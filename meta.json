@@ -1,0 +1,14 @@
+{
+    "name": "Funkin.avi: Recycled",
+    "global": true,
+    "iconFile": "icon64",
+    "windowTitle": "Funkin.avi: Recycled",
+
+    "stateRedirects": {
+        "TitleState": "TitleState",
+        "MainMenuState": "MainMenuState",
+        "StoryMenuState": "StoryMenu",
+        "FreeplayState": "FreeplayState",
+        "CreditsState": "CreditsMenu"
+    }
+}

@@ -1,0 +1,82 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				612,
+				643
+			],
+			"anim": "idle",
+			"fps": 9,
+			"name": "mickeyIsolateDrop idle",
+			"indices": []
+		},
+		{
+			"offsets": [
+				606,
+				635
+			],
+			"loop": false,
+			"fps": 12,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "mickeyIsolateDrop left"
+		},
+		{
+			"offsets": [
+				608,
+				642
+			],
+			"loop": false,
+			"fps": 12,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "mickeyIsolateDrop down"
+		},
+		{
+			"offsets": [
+				622,
+				638
+			],
+			"loop": false,
+			"fps": 12,
+			"anim": "singUP",
+			"indices": [],
+			"name": "mickeyIsolateDrop up"
+		},
+		{
+			"offsets": [
+				592,
+				643
+			],
+			"loop": false,
+			"fps": 12,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "mickeyIsolateDrop right"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/mickey-alt/mickeyIsolateDrop",
+	"position": [
+		0,
+		0
+	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": false,
+	"gameover_confirm_sound": null,
+	"healthicon": "avier",
+	"gameover_character": null,
+	"vslice_sustains": false,
+	"flip_x": false,
+	"healthbar_colour": -2565928,
+	"camera_position": [
+		-320,
+		-320
+	],
+	"gameover_loop_sound": null,
+	"sing_duration": 6.1,
+	"scale": 0.6,
+	"_editor_isPlayer": false
+}

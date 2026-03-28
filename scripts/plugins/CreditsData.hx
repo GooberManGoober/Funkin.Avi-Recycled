@@ -1,0 +1,156 @@
+import sys.io.File;
+import haxe.Json;
+
+using StringTools;
+
+typedef PauseData =
+{
+    var settings:Array<Dynamic>;
+}
+
+var devilishDeal:String = '{
+	"settings":
+	[
+		"Art: Domingo, Moe, Oyxz,\n& SkylarFilm\n\nChart: Purg\n\nCode: ThatOneSillyGuy & Jason\n\nMusic: obscurity.", -40, -5
+	]
+}';
+    var isolated:String = '{
+	"settings":
+	[
+		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: obscurity.", 0, -5
+	]
+}';
+    var lunacy:String = '{
+	"settings":
+	[
+		"Art: Domingo & Moe\n\nChart: Venage5603\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: obscurity.", 25, -5
+	]
+}';
+    var delusional:String = '{
+	"settings":
+	[
+		"Art: Domingo, Moe, BladzAMC_Emerald,\nTeelbe, Oyxz, GreyDoodlez,\nAustinWProductions\n& ThatOneSillyGuy\n\nChart: Dreupy\n\nCode: Jason, MalyPlus\n& ThatOneSillyGuy\n\nMusic: FR3SHMoure\n\nVoice Actor: BonoanAnything", -21, -43
+	]
+}';
+    // fuck you goofy fnf
+    var hunted:String = '{
+	"settings":
+	[
+		"Art: GreyDoodlez, Jason,\n8tastic & rezeo\n\nChart: Jason & ThatOneSillyGuy\n\nCode: Jason, ThatOneSillyGuy \n& MalyPlus\n\nMusic: JBlitz", 18, 0
+	]
+}';
+    var laughTrack:String = '{
+	"settings":
+	[
+		"Art: Just_Kuro, Jason &\nGreyDoodlez\n\nChart: ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: PualTheUnTruest", -35, -5
+	]
+}';
+    var bless:String = '{
+	"settings":
+	[
+		"Art: ThatOneSillyGuy\nAustinWProductions, JDrive, Teelbe\n& Moe\n\nChart: ThatOneSillyGuy\n\nCode: Jason, MalyPlus \n& ThatOneSillyGuy\n\nMusic: PualTheUnTruest", 33, -30
+	]
+}';
+    var dontCross:String = '{
+	"settings":
+	[
+		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: PualTheUnTruest", -55, 20
+	]
+}';
+	var twistedGrins:String = '{
+	"settings":
+	[
+		"Art: AustinWProduction,\nTeelbe & TrellXD\n\nChart: Purg\n\nCode: ThatOneSillyGuy & Goober Man\n\nMusic: ForFurtherNotice\n\nVoice Actor: Jogadorice", -68, -23
+	]
+}';
+	var malfunction:String = '{
+	"settings":
+	[
+		"Art: ThatOneSillyGuy, 8tastic &\njaooazul\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: obscurity.", -43, -13
+	]
+}';
+    var birthday:String = '{
+	"settings":
+	[
+		"Art: Teelbe\n\nChart: Jason & ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: FR3SHMoure", 0, 15
+	]
+}';
+
+var json:String = null;
+var array:Array<Dynamic>;
+var data:PauseData;
+
+var difficultyRank:String = 'HARD';
+var songArtist:String = "Unknown";
+var charter:String = "Unknown";
+
+function jsonStuff(fuckingName:String)
+{
+    switch (fuckingName)
+    {
+        case "Devilish Deal": json = devilishDeal;
+        case "Isolated": json = isolated;
+        case "Lunacy": json = lunacy;
+        case "Delusional": json = delusional;
+        case "Hunted": json = hunted;
+        case "Laugh Track": json = laughTrack;
+        case "Bless": json = bless;
+        case "Don't Cross!": json = dontCross;
+        case "Twisted Grins": json = twistedGrins;
+        case "Malfunction": json = malfunction;
+        case "Birthday": json = birthday;
+    }
+
+    if (json != null && json.length > 0)
+    {
+		var data = Json.parse(json);
+	    return data;
+    }
+	else 
+		return null;
+}
+
+function getCharterCredits(name)
+{
+	switch (name)
+	{
+		case "Devilish Deal", "Twisted Grins": charter = "Purg";
+		case "Delusional", "Birthday": charter = "Dreupy";
+		case "Hunted": charter = "JustJasonLol & ThatOneSillyGuy";
+		case "Lunacy", "Isolated", "Malfunction", "Laugh Track": charter = "ThatOneSillyGuy"; 
+		case "Don't Cross!": charter = "ThatOneSillyGuy & fakeburrito123";
+		default: charter = "Unknown";
+	}
+	return charter;
+}
+
+function getDiffRank(name)
+{
+	switch (name.toLowerCase().replace(' ', '-'))
+	{
+		case 'devilish-deal': difficultyRank = 'EASY';
+		case 'isolated', 'hunted': difficultyRank = 'NORMAL';
+		case 'delusional': difficultyRank = 'INSANE';
+		case 'malfunction': difficultyRank = 'null';
+		case "don't-cross!": difficultyRank = 'GOOD LUCK';
+		case 'birthday': difficultyRank = 'PARTY';
+		default: difficultyRank = 'HARD';
+	}
+	return difficultyRank;
+}
+
+function getArtistName(name)
+{
+	switch (name)
+	{
+		case "Devilish Deal", "Isolated", "Lunacy", "Malfunction": songArtist = "obscurity.";
+		case "Birthday", "Delusional": songArtist = "FR3SHMoure";
+		case "Hunted": songArtist = "JBlitz";
+		case "Laugh Track", "Don't Cross!": songArtist = "Yama haki/Toko";
+		case "Bless": songArtist = "PualTheUnTruest";
+		case "War Dilemma": songArtist = "Sayan Sama & obscurity.";
+		case "Twisted Grins": songArtist = "ForFurtherNotice";
+		default: songArtist = "Unknown";
+	}
+	return songArtist;
+}
