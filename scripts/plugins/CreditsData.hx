@@ -75,6 +75,12 @@ var devilishDeal:String = '{
 		"Art: Teelbe\n\nChart: Jason & ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: FR3SHMoure", 0, 15
 	]
 }';
+	var neglection:String = '{
+	"settings":
+	[
+		"Art: Moe\n\n3D Modeling: MalyPlus\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: AttackPan", -21, 21
+	]
+}';
 
 var json:String = null;
 var array:Array<Dynamic>;
@@ -98,6 +104,7 @@ function jsonStuff(fuckingName:String)
         case "Don't Cross!": json = dontCross;
         case "Twisted Grins": json = twistedGrins;
         case "Malfunction": json = malfunction;
+		case "Neglection": json = neglection;
         case "Birthday": json = birthday;
     }
 
@@ -117,7 +124,7 @@ function getCharterCredits(name)
 		case "Devilish Deal", "Twisted Grins": charter = "Purg";
 		case "Delusional", "Birthday": charter = "Dreupy";
 		case "Hunted": charter = "JustJasonLol & ThatOneSillyGuy";
-		case "Lunacy", "Isolated", "Malfunction", "Laugh Track": charter = "ThatOneSillyGuy"; 
+		case "Lunacy", "Isolated", "Malfunction", "Laugh Track", "Neglection": charter = "ThatOneSillyGuy"; 
 		case "Don't Cross!": charter = "ThatOneSillyGuy & fakeburrito123";
 		default: charter = "Unknown";
 	}
@@ -129,7 +136,7 @@ function getDiffRank(name)
 	switch (name.toLowerCase().replace(' ', '-'))
 	{
 		case 'devilish-deal': difficultyRank = 'EASY';
-		case 'isolated', 'hunted': difficultyRank = 'NORMAL';
+		case 'isolated', 'hunted', 'neglection': difficultyRank = 'NORMAL';
 		case 'delusional': difficultyRank = 'INSANE';
 		case 'malfunction': difficultyRank = 'null';
 		case "don't-cross!": difficultyRank = 'GOOD LUCK';
@@ -150,6 +157,7 @@ function getArtistName(name)
 		case "Bless": songArtist = "PualTheUnTruest";
 		case "War Dilemma": songArtist = "Sayan Sama & obscurity.";
 		case "Twisted Grins": songArtist = "ForFurtherNotice";
+		case "Neglection": songArtist = "AttackPan";
 		default: songArtist = "Unknown";
 	}
 	return songArtist;

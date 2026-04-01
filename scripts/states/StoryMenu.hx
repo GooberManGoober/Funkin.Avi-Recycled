@@ -192,6 +192,9 @@ function onCreate()
 	{
 		FlxG.camera.filters = [new ShaderFilter(defaultShader), new ShaderFilter(defaultShader2)];
 	}
+
+	ClientPrefs.gameplaySettings["botplay"] = false;
+	ClientPrefs.flush();
 }
 
 function onCloseSubstate() {

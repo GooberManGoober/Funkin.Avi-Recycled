@@ -89,9 +89,9 @@ var optionShit:Array<String> = [
 
 var menuart:FlxSprite;
 var eyes:FlxSprite;
-var camFollow:FlxObject;
-var camFollowPos:FlxObject;
 var finishedFunnyMove:Bool = false;
+
+var holdTimer:Float = 0;
 
 var defaultShader:FlxRuntimeShader;
 var defaultShader2:FlxRuntimeShader;
@@ -181,8 +181,6 @@ function onCreate()
 
 	persistentUpdate = persistentDraw = true;
 
-	var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-
 	eyes = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/menu/HahaSadBoi'));
 	eyes.scrollFactor.set(0, 0);
 	eyes.screenCenter();
@@ -197,11 +195,6 @@ function onCreate()
 	menuart.screenCenter();
 	menuart.antialiasing = ClientPrefs.globalAntialiasing;
 	add(menuart);
-
-	camFollow = new FlxObject(0, 0, 1, 1);
-	camFollowPos = new FlxObject(0, 0, 1, 1);
-	add(camFollow);
-	add(camFollowPos);
 
 	menuItems = new FlxTypedGroup();
 	add(menuItems);
@@ -228,7 +221,6 @@ function onCreate()
 		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 		menuItem.updateHitbox();
-		menuItem.y = 108 + (0 * 90);
 
 		// Freeplay
 		var menuItem:FlxSprite = new FlxSprite(700, 250);
@@ -247,10 +239,9 @@ function onCreate()
 		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 		menuItem.updateHitbox();
-		menuItem.y = 108 + (0 * 90);
 
 		// Credits
-		var menuItem:FlxSprite = new FlxSprite(700, 400);
+		var menuItem:FlxSprite = new FlxSprite(700, 425);
 		menuItem.scale.x = scale;
 		menuItem.scale.y = scale;
 		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[2]);
@@ -266,10 +257,9 @@ function onCreate()
 		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 		menuItem.updateHitbox();
-		menuItem.y = 108 + (0 * 90);
-
+		
 		// Settings
-		var menuItem:FlxSprite = new FlxSprite(700, 700);
+		var menuItem:FlxSprite = new FlxSprite(700, 600);
 		menuItem.scale.x = scale;
 		menuItem.scale.y = scale;
 		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[3]);
@@ -285,26 +275,22 @@ function onCreate()
 		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 		menuItem.updateHitbox();
-		menuItem.y = 108 + (0 * 90);
-
-	FlxG.camera.follow(camFollowPos, null, 1);
-	camFollowPos.setPosition(camFollow.x, camFollow.y);
-
+		
 	var versionShit:FlxText = new FlxText(12, FlxG.height - 84, 0, "Funkin.avi v2.0.0", 12);
 	versionShit.scrollFactor.set();
-	versionShit.setFormat(Paths.font("NewWaltDisneyFontRegular-BPen.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	versionShit.setFormat(Paths.font("DisneyFont.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	versionShit.cameras = [camFilter];
 	add(versionShit);
 
 	var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Nightmare Vision Engine v" + Main.NMV_VERSION, 12);
 	versionShit.scrollFactor.set();
-	versionShit.setFormat(Paths.font("NewWaltDisneyFontRegular-BPen.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	versionShit.setFormat(Paths.font("DisneyFont.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	versionShit.cameras = [camFilter];
 	add(versionShit);
 
 	var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Friday Night Funkin' v0.2.8", 12);
 	versionShit.scrollFactor.set();
-	versionShit.setFormat(Paths.font("NewWaltDisneyFontRegular-BPen.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	versionShit.setFormat(Paths.font("DisneyFont.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	versionShit.cameras = [camFilter];
 	add(versionShit);
 
@@ -360,16 +346,28 @@ function onCreate()
 
 var selectedSomethin:Bool = false;
 
+function onCloseSubState() {
+	selectedSomethin = false;
+}
+
 function onUpdate(elapsed)
 {
-	if (FlxG.keys.justPressed.R)
-		coolMenuEvents(1);
+	if (FlxG.keys.pressed.R)
+	{
+		holdTimer += elapsed;
+	}
+	else
+		holdTimer = 0;
+
+
+	if (holdTimer >= 0.5)
+	{
+		openSubState(new ScriptedSubstate("resetSave"));
+		persistentUpdate = false;
+	}
 
 	if (FlxG.sound.music.volume < 0.8)
 		FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-
-	var lerpVal:Float = FlxMath.bound(elapsed * 7.5, 0, 1);
-	camFollowPos.setPosition(MathUtil.fpsLerp(camFollowPos.x, camFollow.x, lerpVal), MathUtil.fpsLerp(camFollowPos.y, camFollow.y, lerpVal));
 
 	if (!selectedSomethin)
 	{
@@ -478,6 +476,17 @@ function onUpdate(elapsed)
 
 		if (FlxG.keys.justPressed.SEVEN)
 			FlxG.switchState(new ScriptedState("SexState"));
+		if (FlxG.keys.justPressed.ONE && ClientPrefs.inDevMode)
+		{
+			PluginsManager.callPluginFunc('GameData', 'fullSave');
+			FlxG.sound.play(Paths.sound('funkinAVI/easterEggSound'));
+		}		
+		if (FlxG.keys.justPressed.TWO && ClientPrefs.inDevMode)
+		{
+			FlxG.sound.play(Paths.sound('funkinAVI/easterEggSound'));
+			FlxG.save.data.episode1FPLock = "unlocked";
+			FlxG.save.flush();
+		}
 	}
 }
 
@@ -503,7 +512,6 @@ function changeItem(huh:Int = 0)
 			if(menuItems.length > 4) {
 				add = menuItems.length * 8;
 			}
-			camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y - add);
 			spr.centerOffsets();
 		}
 	});
@@ -514,7 +522,7 @@ function coolMenuEvents(getEvent:Int)
 	switch (getEvent)
 	{
 		case 1:
-			var redGradient:FlxSprite = new FlxSprite(0, 0, Paths.image('favi/filters/redGradient'));
+			var redGradient:FlxSprite = new FlxSprite(0, 0, Paths.image('Funkin_avi/filters/redGradient'));
 			redGradient.setGraphicSize(Std.int(redGradient.width * 0.7));
 			redGradient.screenCenter();
 			redGradient.cameras = [camFilter];

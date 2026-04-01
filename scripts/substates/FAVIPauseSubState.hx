@@ -119,6 +119,7 @@ function onLoad()
 	songArtOutline = new FlxSprite(songArt.x - 20, songArt.y - 20 /*POV: you're lazy to do the math yourself*/).makeGraphic(890, 890, FlxColor.WHITE);
 	disc = new FlxSprite(songArt.x + 75, songArt.y - 12).loadGraphic(Paths.image('Funkin_avi/pause/disc'));
 	songName = new FlxText(FlxG.width * 0.78 + array[1], 10, 0, ((PlayState.SONG.song == "Delusional" && (PlayState.instance.curBeat >= 472 && PlayState.instance.curBeat <= 744)) ? "Regret" : PlayState.SONG.song), 32);
+	countDown = new FlxText(0, 0, 1280, "", 0);
 	satanTxt = new FlxTypeText(0, 25, 1280, "");
 	pauseNameTxt = new FlxText(5, 700, 1280, "Now Playing: " + pauseSongStr + " - ForFurtherNotice");
 
@@ -127,6 +128,7 @@ function onLoad()
 	levelInfo.setFormat(Paths.font("disneyFreeplayFont.ttf"), 18, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	songName.setFormat(Paths.font("disneyFreeplayFont.ttf"), 46, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	pauseNameTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 16, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	countDown.setFormat(Paths.font("betterSatanFont.ttf"), 90, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	satanTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 32, FlxColor.fromRGB(255, 117, 107), 'center', FlxTextBorderStyle.OUTLINE, FlxColor.fromRGB(92, 0, 26));
 	satanTxt.borderSize = 2;
 	songArt.loadGraphic(Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset));
@@ -139,14 +141,18 @@ function onLoad()
 
 	levelInfo.text = array[0];
 
-	for (obj in [levelInfo, bg, songName])
+	for (obj in [levelInfo, bg, songName, countDown])
 		obj.scrollFactor.set();
 
+	countDown.screenCenter();
+	
 	satanTxt.screenCenter(FlxAxes.X);
 
 	// alpha value setup
 	for (obj in [bg, levelInfo, songName, pauseNameTxt])
 		obj.alpha = 0.0001;
+
+	countDown.visible = false;
 
 	// fuck it. add everything
 	for (obj in [bg, songName, levelInfo, pauseNameTxt, disc, songArtOutline, songArt])
@@ -167,6 +173,9 @@ function onLoad()
 
 	satanTxt.camera = CameraUtil.lastCamera;
 	add(satanTxt);
+
+	countDown.camera = CameraUtil.lastCamera;
+	add(countDown);
 
 	// tweens (bruh moment)
 	FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartOut, onComplete: 
@@ -225,18 +234,6 @@ function onUpdate(elapsed)
 		case 'leave':
 			funnyButton.x = songText.x + 530;
 			funnyButton.y = 580;
-		case 'wd-continue':
-			funnyButton.x = songText.x + 430;
-			funnyButton.y = 124;
-		case 'wd-restart':
-			funnyButton.x = songText.x + 370;
-			funnyButton.y = 280;
-		case 'wd-settings':
-			funnyButton.x = songText.x + 720;
-			funnyButton.y = 430;
-		case 'wd-escape':
-			funnyButton.x = songText.x + 570;
-			funnyButton.y = 585;
 		case 'mal-continue':
 			funnyButton.x = songText.x + 410;
 			funnyButton.y = 104;
@@ -274,7 +271,7 @@ function onUpdate(elapsed)
 					remove(disc);
 					FlxG.mouse.load(Paths.image('Funkin_avi/Hand').bitmap);
 					FlxG.mouse.visible = true;
-					FlxG.switchState(new OptionsState());
+					FlxG.switchState(new ScriptedState("Options"));
 					OptionsState.onPlayState = true;
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				case 3:
@@ -364,21 +361,43 @@ function resumeGame()
 	satanTxt.text = "";
 	
 	FlxG.sound.play(Paths.sound('clickText'), 0.6);
-	FlxTween.tween(disc, {x: disc.x + 800}, 0.4, {ease: FlxEase.quartOut});
-	FlxTween.tween(songArt, {x: songArt.x + 510}, 0.4, {ease: FlxEase.quartOut});
-	FlxTween.tween(songArtOutline, {x: songArtOutline.x + 510}, 0.4, {ease: FlxEase.quartOut});
-	FlxTween.tween(bg, {alpha: 0}, 0.4, {ease: FlxEase.quartOut});
-	FlxTween.tween(pauseNameTxt, {alpha: 0}, 0.04, {ease: FlxEase.quartOut});
-	FlxTween.tween(funnyButton, {alpha: 0}, 0.4, {ease: FlxEase.quartInOut});
+	FlxTween.tween(disc, {x: disc.x + 800}, 0.8, {ease: FlxEase.quartOut});
+	FlxTween.tween(songArt, {x: songArt.x + 510}, 0.8, {ease: FlxEase.quartOut});
+	FlxTween.tween(songArtOutline, {x: songArtOutline.x + 510}, 0.8, {ease: FlxEase.quartOut});
+	FlxTween.tween(pauseNameTxt, {alpha: 0}, 0.75, {ease: FlxEase.quartOut});
+	FlxTween.tween(funnyButton, {alpha: 0}, 0.8, {ease: FlxEase.quartInOut});
 
-	new FlxTimer().start(0.5, function(tmr:FlxTimer)
+	new FlxTimer().start(0.4, function(tmr:FlxTimer)
 	{
-		close();
-		remove(disc);
-		Application.current.window.title = "Funkin.avi: Recycled - " + 
-		(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + 
-		PlayState.SONG.song + 
-		" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // short version that displays after 5 seconds yayaya;
+		FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.6);
+		countDown.visible = true;
+		countDown.text = "3";
+		new FlxTimer().start(1, function(tmr:FlxTimer)
+		{
+			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.6);
+			countDown.text = "2";
+			new FlxTimer().start(1, function(tmr:FlxTimer)
+			{
+				FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.6);
+				countDown.text = "1";
+				FlxTween.tween(bg, {alpha: 0}, 1.2, {ease: FlxEase.quartInOut});
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.6);
+					countDown.text = "Go!";
+					FlxTween.tween(countDown, {alpha: 0}, 0.4);
+					new FlxTimer().start(0.55, function(tmr:FlxTimer)
+					{
+						close();
+						remove(disc);
+						Application.current.window.title = "Funkin.avi: Recycled - " + 
+						(PlayState.isStoryMode ? "Episode 1" + " - " : "Freeplay - ") + 
+						PlayState.SONG.song + 
+						" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // short version that displays after 5 seconds yayaya;
+					});
+				});
+			});
+		});
 	});
 }
 

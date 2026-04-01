@@ -2,6 +2,7 @@
 	"song": {
 		"player1": "minnie",
 		"player2": "satandd",
+		"arrowSkins": ["grayscale", "grayscale"],
 		"notes": [
 			{
 				"typeOfSection": 0,

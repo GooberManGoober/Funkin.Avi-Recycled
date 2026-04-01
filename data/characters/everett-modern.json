@@ -65,9 +65,9 @@
 	"healthicon": "everettmodern",
 	"flip_x": true,
 	"healthbar_colors": [
-		28,
-		151,
-		255
+		123,
+		194,
+		246
 	],
 	"camera_position": [
 		0,

@@ -128,35 +128,39 @@
 	],
 	"noteSplashAnimations": [
 		{
+			"looping": false,
+			"xmlName": "vanilla splash purple 1",
 			"offsets": [
-				-2,
-				-2
+				4,
+				-15
 			],
-			"xmlName": "note splash",
 			"anim": "note0"
 		},
 		{
+			"looping": false,
+			"xmlName": "vanilla splash blue 1",
 			"offsets": [
-				-2,
-				-2
+				3,
+				-5
 			],
-			"xmlName": "note splash",
 			"anim": "note1"
 		},
 		{
+			"looping": false,
+			"xmlName": "vanilla splash green 1",
 			"offsets": [
-				-2,
-				-2
+				6,
+				-5
 			],
-			"xmlName": "note splash",
 			"anim": "note2"
 		},
 		{
+			"looping": false,
+			"xmlName": "vanilla splash red 1",
 			"offsets": [
-				-2,
-				-2
+				12,
+				-5
 			],
-			"xmlName": "note splash",
 			"anim": "note3"
 		}
 	],
@@ -284,11 +288,11 @@
 		{"r": -9313536, "g": -589850, "b": -16764672},
 		{"r": -30642, "g": -1291, "b": -9699328}
 	],
-	"splashTexture": "noteSplashes",
+	"splashTexture": "noteSplashes-vanilla",
 	"antialiasing": false,
 	"inGameColoring": true,
 	"receptorScale": 6,
 	"noteScale": 6,
-	"splashScale": 1.5,
+	"splashScale": 1,
 	"susSplashOrigin": [-10, 15]
 }

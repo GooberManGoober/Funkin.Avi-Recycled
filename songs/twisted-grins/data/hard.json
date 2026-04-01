@@ -2,6 +2,7 @@
 	"song": {
 		"composer": "ForFurtherNotice",
 		"player1": "everretBFfinal",
+		"arrowSkins": ["grayscale", "grayscale"],
 		"events": [
 			[
 				0,

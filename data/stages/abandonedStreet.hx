@@ -31,7 +31,6 @@ typedef FlashingSettings =
 	 @:optional var colors:Array<Int>;
 }
 
-var grayScale:FlxRuntimeShader = newShader('grayScale');
 var chromZoomShader:FlxRuntimeShader = newShader('aberration');
 var chromNormalShader:FlxRuntimeShader = newShader('aberrationDefault');
 var dramaticCamMovement:FlxRuntimeShader = newShader('cameraMovement');
@@ -47,7 +46,10 @@ var stageCurtains:FlxSprite;
 var rain:FlxSprite;
 var fakeLightOfHope:FlxSprite;
 var rainTween:FlxTween;
-var pathway:String = 'favi/stages/' + PlayState.SONG.stage + '/images/';
+var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/images/';
+
+var tumbleWeed:FlxSprite;
+var tumbleGrp:FlxTypedGroup;
 
 var dumbCamTwn:FlxTween;
 
@@ -127,6 +129,9 @@ function onLoad()
 	stageBGFlash.scrollFactor.set();
 	add(stageBGFlash);
 
+    tumbleGrp = new FlxTypedGroup();
+    add(tumbleGrp);
+
     if(!ClientPrefs.lowQulity)
     {
         stageCurtains = new FlxSprite(0, 0).loadGraphic(Paths.image(pathway + 'i_forgor'));
@@ -197,23 +202,20 @@ function onCreatePost()
         if (!ClientPrefs.lowQuality)
         {
             camGame.filters = [
-                new ShaderFilter(grayScale), 
                 new ShaderFilter(dramaticCamMovement),
                 new ShaderFilter(monitorFilter),
                 new ShaderFilter(chromZoomShader),
                 new ShaderFilter(chromNormalShader)
             ];
-            camHUD.filters = [new ShaderFilter(grayScale), new ShaderFilter(chromNormalShader)];
+            camHUD.filters = [new ShaderFilter(chromNormalShader)];
         }
         else
         {
             camGame.filters = [
-                new ShaderFilter(grayScale), 
                 new ShaderFilter(monitorFilter),
                 new ShaderFilter(chromNormalShader)
             ];
             camHUD.filters = [
-                new ShaderFilter(grayScale),
                 new ShaderFilter(chromNormalShader)
             ];
         }
@@ -253,8 +255,6 @@ function onCreatePost()
             deluSing.visible = false;
             deluSing.load(Paths.video("deluLyrics"), [FunkinVideoSprite.muted]);
             deluSing.cameras = [camHUD];
-            deluSing.play();
-            deluSing.pause();
             deluSing.onEnd(() -> {
                 deluSing.kill();
                 deluSing.destroy();
@@ -264,8 +264,6 @@ function onCreatePost()
             minnieJumpscare.visible = false;
             minnieJumpscare.load(Paths.video("minniePart"), [FunkinVideoSprite.muted]);
             minnieJumpscare.cameras = [camHUD];
-            minnieJumpscare.play();
-            minnieJumpscare.pause();
             minnieJumpscare.onEnd(() -> {
                 minnieJumpscare.kill();
                 minnieJumpscare.destroy();
@@ -326,91 +324,721 @@ function onUpdate(elapsed)
     }
 }
 
-function onBeatHit()
+function onEndSong()
 {
-    if (PlayState.SONG.song == "Isolated")
-        switch (curBeat)
-        {
-            case 160:
+    if (PlayState.SONG.song == "Delusional" && isStoryMode && FlxG.save.data.episode1FPLock != 'unlocked')
+    {
+        FlxG.save.data.episode1FPLock = 'unlocked';
+        FlxG.save.flush();
+    }
+}
+
+function onSongStart()
+{
+    switch(PlayState.SONG.song)
+    {    
+        case "Isolated":
+            modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
                 iconP2.alpha = 0;
                 isolatedHappy.visible = true;
                 FlxTween.tween(isolatedHappy, {alpha: 0}, 1);
                 FlxTween.tween(iconP2, {alpha: 1}, 0.6);
+            });
 
-            case 168:
-                lunacyIcon.visible = true;
+            modManager.queueFuncOnce(168 * 4, (s,s2)->{ 
                 iconP2.alpha = 0;
-                FlxTween.tween(lunacyIcon, {alpha: 0}, 1);
+                isolatedHappy.visible = true;
+                FlxTween.tween(isolatedHappy, {alpha: 0}, 1);
                 FlxTween.tween(iconP2, {alpha: 1}, 0.6);
+            });
 
-            case 172:
+            modManager.queueFuncOnce(172 * 4, (s,s2)->{ 
                 delusionalIcon.visible = true;
                 iconP2.alpha = 0;
                 FlxTween.tween(delusionalIcon, {alpha: 0}, 1);
                 FlxTween.tween(iconP2, {alpha: 1}, 0.6);
+            });
 
-            case 176:
+            modManager.queueFuncOnce(176 * 4, (s,s2)->{ 
                 fakeBFLosingFrame.visible = true;
                 iconP1.alpha = 0;
                 FlxTween.tween(fakeBFLosingFrame, {alpha: 0}, 1);
                 FlxTween.tween(iconP1, {alpha: 1}, 0.6);
+            });
 
-            case 184:
+            modManager.queueFuncOnce(184 * 4, (s,s2)->{ 
                 demonBFIcon.visible = true;
                 iconP1.alpha = 0;
                 FlxTween.tween(demonBFIcon, {alpha: 0}, 1);
                 FlxTween.tween(iconP1, {alpha: 1}, 0.6);
+            });
 
-            case 188:
+            modManager.queueFuncOnce(188 * 4, (s,s2)->{ 
                 demonBFScary.visible = true;
                 iconP1.alpha = 0;
                 FlxTween.tween(demonBFScary, {alpha: 0}, 1);
                 FlxTween.tween(iconP1, {alpha: 1}, 0.6);
-        }
-    
-    switch (PlayState.SONG.song)
-    {
-        case 'Lunacy':
+            });
+
+            modManager.queueFuncOnce(12 * 4, (s,s2)->{ 
+                camGame.fade(FlxColor.BLACK, 3, true);
+            });
+
+            modManager.queueFuncOnce(30 * 4, (s,s2)->{ 
+                FlxTween.tween(camHUD, {alpha: 1}, 3, {ease: FlxEase.quadOut});
+            });
+
+            modManager.queueFuncOnce(88 * 4, (s,s2)->{ 
+                tweenCamera(1.4, 3, 'sineInOut');
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
+            });
+
+            modManager.queueFuncOnce(96 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.85;
+                tweenCamera(0.85, 0.4, 'expoOut');
+
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 1.5);
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35});
+            });
+
+            modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
+                tweenCamera(1.3, 2, 'sineInOut');
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
+            });
+
+            modManager.queueFuncOnce(184 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0.77, timer: 0.5, ease: FlxEase.quartOut});
+            });
+
+            modManager.queueFuncOnce(188 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0.6, timer: 0.5, ease: FlxEase.quartOut});
+            });
+
+            modManager.queueFuncOnce(192 * 4, (s,s2)->{ 
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 1.5);
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
+                
+                defaultCamZoom = 1.25;
+            });
+
+            modManager.queueFuncOnce(220 * 4, (s,s2)->{ 
+                tweenCamera(0.85, 2, 'sineInOut');
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
+            });
+
+            modManager.queueFuncOnce(288 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.85;
+
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 1.5);
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+            });
+
+            modManager.queueFuncOnce(352 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
+                tweenCamera(1.07, 5, 'quadInOut');
+                cameraSpeed -= 0.25;
+            });
+
+            modManager.queueFuncOnce(376 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 4, ease: FlxEase.quartInOut});
+            });
+
+            for (i in [36, 40, 44, 52, 56, 60, 64, 68, 72, 76, 80, 84, 92])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
+                });
+            }
+
+            for (i in [100, 104, 108, 116, 120, 124, 132, 136, 140, 148, 152, 156, 228, 232, 236, 240, 244, 252, 260, 264, 268, 276 |
+                280, 284, 292, 296, 300, 308, 312, 316, 324, 328, 332, 340, 344, 348])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.2, timer: 0.35, colors: [194, 194, 194]});
+                });
+            }
+
+            for (i in [98, 102, 106, 110, 114, 118, 122, 126, 130, 134, 138, 142, 146, 150, 154, 158, 226, 230, 234, 238, 242, 246 |
+                250, 254, 258, 262, 266, 270, 274, 278, 282, 286, 290, 294, 298, 302, 306, 310, 314, 318, 322, 326, 330, 334 |
+                338, 342, 346, 350])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.55, timer: 0.35, colors: [194, 194, 194]});
+                });
+            }
+
+            for (i in [194, 196, 198, 200, 202, 204, 206, 210, 212, 214, 222])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
+                });
+            }
+
+            for (i in [216, 217, 218, 219])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
+                    camHUD.zoom += 0.04;
+                });
+            }
+
+            for (i in [128, 256])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (ClientPrefs.flashing)
+                        camGame.flash(FlxColor.WHITE, 1.5);
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+                });
+            }
+
+            for (i in [48, 336, 304, 272, 112, 144])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (ClientPrefs.flashing)
+                        camGame.flash(FlxColor.BLACK, 1.5);
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
+                });
+            }
+
+            modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
+                if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
+            });
+
+            modManager.queueFuncOnce(416 * 4, (s,s2)->{ 
+                camGame.visible = false;
+                camHUD.visible = false;
+            });
+
+            modManager.queueFuncOnce(224 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+                if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
+            });
+
+            modManager.queueFuncOnce(320 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+                if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
+            });
+
+        case "Lunacy":
             if (!ClientPrefs.lowQulity)
             {
-                if (curBeat == 228 || curBeat == 238 || curBeat == 244 || curBeat == 252 || curBeat == 260 || curBeat == 270 || curBeat == 276 || curBeat == 284 || curBeat == 292 || curBeat == 300 || curBeat == 308 || curBeat == 316 || curBeat == 324 || curBeat == 332 || curBeat == 340 || curBeat == 248)
+                for (i in [228, 238, 244, 252, 260, 270, 276, 284, 292, 300, 308, 316, 324, 332, 340, 248])
                 {
-                    if (rainTween != null)
-                        rainTween.cancel();
-    
-                    if (rain != null)
-                        rainTween = FlxTween.tween(rain, {alpha: 0.5}, 0.35, {ease: FlxEase.sineOut, onComplete: function(twn:FlxTween)
-                        {
-                            rainTween = null;
-                        }});
-                }
-                if (curBeat == 230 || curBeat == 240 || curBeat == 248 || curBeat == 256 || curBeat == 262 || curBeat == 272 || curBeat == 280 || curBeat == 288 || curBeat == 296 || curBeat == 304 || curBeat == 312 || curBeat == 320 || curBeat == 328 || curBeat == 336 || curBeat == 344 || curBeat == 352)
-                {
-                    if (rainTween != null)
-                        rainTween.cancel();
-
-                    if (rain != null)
-                        rainTween = FlxTween.tween(rain, {alpha: 0.0001}, 0.35, {ease: FlxEase.sineOut, onComplete: function(twn:FlxTween)
+                    modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                        if (rainTween != null)
+                            rainTween.cancel();
+        
+                        if (rain != null)
+                            rainTween = FlxTween.tween(rain, {alpha: 0.5}, 0.35, {ease: FlxEase.sineOut, onComplete: function(twn:FlxTween)
                             {
                                 rainTween = null;
                             }});
+                    });
                 }
-                if (curBeat == 480)
+
+                for (i in [230, 240, 248, 256, 262, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352])
                 {
-                    if (rain != null) rain.alpha = 1;
+                    modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                        if (rainTween != null)
+                            rainTween.cancel();
+
+                        if (rain != null)
+                            rainTween = FlxTween.tween(rain, {alpha: 0.0001}, 0.35, {ease: FlxEase.sineOut, onComplete: function(twn:FlxTween)
+                                {
+                                    rainTween = null;
+                                }});
+                    });
                 }
+
+                modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
+                    if (rain != null) rain.alpha = 1;
+                });
             }
-        case 'Delusional':
-            if (curBeat == 1)
+
+            for (i in [100, 108, 116, 124, 132, 140, 148])
             {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.5, timer: 0.5, ease: FlxEase.sineOut});
+                });
+            }
+
+            for (i in [160, 230, 240, 248, 256, 262, 272, 280, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 0.5, ease: FlxEase.quadOut});
+                });
+            }
+
+            for (i in [156, 228, 238, 244, 252, 260, 270, 276, 284, 292, 300, 308, 316, 324, 332, 340, 348])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_DARK, {alpha: 0.77, timer: 0.5, ease: FlxEase.quadOut});
+                });
+            }
+
+            for (i in [424, 432, 440, 448, 456, 464, 472])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.65, timer: 0.6, ease: FlxEase.sineOut});
+                });
+            }
+
+            for (i in [32, 64])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.27;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 1.5, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [38, 40, 46, 48, 54, 56, 62, 70, 72, 78, 80, 86, 88, 102, 110, 118, 126, 134, 142, 150])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.12;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 0.3, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [96, 104, 112, 120, 128, 136, 144, 152])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.32;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 2.1, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [100, 108, 116, 124, 132, 140, 148])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.4;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 1, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            modManager.queueFuncOnce(156 * 4, (s,s2)->{ 
+                if (chromTween != null)
+                    chromTween.cancel();
+
+                chromTween = FlxTween.num(chromEffect, 0.33, 0.2, {
+                    ease: FlxEase.sineOut,
+                    onComplete: function(twn:FlxTween)
+                    {
+                        chromTween = null;
+                    }
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+            });
+
+            modManager.queueFuncOnce(158 * 4, (s,s2)->{ 
+                if (chromTween != null)
+                    chromTween.cancel();
+
+                chromEffect = 0.4;
+
+                chromTween = FlxTween.num(chromEffect, 0.0001, 0.2, {
+                    ease: FlxEase.sineOut,
+                    onComplete: function(twn:FlxTween)
+                    {
+                        chromTween = null;
+                    }
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+            });
+
+            for (i in [160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.55;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 0.6, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [162, 170, 178, 186, 194, 202, 210, 218, 226, 234, 242, 250, 258, 266, 274, 282, 290, 298, 306, 314, 322, 330, 338, 346])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.6;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 0.25, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [163, 171, 179, 187, 195, 203, 211, 219, 227, 235, 243, 251, 259, 267, 275, 283, 291, 299, 307, 315, 323, 331, 339, 347])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromTween = FlxTween.num(chromEffect, 0.5, 0.22, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                            chromEffect = 0.00001;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [165, 173, 181, 189, 197, 205, 213, 221])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromTween = FlxTween.num(chromEffect, 0.35, 0.2, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                            chromEffect = 0.00001;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [166, 174, 182, 190, 198, 206, 214, 222])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.45;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 0.2, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [167, 175, 183, 191, 199, 207, 215, 223])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.56;
+
+                    chromTween = FlxTween.num(chromEffect, 0.0001, 0.2, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            for (i in [352, 354, 356, 358, 360, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 
+                    382, 384, 386, 388, 390, 392, 394, 396, 398, 400, 402, 404, 406, 408, 410, 
+                    416, 418, 420, 422, 424, 426, 428, 430, 432, 434, 436, 438, 440, 442, 444, 
+                    446, 448, 450, 452, 454, 456, 458, 460, 462, 464, 466, 468, 470, 472, 474])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (chromTween != null)
+                        chromTween.cancel();
+
+                    chromEffect = 0.3;
+
+                    chromTween = FlxTween.num(chromEffect, 0.00001, 0.5, {
+                        ease: FlxEase.sineOut,
+                        onComplete: function(twn:FlxTween)
+                        {
+                            chromTween = null;
+                        }
+                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+                });
+            }
+
+            modManager.queueFuncOnce(412 * 4, (s,s2)->{ 
+                if (chromTween != null)
+                    chromTween.cancel();
+
+                chromEffect = 0.36;
+
+                chromTween = FlxTween.num(chromEffect, 0.00001, 1, {
+                    ease: FlxEase.sineOut,
+                    onComplete: function(twn:FlxTween)
+                    {
+                        chromTween = null;
+                    }
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+            });
+
+            modManager.queueFuncOnce(476 * 4, (s,s2)->{ 
+                if (chromTween != null)
+                    chromTween.cancel();
+
+                chromTween = FlxTween.num(chromEffect, 0.85, 1.6, {
+                    ease: FlxEase.sineOut,
+                    onComplete: function(twn:FlxTween)
+                    {
+                        chromTween = null;
+                    }
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+            });
+
+            modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
+                chromTween.cancel();
+
+                chromEffect = 0.00001;
+            });
+
+            modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
+                camGame.fade(FlxColor.BLACK, 3, true);
+            });
+
+            modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
+                if (ClientPrefs.flashing) camGame.flash(FlxColor.BLACK, 1.5);
+                tweenCamera(camGame.zoom + .5, 16.5, 'sineInOut');
+            });
+
+            modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.BLACK, 0.9);
+            });
+
+            modManager.queueFuncOnce(88 * 4, (s,s2)->{ 
+                tweenCamera(.75, 2.2, 'sineInOut');
+
+                FlxTween.tween(camHUD, {alpha: 1}, 5, {ease: FlxEase.sineOut});
+            });
+
+            modManager.queueFuncOnce(96 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.75;
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 1.5);
+            });
+
+            for (i in [128, 256])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
+                });
+            }
+
+            modManager.queueFuncOnce(156 * 4, (s,s2)->{ 
+                defaultCamZoom = 1.05;
+            });
+
+            modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
+                boundValue = 1.25;
+                drainValue = 0.015;
+                defaultCamZoom = 0.7;
+                if (ClientPrefs.flashing) camGame.flash(FlxColor.BLACK, 1.5);
+            });
+
+            modManager.queueFuncOnce(192 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.75;
+            });
+
+            for (i in [200, 238, 270, 316, 332, 344])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 0.8;
+                });
+            }
+
+            modManager.queueFuncOnce(208 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.85;
+            });
+
+            for (i in [216, 252, 284])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 0.9;
+                });
+            }
+
+            modManager.queueFuncOnce(220 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.95;
+            });
+
+            for (i in [222, 267, 239, 271, 334])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 1;
+                });
+            }
+
+            for (i in [224, 288])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 0.75;
+                    if (ClientPrefs.flashing)
+                        camGame.flash(FlxColor.WHITE, 1.5);
+                    FlxTween.tween(camHUD, {alpha: 0}, 3, {ease: FlxEase.sineInOut});
+                });
+            }
+
+            for (i in [228, 260, 292, 286])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 1.1;
+                });
+            }
+
+            for (i in [230, 262, 296, 312, 236, 268])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 0.65;
+                });
+            }
+
+            for (i in [232, 264])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (ClientPrefs.flashing)
+                        camGame.flash(FlxColor.WHITE, 1.5);
+                    defaultCamZoom = 0.7;
+                });
+            }
+
+            for (i in [412, 240, 272, 300, 304, 336, 248, 280, 328])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 0.7;
+                });
+            }
+
+            modManager.queueFuncOnce(320 * 4, (s,s2)->{ 
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 1.5);
+                defaultCamZoom = 0.7;
+            });
+
+            modManager.queueFuncOnce(254 * 4, (s,s2)->{ 
+                defaultCamZoom = 1.1;
+                FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.sineInOut});
+            });
+
+            modManager.queueFuncOnce(318 * 4, (s,s2)->{ 
+                defaultCamZoom = 1.25;
+                FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.sineInOut});
+            });
+
+            for (i in [310, 342, 350])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 1.25;
+                });
+            }
+
+            modManager.queueFuncOnce(352 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.65;
+                FlxTween.tween(camHUD, {alpha: 0.25}, 8, {ease: FlxEase.sineInOut});
+                FlxTween.num(health, 0.01, 20, null, shitshitfuckfuck -> health = shitshitfuckfuck);
+
+                if (globalGradient != null)
+                    FlxTween.tween(globalGradient, {alpha: 0.8}, 10);
+                FlxTween.tween(FlxG.camera, {zoom: 1.1}, 18, {startDelay: 2});
+            });
+
+            modManager.queueFuncOnce(408 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.9;
+                FlxTween.tween(camHUD, {alpha: 0.36}, 4, {ease: FlxEase.sineInOut});
+            });
+
+            modManager.queueFuncOnce(416 * 4, (s,s2)->{ 
+                if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
+            });
+
+            modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
+                boundValue = 1;
+                drainValue = 0.02;
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.BLACK, 1.5);
+                camHUD.alpha = 0;
+            });
+
+            modManager.queueFuncOnce(481 * 4, (s,s2)->{ 
+                camFollow.x += 100;
+            });
+
+            modManager.queueFuncOnce(506 * 4, (s,s2)->{ 
+                FlxTween.tween(camHUD, {alpha: 0.5}, 4, {ease: FlxEase.sineInOut});
+            });
+
+            modManager.queueFuncOnce(536 * 4, (s,s2)->{ 
+                FlxTween.tween(camHUD, {alpha: 0}, 2, {ease: FlxEase.sineInOut});
+            });
+
+            modManager.queueFuncOnce(540 * 4, (s,s2)->{ 
+                camGame.fade(FlxColor.BLACK, 5);
+            });
+        case "Delusional":
+            modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
                 if (rain != null) rain.alpha = 1;
-            }
-            if (curBeat == 64)
-            {
+            });
+
+            modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
                 FlxTween.tween(fakeLightOfHope, {alpha: 0.001}, 1.7);
-            }
-            if (curBeat == 474) // load daytime street assets
-            {
+            });
+
+            modManager.queueFuncOnce(474 * 4, (s,s2)->{ 
                 colorsOrSmthElse.alpha = 0.0001;
                 
                 floor.alpha = 0.0001;
@@ -421,28 +1049,33 @@ function onBeatHit()
                     stageCurtains.visible = false;
                 }
                 minnieBackground.visible = true;
+            });
+
+            if (!ClientPrefs.lowQulity)
+            {
+                modManager.queueFuncOnce(679 * 4, (s,s2)->{ 
+                    stageCurtains.alpha = 0.0001;
+                    stageCurtains.visible = true;
+                });
             }
 
-            if (curBeat == 679 && !ClientPrefs.lowQulity)
+            for (i in [680, 688, 696, 700, 704, 712, 720])
             {
-                stageCurtains.alpha = 0.0001;
-                stageCurtains.visible = true;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    if (!ClientPrefs.lowQulity)
+                    {
+                        stageCurtains.alpha = 1;
+                        FlxTween.tween(stageCurtains, {alpha: 0}, 1, {ease: FlxEase.circOut});
+                    }
+                });
             }
 
-            if (curBeat == 680 || curBeat == 688 || curBeat == 696 || curBeat == 700 || curBeat == 704 || curBeat == 712 || curBeat == 720)
-            {
-                if (!ClientPrefs.lowQulity)
-                {
-                    stageCurtains.alpha = 1;
-                    FlxTween.tween(stageCurtains, {alpha: 0}, 1, {ease: FlxEase.circOut});
-                }
-            }
+            modManager.queueFuncOnce(728 * 4, (s,s2)->{ 
+                if (!ClientPrefs.lowQuality)
+                    FlxTween.tween(stageCurtains, {alpha: 1}, 5);
+            });
 
-            if (curBeat == 728 && !ClientPrefs.lowQulity)
-                FlxTween.tween(stageCurtains, {alpha: 1}, 5);
-
-            if (curBeat == 740) // go back to the street in a even more decayed state
-            {
+            modManager.queueFuncOnce(740 * 4, (s,s2)->{ 
                 if (!ClientPrefs.lowQulity)
                 {
                     totallyanoriginalname.kill();
@@ -457,117 +1090,508 @@ function onBeatHit()
                 colorsOrSmthElse.alpha = 1;
                 
                 floor.alpha = 1;
-            }
-        }
+            });
 
+            modManager.queueFuncOnce(146 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', 'Count the minutes...', 'disneyFreeplayFont.ttf', 30, 1.1, 'sineInOut', .05);
+            });
+
+            modManager.queueFuncOnce(150 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "...of how long...", 'disneyFreeplayFont.ttf', 30, 1, 'sineInOut', 0.04);
+            });
+
+            modManager.queueFuncOnce(154 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "...this show will play!", 'disneyFreeplayFont.ttf', 30, 2.2, 'quartInOut', .07);
+            });
+
+            modManager.queueFuncOnce(162 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "And remind yourself...", 'disneyFreeplayFont.ttf', 30, 1.3, 'sineInOut', .05);
+            });
+
+            modManager.queueFuncOnce(167 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "...no matter what's in...", 'disneyFreeplayFont.ttf', 30, 2, 'sineInOut', .06);
+            });
+
+            modManager.queueFuncOnce(174 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "...THE WAY!", 'disneyFreeplayFont.ttf', 30, 1, 'circOut', .035);
+            });
+
+            modManager.queueFuncOnce(178 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "All your dreams...", 'disneyFreeplayFont.ttf', 30, 1, 'sineInOut', .04);
+            });
+
+            modManager.queueFuncOnce(182 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "...ARE SO FAR OUT OF REACH!", 'disneyFreeplayFont.ttf', 30, 4, 'quartInOut', .055);
+            });
+
+            modManager.queueFuncOnce(190 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "But if YOUR delusions...", 'disneyFreeplayFont.ttf', 30, 2.2, 'sineInOut', .045);
+            });
+
+            modManager.queueFuncOnce(196 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "...loops around then...", 'disneyFreeplayFont.ttf', 30, 1.3, "quartOut", .045);
+            });
+
+            modManager.queueFuncOnce(200 * 4, (s,s2)->{ 
+                manageLyrics('evildelu', "Let's LOOP 'ROUND ONCE MORE.", 'disneyFreeplayFont.ttf', 30, 3, "sineInOut", .065);
+            });
+
+            modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
+                cinematicBarControls("create", 1);
+
+                boundValue = 1;
+                drainValue = 0.02;
+                camGame.fade(FlxColor.BLACK, 2, true);
+            });
+
+            modManager.queueFuncOnce(470 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 0.65, 'backIn', 380);
+            });
+
+            modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 10, 'linear', 70);
+            });
+
+            modManager.queueFuncOnce(672 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1, "circOut", 0);
+            });
+
+            modManager.queueFuncOnce(132 * 4, (s,s2)->{ 
+                defaultCamZoom = 1.3;
+                modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear");
+            });
+
+            modManager.queueFuncOnce(136 * 4, (s,s2)->{ 
+                camGame.fade(FlxColor.BLACK, 0.6);
+                camHUD.fade(FlxColor.BLACK, 1.75);
+            });
+
+            modManager.queueFuncOnce(143 * 4, (s,s2)->{ 
+                playHUD.alpha = 0;
+                camHUD.fade(FlxColor.BLACK, 5, true);
+                deluSing.play();
+                deluSing.visible = true;
+                if (vocals.volume != 1) vocals.volume = 1; // it should be fixed then
+            });
+
+            modManager.queueFuncOnce(144 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.8;
+                camGame.fade(0x000000, 5, true);
+                camFlashSystem(FlashType.BG_DARK, {alpha: 1, timer: 0.3, ease: FlxEase.quartInOut});
+                defaultCamZoom = 1.2;
+                camFollow.x -= 100;
+                FlxTween.tween(camFollow, {x: camFollow.x + 100}, 12, {ease: FlxEase.sineInOut});
+            });
+
+            modManager.queueFuncOnce(176 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 0.3, ease: FlxEase.quartInOut});
+                defaultCamZoom = 0.75;
+                camGame.flash(FlxColor.WHITE, 1);
+
+                // today in super r slur shit we have this cus i hate my life
+                FlxTween.tween(camFollow, {y: camFollow.y - 300}, .00000001, {onComplete: bensonFromRegularShow -> {
+                    FlxTween.tween(camFollow, {y: camFollow.y + 300}, 7, {ease: FlxEase.sineInOut});
+                }});
+            });
+
+            for (i in [180, 188, 196])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camGame.zoom += 0.3;
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.5, timer: 0.35});
+                });
+            }
+
+            for (i in [184, 192, 200])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camGame.zoom += 0.15;
+                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.25, timer: 0.35});
+                });
+            }
+
+            modManager.queueFuncOnce(204 * 4, (s,s2)->{ 
+                defaultCamZoom = 1;
+            });
+
+            modManager.queueFuncOnce(208 * 4, (s,s2)->{ 
+                camGame.fade(FlxColor.BLACK, .000001);
+                defaultCamZoom = 1.3;
+                modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear");
+            });
+
+            // Mickey Screams Like A Bitch
+            modManager.queueFuncOnce(212 * 4, (s,s2)->{ 
+                boundValue = 0.6;
+                drainValue = 0.025;
+                chromEffect = 0.3;
+                chromTween = FlxTween.num(chromEffect, 1, 1.2, {
+                    ease: FlxEase.sineOut
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+
+                camGame.fade(FlxColor.BLACK, .000001, true);
+                defaultCamZoom = 0.75;
+                camGame.shake(0.01, 1.2);
+            });
+            // The Drop Starts
+            modManager.queueFuncOnce(216 * 4, (s,s2)->{ 
+                FlxTween.tween(playHUD, {alpha: 1}, 1, {ease: FlxEase.quadOut});
+                if (chromTween != null) 
+                    chromTween.cancel();
+                
+                chromTween = FlxTween.num(chromEffect, 0.18, 0.6, {
+                    ease: FlxEase.sineOut
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 0.5);
+                if (ClientPrefs.shaders)
+                {
+                    if (!ClientPrefs.lowQuality)
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(dramaticCamMovement),
+                            new ShaderFilter(monitorFilter),
+                            new ShaderFilter(chromZoomShader),
+                            new ShaderFilter(chromNormalShader),
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                        camHUD.filters = ([
+                            new ShaderFilter(chromNormalShader),
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                    }
+                    else
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(monitorFilter),
+                            new ShaderFilter(chromZoomShader),
+                            new ShaderFilter(chromNormalShader),
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                        camHUD.filters = ([
+                            new ShaderFilter(chromNormalShader), 
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                    }
+                }
+            });
+
+            modManager.queueFuncOnce(228 * 4, (s,s2)->{ 
+                chromTween = null;
+                defaultCamZoom = 0.85;
+            });
+
+            modManager.queueFuncOnce(230 * 4, (s,s2)->{ 
+                defaultCamZoom = 1;
+            });
+
+            modManager.queueFuncOnce(232 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.75;
+            });
+
+            modManager.queueFuncOnce(278 * 4, (s,s2)->{ 
+                defaultCamZoom = 1;
+            });
+
+            for (i in [280, 312, 344])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 0.7;
+                });
+            }
+
+            for (i in [288, 296, 304, 320, 328, 336])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom += 0.1;
+                });
+            }
+
+            modManager.queueFuncOnce(308 * 4, (s,s2)->{ 
+                defaultCamZoom += 0.2;
+            });
+
+            modManager.queueFuncOnce(340 * 4, (s,s2)->{ 
+                defaultCamZoom += 0.3;
+            });
+
+            for (i in [356, 388])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 1.2;
+                });
+            }
+
+            for (i in [358, 390])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    defaultCamZoom = 1.3;
+                });
+            }
+
+            modManager.queueFuncOnce(360 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.75;
+            });
+
+            modManager.queueFuncOnce(375 * 4, (s,s2)->{ 
+                chromTween = FlxTween.num(chromEffect, 1, 0.1, {
+                    ease: FlxEase.sineInOut
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+
+                tweenCamera(1.5, 0.1, 'sineInOut');
+            });
+
+            modManager.queueFuncOnce(376 * 4, (s,s2)->{ 
+                if (chromTween != null) chromTween.cancel();
+                    chromTween = null;
+                camGame.visible = false;
+
+                playHUD.alpha = 0;
+            });
+
+            modManager.queueFuncOnce(377 * 4, (s,s2)->{ 
+                camGame.visible = true;
+                playHUD.alpha = 1;
+                modManager.setValue("alpha", 0);
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 1);
+                defaultCamZoom = 0.8;
+                
+                chromTween = FlxTween.num(chromEffect, 0.1, 0.6, {
+                    ease: FlxEase.quadOut
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+            });
+
+            modManager.queueFuncOnce(472 * 4, (s,s2)->{ 
+                boundValue = 2;
+                drainValue = 0;
+                camGame.visible = false;
+                playHUD.alpha = 0;
+                modManager.setValue("alpha", 1);
+            });
+
+            modManager.queueFuncOnce(473 * 4, (s,s2)->{ 
+                if (ClientPrefs.shaders)
+                {
+                    if (!ClientPrefs.lowQuality)
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(dramaticCamMovement),
+                            new ShaderFilter(monitorFilter),
+                            new ShaderFilter(chromZoomShader),
+                            new ShaderFilter(chromNormalShader)
+                        ]);
+                        camHUD.filters = ([new ShaderFilter(chromNormalShader)]);
+                    }
+                    else
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(monitorFilter),
+                            new ShaderFilter(chromZoomShader),
+                            new ShaderFilter(chromNormalShader)
+                        ]);
+                        camHUD.filters = ([new ShaderFilter(chromNormalShader)]);
+                    }
+                }
+                chromEffect = 0.00001;
+                defaultCamZoom = 0.85;
+            });
+
+            modManager.queueFuncOnce(1912, (s,s2)->{ 
+                camFollow.x = 630;
+                camFollow.y = 750;
+                isCameraOnForcedPos = true;
+                defaultCamZoom = 0.5;
+                boyfriend.cameras = [camHUD];
+                boyfriend.zIndex = 3;
+
+                playHUD.alpha = 0;
+                modManager.setValue("alpha", 1, 0);
+                modManager.setValue("alpha", 1, 1);
+
+                boyfriend.alpha = 0.0001;
+            });
+
+            modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
+                // no healthbar to add more onto the atmosphere of this section
+                camGame.visible = true;
+                modManager.setValue("alpha", 0, 0);
+            });
+
+            modManager.queueFuncOnce(508 * 4, (s,s2)->{ 
+                FlxTween.tween(boyfriend, {alpha: 0.45}, 2.5, {ease: FlxEase.expoOut});
+            });
+
+            modManager.queueFuncOnce(672 * 4, (s,s2)->{ 
+                blendFlash.cameras = [camGame];
+                boyfriend.alpha = 0.0001;
+                camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.38, timer: 0.85, colors: [255, 255, 255]});
+                minnieJumpscare.play();
+                minnieJumpscare.visible = true;
+            });
+
+            modManager.queueFuncOnce(720 * 4, (s,s2)->{ 
+                FlxTween.tween(camGame, {alpha: 0.0001}, 5, {ease: FlxEase.quartInOut});
+            });
+
+            modManager.queueFuncOnce(736 * 4, (s,s2)->{ 
+                blendFlash.cameras = [camGame];
+            });
+
+            modManager.queueFuncOnce(740 * 4, (s,s2)->{ 
+                isCameraOnForcedPos = false;
+                boundValue = 0.45;
+                drainValue = 0.032;
+                boyfriend.alpha = 1;
+                camFollow.x = 0;
+                camFollow.y = 0;
+            });
+
+            modManager.queueFuncOnce(744 * 4, (s,s2)->{ 
+                camGame.alpha = 1;
+                playHUD.alpha = 1;
+                modManager.setValue("alpha", 0);
+                defaultCamZoom = 0.9;
+                chromEffect = 0.1;
+                if (ClientPrefs.flashing)
+                    camGame.flash(FlxColor.WHITE, 0.5);
+                if (ClientPrefs.shaders)
+                {
+                    if (!ClientPrefs.lowQuality)
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(dramaticCamMovement),
+                            new ShaderFilter(heatWaveEffect),
+                            new ShaderFilter(monitorFilter),
+                            new ShaderFilter(chromZoomShader),
+                            new ShaderFilter(chromNormalShader),
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                        
+                        camHUD.filters = ([ 
+                            new ShaderFilter(chromNormalShader), 
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                    }
+                    else
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(monitorFilter),
+                            new ShaderFilter(chromZoomShader),
+                            new ShaderFilter(chromNormalShader),
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                        camHUD.filters = ([ 
+                            new ShaderFilter(chromNormalShader), 
+                            new ShaderFilter(delusionalShift)
+                        ]);
+                    }
+                }
+            });
+
+            for (i in [880, 884, 888, 892, 896, 900, 904, 908, 913, 916, 920, 924, 929, 933, 936, 940, 944, 948, 952, 956, 960, 964, 968, 972, 976, 980, 984, 988, 993, 997, 1000, 1004])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.135, timer: 0.85, colors: [255, 0, 0]});
+                });
+            }
+
+            // The part where shit gets serious, Evilrette/Satan starts the solo
+            modManager.queueFuncOnce(1008 * 4, (s,s2)->{ 
+                boundValue = 1.5;
+                drainValue = 0.01;
+                tweenCamera(1.35, 7, "quartInOut");
+                camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, timer: 2, colors: [255, 0, 0]});
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0.8, timer: 6, ease: FlxEase.quartInOut});
+                isCameraOnForcedPos = true;
+                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150, y: camFollow.y + 50}, 4.3, {ease: FlxEase.quartInOut});
+            });
+            // camera moves over to Mickey realizing he was never gonna win
+            modManager.queueFuncOnce(1024 * 4, (s,s2)->{ 
+                if (camPosTween != null)
+                    camPosTween.cancel();
+                    
+                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 750, y: camFollow.y - 70}, 1.5, {ease: FlxEase.circInOut});
+            });
+
+            modManager.queueFuncOnce(1040 * 4, (s,s2)->{ 
+                camFollow.x = 440;
+                camFollow.y = 360;
+                defaultCamZoom = 0.5;
+                camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 1, ease: FlxEase.circOut});
+            });
+
+            modManager.queueFuncOnce(1072 * 4, (s,s2)->{ 
+                isCameraOnForcedPos = false;
+                defaultCamZoom = 0.9;
+                death.play();
+                death.pause();
+                modManager.queueEase(1082 * 4, 1086 * 4, "alpha", 1, "sineInOut");
+            });
+
+            modManager.queueFuncOnce(1082 * 4, (s,s2)->{ 
+                FlxTween.tween(camGame, {zoom: 1.6}, 1, {ease: FlxEase.sineInOut});
+                camGame.fade(FlxColor.BLACK, 0.7);
+                FlxTween.tween(playHUD, {alpha: 0}, 1, {ease: FlxEase.sineInOut});
+            });
+
+            modManager.queueFuncOnce(1086 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_DARK, {timer: 5});
+
+                death.seekTo(0);
+                death.resume();
+
+                if (ClientPrefs.shaders)
+                {
+                    camHUD.filters = ([
+                        new ShaderFilter(chromNormalShader), 
+                        new ShaderFilter(delusionalShift)
+                    ]);
+                }
+
+                FlxTween.tween(death, {alpha: 1}, 0.2, {ease: FlxEase.sineInOut});
+            });
+
+            modManager.queueFuncOnce(1136 * 4, (s,s2)->{ 
+                camFlashSystem(FlashType.BG_FLASH, {alpha: 1, timer: 0.3, ease: FlxEase.sineOut});
+                if (ClientPrefs.shaders)
+                {
+                    if (!ClientPrefs.lowQuality)
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(dramaticCamMovement),
+                            new ShaderFilter(monitorFilter)
+                        ]);
+                    }
+                    else
+                    {
+                        camGame.filters = ([
+                            new ShaderFilter(monitorFilter)
+                        ]);
+                    }
+                }
+            });
+
+            modManager.queueFuncOnce(1144 * 4, (s,s2)->{ 
+                 FlxTween.tween(camHUD, {alpha: 0}, 4);
+            });
+    }
+}
+
+function onBeatHit()
+{
+    if (!ClientPrefs.lowQuality)
+    {
+        if (PlayState.SONG.song == "Delusional" && FlxG.random.bool(3) && tumbleWeed == null && curBeat < 474)
+            summonWeedMakerLmfao();
+        else if (PlayState.SONG.song != "Delusional" && FlxG.random.bool(3) && tumbleWeed == null)
+            summonWeedMakerLmfao();
+    }
+    
     switch (PlayState.SONG.song)
     {
         case 'Isolated':
-            switch (curBeat)
-            {
-                case 12: camGame.fade(FlxColor.BLACK, 3, true);
-
-                case 30:
-                    FlxTween.tween(camHUD, {alpha: 1}, 3, {ease: FlxEase.quadOut});
-
-                case 88: 
-                    tweenCamera(1.4, 3, 'sineInOut');
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
-
-                case 96:
-                    defaultCamZoom = 0.85;
-                    tweenCamera(0.85, 0.4, 'expoOut');
-
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35});
-
-                case 160: 
-                    tweenCamera(1.3, 2, 'sineInOut');
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
-
-                case 184:
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0.77, timer: 0.5, ease: FlxEase.quartOut});
-
-                case 188:
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0.6, timer: 0.5, ease: FlxEase.quartOut});
-
-                case 192: 
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
-                    
-                    defaultCamZoom = 1.25;
-
-                // same as dad
-                // case 199: updateSectionCamera('bf', true);
-
-                // update after testing without the cam thing they rarely still stunned so idk what to do lmao
-
-                case 220: 
-                    tweenCamera(0.85, 2, 'sineInOut');
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
-
-                case 288:
-                    defaultCamZoom = 0.85;
-
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
-
-                case 352:
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
-                    tweenCamera(1.07, 5, 'quadInOut');
-                    cameraSpeed -= 0.25;
-
-                case 376:
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 4, ease: FlxEase.quartInOut});
-
-                case 36, 40, 44, 52, 56, 60, 64, 68, 72, 76, 80, 84, 92:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
-
-                case 100, 104, 108, 116, 120, 124, 132, 136, 140, 148, 152, 156, 228, 232, 236, 240, 244, 252, 260, 264, 268, 276 |
-                    280, 284, 292, 296, 300, 308, 312, 316, 324, 328, 332, 340, 344, 348:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.2, timer: 0.35, colors: [194, 194, 194]});
-
-                case 98, 102, 106, 110, 114, 118, 122, 126, 130, 134, 138, 142, 146, 150, 154, 158, 226, 230, 234, 238, 242, 246 |
-                    250, 254, 258, 262, 266, 270, 274, 278, 282, 286, 290, 294, 298, 302, 306, 310, 314, 318, 322, 326, 330, 334 |
-                    338, 342, 346, 350:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.55, timer: 0.35, colors: [194, 194, 194]});
-
-                case 194, 196, 198, 200, 202, 204, 206, 210, 212, 214, 222:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
-
-                case 216, 217, 218, 219:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
-                    camHUD.zoom += 0.04;
-
-                case 128, 256:
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
-
-                case 48, 336, 304, 272, 112, 144:
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.BLACK, 1.5);
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
-
-                case 32:
-                    if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
-
-                case 416:
-                    camGame.visible = false;
-                    camHUD.visible = false;
-
-                case 224:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
-                    if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
-
-                case 320:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
-                    if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
-            }
-
             if ((curBeat > 96 && curBeat < 160) || (curBeat > 224 && curBeat < 352))
             {
                 if (curBeat % 2 == 0)
@@ -576,236 +1600,8 @@ function onBeatHit()
                     camHUD.zoom += 0.06;
                 }
             }
-
+        
         case 'Lunacy':
-            
-            if (curBeat == 100 || curBeat == 108 || curBeat == 116 || curBeat == 124 || curBeat == 132 || curBeat == 140 || curBeat == 148)
-            {
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.5, timer: 0.5, ease: FlxEase.sineOut});
-            }
-
-            if (curBeat == 160 || curBeat == 230 || curBeat == 240 || curBeat == 248 || curBeat == 256 || curBeat == 262 || curBeat == 272
-                || curBeat == 280 || curBeat == 280 || curBeat == 288 || curBeat == 296 || curBeat == 304 || curBeat == 312 || curBeat == 320
-                || curBeat == 328 || curBeat == 336 || curBeat == 344 || curBeat == 352)
-            {
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 0.5, ease: FlxEase.quadOut});
-            }
-
-            // Darkens BG
-            if (curBeat == 156 || curBeat == 228 || curBeat == 238 || curBeat == 244 || curBeat == 252 || curBeat == 260 || curBeat == 270
-                || curBeat == 276 || curBeat == 284 || curBeat == 292 || curBeat == 300 || curBeat == 308 || curBeat == 316 || curBeat == 324
-                || curBeat == 332 || curBeat == 340 || curBeat == 348)
-            {
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0.77, timer: 0.5, ease: FlxEase.quadOut});
-            }
-
-            if (curBeat == 424 || curBeat == 432 || curBeat == 440 || curBeat == 448 || curBeat == 456 || curBeat == 464 || curBeat == 472)
-            {
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.65, timer: 0.6, ease: FlxEase.sineOut});
-            }
-
-            if (curBeat == 32 || curBeat == 64)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.27;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.5, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 38 || curBeat == 40 || curBeat == 46 || curBeat == 48 || curBeat == 54 || curBeat == 56 || curBeat == 62 || curBeat == 70
-                || curBeat == 72 || curBeat == 78 || curBeat == 80 || curBeat == 86 || curBeat == 88 || curBeat == 102 || curBeat == 110
-                || curBeat == 118 || curBeat == 126 || curBeat == 134 || curBeat == 142 || curBeat == 150)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.12;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 0.3, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 96 || curBeat == 104 || curBeat == 112 || curBeat == 120 || curBeat == 128 || curBeat == 136 || curBeat == 144 || curBeat == 152)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 2.1, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 100 || curBeat == 108 || curBeat == 116 || curBeat == 124 || curBeat == 132 || curBeat == 140 || curBeat == 148)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.4;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 156)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromTween = FlxTween.num(chromEffect, 0.33, 0.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 158)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.4;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 0.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 160 || curBeat == 168 || curBeat == 176 || curBeat == 184 || curBeat == 192 || curBeat == 200 || curBeat == 208
-                || curBeat == 216 || curBeat == 224 || curBeat == 232 || curBeat == 240 || curBeat == 248 || curBeat == 256 || curBeat == 264
-                || curBeat == 272 || curBeat == 280 || curBeat == 288 || curBeat == 296 || curBeat == 304 || curBeat == 312 || curBeat == 320
-                || curBeat == 328 || curBeat == 336 || curBeat == 344)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.55;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 0.6, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 162 || curBeat == 170 || curBeat == 178 || curBeat == 186 || curBeat == 194 || curBeat == 202 || curBeat == 210
-                || curBeat == 218 || curBeat == 226 || curBeat == 234 || curBeat == 242 || curBeat == 250 || curBeat == 258 || curBeat == 266
-                || curBeat == 274 || curBeat == 282 || curBeat == 290 || curBeat == 298 || curBeat == 306 || curBeat == 314 || curBeat == 322
-                || curBeat == 330 || curBeat == 338 || curBeat == 346)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.6;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 0.25, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 163 || curBeat == 171 || curBeat == 179 || curBeat == 187 || curBeat == 195 || curBeat == 203 || curBeat == 211
-                || curBeat == 219 || curBeat == 227 || curBeat == 235 || curBeat == 243 || curBeat == 251 || curBeat == 259 || curBeat == 267
-                || curBeat == 275 || curBeat == 283 || curBeat == 291 || curBeat == 299 || curBeat == 307 || curBeat == 315 || curBeat == 323
-                || curBeat == 331 || curBeat == 339 || curBeat == 347)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromTween = FlxTween.num(chromEffect, 0.5, 0.22, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                        chromEffect = 0.00001;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 165 || curBeat == 173 || curBeat == 181 || curBeat == 189 || curBeat == 197 || curBeat == 205 || curBeat == 213
-                || curBeat == 221)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromTween = FlxTween.num(chromEffect, 0.35, 0.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                        chromEffect = 0.00001;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 166 || curBeat == 174 || curBeat == 182 || curBeat == 190 || curBeat == 198 || curBeat == 206 || curBeat == 214
-                || curBeat == 222)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.45;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 0.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 167 || curBeat == 175 || curBeat == 183 || curBeat == 191 || curBeat == 199 || curBeat == 207 || curBeat == 215
-                || curBeat == 223)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.56;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 0.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
             if (curBeat >= 228 && curBeat <= 231 || curBeat >= 236 && curBeat <= 239 || curBeat >= 244 && curBeat <= 247 || curBeat >= 252
                 && curBeat <= 255 || curBeat >= 260 && curBeat <= 263 || curBeat >= 168 && curBeat <= 171 || curBeat >= 276 && curBeat <= 279
                 || curBeat >= 284 && curBeat <= 287 || curBeat >= 292 && curBeat <= 295 || curBeat >= 300 && curBeat <= 303 || curBeat >= 308
@@ -826,543 +1622,50 @@ function onBeatHit()
                 }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
             }
 
-            if (curBeat == 352 || curBeat == 354 || curBeat == 356 || curBeat == 358 || curBeat == 360 || curBeat == 362 || curBeat == 364
-                || curBeat == 366 || curBeat == 368 || curBeat == 370 || curBeat == 372 || curBeat == 374 || curBeat == 376 || curBeat == 378
-                || curBeat == 380 || curBeat == 382 || curBeat == 384 || curBeat == 386 || curBeat == 388 || curBeat == 390 || curBeat == 392
-                || curBeat == 394 || curBeat == 396 || curBeat == 398 || curBeat == 400 || curBeat == 402 || curBeat == 404 || curBeat == 406
-                || curBeat == 408 || curBeat == 410 || curBeat == 416 || curBeat == 418 || curBeat == 420 || curBeat == 422 || curBeat == 424
-                || curBeat == 426 || curBeat == 428 || curBeat == 430 || curBeat == 432 || curBeat == 434 || curBeat == 436 || curBeat == 438
-                || curBeat == 440 || curBeat == 442 || curBeat == 444 || curBeat == 446 || curBeat == 448 || curBeat == 450 || curBeat == 452
-                || curBeat == 454 || curBeat == 456 || curBeat == 458 || curBeat == 460 || curBeat == 462 || curBeat == 464 || curBeat == 466
-                || curBeat == 468 || curBeat == 470 || curBeat == 472 || curBeat == 474)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.3;
-
-                chromTween = FlxTween.num(chromEffect, 0.00001, 0.5, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 412)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.36;
-
-                chromTween = FlxTween.num(chromEffect, 0.00001, 1, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 476)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromTween = FlxTween.num(chromEffect, 0.85, 1.6, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-            if (curBeat == 480)
-            {
-                chromTween.cancel();
-
-                chromEffect = 0.00001;
-            }
-
-            switch (curBeat)
-            {
-                // I'm NOT gonna have a fun time recoding all this for the BG dimming in and out later lmao
-
-                case 16: camGame.fade(FlxColor.BLACK, 3, true);
-
-                case 32:
-                    if (ClientPrefs.flashing) camGame.flash(FlxColor.BLACK, 1.5);
-                    tweenCamera(camGame.zoom + .5, 16.5, 'sineInOut');
-
-                case 64:
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.BLACK, 0.9);
-
-                case 88:
-                    tweenCamera(.75, 2.2, 'sineInOut');
-
-                    FlxTween.tween(camHUD, {alpha: 1}, 5, {ease: FlxEase.sineOut});
-
-                case 96:
-                    defaultCamZoom = 0.75;
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-
-                case 128, 256:
-                    if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
-
-                case 156:
-                    defaultCamZoom = 1.05;
-
-                case 160:
-                    boundValue = 1.25;
-                    drainValue = 0.015;
-                    defaultCamZoom = 0.7;
-                    if (ClientPrefs.flashing) camGame.flash(FlxColor.BLACK, 1.5);
-
-                case 192:
-                    defaultCamZoom = 0.75;
-                case 200, 238, 270, 316, 332, 344:
-                    defaultCamZoom = 0.8;
-                case 208:
-                    defaultCamZoom = 0.85;
-                case 216, 252, 284:
-                    defaultCamZoom = 0.9;
-                case 220:
-                    defaultCamZoom = 0.95;
-                case 222, 267, 239, 271, 334:
-                    defaultCamZoom = 1;
-
-                case 224, 288:
-                    defaultCamZoom = 0.75;
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-                    FlxTween.tween(camHUD, {alpha: 0}, 3, {ease: FlxEase.sineInOut});
-
-                case 228, 260, 292, 286:
-                    defaultCamZoom = 1.1;
-
-                case 230, 262, 296, 312, 236, 268:
-                    defaultCamZoom = 0.65;
-
-                case 232, 264:
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-                    defaultCamZoom = 0.7;
-
-                case 412, 240, 272, 300, 304, 336, 248, 280, 328:
-                    defaultCamZoom = 0.7;
-
-                case 320:
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1.5);
-                    defaultCamZoom = 0.7;
-
-                case 254:
-                    defaultCamZoom = 1.1;
-                    FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.sineInOut});
-
-                case 318:
-                    defaultCamZoom = 1.25;
-                    FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.sineInOut});
-
-                case 310, 342, 350:
-                    defaultCamZoom = 1.25;
-
-                case 352:
-                    defaultCamZoom = 0.65;
-                    FlxTween.tween(camHUD, {alpha: 0.25}, 8, {ease: FlxEase.sineInOut});
-                    FlxTween.num(health, 0.01, 20, null, shitshitfuckfuck -> health = shitshitfuckfuck);
-
-                    if (globalGradient != null)
-                        FlxTween.tween(globalGradient, {alpha: 0.8}, 10);
-                    FlxTween.tween(FlxG.camera, {zoom: 1.1}, 18, {startDelay: 2});
-
-                case 408:
-                    defaultCamZoom = 0.9;
-                    FlxTween.tween(camHUD, {alpha: 0.36}, 4, {ease: FlxEase.sineInOut});
-
-                case 416: if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
-
-                case 480:
-                    boundValue = 1;
-                    drainValue = 0.02;
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.BLACK, 1.5);
-                    camHUD.alpha = 0;
-
-                case 481:
-                    camFollow.x += 100;
-
-                case 506:
-                    FlxTween.tween(camHUD, {alpha: 0.5}, 4, {ease: FlxEase.sineInOut});
-
-                case 536:
-                    FlxTween.tween(camHUD, {alpha: 0}, 2, {ease: FlxEase.sineInOut});
-
-                case 540:
-                    camGame.fade(FlxColor.BLACK, 5);
-            }
-
         case 'Delusional':
-            if (curBeat == 146)
-                manageLyrics('evildelu', 'Count the minutes...', 'disneyFreeplayFont.ttf', 30, 1.1, 'sineInOut', .05);
-            if (curBeat == 150)
-                manageLyrics('evildelu', "...of how long...", 'disneyFreeplayFont.ttf', 30, 1, 'sineInOut', 0.04);
-            if (curBeat == 154)
-                manageLyrics('evildelu', "...this show will play!", 'disneyFreeplayFont.ttf', 30, 2.2, 'quartInOut', .07);
-            if (curBeat == 162)
-                manageLyrics('evildelu', "And remind yourself...", 'disneyFreeplayFont.ttf', 30, 1.3, 'sineInOut', .05);
-            if (curBeat == 167)
-                manageLyrics('evildelu', "...no matter what's in...", 'disneyFreeplayFont.ttf', 30, 2, 'sineInOut', .06);
-            if (curBeat == 174)
-                manageLyrics('evildelu', "...THE WAY!", 'disneyFreeplayFont.ttf', 30, 1, 'circOut', .035);
-            if (curBeat == 178)
-                manageLyrics('evildelu', "All your dreams...", 'disneyFreeplayFont.ttf', 30, 1, 'sineInOut', .04);
-            if (curBeat == 182)
-                manageLyrics('evildelu', "...ARE SO FAR OUT OF REACH!", 'disneyFreeplayFont.ttf', 30, 4, 'quartInOut', .055);
-            if (curBeat == 190)
-                manageLyrics('evildelu', "But if YOUR delusions...", 'disneyFreeplayFont.ttf', 30, 2.2, 'sineInOut', .045);
-            if (curBeat == 196)
-                manageLyrics('evildelu', "...loop around then...", 'disneyFreeplayFont.ttf', 30, 1.3, "quartOut", .045);
-            if (curBeat == 200)
-                manageLyrics('evildelu', "Let's LOOP 'ROUND ONCE MORE.", 'disneyFreeplayFont.ttf', 30, 3, "sineInOut", .065);
-
-            if (curBeat == 1)
-                cinematicBarControls("create", 1);
-            if (curBeat == 470)
-                cinematicBarControls("moveboth", 0.65, 'backIn', 380);
-            if (curBeat == 480)
-                cinematicBarControls("moveboth", 10, 'linear', 70);
-            if (curBeat == 672)
-                cinematicBarControls("moveboth", 1, "circOut", 0);
-
-            switch (curBeat)
+            if ((curBeat >= 216 && curBeat < 340) || (curBeat >= 344 && curBeat < 356) || (curBeat >= 360 && curBeat < 388) || (curBeat >= 392 && curBeat < 408) || (curBeat >= 880 && curBeat < 1072))
             {
-                case 1: 
-                    boundValue = 1;
-                    drainValue = 0.02;
-                    camGame.fade(FlxColor.BLACK, 2, true);
-                case 132: 
-                    defaultCamZoom = 1.3;
-                    modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear");
-                case 136:
-                    camGame.fade(FlxColor.BLACK, 0.6);
-                    camHUD.fade(FlxColor.BLACK, 1.75);
-                // BF Starts Singing Some Lyrics
-                case 143:
-                    playHUD.alpha = 0;
-                    camHUD.fade(FlxColor.BLACK, 5, true);
-                    deluSing.seekTo(0);
-                    deluSing.resume();
-                    deluSing.visible = true;
-                    if (vocals.volume != 1) vocals.volume = 1; // it should be fixed then
-                case 144:
-                    defaultCamZoom = 0.8;
-                    camGame.fade(0x000000, 5, true);
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 1, timer: 0.3, ease: FlxEase.quartInOut});
-                    defaultCamZoom = 1.2;
-                    camFollow.x -= 100;
-                    FlxTween.tween(camFollow, {x: camFollow.x + 100}, 12, {ease: FlxEase.sineInOut});
-                case 176:
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 0.3, ease: FlxEase.quartInOut});
-                    defaultCamZoom = 0.75;
-                    camGame.flash(FlxColor.WHITE, 1);
-
-                    // today in super r slur shit we have this cus i hate my life
-                    FlxTween.tween(camFollow, {y: camFollow.y - 300}, .00000001, {onComplete: bensonFromRegularShow -> {
-                        FlxTween.tween(camFollow, {y: camFollow.y + 300}, 7, {ease: FlxEase.sineInOut});
-                    }});
-                case 180, 188, 196:
-                    camGame.zoom += 0.3;
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.5, timer: 0.35});
-                case 184, 192, 200:
-                    camGame.zoom += 0.15;
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.25, timer: 0.35});
-                case 204: defaultCamZoom = 1;
-                case 208:
-                    camGame.fade(FlxColor.BLACK, .000001);
-                    defaultCamZoom = 1.3;
-                    modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear");
-
-                // Mickey Screams Like A Bitch
-                case 212:
-                    boundValue = 0.6;
-                    drainValue = 0.025;
-                    chromEffect = 0.3;
-                    chromTween = FlxTween.num(chromEffect, 1, 1.2, {
-                        ease: FlxEase.sineOut
-                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-
-                    camGame.fade(FlxColor.BLACK, .000001, true);
-                    defaultCamZoom = 0.75;
-                    camGame.shake(0.01, 1.2);
-                // The Drop Starts
-                case 216:
-                    FlxTween.tween(playHUD, {alpha: 1}, 1, {ease: FlxEase.quadOut});
-                    if (chromTween != null) 
-                        chromTween.cancel();
-                    
-                    chromTween = FlxTween.num(chromEffect, 0.18, 0.6, {
-                        ease: FlxEase.sineOut
-                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 0.5);
-                    if (ClientPrefs.shaders)
-                    {
-                        if (!ClientPrefs.lowQuality)
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(dramaticCamMovement),
-                                new ShaderFilter(monitorFilter),
-                                new ShaderFilter(chromZoomShader),
-                                new ShaderFilter(chromNormalShader),
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                            camHUD.filters = ([
-                                new ShaderFilter(grayScale), 
-                                new ShaderFilter(chromNormalShader),
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                        }
-                        else
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(monitorFilter),
-                                new ShaderFilter(chromZoomShader),
-                                new ShaderFilter(chromNormalShader),
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                            camHUD.filters = ([
-                                new ShaderFilter(grayScale), 
-                                new ShaderFilter(chromNormalShader), 
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                        }
-                    }
-                case 228:
-                    chromTween = null;
-                    defaultCamZoom = 0.85;
-                case 230: defaultCamZoom = 1;
-                case 232: defaultCamZoom = 0.75;
-                case 278: defaultCamZoom = 1;
-                case 280, 312, 344: defaultCamZoom = 0.7;
-                case 288, 296, 304, 320, 328, 336: defaultCamZoom += 0.1;
-                case 308: defaultCamZoom += 0.2;
-                case 340: defaultCamZoom += 0.3;
-                case 356, 388: defaultCamZoom = 1.2;
-                case 358, 390: defaultCamZoom = 1.3;
-                case 360: defaultCamZoom = 0.75;
-                case 375:
-                    chromTween = FlxTween.num(chromEffect, 1, 0.1, {
-                        ease: FlxEase.sineInOut
-                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-
-                    tweenCamera(1.5, 0.1, 'sineInOut');
-                case 376:
-                    if (chromTween != null) chromTween.cancel();
-                        chromTween = null;
-                    camGame.visible = false;
-
-                    playHUD.alpha = 0;
-                case 377:
-                    camGame.visible = true;
-                    playHUD.alpha = 1;
-                    modManager.setValue("alpha", 0);
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 1);
-                    defaultCamZoom = 0.8;
-                    
-                    chromTween = FlxTween.num(chromEffect, 0.1, 0.6, {
-                        ease: FlxEase.quadOut
-                    }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-                case 472:
-                    boundValue = 2;
-                    drainValue = 0;
-                    camGame.visible = false;
-                    playHUD.alpha = 0;
-                    modManager.setValue("alpha", 1);
-                case 473:
-                    if (ClientPrefs.shaders)
-                    {
-                        if (!ClientPrefs.lowQuality)
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(dramaticCamMovement),
-                                new ShaderFilter(monitorFilter),
-                                new ShaderFilter(chromZoomShader),
-                                new ShaderFilter(chromNormalShader)
-                            ]);
-                            camHUD.filters = ([new ShaderFilter(grayScale), new ShaderFilter(chromNormalShader)]);
-                        }
-                        else
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(monitorFilter),
-                                new ShaderFilter(chromZoomShader),
-                                new ShaderFilter(chromNormalShader)
-                            ]);
-                            camHUD.filters = ([new ShaderFilter(grayScale), new ShaderFilter(chromNormalShader)]);
-                        }
-                    }
-                    chromEffect = 0.00001;
-                    defaultCamZoom = 0.85;
-                case 478:
-                    camFollow.x = 630;
-                    camFollow.y = 750;
-                    isCameraOnForcedPos = true;
-                    defaultCamZoom = 0.5;
-                    boyfriend.cameras = [camHUD];
-                    boyfriend.zIndex = 3;
-
-                    playHUD.alpha = 0;
-                    modManager.setValue("alpha", 1);
-
-                    boyfriend.alpha = 0.0001;
-                case 480:
-                    // no healthbar to add more onto the atmosphere of this section
-                    camGame.visible = true;
-                    modManager.setValue("alpha", 0);
-                case 508:
-					FlxTween.tween(boyfriend, {alpha: 0.45}, 2.5, {ease: FlxEase.expoOut});
-                case 672:
-                    blendFlash.cameras = [camGame];
-                    boyfriend.alpha = 0.0001;
-                    camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.38, timer: 0.85, colors: [255, 255, 255]});
-                    minnieJumpscare.seetTo(0);
-                    minnieJumpscare.resume();
-                    minnieJumpscare.visible = true;
-                case 720:
-                    FlxTween.tween(camGame, {alpha: 0.0001}, 5, {ease: FlxEase.quartInOut});
-                case 736:
-                    blendFlash.cameras = [camGame];
-                case 740:
-                    isCameraOnForcedPos = false;
-                    boundValue = 0.45;
-                    drainValue = 0.032;
-                    boyfriend.alpha = 1;
-                    camFollow.x = 0;
-                    camFollow.y = 0;
-                case 744:
-                    camGame.alpha = 1;
-                    playHUD.alpha = 1;
-                    modManager.setValue("alpha", 0);
-                    defaultCamZoom = 0.9;
-                    chromEffect = 0.1;
-                    if (ClientPrefs.flashing)
-                        camGame.flash(FlxColor.WHITE, 0.5);
-                    if (ClientPrefs.shaders)
-                    {
-                        if (!ClientPrefs.lowQuality)
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(dramaticCamMovement),
-                                new ShaderFilter(heatWaveEffect),
-                                new ShaderFilter(monitorFilter),
-                                new ShaderFilter(chromZoomShader),
-                                new ShaderFilter(chromNormalShader),
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                            
-                            camHUD.filters = ([
-                                new ShaderFilter(grayScale), 
-                                new ShaderFilter(chromNormalShader), 
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                        }
-                        else
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(monitorFilter),
-                                new ShaderFilter(chromZoomShader),
-                                new ShaderFilter(chromNormalShader),
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                            camHUD.filters = ([
-                                new ShaderFilter(grayScale), 
-                                new ShaderFilter(chromNormalShader), 
-                                new ShaderFilter(delusionalShift)
-                            ]);
-                        }
-                    }
-                case 880, 884, 888, 892, 896, 900, 904, 908, 913, 916, 920, 924, 929, 933, 936, 940, 944, 948, 952, 956, 960, 964, 968, 972, 976, 980, 984, 988, 993, 997, 1000, 1004:
-                    camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.135, timer: 0.85, colors: [255, 0, 0]});
-                // The part where shit gets serious, Evilrette/Satan starts the solo
-                case 1008:
-                    boundValue = 1.5;
-                    drainValue = 0.01;
-                    tweenCamera(1.35, 7, "quartInOut");
-                    camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, timer: 2, colors: [255, 0, 0]});
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0.8, timer: 6, ease: FlxEase.quartInOut});
-                    isCameraOnForcedPos = true;
-                    camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150, y: camFollow.y + 50}, 4.3, {ease: FlxEase.quartInOut});
-                // camera moves over to Mickey realizing he was never gonna win
-                case 1024:
-                    if (camPosTween != null)
-                        camPosTween.cancel();
-                    
-                    camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 750, y: camFollow.y - 70}, 1.5, {ease: FlxEase.circInOut});
-                case 1040:
-                    camFollow.x = 440;
-                    camFollow.y = 360;
-                    defaultCamZoom = 0.5;
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 1, ease: FlxEase.circOut});
-                case 1072:
-                    isCameraOnForcedPos = false;
-                    defaultCamZoom = 0.9;
-                    modManager.queueEase(1082 * 4, 1086 * 4, "alpha", 1, "sineInOut");
-                case 1082:
-                    FlxTween.tween(camGame, {zoom: 1.6}, 1, {ease: FlxEase.sineInOut});
-                    camGame.fade(FlxColor.BLACK, 0.7);
-                    FlxTween.tween(playHUD, {alpha: 0}, 1, {ease: FlxEase.sineInOut});
-                case 1086:
-                    camFlashSystem(FlashType.BG_DARK, {timer: 5});
-
-					death.play();
-                    death.seekTo(0);
-
-                    if (ClientPrefs.shaders)
-                    {
-                        camHUD.filters = ([
-                            new ShaderFilter(chromNormalShader), 
-                            new ShaderFilter(delusionalShift)
-                        ]);
-                    }
-
-                    FlxTween.tween(death, {alpha: 1}, 0.2, {ease: FlxEase.sineInOut});
-                case 1136:
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 1, timer: 0.3, ease: FlxEase.sineOut});
-                    if (ClientPrefs.shaders)
-                    {
-                        if (!ClientPrefs.lowQuality)
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(dramaticCamMovement),
-                                new ShaderFilter(monitorFilter)
-                            ]);
-                        }
-                        else
-                        {
-                            camGame.filters = ([
-                                new ShaderFilter(monitorFilter)
-                            ]);
-                        }
-                    }
-                case 1144:
-                    FlxTween.tween(camHUD, {alpha: 0}, 4);
+                FlxG.camera.zoom += 0.015;
+                camHUD.zoom += 0.03;
             }
 
-        if ((curBeat >= 216 && curBeat < 340) || (curBeat >= 344 && curBeat < 356) || (curBeat >= 360 && curBeat < 388) || 
-            (curBeat >= 392 && curBeat < 408) || (curBeat >= 880 && curBeat < 1072))
-        {
-            FlxG.camera.zoom += .015;
-            for (mridk in [camHUD]) mridk.zoom += .03;
-        }
     }
+}
+
+function summonWeedMakerLmfao()
+{
+    tumbleWeed = new FlxSprite(1800, 600);
+    tumbleWeed.antialiasing = ClientPrefs.globalAntialiasing;
+    var velocityX:Float = 0;
+    var bounceVal:Int = 735;
+    var loopTime:Array<Float> = [];
+    if (FlxG.random.bool(1))
+    {
+        tumbleWeed.loadGraphic(Paths.image(pathway + 'THELEGENDARYTUMBLEWEED'));
+        tumbleWeed.scale.set(0.6, 0.6);
+        velocityX = -1270;
+        bounceVal = 50;
+        loopTime[0] = 0.5;
+        loopTime[1] = 0.1;
+        loopTime[2] = 4;
+    }
+    else
+    {
+        tumbleWeed.loadGraphic(Paths.image(pathway + 'Tumble_' + FlxG.random.int(0,1)));
+        velocityX = -520;
+        loopTime[0] = 1.7;
+        loopTime[1] = 0.75;
+        loopTime[2] = 5.6;
+    }
+    tumbleWeed.velocity.set(velocityX, 0);
+    tumbleGrp.add(tumbleWeed);
+    FlxTween.tween(tumbleWeed, {angle: -360}, loopTime[0], {type: 2});
+    FlxTween.tween(tumbleWeed, {y: bounceVal}, loopTime[1], {ease: FlxEase.sineInOut, type: 4});
+    new FlxTimer().start(loopTime[2], function(tmr:FlxTimer)
+    {
+        tumbleWeed.kill();
+        tumbleWeed = null;
+    });
 }
 
 function camFlashSystem(flashType:FlashType, settings:FlashingSettings)
@@ -1476,20 +1779,7 @@ function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String>):Void
     }});
 }
 
-/**
-	* Manages the `lyrics` of the song in-game
-	* @param icon Lyrics icon as string
-	* @param text The lyrics text
-	* @param font Lyric font
-	* @param size Lyric size
-	* @param duration Delay time to disappear
-	* @param tweenType Tween ease (as string)
-	* @param textDelay Text delay. The amount of seconds to type the next word
-	* 
-	* @author DEMOLITIONDON96 Ft. Jason
-	*/
-function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5,
-		tweenType:String = 'linear', textDelay:Float = 0.03)
+function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5, tweenType:String = 'linear', textDelay:Float = 0.03)
 {
 	if (!lyricsIcon.visible)
 	{

@@ -1,7 +1,6 @@
 import openfl.filters.ShaderFilter;
 import flixel.addons.text.FlxTypeText;
 
-var grayScale:FlxRuntimeShader = newShader('grayScale');
 var chromZoomShader:FlxRuntimeShader = newShader('aberration');
 var chromNormalShader:FlxRuntimeShader = newShader('aberrationDefault');
 var dramaticCamMovement:FlxRuntimeShader = newShader('cameraMovement');
@@ -29,7 +28,7 @@ var devilishGaming:FunkinVideoSprite;
 
 function onLoad()
 {
-    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("favi/stages/ddStage/images/dd-bg"));
+    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/dd-bg"));
     bg.scale.set(0.75, 0.75);
     add(bg);
 }
@@ -38,7 +37,7 @@ function onCreatePost()
 {
     healthBar.leftToRight = true;
     
-    overlay = new FlxSprite(-640, 170).loadGraphic(Paths.image("favi/stages/ddStage/images/dd-overlay"));
+    overlay = new FlxSprite(-640, 170).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/dd-overlay"));
     overlay.scrollFactor.set(1.15, 1.15);
     add(overlay);
 
@@ -54,7 +53,7 @@ function onCreatePost()
         devilishGaming.bitmap.time = 0;
     });
     
-    gradient = new FlxSprite().loadGraphic(Paths.image('favi/filters/gradient'));
+    gradient = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/filters/gradient'));
     gradient.cameras = [camOther];
     gradient.screenCenter();
     gradient.scale.set(0.5, 0.5);
@@ -96,7 +95,7 @@ function onCreatePost()
                 new ShaderFilter(chromZoomShader),
                 new ShaderFilter(chromNormalShader)
             ]);
-            camHUD.filters = ([new ShaderFilter(grayScale), new ShaderFilter(chromNormalShader)]);
+            camHUD.filters = ([new ShaderFilter(chromNormalShader)]);
         }
         else
         {
@@ -105,7 +104,6 @@ function onCreatePost()
                 new ShaderFilter(chromNormalShader)
             ]);
             camHUD.filters = ([
-                new ShaderFilter(grayScale),
                 new ShaderFilter(chromNormalShader)
             ]);
         }
@@ -147,8 +145,135 @@ function onUpdate(elapsed)
     satanIconPulse.x = iconP2.x;
 }
 
-function onBeatHit()
+function onSongStart()
 {
+    modManager.queueEase(120, 128, "alpha", 0, 'quartInOut', -1);
+
+    modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
+        satanIconPulse.visible = true;
+        satanIconPulse.alpha = 0.001;
+    });
+
+    modManager.queueFuncOnce(128 * 4, (s,s2)->{ 
+        camGame.visible = false;
+        camHUD.visible = false;
+        playFields.visible = false;
+    });
+
+    modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
+        devilishGaming.resume();
+        devilishGaming.visible = true;
+    });
+
+    modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
+        FlxTween.tween(devilishGaming, {alpha: 0}, 3, {ease: FlxEase.sineOut});
+        FlxTween.tween(camGame, {alpha: 1}, 3, {ease: FlxEase.sineOut});
+        manageLyrics('satandd', 'In the rain...', 'betterSatanFont.ttf', 30, 2, 'sineInOut', 0.1);
+    });
+
+    modManager.queueFuncOnce(20 * 4, (s,s2)->{ 
+        manageLyrics('satandd', '...Looking so blue...', 'betterSatanFont.ttf', 30, 3.2, 'sineInOut', 0.08);
+    });
+
+    modManager.queueFuncOnce(26 * 4, (s,s2)->{ 
+        manageLyrics('satandd', '...SPEAK...', 'betterSatanFont.ttf', 30, 0.7, 'sineInOut', 0.05);
+    });
+
+    modManager.queueFuncOnce(28 * 4, (s,s2)->{ 
+        manageLyrics('satandd', '...What is on your mind?', 'betterSatanFont.ttf', 30, 2.5, 'sineInOut', 0.06);
+    });
+
+    modManager.queueFuncOnce(30 * 4, (s,s2)->{ 
+        FlxTween.tween(camHUD, {alpha: 1}, 2, {ease: FlxEase.sineOut});
+    });
+
+    for (i in [32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58])
+    {
+        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+            if (ClientPrefs.shaders)
+            {
+                if (chromTween != null)
+                    chromTween.cancel();
+
+                chromEffect = 0.32;
+
+                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
+                    ease: FlxEase.sineOut,
+                    onComplete: function(twn:FlxTween)
+                    {
+                        chromTween = null;
+                    }
+                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+            }
+        });
+    }
+
+    modManager.queueFuncOnce(60 * 4, (s,s2)->{ 
+        FlxTween.tween(camHUD, {alpha: 0.4}, 0.75, {ease: FlxEase.quartInOut});
+        FlxTween.tween(dad.colorTransform, {redMultiplier: 1, blueMultiplier: 1, greenMultiplier: 1}, 2, {ease: FlxEase.circInOut});
+        if (ClientPrefs.shaders)
+        {
+            if (chromTween != null)
+                chromTween.cancel();
+
+            chromEffect = 0.15;
+
+            chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
+                ease: FlxEase.sineOut,
+                onComplete: function(twn:FlxTween)
+                {
+                    chromTween = null;
+                }
+            }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+        }
+    });
+
+    modManager.queueFuncOnce(62 * 4, (s,s2)->{ 
+        if (ClientPrefs.shaders)
+        {
+            if (chromTween != null)
+                chromTween.cancel();
+
+            chromEffect = 0.15;
+
+            chromTween = FlxTween.num(chromEffect, 0.0001, 2, {
+                ease: FlxEase.sineOut,
+                onComplete: function(twn:FlxTween)
+                {
+                    chromTween = null;
+                }
+            }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+        }
+    });
+
+    modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
+        FlxTween.tween(camHUD, {alpha: 1}, 1.2, {ease: FlxEase.quartInOut});
+    });
+
+    modManager.queueFuncOnce(128 * 4, (s,s2)->{ 
+        camGame.visible = false;
+        if (ClientPrefs.flashing)
+            camOther.flash(FlxColor.WHITE, 1);
+        if (ClientPrefs.shaders)
+        {
+            if (chromTween != null)
+                chromTween.cancel();
+
+            chromEffect = 0.4;
+
+            chromTween = FlxTween.num(chromEffect, 0.0001, 2.3, {
+                ease: FlxEase.sineOut,
+                onComplete: function(twn:FlxTween)
+                {
+                    chromTween = null;
+                }
+            }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
+        }
+    });
+}
+
+function onBeatHit()
+{    
     // me when zoom gets higher or whatever -jason
     if(curBeat >= 64 && curBeat < 95)
     {
@@ -171,16 +296,6 @@ function onBeatHit()
         camHUD.zoom += 0.053;
     }
 
-    switch (curBeat)
-    {
-        case 64:
-            satanIconPulse.visible = true;
-            satanIconPulse.alpha = 0.001;
-        case 128:
-            camGame.visible = false;
-            camHUD.visible = false;
-            playFields.visible = false;
-    }
     if (curBeat >= 64 && curBeat <= 79)
     {
         if (iconPulseTween != null)
@@ -273,314 +388,6 @@ function onBeatHit()
     satanIconPulse.scale.set(1.35, 1.35);
 	satanIconPulse.updateHitbox();
 
-    switch (curBeat)
-    {
-        case 1: 
-			devilishGaming.resume();
-			devilishGaming.visible = true;
-        
-        case 16:
-            FlxTween.tween(devilishGaming, {alpha: 0}, 3, {ease: FlxEase.sineOut});
-            FlxTween.tween(camGame, {alpha: 1}, 3, {ease: FlxEase.sineOut});
-            manageLyrics('satandd', 'In the rain...', 'betterSatanFont.ttf', 30, 2, 'sineInOut', 0.1);
-
-        case 20:
-            manageLyrics('satandd', '...Looking so blue...', 'betterSatanFont.ttf', 30, 3.2, 'sineInOut', 0.08);
-
-        case 26:
-            manageLyrics('satandd', '...SPEAK...', 'betterSatanFont.ttf', 30, 0.7, 'sineInOut', 0.05);
-
-        case 28:
-            manageLyrics('satandd', '...What is on your mind?', 'betterSatanFont.ttf', 30, 2.5, 'sineInOut', 0.06);
-
-        case 30:
-            FlxTween.tween(camHUD, {alpha: 1}, 2, {ease: FlxEase.sineOut});
-
-        case 32:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 34:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 36:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 38:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 40:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 42:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 44:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 46:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 48:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 50:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 52:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 54:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 56:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-        case 58:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.32;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-        case 60:
-            FlxTween.tween(camHUD, {alpha: 0.4}, 0.75, {ease: FlxEase.quartInOut});
-            FlxTween.tween(dad.colorTransform, {redMultiplier: 1, blueMultiplier: 1, greenMultiplier: 1}, 2, {ease: FlxEase.circInOut});
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.15;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 1.2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-        case 62:
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.15;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 2, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-
-        case 64:
-            FlxTween.tween(camHUD, {alpha: 1}, 1.2, {ease: FlxEase.quartInOut});
-
-        case 128:
-            camGame.visible = false;
-            if (ClientPrefs.flashing)
-                camOther.flash(FlxColor.WHITE, 1);
-            if (ClientPrefs.shaders)
-            {
-                if (chromTween != null)
-                    chromTween.cancel();
-
-                chromEffect = 0.4;
-
-                chromTween = FlxTween.num(chromEffect, 0.0001, 2.3, {
-                    ease: FlxEase.sineOut,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        chromTween = null;
-                    }
-                }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
-            }
-    }
-
     if (curBeat >= 64 && curBeat <= 95 && ClientPrefs.shaders)
     {
         if (chromTween != null)
@@ -628,11 +435,6 @@ function onBeatHit()
             }
         }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
     }
-}
-
-function onSongStart()
-{
-    modManager.queueEase(120, 128, "alpha", 0, 'quartInOut', -1);
 }
 
 /**

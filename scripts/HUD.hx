@@ -6,11 +6,11 @@ using StringTools;
 var spectraSongTime:FlxText;
 var centerMark:FlxText; // song display name and difficulty at the center
 
-var judgementCounter:FlxText;
-var judgementUnderlay:FlxSprite;
-
 var autoplaySine:Float = 0;
 var autoplayMark:FlxText; // botplay/autoplay indicator at the center
+
+var judgementCounter:FlxText;
+var judgementUnderlay:FlxSprite;
 
 var botTxtArray:Array<Any> = [
     "AUTOPLAY",
@@ -43,8 +43,6 @@ var botTxtArray:Array<Any> = [
 var infoDisplay:String = PlayState.SONG.song.replace('-', ' ');
 var engineDisplay:String = '~ Episode 1 ~';
 
-var fancyBarOverlay:FlxSprite;
-
 var watermarkTxt:FlxText;
 var songTxt:FlxText;
 
@@ -53,21 +51,6 @@ function onCreatePost()
     switch (PlayState.SONG.stage)
     {	
         case 'abandonedStreet', 'ddStage':
-            fancyBarOverlay = new FlxSprite(healthBar.x, healthBar.y).loadGraphic(Paths.image('episode1Overlay'));
-            fancyBarOverlay.scale.set(1.01, 1);
-            fancyBarOverlay.screenCenter(FlxAxes.X);
-            fancyBarOverlay.scrollFactor.set();
-            if (ClientPrefs.downScroll)
-            {
-                fancyBarOverlay.y -= 10;
-            }
-            else
-            {
-                fancyBarOverlay.y -= 117;
-                fancyBarOverlay.flipY = true;
-            }
-            fancyBarOverlay.visible = !ClientPrefs.hideHud;
-            playHUD.insert(members.indexOf(healthBar - 1), fancyBarOverlay);
         default:
             if (ClientPrefs.downScroll) 
                 spectraSongTime = new FlxText(-108, 655, 400, "", 32); 
@@ -84,7 +67,7 @@ function onCreatePost()
     switch (PlayState.SONG.stage)
     {	
         case 'abandonedStreet', 'ddStage':
-            scoreTxt.setFormat(Paths.font("DisneyFont.ttf"), 28, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+            scoreTxt.setFormat(Paths.font("DisneyFont.ttf"), 24, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
             scoreTxt.scrollFactor.set();
             scoreTxt.borderSize = 1.25;
             scoreTxt.visible = (!ClientPrefs.hideHud || !cpuControlled);
@@ -152,22 +135,78 @@ function onCreatePost()
             autoplayMark.setFormat(Paths.font("VanillaExtractRegular.ttf"), 14, FlxColor.WHITE, "center");
             autoplayMark.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2.3);
             autoplayMark.alpha = 0;
-            autoplayMark.visible = true;
+            autoplayMark.visible = false;
             playHUD.add(autoplayMark);
 
+    }
+
+    if (ClientPrefs.showRatings)
+    {
+        if(!PlayState.isPixelStage)
+        {
+            if(ClientPrefs.downScroll) 
+                judgementUnderlay = new FlxSprite(910, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay')); 
+            else 
+                judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay'));
+            judgementUnderlay.scrollFactor.set();
+            judgementUnderlay.scale.set(0.35, 0.32);
+            judgementUnderlay.alpha = 0.45;
+            judgementUnderlay.visible = !ClientPrefs.hideHud;
+            playHUD.add(judgementUnderlay);
+        }
+        else
+        {
+            if(ClientPrefs.downScroll) 
+                judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay')); 
+            else 
+                judgementUnderlay = new FlxSprite(870, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay'));
+            judgementUnderlay.scrollFactor.set();
+            judgementUnderlay.scale.set(0.37, 0.32);
+            judgementUnderlay.alpha = 0.45;
+            judgementUnderlay.visible = !ClientPrefs.hideHud;
+            playHUD.add(judgementUnderlay);
+        }
+
+        if (!PlayState.isPixelStage)
+        {
+            judgementCounter = new FlxText(1155, 0, 0, "", 20);
+            judgementCounter.setFormat(Paths.font("VanillaExtractRegular.ttf"), 17, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        }
+        else 
+        {
+            judgementCounter = new FlxText(1125, 0, 0, "", 20);
+            judgementCounter.setFormat(Paths.font("m40.ttf"), 17, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        }
+        judgementCounter.borderSize = 2;
+        judgementCounter.borderQuality = 2;
+        judgementCounter.scrollFactor.set();
+        judgementCounter.screenCenter(FlxAxes.Y);
+        judgementCounter.visible = !ClientPrefs.hideHud;
+        playHUD.add(judgementCounter);
     }
 }
 
 function onUpdatePost(elapsed)
 {
+    var str:String = '${MathUtil.floorDecimal(ratingPercent * 100, 2)}% [${(totalPlayed != 0 ? ratingFC : 'N/A')}]';
+
+    if (ClientPrefs.showRatings)
+    {
+        if (ClientPrefs.useEpicRankings)
+            judgementCounter.text = 'Epics: ${epics}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
+        else
+            judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
+    }
+    
     switch (PlayState.SONG.stage)
     {	
         case 'abandonedStreet', 'ddStage':
-            scoreTxt.text = 'Score: ' + FlxStringUtil.formatMoney(songScore, false)
-            + ' - Accuracy: ' + MathUtil.floorDecimal(ratingPercent * 100, 2) + '%';
+            scoreTxt.text = 'Score: ' + FlxStringUtil.formatMoney(songScore, false) 
+            + ' - Combo Breaks: ' + songMisses 
+            + ' - Accuracy: ' + str;
         default:
             scoreTxt.text = 'Score: ' + FlxStringUtil.formatMoney(songScore, false)
-            + ' / Accuracy: ' + MathUtil.floorDecimal(ratingPercent * 100, 2) + '%'
+            + ' / Accuracy: ' + str
             + ' / Combo Breaks: ' + songMisses;
     }
 
@@ -180,6 +219,7 @@ function onUpdatePost(elapsed)
                 scoreTxt.visible = false;
             default:
                 scoreTxt.visible = false;
+                autoplayMark.visible = true;
                 if (autoplayMark.visible)
                 {
                     autoplaySine += 180 * (elapsed / 4);
@@ -213,5 +253,22 @@ function onUpdatePost(elapsed)
         }
 
         // Conductor.lastSongPos = FlxG.sound.music.time;
+    }
+}
+
+function onPopUpScore(note, daRating)
+{
+    switch (daRating.name)
+    {
+        case 'epic':
+            epics += 1;
+        case 'sick':
+            sicks += 1;
+        case 'good':
+            goods += 1;
+        case 'bad':
+            bads += 1;
+        case 'shit':
+            shits += 1;
     }
 }

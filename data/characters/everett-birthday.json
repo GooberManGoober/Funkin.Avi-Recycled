@@ -101,17 +101,17 @@
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/everett-birthday/everett-birthday",
+	"image": "characters/everett-birthday",
 	"position": [
 		0,
 		0
 	],
-	"healthicon": "everettb",
+	"healthicon": "everett",
 	"flip_x": false,
 	"healthbar_colors": [
-		221,
-		221,
-		221
+		132,
+		132,
+		132
 	],
 	"camera_position": [
 		60,

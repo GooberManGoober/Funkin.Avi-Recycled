@@ -47,7 +47,7 @@ var flashTween:FlxTween;
 
 var letsFight:FunkinVideoSprite;
 
-var pathway:String = 'favi/stages/' + 'vaultRoom' + '/images/';
+var pathway:String = 'Funkin_avi/stages/' + 'vaultRoom' + '/images/';
 
 function onLoad()
 {
@@ -130,13 +130,13 @@ function onCreatePost()
     letsFight.zIndex = 2;
     playHUD.zIndex = 3;
     playFields.zIndex = 4;
-
-    if (ClientPrefs.shaders)
+	
+	if (ClientPrefs.shaders)
     {
         camGame.filters = [new ShaderFilter(othershader)];
         new FlxTimer().start(1, function(tmr)
         {
-            camGame.filters = [/*that's right, nothing*/];
+            camGame.filters = [];
         });
     }
 }
@@ -159,112 +159,137 @@ function onUpdate(elapsed)
     }
 }
 
-function onStepHit()
+function onSongStart()
 {
-    switch (curStep)
-    {
-        case 1:
-            FlxTween.tween(camGame, {alpha: 1}, 5, {ease: FlxEase.expoOut});
-            for (light in [light, flair])
-            {
-                light.visible = false;
-                light.alpha -= 0.2;
-            }
-        case 42:
-            FlxTween.tween(camHUD, {alpha: 1}, 3);
-        case 84:
-            for (light in[light, flair])
-            {
-                light.visible = true;
-                FlxTween.tween(light, {alpha: light.alpha + 0.2}, 0.64, {ease: FlxEase.expoOut});
-            }
-        case 421:
-            defaultCamZoom = 1.2;
-        case 442:
-            defaultCamZoom = 0.95;
-        case 610:
-            defaultCamZoom = 1.2;
-        case 615:
-            defaultCamZoom = 0.95;
-            camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
-        case 862:
-            defaultCamZoom = 1.1;
-        case 904:
-            defaultCamZoom = 1.3;
-        case 947:
-            defaultCamZoom = 0.9;
-        case 1115:
-            defaultCamZoom = 0.8;
-            FlxG.game.setFilters([new ShaderFilter(invert)]);
-            invert.setFloat('binaryIntensity', 1000);
-            invert.setFloat('negativity', 1);
-            /*for (textShit in [spectraSongTime, watermarkTxt, songTxt, centerMark, autoplayMark])
-            {
-                textShit.color = FlxColor.BLACK;
-                textShit.borderColor = FlxColor.WHITE;
-            }*/
+    modManager.queueFuncOnce(1, (s,s2)->{ 
+        FlxTween.tween(camGame, {alpha: 1}, 5, {ease: FlxEase.expoOut});
+        for (light in [light, flair])
+        {
+            light.visible = false;
+            light.alpha -= 0.2;
+        }
+    });
 
-            camGame.flash(FlxColor.BLACK, 2);
-            modManager.queueEase(1828, 1873, "alpha", 0, "linear", -1);
-        case 1828:
-            FlxTween.tween(playHUD, {alpha: 1}, 3);
-            invert.setFloat('negativity', 0);
-            letsFight.seekTo(0);
-            letsFight.resume();
-			letsFight.visible = true;
-        case 1818:
-            defaultCamZoom = 2;
-        case 1850:
-            defaultCamZoom = 0.9;
-            camGame.visible = true;
-            camGame.zoom += 0.15;
-            camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.45, timer: 0.25});
-        case 2018:
-            defaultCamZoom = 1.15;
-        case 2024:
-            defaultCamZoom = 0.95;
-            camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
-        case 2187:
-            isCameraOnForcedPos = true;
-            camFollow.x = 450;
-            camFollow.y = 250;
-            defaultCamZoom = 0.7;
-        case 2524:
-            defaultCamZoom = 0.95;
-            camFollow.x = 0;
-            camFollow.y = 0;
-            isCameraOnForcedPos = false;
-            invert.setFloat('negativity', 1);
-            
-            camGame.flash(FlxColor.BLACK, 2);
-        case 2860:
-            FlxTween.num(1, 0, 2, {ease: FlxEase.quartOut}, num -> invert.setFloat('negativity', num));
-       case 2881:
-            defaultCamZoom += 0.05;
-        case 2889:
-            defaultCamZoom += 0.05;
-        case 2897:
-            defaultCamZoom += 0.05;
-        case 2902:
-            if (ClientPrefs.shaders)
-            {
-                // We make ur Laptop fry till the end of the song :fire: - MalyPlus
-                camGame.filters = [new ShaderFilter(othershader)];
-            }
-            defaultCamZoom = 0.95;
-    }
-}
+    modManager.queueFuncOnce(42, (s,s2)->{ 
+        FlxTween.tween(camHUD, {alpha: 1}, 3);
+    });
 
-function onBeatHit()
-{
-    switch (curBeat)
+    modManager.queueFuncOnce(84, (s,s2)->{ 
+        for (light in[light, flair])
+        {
+            light.visible = true;
+            FlxTween.tween(light, {alpha: light.alpha + 0.2}, 0.64, {ease: FlxEase.expoOut});
+        }
+    });
+
+    modManager.queueFuncOnce(421, (s,s2)->{ 
+        defaultCamZoom = 0.95;
+    });
+
+    modManager.queueFuncOnce(610, (s,s2)->{ 
+        defaultCamZoom = 1.2;
+    });
+
+    modManager.queueFuncOnce(615, (s,s2)->{ 
+        defaultCamZoom = 0.95;
+        camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
+    });
+
+    modManager.queueFuncOnce(862, (s,s2)->{ 
+        defaultCamZoom = 1.1;
+    });
+
+    modManager.queueFuncOnce(904, (s,s2)->{ 
+        defaultCamZoom = 1.3;
+    });
+
+    modManager.queueFuncOnce(947, (s,s2)->{ 
+        defaultCamZoom = 0.9;
+    });
+
+    modManager.queueFuncOnce(1115, (s,s2)->{ 
+        defaultCamZoom = 0.8;
+        FlxG.game.setFilters([new ShaderFilter(invert)]);
+        invert.setFloat('binaryIntensity', 1000);
+        invert.setFloat('negativity', 1);
+
+        camGame.flash(FlxColor.BLACK, 2);
+        modManager.queueEase(1828, 1873, "alpha", 0, "linear", -1);
+    });
+
+    modManager.queueFuncOnce(1828, (s,s2)->{ 
+        FlxTween.tween(playHUD, {alpha: 1}, 3);
+        invert.setFloat('negativity', 0);
+        letsFight.visible = true;
+        letsFight.seekTo(0);
+        letsFight.resume();
+    });
+
+    modManager.queueFuncOnce(1818, (s,s2)->{ 
+        defaultCamZoom = 2;
+    });
+
+    modManager.queueFuncOnce(1850, (s,s2)->{ 
+        defaultCamZoom = 0.9;
+        camGame.visible = true;
+        camGame.zoom += 0.15;
+        camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.45, timer: 0.25});
+    });
+
+    modManager.queueFuncOnce(2018, (s,s2)->{ 
+        defaultCamZoom = 1.15;
+    });
+
+    modManager.queueFuncOnce(2024, (s,s2)->{ 
+        defaultCamZoom = 0.95;
+        camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
+    });
+
+    modManager.queueFuncOnce(2187, (s,s2)->{ 
+        isCameraOnForcedPos = true;
+        camFollow.x = 450;
+        camFollow.y = 250;
+        defaultCamZoom = 0.7;
+    });
+
+    modManager.queueFuncOnce(2524, (s,s2)->{ 
+        defaultCamZoom = 0.95;
+        camFollow.x = 0;
+        camFollow.y = 0;
+        isCameraOnForcedPos = false;
+        invert.setFloat('negativity', 1);
+        
+        camGame.flash(FlxColor.BLACK, 2);
+    });
+
+    modManager.queueFuncOnce(2860, (s,s2)->{ 
+        FlxTween.num(1, 0, 2, {ease: FlxEase.quartOut}, num -> invert.setFloat('negativity', num));
+    });
+
+    for (i in [2881, 2889, 2897])
     {
-        case 446:
-            modManager.queueEase(447 * 4, 1818, "alpha", 1, "linear", -1);
-        case 447:
-            camGame.visible = false;
-            FlxTween.tween(playHUD, {alpha: 0}, 2);
+        modManager.queueFuncOnce(i, (s,s2)->{ 
+            defaultCamZoom += 0.05;
+        });
     }
+
+    modManager.queueFuncOnce(2902, (s,s2)->{ 
+        if (ClientPrefs.shaders)
+        {
+            // We make ur Laptop fry till the end of the song :fire: - MalyPlus
+            camGame.filters = [new ShaderFilter(othershader)];
+        }
+        defaultCamZoom = 0.95;
+    });
+
+    modManager.queueFuncOnce(446 * 4, (s,s2)->{ 
+        modManager.queueEase(447 * 4, 1818, "alpha", 1, "linear", -1);
+    });
+
+    modManager.queueFuncOnce(447 * 4, (s,s2)->{ 
+        camGame.visible = false;
+        FlxTween.tween(playHUD, {alpha: 0}, 2);
+    });
 }
 
 function camFlashSystem(flashType:FlashType, settings:FlashingSettings)

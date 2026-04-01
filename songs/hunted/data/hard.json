@@ -2,6 +2,7 @@
 	"song": {
 		"player1": "everretBFfinal",
 		"gfVersion": "lilith",
+		"arrowSkins": ["grayscale", "grayscale"],
 		"notes": [
 			{
 				"typeOfSection": 0,

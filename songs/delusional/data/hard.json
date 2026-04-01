@@ -3,6 +3,7 @@
 		"player1": "bf-fake-new",
 		"composer": "FR3SHMoure",
 		"player2": "mick-lunacyEnd",
+		"arrowSkins": ["grayscale", "grayscale"],
 		"events": [
 			[
 				71027.0270270271,
@@ -166,36 +167,6 @@
 						"Change Character",
 						"dad",
 						"delusional-mickey"
-					]
-				]
-			],
-			[
-				367164.032654353,
-				[
-					[
-						"Change Character",
-						"dad",
-						"death-part-1"
-					],
-					[
-						"Play Animation",
-						"murder",
-						"Dad"
-					]
-				]
-			],
-			[
-				383380.24887057,
-				[
-					[
-						"Change Character",
-						"Dad",
-						"death-part-2"
-					],
-					[
-						"Play Animation",
-						"murder2-electric-boogaloo",
-						"Dad"
 					]
 				]
 			]

@@ -44,16 +44,16 @@ function resetCharPos()
         case 'forestNew':
             // It was before perfect but then Jason had put the new spritesheet... im gonna explode :) - MalyPlus
             // lol - jason the jasenous
-            dad.setPosition(-110, -15); // goofy ahh goofy offsets - malyplus
-            boyfriend.setPosition(480, -220);
-            gf.setPosition(170, -50);
+            dad.setPosition(-320, 160); // goofy ahh goofy offsets - malyplus
+            boyfriend.setPosition(850, -45);
+            gf.setPosition(480, 120);
         case 'circus':
             dad.setPosition(-990, -100);
             boyfriend.setPosition(0,-360);
             gf.setPosition(-300, -200);
         case 'treasureIsland':
-			boyfriend.setPosition(1080, 310);
-			dad.setPosition(0, 190);
+            boyfriend.setPosition(1080, 310);
+            dad.setPosition(0, 190);
         case 'clubhouse':
             switch (dad.curCharacter)
             {

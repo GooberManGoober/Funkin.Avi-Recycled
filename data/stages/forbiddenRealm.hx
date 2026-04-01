@@ -15,7 +15,7 @@ var chromTween:FlxTween;
 
 var dumbCamTwn:FlxTween;
 
-var pathway:String = 'favi/stages/' + PlayState.SONG.stage + '/images/';
+var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/images/';
 
 function onLoad()
 {
@@ -117,6 +117,9 @@ function onCreatePost()
             });
         }
     }
+
+    camGame.alpha = 0.001;
+	camHUD.alpha = 0.001;
 }
 
 function onUpdate()
@@ -178,90 +181,150 @@ function opponentNoteHit(note)
     }
 }
 
-function onBeatHit()
+function onSongStart()
 {
-    if (curBeat == 160)
-    {
+    modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
         whiteBG.alpha = 1;
         FlxTween.tween(whiteBG, {alpha: 0}, 2);
         FlxTween.tween(fuckingsquares, {alpha: 0}, 5, {ease: FlxEase.sineOut});
-    }
+    });
 
-    if (curBeat == 184)
-    {
+    modManager.queueFuncOnce(184 * 4, (s,s2)->{ 
         FlxTween.tween(fuckingsquares, {alpha: 1}, 1.5, {ease: FlxEase.sineOut});
+    });
+
+    modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
+        FlxTween.tween(camGame, {alpha: 1}, 5, {ease: FlxEase.sineInOut});
+    });
+
+    modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
+        tweenCamera(1.2, 5, 'quartInOut');
+    });
+
+    modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
+        defaultCamZoom = 0.75;
+        FlxTween.tween(camHUD, {alpha: 1}, 0.5, {ease: FlxEase.sineOut});
+    });
+
+    modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
+        defaultCamZoom = 0.65;
+    });
+
+    modManager.queueFuncOnce(164 * 4, (s,s2)->{ 
+        tweenCamera(1.5, 6, 'sineInOut');
+    });
+
+    modManager.queueFuncOnce(191 * 4, (s,s2)->{ 
+        //mickeyEmitter.emitting = true;
+        if (ClientPrefs.shaders)
+        {
+            if (!ClientPrefs.lowQuality)
+            {
+                camGame.filters = [new ShaderFilter(chromZoomShader)];
+                camHUD.filters = [new ShaderFilter(chromNormalShader)];
+            }
+        }
+    });
+
+    modManager.queueFuncOnce(320 * 4, (s,s2)->{ 
+        FlxTween.tween(camHUD, {alpha: 0}, 0.5);
+    });
+
+    modManager.queueFuncOnce(324 * 4, (s,s2)->{ 
+        var count = makeCountdownSprite('mal-prepare');
+        count.scrollFactor.set();
+        count.updateHitbox();
+        count.screenCenter();
+        count.cameras = [camGame];
+        add(count);
+        FlxG.sound.play(Paths.sound('intro3-glitch'), 2);
+    });
+
+    modManager.queueFuncOnce(325 * 4, (s,s2)->{ 
+        var count = makeCountdownSprite('mal-ready');
+        count.scrollFactor.set();
+        count.updateHitbox();
+        count.screenCenter();
+        count.cameras = [camGame];
+        count.antialiasing = false;
+        add(count);
+        FlxG.sound.play(Paths.sound('intro2-glitch'), 2);
+    });
+
+    modManager.queueFuncOnce(326 * 4, (s,s2)->{ 
+        var count = makeCountdownSprite('mal-set');
+        count.scrollFactor.set();
+        count.updateHitbox();
+        count.screenCenter();
+        count.cameras = [camGame];
+        count.antialiasing = false;
+        add(count);
+        FlxG.sound.play(Paths.sound('intro1-glitch'), 2);
+    });
+
+    modManager.queueFuncOnce(327 * 4, (s,s2)->{ 
+        var count = makeCountdownSprite('mal-go');
+        count.scrollFactor.set();
+        count.updateHitbox();
+        count.screenCenter();
+        count.cameras = [camGame];
+        count.antialiasing = false;
+        add(count);
+        FlxG.sound.play(Paths.sound('introGo-glitch'), 2);
+    });
+
+    modManager.queueFuncOnce(328 * 4, (s,s2)->{ 
+        FlxTween.tween(camHUD, {alpha: 1}, 0.5);
+    });
+
+    modManager.queueFuncOnce(584 * 4, (s,s2)->{ 
+        FlxTween.tween(camHUD, {alpha: 0}, 4.45, {ease: FlxEase.quartInOut});
+    });
+
+    modManager.queueFuncOnce(616 * 4, (s,s2)->{ 
+        camGame.visible = false;
+    });
+
+    for (i in [48, 39, 64, 72, 88, 96, 103, 113, 128, 184, 192])
+    {
+        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+            defaultCamZoom = 0.75;
+        });
     }
 
-    switch (curBeat)
+    for (i in [38, 102])
     {
-        // Intro Cam Stuff
-        case 1: FlxTween.tween(camGame, {alpha: 1}, 5, {ease: FlxEase.sineInOut});
-        case 16: tweenCamera(1.2, 5, 'quartInOut');
-        case 32:
-            defaultCamZoom = 0.75;
-            FlxTween.tween(camHUD, {alpha: 1}, 0.5, {ease: FlxEase.sineOut});
-        case 160: defaultCamZoom = 0.65;
-        case 164: tweenCamera(1.5, 6, 'sineInOut');
-        case 191:
-            //mickeyEmitter.emitting = true;
-            if (ClientPrefs.shaders)
-            {
-                if (!ClientPrefs.lowQuality)
-                {
-                    camGame.filters = [new ShaderFilter(chromZoomShader)];
-                    camHUD.filters = [new ShaderFilter(chromNormalShader)];
-                }
-            }
-        case 320:
-            FlxTween.tween(camHUD, {alpha: 0}, 0.5);
-        case 328:
-            FlxTween.tween(camHUD, {alpha: 1}, 0.5);
-        case 584:
-            FlxTween.tween(camHUD, {alpha: 0}, 4.45, {ease: FlxEase.quartInOut});
-        case 616:
-            camGame.visible = false;
+        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+            tweenCamera(1.5, 0.25, 'sineInOut');
+        });
+    }
 
-        case 48: defaultCamZoom = 0.75;
-        case 39: defaultCamZoom = 0.75;
-        case 64: defaultCamZoom = 0.75;
-        case 72: defaultCamZoom = 0.75;
-        case 88: defaultCamZoom = 0.75;
-        case 96: defaultCamZoom = 0.75;
-        case 103: defaultCamZoom = 0.75;
-        case 113: defaultCamZoom = 0.75;
-        case 128: defaultCamZoom = 0.75;
-        case 184: defaultCamZoom = 0.75;
-        case 192: defaultCamZoom = 0.75;
+    for (i in [45, 61, 110, 126, 187])
+    {
+        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+            defaultCamZoom = 0.9;
+        });
+    }
 
-        case 38: tweenCamera(1.5, 0.25, 'sineInOut');
-        case 102: tweenCamera(1.5, 0.25, 'sineInOut');
+    for (i in [46, 62, 67, 76, 83, 92, 111, 127, 158, 190])
+    {
+        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+            defaultCamZoom = 1;
+        });
+    }
 
-        case 45: defaultCamZoom = 0.9;
-        case 61: defaultCamZoom = 0.9;
-        case 110: defaultCamZoom = 0.9;
-        case 126: defaultCamZoom = 0.9;
-        case 187: defaultCamZoom = 0.9;
+    for (i in [47, 63, 68, 84, 112, 159])
+    {
+        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+            defaultCamZoom = 1.3;
+        });
+    }
 
-        case 46: defaultCamZoom = 1;
-        case 62: defaultCamZoom = 1;
-        case 67: defaultCamZoom = 1;
-        case 76: defaultCamZoom = 1;
-        case 83: defaultCamZoom = 1;
-        case 92: defaultCamZoom = 1;
-        case 111: defaultCamZoom = 1;
-        case 127: defaultCamZoom = 1;
-        case 158: defaultCamZoom = 1;
-        case 190: defaultCamZoom = 1;
-
-        case 47: defaultCamZoom = 1.3;
-        case 63: defaultCamZoom = 1.3;
-        case 68: defaultCamZoom = 1.3;
-        case 84: defaultCamZoom = 1.3;
-        case 112: defaultCamZoom = 1.3;
-        case 159: defaultCamZoom = 1.3;
-
-        case 69: defaultCamZoom = 1.1;
-        case 85: defaultCamZoom = 1.1;
+    for (i in [69, 85])
+    {
+        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+            defaultCamZoom = 1.1;
+        });
     }
 }
 

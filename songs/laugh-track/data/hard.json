@@ -2,6 +2,7 @@
 	"song": {
 		"player1": "everretBFfinal",
 		"player2": "ricky",
+		"arrowSkins": ["grayscale", "grayscale"],
 		"events": [],
 		"notes": [
 			{

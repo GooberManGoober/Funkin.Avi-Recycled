@@ -27,6 +27,7 @@ var defaultShader2:FlxRuntimeShader;
 var fade:FlxSprite;
 
 var logoBl:FlxSprite;
+var recycledText:FlxText;
 var gfDance:FlxSprite;
 var danceLeft:Bool = false;
 var titleText:FlxText;
@@ -143,7 +144,7 @@ var playJingle:Bool = false;
 var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
 var closedState:Bool = false;
 
-function onLoad()
+function onCreate()
 {	
 	Application.current.window.title = 'Funkin.avi: Recycled - ' + windowArray[FlxG.random.int(0, windowArray.length-1)];
 
@@ -161,14 +162,25 @@ function onLoad()
 	bg.scale.y = 0.67;
 	add(bg);
 
-	logoBl = new FlxSprite(150, 0);
+	logoBl = new FlxSprite(150, -75);
 	logoBl.frames = Paths.getSparrowAtlas('Funkin_avi/title/MickeyLogo');
 	logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 	logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 	logoBl.animation.play('bump');
 	logoBl.updateHitbox();
-	logoBl.screenCenter();
+	logoBl.screenCenter().y -= 50;
+	logoBl.angle = -4;
+	FlxTween.tween(logoBl, {angle: 4}, 4, {ease: FlxEase.quartInOut, type: 4});
 	add(logoBl);
+
+	recycledText = new FlxText(60, 515, 1200, "Recycled", 96);
+	recycledText.setFormat(Paths.font('DisneyFont.ttf'), 50, FlxColor.fromRGB(255, 255, 255), "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	recycledText.borderSize = 1.5;
+	recycledText.antialiasing = ClientPrefs.globalAntialiasing;
+	recycledText.screenCenter('x');
+	recycledText.angle = -4;
+	FlxTween.tween(recycledText, {angle: 4, x: 15}, 4, {ease: FlxEase.quartInOut, type: 4});
+	add(recycledText);
 
 	titleText = new FlxText(24, 600, 1200, "Click Anywhere Or Press Enter to Start", 96);
 	titleText.setFormat(Paths.font('MagicOwlFont.otf'), 60, FlxColor.fromRGB(255, 255, 255), "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -185,7 +197,7 @@ function onLoad()
 	blackScreen.scrollFactor.set();
 	credGroup.add(blackScreen);
 
-	FlxG.sound.music.stop();
+	if (FlxG.sound.music != null) FlxG.sound.music.stop();
 	FlxTimer.wait(1, () -> {
 		FunkinSound.playMusic(Paths.music('freakyMenu'), 0);
 		Conductor.bpm = 60;
@@ -265,12 +277,13 @@ function onUpdate(elapsed)
 			transitioning = true;
 
 			FlxTween.tween(logoBl, {y: 2000}, 3, {ease: FlxEase.quadIn});
+			FlxTween.tween(recycledText, {y: 2000}, 3, {ease: FlxEase.quadIn});
 			FlxTween.tween(titleText, {y: 2000}, 3, {ease: FlxEase.quadIn});
 
 			new FlxTimer().start(1.3, function(tmr:FlxTimer){
 				closedState = true;
-				FlxG.save.data.birthdayLocky = "beaten";
-				FlxG.save.flush();
+				ClientPrefs.quants = false;
+				ClientPrefs.flush();
 				FlxG.switchState(new ScriptedState("MainMenuState"));
 			});
 		}
@@ -282,6 +295,8 @@ function onUpdate(elapsed)
 	}
 
 	FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, FlxMath.bound(1 - (elapsed * 1.925), 0, 1));
+	logoBl.scale.set(FlxMath.lerp(0.85, logoBl.scale.x, FlxMath.bound(1 - (elapsed * 1.995), 0, 1)), FlxMath.lerp(0.85, logoBl.scale.y, FlxMath.bound(1 - (elapsed * 1.995), 0, 1)));
+	recycledText.scale.set(FlxMath.lerp(1, recycledText.scale.x, FlxMath.bound(1 - (elapsed * 1.995), 0, 1)), FlxMath.lerp(1, recycledText.scale.y, FlxMath.bound(1 - (elapsed * 1.995), 0, 1)));
 }
 
 function createCoolText(textArray:Array<String>, ?offset:Float = 0)
@@ -321,14 +336,18 @@ function onBeatHit()
 	if(!closedState) {
 		FlxG.camera.zoom += 0.025;
 
-		if(logoBl != null)
-			logoBl.animation.play('bump', true);
+		// logo doesn't have animation, we make one by ourselfs instead
+		logoBl.scale.x += 0.03;
+		logoBl.scale.y += 0.03;
+
+		recycledText.scale.x += 0.03;
+		recycledText.scale.y += 0.03;
 
 		sickBeats += 1;
 		switch (sickBeats)
 		{
 			case 1:
-				createCoolText(["Goober Man"], 15);
+				createCoolText(["Goober (the guy with a -1.04 GPA)"], 15);
 			case 3:
 				addMoreText('Presents', 15);
 			case 4:
@@ -378,19 +397,9 @@ function skipIntro():Void
 		FlxG.camera.flash(FlxColor.BLACK, 4);
 	}
 
-	logoBl.angle = -4;
 	isTweenCancelled = true;
 	if (fadeTween != null) fadeTween.cancel();
 	whiteFade.alpha = 0;
-
-	new FlxTimer().start(0.01, function(tmr:FlxTimer)
-	{
-		if (logoBl.angle == -4)
-			FlxTween.angle(logoBl, logoBl.angle, 4, 4, {ease: FlxEase.quartInOut});
-		if (logoBl.angle == 4)
-			FlxTween.angle(logoBl, logoBl.angle, -4, 4, {ease: FlxEase.quartInOut});
-
-	}, 0);
 
 	skippedIntro = true;
 }

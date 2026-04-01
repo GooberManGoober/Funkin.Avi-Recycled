@@ -61,3 +61,25 @@ function fullSave()
 
 	FlxG.save.flush();
 }
+
+function resetData()
+{
+	saveFix();
+
+	FlxG.save.data.episode1FPLock = 'locked';
+
+    FlxG.save.data.freeplayMenuList = 0;
+
+    FlxG.save.data.huntedLock = 'locked';
+    FlxG.save.data.malfunctionLock = 'locked';
+    FlxG.save.data.blessLock = 'locked';
+    FlxG.save.data.crossinLock = 'locked';
+    FlxG.save.data.tgLock = 'locked';
+    FlxG.save.data.rickyLock = 'locked';
+
+    FlxG.save.data.birthdayLocky = "uncompleted";
+
+	FlxG.save.data.loading = false;
+
+	FlxG.save.flush();
+}

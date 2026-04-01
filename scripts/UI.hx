@@ -56,7 +56,7 @@ function onLoad() {
 
 	switch (PlayState.SONG.song)
 	{
-		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track",  "Isolated Old", "Isolated Beta", "Isolated Legacy", "Lunacy Legacy", "Delusional Legacy", "Hunted Legacy", "Birthday", "Rotten Petals", "Seeking Freedom", "Am I Real?", "Curtain Call", "Your Final Bow", "A True Monster", "The Wretched Tilezones (Simple Life)", "Ship the Fart Yay Hooray <3 (Distant Stars)", "Ahh the Scary (Somber Night)":
+		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday":
 			introSoundsSuffix = "-cartoon";
 		case "Malfunction":
 			introSoundsSuffix = "-error";
@@ -90,7 +90,7 @@ function onCreatePost()
 		if (PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom')
 		{
 			scratch = new FlxSprite();
-			scratch.frames = Paths.getSparrowAtlas('favi/filters/scratchShit');
+			scratch.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
 			scratch.animation.addByPrefix('e', 'scratch thing', 24, true);
 			scratch.animation.play('e');
 			scratch.cameras = [camOther];
@@ -105,7 +105,7 @@ function onCreatePost()
 
 	if (!ClientPrefs.lowQuality)
 	{
-		globalGradient = new FlxSprite().loadGraphic(Paths.image('favi/filters/gradient'));
+		globalGradient = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/filters/gradient'));
 		globalGradient.screenCenter();
 		globalGradient.setGraphicSize(Std.int(globalGradient.width * 0.68));
 		globalGradient.cameras = [camOther];
@@ -121,8 +121,7 @@ function onCreatePost()
 		"Hunted",
 		"Laugh Track",
 		"Don't Cross!",
-		"Bless",
-		"War Dilemma"
+		"Bless"
 	];
 
 	var checkMechanics:Bool = false;
@@ -195,18 +194,18 @@ function onUpdate(elapsed)
 
 function onCountdownTick(swagCounter)
 {
-    var introAlts:Array<String> = ['ready', 'set', 'go'];
+    var introAlts:Array<String> = ['Funkin_avi/countdownAssets/default-prepare', 'Funkin_avi/countdownAssets/default-ready', 'Funkin_avi/countdownAssets/default-set', 'Funkin_avi/countdownAssets/default-go'];
 	var antialias:Bool = ClientPrefs.globalAntialiasing;
 	switch (PlayState.SONG.song)
 	{
 		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday":
-			introAlts = ['favi/countdown/prepare', 'favi/countdown/ready', 'favi/countdown/set', 'favi/countdown/go'];
+			introAlts = ['Funkin_avi/countdownAssets/cartoon-prepare', 'Funkin_avi/countdownAssets/cartoon-ready', 'Funkin_avi/countdownAssets/cartoon-set', 'Funkin_avi/countdownAssets/cartoon-go'];
 		case "Malfunction":
-			introAlts = ['favi/countdown/mal-prepare', 'favi/countdown/mal-ready', 'favi/countdown/mal-set', 'favi/countdown/mal-go'];
+			introAlts = ['Funkin_avi/countdownAssets/mal-prepare', 'Funkin_avi/countdownAssets/mal-ready', 'Funkin_avi/countdownAssets/mal-set', 'Funkin_avi/countdownAssets/mal-go'];
 			antialias = false;
 		default:
 			if(PlayState.isPixelStage) {
-				introAlts = ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel'];
+				introAlts = ['pixelUI/prepare-pixel', 'pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel'];
 				antialias = false;
 			}
 	}
@@ -217,49 +216,22 @@ function onCountdownTick(swagCounter)
 			FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix));
 			var prepare:FlxSprite = makeCountdownSprite(introAlts[0]);
 			prepare.cameras = [camOther];
-			switch (PlayState.SONG.song)
-			{
-				case "Don't Cross!", "Bless", "Neglection":
-					//nothing
-				default:
-            		add(prepare);
-			}
+			add(prepare);
 		case 1:
 			FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix));
-			var ready:FlxSprite;
-			switch (PlayState.SONG.song)
-			{
-				case "Don't Cross!", "Bless", "Neglection":
-					ready = makeCountdownSprite(introAlts[0]);
-				default:
-					ready = makeCountdownSprite(introAlts[1]);
-			}
+			var ready:FlxSprite = makeCountdownSprite(introAlts[1]);
             add(ready);
 			ready.cameras = [camOther];
             remove(countdownReady);
 		case 2:
             FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix));
-			var set:FlxSprite;
-			switch (PlayState.SONG.song)
-			{
-				case "Don't Cross!", "Bless", "Neglection":
-					set = makeCountdownSprite(introAlts[1]);
-				default:
-					set = makeCountdownSprite(introAlts[2]);
-			}
+			var set:FlxSprite = makeCountdownSprite(introAlts[2]);
             add(set);
 			set.cameras = [camOther];
             remove(countdownSet);
         case 3:
             FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix));
-			var go:FlxSprite;
-            switch (PlayState.SONG.song)
-			{
-				case "Don't Cross!", "Bless", "Neglection":
-				 	go = makeCountdownSprite(introAlts[2]);
-				default:
-					go = makeCountdownSprite(introAlts[3]);
-			}
+			var go:FlxSprite = makeCountdownSprite(introAlts[3]);
             add(go);
 			go.cameras = [camOther];
             remove(countdownGo);

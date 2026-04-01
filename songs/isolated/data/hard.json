@@ -2,6 +2,7 @@
 	"song": {
 		"composer": "obscurity",
 		"player1": "bf-fake-new",
+		"arrowSkins": ["grayscale", "grayscale"],
 		"notes": [
 			{
 				"sectionNotes": [],

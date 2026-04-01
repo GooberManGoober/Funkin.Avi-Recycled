@@ -18,12 +18,12 @@ function onLoad()
     aberrationBoom.setFloat('effectTime', 0.001);
 
     delusionalStreet = new FlxSprite(-500, -700);
-    delusionalStreet.loadGraphic(Paths.image('favi/stages/theLoop/images/Mickeybg'));
+    delusionalStreet.loadGraphic(Paths.image('Funkin_avi/stages/clubhouse/images/Mickeybg'));
     delusionalStreet.alpha = 0.0001;
     add(delusionalStreet);
 
     clubhouse = new FlxSprite(-410, -100);
-    clubhouse.frames = Paths.getSparrowAtlas('favi/stages/clubhouse/images/daHouse');
+    clubhouse.frames = Paths.getSparrowAtlas('Funkin_avi/stages/clubhouse/images/daHouse');
     clubhouse.animation.addByPrefix('balloons bounce', 'daHouse idle', 12, true);
     clubhouse.animation.play('balloons bounce');
     clubhouse.scale.set(1.15, 1.15);
@@ -32,7 +32,7 @@ function onLoad()
     clubhouse.scrollFactor.set(1, 1);
     add(clubhouse);
 
-    var vignette:FlxSprite = new FlxSprite(-250, -140).loadGraphic(Paths.image('favi/stages/clubhouse/images/vignetteOverlay'));
+    var vignette:FlxSprite = new FlxSprite(-250, -140).loadGraphic(Paths.image('Funkin_avi/stages/clubhouse/images/vignetteOverlay'));
     vignette.cameras = [camOther];
     vignette.scale.set(0.75, 0.75);
     vignette.antialiasing = true;
@@ -46,74 +46,81 @@ function onLoad()
             new ShaderFilter(aberrationBoom),
             new ShaderFilter(monitorFilter)
         ];
-
-        camHUD.filters = [new ShaderFilter(grayScale)];
     }
 }
 
-function onBeatHit()
+function onSongStart()
 {
     // they start going on an acid trip lmao
-    if (curBeat == 256)
-    {
+    modManager.queueFuncOnce(256 * 4, (s,s2)->{ 
         camGame.shake(0.015, 1.3);
         defaultCamZoom = 1.1;
         aberrationBoom.setFloat('aberration', 0.03);
         aberrationBoom.setFloat('effectTime', 0.06);
-    }
-    if (curBeat == 258)
-    {
+    });
+
+    modManager.queueFuncOnce(258 * 4, (s,s2)->{ 
         aberrationBoom.setFloat('aberration', 0.06);
         aberrationBoom.setFloat('effectTime', 0.12);
-    }
-    if (curBeat == 260)
-    {
+    });
+
+    modManager.queueFuncOnce(260 * 4, (s,s2)->{ 
         defaultCamZoom = 0.76;
         aberrationBoom.setFloat('aberration', 0.12);
         aberrationBoom.setFloat('effectTime', 0.24);
-    }
-    if (curBeat == 320)
-    {
+    });
+
+    modManager.queueFuncOnce(320 * 4, (s,s2)->{ 
         camGame.shake(0.025, 1.3);
         defaultCamZoom = 1;
         aberrationBoom.setFloat('aberration', 0.15);
         aberrationBoom.setFloat('effectTime', 0.30);
-    }
-    if (curBeat == 322)
-    {
+    });
+
+    modManager.queueFuncOnce(322 * 4, (s,s2)->{ 
         aberrationBoom.setFloat('aberration', 0.18);
         aberrationBoom.setFloat('effectTime', 0.36);
-    }
-    if (curBeat == 324)
-    {
+    });
+
+    modManager.queueFuncOnce(324 * 4, (s,s2)->{ 
         if (ClientPrefs.flashing)
             camGame.flash(FlxColor.WHITE, 0.5);
-    }
+    });
 
-    if (curBeat >= 324 && curBeat <= 387)
-    {
-        aberrationBoom.setFloat('aberration', aberrationTimer);
-        aberrationBoom.setFloat('effectTime', aberrationTimer);
-    }
-
-    if (curBeat == 388)
-    {
+    modManager.queueFuncOnce(388 * 4, (s,s2)->{ 
         defaultCamZoom = 0.85;
         if (ClientPrefs.flashing)
             camGame.flash(FlxColor.WHITE, 0.5);
         aberrationBoom.setFloat('aberration', 0.001);
         aberrationBoom.setFloat('effectTime', 0.001);
-    }
+    });
 
-    if (curBeat == 520)
-    {
+    modManager.queueFuncOnce(520 * 4, (s,s2)->{ 
         camGame.alpha = 0.000001;
         camHUD.alpha = 0;
         camOther.flash(FlxColor.WHITE, 1);
         gfGroup.alpha = 0.0001;
+        boyfriend.alpha = 0.0001;
 
         delusionalStreet.alpha = 1;
         clubhouse.alpha = 0.0001;
+    });
+
+    modManager.queueFuncOnce(2125, (s,s2)->{ 
+        camGame.alpha = 1;
+    });
+
+    modManager.queueFuncOnce(2144, (s,s2)->{ 
+        camGame.alpha = 0;
+    });
+}
+
+function onBeatHit()
+{
+    if (curBeat >= 324 && curBeat <= 387)
+    {
+        aberrationBoom.setFloat('aberration', aberrationTimer);
+        aberrationBoom.setFloat('effectTime', aberrationTimer);
     }
 }
 
@@ -122,17 +129,6 @@ function onUpdate(elapsed)
     aberrationTimer -= 0.01;
 
     muckneyHealthColorShitLol();
-}
-
-function onStepHit()
-{
-    switch (curStep)
-    {
-        case 2125: 
-            camGame.alpha = 1;
-        case 2144:
-            camGame.alpha = 0;
-    }
 }
 
 function muckneyHealthColorShitLol()

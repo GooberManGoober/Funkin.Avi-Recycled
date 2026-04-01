@@ -1,6 +1,4 @@
-var circusPath:String = 'favi/stages/circus/e/';
-
-var grayScale:FlxRuntimeShader = newShader('grayScale');
+var circusPath:String = 'Funkin_avi/stages/circus/e/';
 
 function onLoad()
 {
@@ -27,8 +25,6 @@ function onCreatePost()
     tentsfront.scrollFactor.set(1.25, 1.25);
     tentsfront.scale.set(1.15, 1.15);
     add(tentsfront);
-
-    if (ClientPrefs.shaders) camHUD.filters = [new ShaderFilter(grayScale)];
 }
 
 function opponentNoteHit(note)

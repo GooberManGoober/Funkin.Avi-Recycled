@@ -19,7 +19,6 @@ import funkin.backend.PlayerSettings;
 using StringTools;
 
 var options:Array<String> = [
-    'Notes',
     'Controls',
     'Graphics',
     'Visuals and UI',
@@ -37,8 +36,6 @@ var controls = PlayerSettings.player1.controls;
 
 function openSelectedSubstate(label:String) {
     switch(label) {
-        case 'Notes':
-            openSubState(new NoteSettingsSubState());
         case 'Controls':
             openSubState(new ControlsSubState());
         case 'Graphics':

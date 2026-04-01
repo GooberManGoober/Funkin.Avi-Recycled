@@ -10,17 +10,15 @@ import funkin.backend.PlayerSettings;
 import funkin.data.Chart;
 import funkin.backend.Difficulty;
 import funkin.Mods;
-import funkin.states.substates.ResetScoreSubState;
-import funkin.states.substates.GameplayChangersSubstate;
 import flixel.util.FlxStringUtil;
 
 using StringTools;
 
 typedef SongMetadata =
 {
-	var name:String;
+	var songName:String;
 	var week:Int;
-	var character:String;
+	var songCharacter:String;
 	var color:FlxColor;
 	var composer:String;
 	var difficultyRank:String;
@@ -44,8 +42,6 @@ var lerpRating:Float = 0;
 var intendedScore:Int = 0;
 var intendedRating:Float = 0;
 
-var canBopCam:Bool = false;
-
 var controls = PlayerSettings.player1.controls;
 
 var path:String = 'Funkin_avi/freeplay';
@@ -56,6 +52,8 @@ var songDisplay:Array<FlxText> = [];
 var curPlaying:Bool = false;
 
 var iconArray:Array<HealthIcon> = [];
+
+var botplaytext:FlxText;
 
 var bg:Null<FlxSprite>;
 
@@ -77,9 +75,6 @@ var songArtist:String = "Unknown";
 
 var intendedColor:Int;
 var colorTween:FlxTween;
-
-// making this a var so the disc just doesn't stop moving at all when going in and out of this menu
-var bpm:Float = 1;
 
 function onCreate()
 {
@@ -110,6 +105,7 @@ function onCreate()
 			addSong('Laugh Track', 3, 'ricky', FlxColor.fromRGB(60, 60, 60), 'Yama haki/Toko', 'HARD', FlxColor.fromRGB(255, 187, 187));
 			addSong('Bless', 3, 'whitenew', FlxColor.WHITE, 'PualTheUnTruest', 'HARD', FlxColor.fromRGB(255, 187, 187));
 			addSong("Don't Cross!", 3, 'cross', FlxColor.fromRGB(255, 0, 0), 'Yama haki/Toko', 'GOOD LUCK', FlxColor.fromRGB(201, 0, 0));
+			addSong('Neglection', 3, 'pnm', FlxColor.fromRGB(117, 86, 27), 'AttackPan', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			addSong('Twisted Grins', 3, 'smile', FlxColor.fromRGB(54, 38, 38), 'ForFurtherNotice', 'HARD', FlxColor.fromRGB(255, 187, 187));
 
 			addSong('Malfunction', 3, 'mal-pixel', FlxColor.fromRGB(150, 149, 186), 'obscurity', null, FlxColor.WHITE);
@@ -145,14 +141,16 @@ function onCreate()
 
 	for (i in 0...songs.length)
 	{
-		var songText:Alphabet = new Alphabet(5, 320, songs[i].name, true);
+		var songText:Alphabet = new Alphabet(5, 320, songs[i].songName, true);
 		songText.isMenuItem = true;
+		songText.changeAxis = FlxAxes.Y;
 		songText.targetY = i;
 		songText.snapToTarget();
+		songText.screenCenter(FlxAxes.X);
 		grpSongs.add(songText);
 		
 		// using a FlxGroup is too much fuss!
-		var icon:HealthIcon = new HealthIcon(songs[i].character);
+		var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 		icon.sprTracker = songText;
 		iconArray.push(icon);
 		add(icon);
@@ -163,20 +161,17 @@ function onCreate()
 		lastDifficultyName = Difficulty.defaultDifficulty;
 	}
 	curDifficulty = Math.round(Math.max(0, Difficulty.defaultDifficulties.indexOf(lastDifficultyName)));
-		
+
 	var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 	textBG.alpha = 0.6;
 	textBG.cameras = [camHUD];
 	add(textBG);
-
-	final leText:String = "Press SPACE to listen to the Song.";
-	final size:Int = 16;
 		
-	var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
-	text.setFormat(Paths.DEFAULT_FONT, size, FlxColor.WHITE, "center");
-	text.scrollFactor.set();
-	text.cameras = [camHUD];
-	add(text);
+	botplaytext = new FlxText(textBG.x, textBG.y + 4, FlxG.width, 'Press B to toggle Botplay. Botplay: ' + (ClientPrefs.gameplaySettings["botplay"] == true ? 'ON' : 'OFF'), 18);
+	botplaytext.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, "center");
+	botplaytext.scrollFactor.set();
+	botplaytext.cameras = [camHUD];
+	add(botplaytext);
 
 	scoreBG = new FlxSprite((FlxG.width * 0.7) - 6, 0).makeGraphic(1, 66, 0xFF000000);
 	scoreBG.alpha = 0.6;
@@ -237,14 +232,26 @@ function onCloseSubstate() {
 function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int, composer:String, rankName:String, rankColor:FlxColor)
 {
 	songs.push({
-		name: songName,
+		songName: songName,
 		week: weekNum,
-		character: songCharacter,
+		songCharacter: songCharacter,
 		color: color,
 		composer: composer,
 		difficultyRank: rankName,
 		textColor: rankColor
 	});
+}
+
+function changeBotPlay(){
+	ClientPrefs.gameplaySettings["botplay"] = (ClientPrefs.gameplaySettings["botplay"] == true) ? false : true;
+	if (ClientPrefs.gameplaySettings["botplay"] == true)
+		botplaytext.text = 'Press B to toggle Botplay. Botplay: ON';
+	else
+		botplaytext.text = 'Press B to toggle Botplay. Botplay: OFF';
+
+	ClientPrefs.flush();
+
+	return;
 }
 
 var instPlaying:Int = -1;
@@ -253,15 +260,16 @@ var holdTime:Float = 0;
 
 function onUpdate(elapsed)
 {
-	for (icon in iconArray) 
-		icon.scale.set(FlxMath.lerp(1, icon.scale.x, FlxMath.bound(1 - (elapsed * 9.6), 0, 1)), FlxMath.lerp(1, icon.scale.y, FlxMath.bound(1 - (elapsed * 9.6), 0, 1)));
-	
 	if (FlxG.sound.music.volume < 0.7)
 	{
 		FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 	}
 
 	Conductor.songPosition = FlxG.sound.music.time;
+
+	if (FlxG.keys.justPressed.B) {
+		changeBotPlay();
+	}
 
 	if (ClientPrefs.shaders) // bye bye lag
 	{
@@ -340,10 +348,10 @@ function onUpdate(elapsed)
 
 	for (i in 0...iconArray.length)
 	{
-		if(songs[i].name == "Birthday")
+		if(songs[i].songName == "Birthday")
 			iconArray[i].animation.curAnim.curFrame = 1; // funi
 		//i swear to god theres too much .replace
-		else if(songs[i].name == "Don't Cross!")
+		else if(songs[i].songName == "Don't Cross!")
 		{
 			var stop:Bool = false;
 			if(!stop)
@@ -375,26 +383,21 @@ function onUpdate(elapsed)
 		{
 			if (FlxG.sound.music != null) FlxG.sound.music.volume = 0;
 			Mods.currentModDirectory = songs[curSelected].folder;
-			PlayState.SONG = Chart.fromSong(songs[curSelected].name, curDifficulty);
+			PlayState.SONG = Chart.fromSong(songs[curSelected].songName, curDifficulty);
 			
 			FunkinSound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
 			instPlaying = curSelected;
-			canBopCam = true;
-			getBPM();
-			FlxTween.num(Conductor.bpm, bpm, 2, null, shitshitfuckfuck -> Conductor.bpm = shitshitfuckfuck);
 		}
 	}
 	else if (accepted)
 	{
-		canBopCam = false;
-
 		persistentUpdate = false;
 
 		if(colorTween != null) {
 			colorTween.cancel();
 		}
 
-		var ret = PlayState.prepareForSong(songs[curSelected].name, curDifficulty, false);
+		var ret = PlayState.prepareForSong(songs[curSelected].songName, curDifficulty, false);
 	
 		if (ret != null)
 		{
@@ -429,11 +432,6 @@ function changeDiff(?change:Int = 0)
 	positionHighscore();
 }
 
-function onBeatHit() {
-	if (curBeat % 2 == 0 && canBopCam)
-		iconArray[curSelected].scale.set(1.2, 1.2);
-}
-
 var shittyTmr:FlxTimer;
 function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 {
@@ -456,7 +454,7 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 	if (curSelected >= songs.length)
 		curSelected = 0;
 
-	var songName:String = songs[curSelected].name;
+	var songName:String = songs[curSelected].songName;
 	songArtist = songs[curSelected].composer;
 
 	switch (FlxG.save.data.freeplayMenuList)
@@ -482,8 +480,8 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 
 	// selector.y = (70 * curSelected) + 30;
 
-	intendedScore = Highscore.getScore(songs[curSelected].name, curDifficulty);
-	intendedRating = Highscore.getRating(songs[curSelected].name, curDifficulty);
+	intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
+	intendedRating = Highscore.getRating(songs[curSelected].songName, curDifficulty);
 
 	var bullShit:Int = 0;
 
@@ -513,7 +511,7 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 	if (ClientPrefs.shaders) // to prevent lag
 	{
 		// ah yes, formatting made by vsc itself - jason
-		switch (songs[curSelected].name.toLowerCase().replace(" ", "-"))
+		switch (songs[curSelected].songName.toLowerCase().replace(" ", "-"))
 		{
 			case 'bless':
 				FlxG.camera.shake(0.01, 0.001);
@@ -584,21 +582,4 @@ function positionHighscore() {
 	scoreBG.x = FlxG.width - (scoreBG.scale.x / 2);
 	diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
 	diffText.x -= diffText.width / 2;
-}
-
-function getBPM():Float
-{
-	switch (songs[curSelected].name.toLowerCase().replace(" ", "-"))
-	{
-		case 'devilish-deal': bpm = 90;
-		case 'isolated': bpm = 165;
-		case 'lunacy': bpm = 188;
-		case 'delusional', 'birthday', 'bless': bpm = 175;
-		case 'hunted': bpm = 160;
-		case 'laugh-track': bpm = 200;
-		case 'malfunction': bpm = 166;
-		case 'twisted-grins': bpm = 390;
-		case "don't-cross!": bpm = 140;
-	}
-	return bpm;
 }

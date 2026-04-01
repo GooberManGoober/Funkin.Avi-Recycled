@@ -3,8 +3,6 @@ import funkin.utils.MathUtil;
 
 var staticEffect:FlxRuntimeShader = newShader('tvStatic');
 
-var grayScale:FlxRuntimeShader = newShader('grayScale');
-
 var shaderAnim:Float = 0;
 
 function onLoad()
@@ -14,13 +12,13 @@ function onLoad()
 
     beatsPerZoom = 8;
 
-    var office:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('favi/stages/trueGrinsOfSins/images/office'));
+    var office:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('Funkin_avi/stages/trueGrinsOfSins/images/office'));
     office.antialiasing = true;
     office.scrollFactor.set(1, 1);
     office.active = false;
     add(office);
 
-    var chair:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('favi/stages/trueGrinsOfSins/images/chair'));
+    var chair:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('Funkin_avi/stages/trueGrinsOfSins/images/chair'));
     chair.antialiasing = true;
     chair.scrollFactor.set(1, 1);
     chair.active = false;
@@ -34,7 +32,7 @@ function onCreatePost()
 {
     playHUD.updateIconScale = false;
     
-    var funiLight:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('favi/stages/trueGrinsOfSins/images/light'));
+    var funiLight:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('Funkin_avi/stages/trueGrinsOfSins/images/light'));
     funiLight.antialiasing = true;
     funiLight.scrollFactor.set(1, 1);
     funiLight.alpha = 0.6;
@@ -51,8 +49,6 @@ function onCreatePost()
                 new ShaderFilter(staticEffect)
             ];
         }
-
-        camHUD.filters = [new ShaderFilter(grayScale)];
     }
 
     boyfriend.danceEveryNumBeats *= 2;
