@@ -1,0 +1,317 @@
+{
+	"extraSkin": "NOTE_assets",
+	"singAnimations": [
+		"singLEFT",
+		"singDOWN",
+		"singUP",
+		"singRIGHT"
+	],
+	"splashesEnabled": true,
+	"playerSkin": "NOTE_assets",
+	"receptorAnimations": [
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "static",
+				"looping": false,
+				"xmlName": "arrowLEFT"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "pressed",
+				"looping": false,
+				"xmlName": "left press"
+			},
+			{
+				"offsets": [
+					-1,
+					-1
+				],
+				"fps": 24,
+				"anim": "confirm",
+				"looping": false,
+				"xmlName": "left confirm"
+			}
+		],
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "static",
+				"looping": false,
+				"xmlName": "arrowDOWN"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "pressed",
+				"looping": false,
+				"xmlName": "down press"
+			},
+			{
+				"offsets": [
+					-2,
+					0
+				],
+				"fps": 24,
+				"anim": "confirm",
+				"looping": false,
+				"xmlName": "down confirm"
+			}
+		],
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "static",
+				"looping": false,
+				"xmlName": "arrowUP"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "pressed",
+				"looping": false,
+				"xmlName": "up press"
+			},
+			{
+				"offsets": [
+					-1,
+					-1
+				],
+				"fps": 24,
+				"anim": "confirm",
+				"looping": false,
+				"xmlName": "up confirm"
+			}
+		],
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "static",
+				"looping": false,
+				"xmlName": "arrowRIGHT"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "pressed",
+				"looping": false,
+				"xmlName": "right press"
+			},
+			{
+				"offsets": [
+					-1,
+					0
+				],
+				"fps": 24,
+				"anim": "confirm",
+				"looping": false,
+				"xmlName": "right confirm"
+			}
+		]
+	],
+	"noteSplashAnimations": [
+		{
+			"xmlName": "note splash",
+			"offsets": [
+				104,
+				103
+			],
+			"anim": "note0"
+		},
+		{
+			"xmlName": "note splash",
+			"offsets": [
+				106,
+				108
+			],
+			"anim": "note1"
+		},
+		{
+			"xmlName": "note splash",
+			"offsets": [
+				110,
+				108
+			],
+			"anim": "note2"
+		},
+		{
+			"xmlName": "note splash",
+			"offsets": [
+				112,
+				110
+			],
+			"anim": "note3"
+		}
+	],
+	"noteAnimations": [
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "scroll0",
+				"looping": false,
+				"xmlName": "purple"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "hold0",
+				"looping": false,
+				"xmlName": "purple hold piece"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "holdend0",
+				"looping": false,
+				"xmlName": "purple hold end"
+			}
+		],
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "scroll1",
+				"looping": false,
+				"xmlName": "blue"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "hold1",
+				"looping": false,
+				"xmlName": "blue hold piece"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "holdend1",
+				"looping": false,
+				"xmlName": "blue hold end"
+			}
+		],
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "scroll2",
+				"looping": false,
+				"xmlName": "green"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "hold2",
+				"looping": false,
+				"xmlName": "green hold piece"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "holdend2",
+				"looping": false,
+				"xmlName": "green hold end"
+			}
+		],
+		[
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "scroll3",
+				"looping": false,
+				"xmlName": "red"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "hold3",
+				"looping": false,
+				"xmlName": "red hold piece"
+			},
+			{
+				"offsets": [
+					0,
+					0
+				],
+				"fps": 24,
+				"anim": "holdend3",
+				"looping": false,
+				"xmlName": "red hold end"
+			}
+		]
+	],
+	"pixelSize": [
+		4,
+		5
+	],
+	"noteSplashSkin": "pixel-splashes",
+	"globalSkin": "NOTE_assets",
+	"antialiasing": true,
+	"inGameColoring": true,
+	"isPixel": false,
+	"opponentSkin": "NOTE_assets",
+	"scale": 0.7,
+	"sustainSuffix": "ENDS"
+}

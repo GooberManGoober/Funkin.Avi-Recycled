@@ -200,100 +200,45 @@ function onCreate()
 	add(menuItems);
 
 	var scale:Float = 0.8;
-	if(optionShit.length > 6) {
-		scale = 0.6 / optionShit.length;
+
+	for (i in 0...optionShit.length)
+	{
+		var menuItem:FlxSprite = new FlxSprite(700, 0);
+		menuItem.scale.x = scale;
+		menuItem.scale.y = scale;
+		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
+		menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
+		menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+		menuItem.animation.play('idle');
+		menuItem.ID = i;
+		menuItems.add(menuItem);
+		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
+		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
+		menuItem.updateHitbox();
+
+		switch (menuItem.ID)
+		{
+			case 0:
+				menuItem.y = 100;
+			case 1:
+				menuItem.y = 250;
+			case 2:
+				menuItem.y = 425;
+			case 3:
+				menuItem.y = 600;
+		}
 	}
 
-		// Story Mode
-		var menuItem:FlxSprite = new FlxSprite(700, 100);
-		menuItem.scale.x = scale;
-		menuItem.scale.y = scale;
-		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[0]);
-		menuItem.animation.addByPrefix('idle', optionShit[0] + " basic", 24);
-		menuItem.animation.addByPrefix('selected', optionShit[0] + " white", 24);
-		menuItem.animation.play('idle');
-		menuItem.ID = 0;
-		//menuItem.screenCenter(X);
-		menuItems.add(menuItem);
-		var scr:Float = (optionShit.length - 2) * 0.135;
-		if(optionShit.length < 6) scr = 0;
-		menuItem.scrollFactor.set(0, scr);
-		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
-		menuItem.updateHitbox();
-
-		// Freeplay
-		var menuItem:FlxSprite = new FlxSprite(700, 250);
-		menuItem.scale.x = scale;
-		menuItem.scale.y = scale;
-		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[1]);
-		menuItem.animation.addByPrefix('idle', optionShit[1] + " basic", 24);
-		menuItem.animation.addByPrefix('selected', optionShit[1] + " white", 24);
-		menuItem.animation.play('idle');
-		menuItem.ID = 1;
-		//menuItem.screenCenter(X);
-		menuItems.add(menuItem);
-		var scr:Float = (optionShit.length - 2) * 0.135;
-		if(optionShit.length < 6) scr = 1;
-		menuItem.scrollFactor.set(0, scr);
-		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
-		menuItem.updateHitbox();
-
-		// Credits
-		var menuItem:FlxSprite = new FlxSprite(700, 425);
-		menuItem.scale.x = scale;
-		menuItem.scale.y = scale;
-		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[2]);
-		menuItem.animation.addByPrefix('idle', optionShit[2] + " basic", 24);
-		menuItem.animation.addByPrefix('selected', optionShit[2] + " white", 24);
-		menuItem.animation.play('idle');
-		menuItem.ID = 2;
-		//menuItem.screenCenter(X);
-		menuItems.add(menuItem);
-		var scr:Float = (optionShit.length - 2) * 0.135;
-		if(optionShit.length < 6) scr = 2;
-		menuItem.scrollFactor.set(0, scr);
-		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
-		menuItem.updateHitbox();
-		
-		// Settings
-		var menuItem:FlxSprite = new FlxSprite(700, 600);
-		menuItem.scale.x = scale;
-		menuItem.scale.y = scale;
-		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[3]);
-		menuItem.animation.addByPrefix('idle', optionShit[3] + " basic", 24);
-		menuItem.animation.addByPrefix('selected', optionShit[3] + " white", 24);
-		menuItem.animation.play('idle');
-		menuItem.ID = 3;
-		//menuItem.screenCenter(X);
-		menuItems.add(menuItem);
-		var scr:Float = (optionShit.length - 2) * 0.135;
-		if(optionShit.length < 6) scr = 3;
-		menuItem.scrollFactor.set(0, scr);
-		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
-		menuItem.updateHitbox();
-		
-	var versionShit:FlxText = new FlxText(12, FlxG.height - 84, 0, "Funkin.avi v2.0.0", 12);
-	versionShit.scrollFactor.set();
-	versionShit.setFormat(Paths.font("DisneyFont.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	versionShit.cameras = [camFilter];
-	add(versionShit);
-
-	var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Nightmare Vision Engine v" + Main.NMV_VERSION, 12);
-	versionShit.scrollFactor.set();
-	versionShit.setFormat(Paths.font("DisneyFont.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	versionShit.cameras = [camFilter];
-	add(versionShit);
-
-	var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Friday Night Funkin' v0.2.8", 12);
-	versionShit.scrollFactor.set();
-	versionShit.setFormat(Paths.font("DisneyFont.ttf"), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	versionShit.cameras = [camFilter];
-	add(versionShit);
-
+	final ver = 'Nightmare Vision Engine v${Main.NMV_VERSION}\nPsych Engine v${Main.PSYCH_VERSION}\nFriday Night Funkin\' v${Main.FUNKIN_VERSION}';
+	
+	final verionDesc:FlxText = new FlxText(12, 0, 0, ver, 22);
+	verionDesc.setFormat(Paths.font('DisneyFont'), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	verionDesc.borderSize = 1.5;
+	verionDesc.y = FlxG.height - verionDesc.height - 12;
+	verionDesc.scrollFactor.set();
+	verionDesc.cameras = [camFilter];
+	add(verionDesc);
+	
 	newBox(-400, FlxG.height - 80, {
 		text: 'Freeplay is Locked!', 
 		subText: 'Complete Episode 1 to Unlock this Menu!',
@@ -327,7 +272,7 @@ function onCreate()
 	grain.cameras = [camFilter];
 
 	if (FlxG.stage.window.title.contains('*cantaloupe jumpscare*'))
-		coolMenuEvents(3);
+		cantaloupeJumpscare();
 
 	if (Application.current.window.title.contains('10 Seconds before I shut your fucking game again >:('))
 	{
@@ -336,6 +281,8 @@ function onCreate()
 			System.exit(0);
 		});
 	}
+
+	FlxTween.tween(FlxG.sound.music, {pitch: 1}, 1.2);
 	
 	defaultShader2 = newShader('monitorFilter');
 	if(ClientPrefs.shaders)
@@ -517,60 +464,15 @@ function changeItem(huh:Int = 0)
 	});
 }
 
-function coolMenuEvents(getEvent:Int)
+function cantaloupeJumpscare()
 {
-	switch (getEvent)
-	{
-		case 1:
-			var redGradient:FlxSprite = new FlxSprite(0, 0, Paths.image('Funkin_avi/filters/redGradient'));
-			redGradient.setGraphicSize(Std.int(redGradient.width * 0.7));
-			redGradient.screenCenter();
-			redGradient.cameras = [camFilter];
-			FlxTween.tween(redGradient, {alpha: 0}, 0.9, {onComplete: sex -> redGradient.destroy()});
-			add(redGradient);
-			FlxG.sound.play(Paths.sound('funkinAVI/oof'), 1, false, null, true);
-
-		case 3:
-			var cantaloupe = new FlxSprite(-200, -100).loadGraphic(Paths.image('Funkin_avi/cantaloupe'));
-			cantaloupe.scale.set(0.05, 0.05);
-			cantaloupe.screenCenter();
-			FlxTween.tween(cantaloupe.scale, {x: 2, y: 2}, 3, {ease: FlxEase.bounceOut, onComplete: _ -> FlxTween.tween(cantaloupe, {alpha: 0}, 2)});
-			add(cantaloupe);
-			FlxG.camera.shake(0.02, 5);
-			FlxG.sound.play(Paths.sound('funkinAVI/fnaf_jumpscare'), 0.7, false, null, true, () -> cantaloupe.destroy());
-
-		case 4:
-			if (FlxG.save.data.birthdayLocky == "obtained" || FlxG.save.data.birthdayLocky == "beaten")
-			{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				switch(howmuchyoufuckinkeptdoingit) {
-					case 0:
-						sendMessage('You\'ve already unlocked this song!', 'Go to freeplay to play the song.');
-					case 1:
-						sendMessage('Can\'t you understand?', 'You already unlocked the song.');
-					case 2:
-						sendMessage('Can\'t you read?', 'This. Is. Already. Unlocked.');
-					case 3:
-						sendMessage('go to freeplay menu.', 'its already unlocked.');
-					case 4:
-						sendMessage('IF YOU KEEP DOING IT THEN', 'IM GONNA DO SOMETHING BAD');
-					case 5:
-						sendMessage('...', 'Im closing the game. Fuck you');
-						new FlxTimer().start(2, function(tmr:FlxTimer){
-							System.exit(0);
-						});
-				}
-				howmuchyoufuckinkeptdoingit++;
-			}
-			else
-			{
-				FlxG.save.data.birthdayLocky = 'obtained';
-
-				FlxG.save.flush();
-				FlxG.sound.play(Paths.sound('funkinAVI/easterEggSound'));
-				sendMessage('Something has unlocked!', 'Check freeplay to see what has been unlocked.');
-			}
-	}
+	var cantaloupe = new FlxSprite(-200, -100).loadGraphic(Paths.image('Funkin_avi/cantaloupe'));
+	cantaloupe.scale.set(0.05, 0.05);
+	cantaloupe.screenCenter();
+	FlxTween.tween(cantaloupe.scale, {x: 2, y: 2}, 3, {ease: FlxEase.bounceOut, onComplete: _ -> FlxTween.tween(cantaloupe, {alpha: 0}, 2)});
+	add(cantaloupe);
+	FlxG.camera.shake(0.02, 5);
+	FlxG.sound.play(Paths.sound('funkinAVI/fnaf_jumpscare'), 0.7, false, null, true, () -> cantaloupe.destroy());
 }
 
 var box:FlxSprite;

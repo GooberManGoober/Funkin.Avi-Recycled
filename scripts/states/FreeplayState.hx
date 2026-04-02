@@ -23,6 +23,7 @@ typedef SongMetadata =
 	var composer:String;
 	var difficultyRank:String;
 	var textColor:FlxColor;
+	var hasVariations:Bool;
 }
 
 var songs:Array<SongMetadata> = [];
@@ -103,7 +104,7 @@ function onCreate()
 
 			addSong('Hunted', 3, 'goofy', FlxColor.fromRGB(94, 28, 35), 'JBlitz', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			addSong('Laugh Track', 3, 'ricky', FlxColor.fromRGB(60, 60, 60), 'Yama haki/Toko', 'HARD', FlxColor.fromRGB(255, 187, 187));
-			addSong('Bless', 3, 'whitenew', FlxColor.WHITE, 'PualTheUnTruest', 'HARD', FlxColor.fromRGB(255, 187, 187));
+			addSong('Bless', 3, 'whitenew', FlxColor.WHITE, 'Lasagnacat (Legacy composed by: END_SELLA)', 'HARD', FlxColor.fromRGB(255, 187, 187), true);
 			addSong("Don't Cross!", 3, 'cross', FlxColor.fromRGB(255, 0, 0), 'Yama haki/Toko', 'GOOD LUCK', FlxColor.fromRGB(201, 0, 0));
 			addSong('Neglection', 3, 'pnm', FlxColor.fromRGB(117, 86, 27), 'AttackPan', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			addSong('Twisted Grins', 3, 'smile', FlxColor.fromRGB(54, 38, 38), 'ForFurtherNotice', 'HARD', FlxColor.fromRGB(255, 187, 187));
@@ -229,7 +230,7 @@ function onCloseSubstate() {
 	persistentUpdate = true;
 }
 
-function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int, composer:String, rankName:String, rankColor:FlxColor)
+function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int, composer:String, rankName:String, rankColor:FlxColor, ?hasVariations:Bool = false)
 {
 	songs.push({
 		songName: songName,
@@ -238,7 +239,10 @@ function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int, 
 		color: color,
 		composer: composer,
 		difficultyRank: rankName,
-		textColor: rankColor
+		textColor: rankColor,
+
+		//new duff
+		hasVariations: hasVariations
 	});
 }
 
@@ -253,8 +257,6 @@ function changeBotPlay(){
 
 	return;
 }
-
-var instPlaying:Int = -1;
 
 var holdTime:Float = 0;
 
@@ -377,19 +379,7 @@ function onUpdate(elapsed)
 		FlxG.mouse.visible = true;
 	}
 
-	if (FlxG.keys.justPressed.SPACE)
-	{
-		if (instPlaying != curSelected)
-		{
-			if (FlxG.sound.music != null) FlxG.sound.music.volume = 0;
-			Mods.currentModDirectory = songs[curSelected].folder;
-			PlayState.SONG = Chart.fromSong(songs[curSelected].songName, curDifficulty);
-			
-			FunkinSound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-			instPlaying = curSelected;
-		}
-	}
-	else if (accepted)
+	if (accepted)
 	{
 		persistentUpdate = false;
 
@@ -397,24 +387,38 @@ function onUpdate(elapsed)
 			colorTween.cancel();
 		}
 
-		var ret = PlayState.prepareForSong(songs[curSelected].songName, curDifficulty, false);
-	
-		if (ret != null)
+		if (songs[curSelected].hasVariations)
 		{
-			trace('Failed to load song. \nException: ' + ret);
-			
+			switch (songs[curSelected].songName)
+			{
+				case "Bless":
+					openSubState(new ScriptedSubstate("songSelection/BlessVariationSelector"));
+			}
+			persistentUpdate = false;
+
 			return;
 		}
-
-		// ignore that im using the short "if" thing is for less code stuff due to lazyness lol
-		FlxTween.tween(FlxG.camera, {zoom: 2.5}, 1.5, {ease: FlxEase.expoInOut});
-		new FlxTimer().start(0.7, function(e)
+		else
 		{
-			FlxG.sound.music.stop();
-			FlxG.switchState(() -> {
-				new PlayState();
-			}, true);
-		});
+			var ret = PlayState.prepareForSong(songs[curSelected].songName, curDifficulty, false);
+		
+			if (ret != null)
+			{
+				trace('Failed to load song. \nException: ' + ret);
+				
+				return;
+			}
+
+			// ignore that im using the short "if" thing is for less code stuff due to lazyness lol
+			FlxTween.tween(FlxG.camera, {zoom: 2.5}, 1.5, {ease: FlxEase.expoInOut});
+			new FlxTimer().start(0.7, function(e)
+			{
+				FlxG.sound.music.stop();
+				FlxG.switchState(() -> {
+					new PlayState();
+				}, true);
+			});
+		}
 	}
 }
 

@@ -28,18 +28,38 @@ var devilishGaming:FunkinVideoSprite;
 
 function onLoad()
 {
-    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/dd-bg"));
-    bg.scale.set(0.75, 0.75);
+    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/sky"));
+    bg.scale.set(0.84, 0.84);
+    bg.scrollFactor.set(0.8, 0.8);
     add(bg);
+
+    var buildings:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/back-buildings"));
+    buildings.scale.set(0.84, 0.84);
+    buildings.scrollFactor.set(0.9, 0.9);
+    add(buildings);
+
+    var alley:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/alley_and_bench"));
+    alley.scale.set(0.84, 0.84);
+    add(alley);
 }
 
 function onCreatePost()
 {
     healthBar.leftToRight = true;
     
-    overlay = new FlxSprite(-640, 170).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/dd-overlay"));
-    overlay.scrollFactor.set(1.15, 1.15);
-    add(overlay);
+    var rain:FlxSprite = new FlxSprite(-600, 130);
+    rain.frames = Paths.getSparrowAtlas("Funkin_avi/stages/ddStage/images/Rain");
+    rain.animation.addByPrefix("crying bitch", "rain but the side", 30, true);
+    rain.scale.set(2.1, 2.1);
+    rain.scrollFactor.set(1.1, 1.1);
+    rain.animation.play("crying bitch");
+    rain.alpha = 0.5;
+    add(rain);
+
+    var fgWall:FlxSprite = new FlxSprite(-600, 290).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/big-ass-wall"));
+    fgWall.scale.set(0.84, 0.84);
+    fgWall.scrollFactor.set(1.18, 1.18);
+    add(fgWall);
 
     devilishGaming = new FunkinVideoSprite(false);
     devilishGaming.load(Paths.video("devilishIntro"), [FunkinVideoSprite.muted]);
@@ -168,6 +188,7 @@ function onSongStart()
     modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
         FlxTween.tween(devilishGaming, {alpha: 0}, 3, {ease: FlxEase.sineOut});
         FlxTween.tween(camGame, {alpha: 1}, 3, {ease: FlxEase.sineOut});
+        defaultCamZoom = 1.3;
         manageLyrics('satandd', 'In the rain...', 'betterSatanFont.ttf', 30, 2, 'sineInOut', 0.1);
     });
 
@@ -180,6 +201,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(28 * 4, (s,s2)->{ 
+        defaultCamZoom = 0.55;
         manageLyrics('satandd', '...What is on your mind?', 'betterSatanFont.ttf', 30, 2.5, 'sineInOut', 0.06);
     });
 
@@ -209,6 +231,7 @@ function onSongStart()
     }
 
     modManager.queueFuncOnce(60 * 4, (s,s2)->{ 
+        defaultCamZoom = 1.2;
         FlxTween.tween(camHUD, {alpha: 0.4}, 0.75, {ease: FlxEase.quartInOut});
         FlxTween.tween(dad.colorTransform, {redMultiplier: 1, blueMultiplier: 1, greenMultiplier: 1}, 2, {ease: FlxEase.circInOut});
         if (ClientPrefs.shaders)
@@ -247,6 +270,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
+        defaultCamZoom = 0.55;
         FlxTween.tween(camHUD, {alpha: 1}, 1.2, {ease: FlxEase.quartInOut});
     });
 
@@ -289,10 +313,17 @@ function onBeatHit()
         FlxTween.tween(gradient, {alpha: 0.6}, 2);
     }
 
-    if(curBeat >= 112)
+    if(curBeat == 112)
     {
+        isCameraOnForcedPos = true;
+        FlxTween.tween(camFollow, {x: camFollow.x - 150, y: 1380}, 14, {ease: FlxEase.sineInOut});
+        FlxTween.tween(FlxG.camera, {zoom: 2}, 14, {ease: FlxEase.sineInOut});
         FlxTween.tween(gradient, {alpha: 0.9}, 2);
-        FlxG.camera.zoom += 0.04;
+    }
+
+    if(curBeat >= 112) // doesn't make sense to but a "&& curBeat < idk"
+    {
+        // not including camGame cus it bugs out
         camHUD.zoom += 0.053;
     }
 

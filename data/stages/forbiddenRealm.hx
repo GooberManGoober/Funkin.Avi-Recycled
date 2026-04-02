@@ -3,9 +3,6 @@ import funkin.utils.CoolUtil;
 
 //var mickeyEmitter:FlxEmitter;
 var fuckingsquares:FlxSprite;
-var whiteBG:FlxSprite;
-var glitchBG:FlxRuntimeShader;
-var staticBG:FlxRuntimeShader;
 
 var chromZoomShader:FlxRuntimeShader = newShader('aberration');
 var chromNormalShader:FlxRuntimeShader = newShader('aberrationDefault');
@@ -22,9 +19,6 @@ function onLoad()
     PlayState.isPixelStage = true;
     defaultCamZoom = 0.75;
     //spawnGirlfriend = false;
-
-    staticBG = newShader('tvStatic');
-    glitchBG = newShader('vignetteGlitch');
 
     fuckingsquares = new FlxSprite(-750, -850);
     fuckingsquares.loadGraphic(Paths.image(pathway + 'malfunctionBG-NEW'));
@@ -97,6 +91,7 @@ function onCreatePost()
         foreground.add(mickeyEmitter);
     }
 */
+/*
     if (ClientPrefs.shaders)
     {
         if(!ClientPrefs.lowQuality)
@@ -117,6 +112,7 @@ function onCreatePost()
             });
         }
     }
+*/
 
     camGame.alpha = 0.001;
 	camHUD.alpha = 0.001;
@@ -135,10 +131,6 @@ function onUpdate()
             chromZoomShader.setFloat('aberration', chromEffect);
             chromZoomShader.setFloat('effectTime', chromEffect);
         }
-        glitchBG.setFloat('time', shaderAnim);
-        glitchBG.setFloat('prob', shaderAnim);
-        staticBG.setFloat('uTime', shaderAnim);
-        staticBG.setFloat('iTime', shaderAnim);
     }
 }
 
@@ -231,7 +223,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(324 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('mal-prepare');
+        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-prepare');
         count.scrollFactor.set();
         count.updateHitbox();
         count.screenCenter();
@@ -241,7 +233,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(325 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('mal-ready');
+        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-ready');
         count.scrollFactor.set();
         count.updateHitbox();
         count.screenCenter();
@@ -252,7 +244,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(326 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('mal-set');
+        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-set');
         count.scrollFactor.set();
         count.updateHitbox();
         count.screenCenter();
@@ -263,7 +255,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(327 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('mal-go');
+        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-go');
         count.scrollFactor.set();
         count.updateHitbox();
         count.screenCenter();

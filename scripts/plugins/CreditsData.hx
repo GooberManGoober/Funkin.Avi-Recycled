@@ -11,7 +11,7 @@ typedef PauseData =
 var devilishDeal:String = '{
 	"settings":
 	[
-		"Art: Domingo, Moe, Oyxz,\n& SkylarFilm\n\nChart: Purg\n\nCode: ThatOneSillyGuy & Jason\n\nMusic: obscurity.", -40, -5
+		"Art: Domingo, Moe, Hikki,\n& SkylarFilm\n\nChart: Purg\n\nCode: ThatOneSillyGuy & Jason\n\nMusic: obscurity.", -40, -5
 	]
 }';
     var isolated:String = '{
@@ -29,7 +29,7 @@ var devilishDeal:String = '{
     var delusional:String = '{
 	"settings":
 	[
-		"Art: Domingo, Moe, BladzAMC_Emerald,\nTeelbe, Oyxz, GreyDoodlez,\nAustinWProductions\n& ThatOneSillyGuy\n\nChart: Dreupy\n\nCode: Jason, MalyPlus\n& ThatOneSillyGuy\n\nMusic: FR3SHMoure\n\nVoice Actor: BonoanAnything", -21, -43
+		"Art: Domingo, Moe, BladzAMC_Emerald,\nTeelbe, Hikki, GreyDoodlez,\nAustinWProductions\n& ThatOneSillyGuy\n\nChart: Dreupy\n\nCode: Jason, MalyPlus\n& ThatOneSillyGuy\n\nMusic: FR3SHMoure\n\nVoice Actor: BonoanAnything", -21, -43
 	]
 }';
     // fuck you goofy fnf
@@ -42,19 +42,19 @@ var devilishDeal:String = '{
     var laughTrack:String = '{
 	"settings":
 	[
-		"Art: Just_Kuro, Jason &\nGreyDoodlez\n\nChart: ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: PualTheUnTruest", -35, -5
+		"Art: Just_Kuro, Jason &\nGreyDoodlez\n\nChart: ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: Lasagnacat", -35, -5
 	]
 }';
     var bless:String = '{
 	"settings":
 	[
-		"Art: ThatOneSillyGuy\nAustinWProductions, JDrive, Teelbe\n& Moe\n\nChart: ThatOneSillyGuy\n\nCode: Jason, MalyPlus \n& ThatOneSillyGuy\n\nMusic: PualTheUnTruest", 33, -30
+		"Art: ThatOneSillyGuy\nAustinWProductions, JDrive, Teelbe\n& Moe\n\nChart: ThatOneSillyGuy\n\nCode: Jason, MalyPlus \n& ThatOneSillyGuy\n\nMusic: Lasagnacat", 33, -30
 	]
 }';
     var dontCross:String = '{
 	"settings":
 	[
-		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: PualTheUnTruest", -55, 20
+		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: Lasagnacat", -55, 20
 	]
 }';
 	var twistedGrins:String = '{
@@ -82,6 +82,13 @@ var devilishDeal:String = '{
 	]
 }';
 
+var blessLegacy:String = '{
+	"settings":
+	[
+		"Art: ThatOneSillyGuy\nAustinWProductions, JDrive, Teelbe\n& Moe\n\nChart: ThatOneSillyGuy\n\nCode: Jason, \nThatOneSillyGuy\n\nMusic: END_SELLA", -40, -30
+	]
+}';
+
 var json:String = null;
 var array:Array<Dynamic>;
 var data:PauseData;
@@ -101,6 +108,7 @@ function jsonStuff(fuckingName:String)
         case "Hunted": json = hunted;
         case "Laugh Track": json = laughTrack;
         case "Bless": json = bless;
+		case "Bless Legacy": json = blessLegacy;
         case "Don't Cross!": json = dontCross;
         case "Twisted Grins": json = twistedGrins;
         case "Malfunction": json = malfunction;
@@ -124,7 +132,7 @@ function getCharterCredits(name)
 		case "Devilish Deal", "Twisted Grins": charter = "Purg";
 		case "Delusional", "Birthday": charter = "Dreupy";
 		case "Hunted": charter = "JustJasonLol & ThatOneSillyGuy";
-		case "Lunacy", "Isolated", "Malfunction", "Laugh Track", "Neglection": charter = "ThatOneSillyGuy"; 
+		case "Lunacy", "Isolated", "Malfunction", "Laugh Track", "Neglection", "Bless Legacy": charter = "ThatOneSillyGuy"; 
 		case "Don't Cross!": charter = "ThatOneSillyGuy & fakeburrito123";
 		default: charter = "Unknown";
 	}
@@ -154,10 +162,11 @@ function getArtistName(name)
 		case "Birthday", "Delusional": songArtist = "FR3SHMoure";
 		case "Hunted": songArtist = "JBlitz";
 		case "Laugh Track", "Don't Cross!": songArtist = "Yama haki/Toko";
-		case "Bless": songArtist = "PualTheUnTruest";
+		case "Bless": songArtist = "Lasagnacat";
 		case "War Dilemma": songArtist = "Sayan Sama & obscurity.";
 		case "Twisted Grins": songArtist = "ForFurtherNotice";
 		case "Neglection": songArtist = "AttackPan";
+		case "Bless Legacy": songArtist = "END_SELLA";
 		default: songArtist = "Unknown";
 	}
 	return songArtist;

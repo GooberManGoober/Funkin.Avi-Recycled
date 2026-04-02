@@ -15,31 +15,31 @@ function resetCharPos()
 {
     switch (PlayState.SONG.stage)
     {
+        case 'vaultRoomLegacy':
+            switch (boyfriend.curCharacter)
+            {
+                case 'bfghost':
+                    boyfriend.setPosition(300, -450);
+                default:
+                    boyfriend.setPosition(950, 520);
+            }
+            dad.setPosition(0, 100);
         case 'abandonedStreet':
             switch (dad.curCharacter)
             {
                 case 'delusional-mickey':
-                    dad.setPosition(-260, 120);
-                case 'mickey-delu-intro':
-                    dad.setPosition(-210, 180);
-                case 'death-part-1':
-                    dad.setPosition(-450, 100);
-                case 'death-part-2':
-                    dad.setPosition(-430, 100);
-                case 'delumickey':
-                    dad.setPosition(-870, -185);
-                case 'deluMick-eyeless':
-                    dad.setPosition(-870, -185);
+                    dad.setPosition(-260, 220);
+                case 'mick-lunacyEnd':
+                    dad.setPosition(-750, -110);
                 default:
-                    dad.setPosition(-870, -190);
+                    dad.setPosition(-870, -90);
             }
             switch (boyfriend.curCharacter)
             {
-                case 'evildelu': boyfriend.setPosition(550, 190);
-                case 'bf-delu-intro': boyfriend.setPosition(750, 350);
-                case 'bf-demon': boyfriend.setPosition(275, 65);
+                case 'evildelu': boyfriend.setPosition(550, 290);
+                case 'bf-demon': boyfriend.setPosition(275, 165);
                 case 'Mickey-Bedroom': boyfriend.setPosition(575, 50);
-                default: boyfriend.setPosition(275, 50);
+                default: boyfriend.setPosition(275, 150);
             }
         case 'forestNew':
             // It was before perfect but then Jason had put the new spritesheet... im gonna explode :) - MalyPlus
@@ -89,8 +89,8 @@ function resetCharPos()
             dad.setPosition(-400, -150);
             boyfriend.setPosition(900, 300);
         case 'ddStage':
-            boyfriend.setPosition(770, 450);
-            dad.setPosition(400, -600);
+            boyfriend.setPosition(1450, 1100);
+		    dad.setPosition(1660, 120);
         default:
             boyfriend.setPosition(770, 450);
             dad.setPosition(100, 100);

@@ -32,12 +32,15 @@ function onCreate()
 
 	grpCats = new FlxTypedGroup();
 	add(grpCats);
+
 	for (i in 0...freeplayCats.length)
 	{
 		var catsText:Alphabet = new Alphabet(5, 320, freeplayCats[i], true, false);
 		catsText.isMenuItem = true;
+		catsText.changeAxis = FlxAxes.Y;
 		catsText.targetY = i;
 		catsText.snapToTarget();
+		catsText.screenCenter(FlxAxes.X);
 		grpCats.add(catsText);
 	}
 

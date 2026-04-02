@@ -292,6 +292,8 @@ function onUpdate(elapsed)
 							PlayState.chartingMode = false;
 							PlayState.deathCounter = 0;
 
+							Conductor.bpm = 60;
+
 							if (PlayState.isStoryMode)
 							{
 								FlxG.switchState(new ScriptedState('StoryMenu'));
@@ -301,7 +303,7 @@ function onUpdate(elapsed)
 							{
 								switch (PlayState.SONG.song)
 								{
-									case 'Devilish Deal' | 'Isolated' | 'Lunacy' | 'Delusional':
+									case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
 										FlxG.save.data.freeplayMenuList = 0;
 										FlxG.save.flush();
 										FlxG.switchState(new ScriptedState('FreeplayState'));

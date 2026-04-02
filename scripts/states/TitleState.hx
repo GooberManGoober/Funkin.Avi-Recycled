@@ -62,7 +62,7 @@ var windowArray:Array<Any> = [
 	"Hi, wanna see me glitch?",
 	"R.I.P: Welcome Old (Definitely The Best Banger Ever) /j",
 	"POV: Your Mom",
-	".edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - iva.niknuF",
+	".edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - delcyceR :iva.niknuF",
 	"Play Wednesday's Infidelity!",
 	"Now with more depression!",
 	"Now with more suicide!",
@@ -475,9 +475,9 @@ function windowFixesAndEvents()
 			System.exit(0);
 		});
 	}
-	else if(Application.current.window.title.contains("Funkin.avi: Recycled - .edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - iva.niknuF"))
+	else if(Application.current.window.title.contains("Funkin.avi: Recycled - .edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - delcyceR :iva.niknuF"))
 	{
-		Application.current.window.title = ".edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - depparcS :iva.niknuF";
+		Application.current.window.title = ".edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - delcyceR :iva.niknuF";
 	}
 	else if(Application.current.window.title.contains("Funkin.avi: Recycled - fuckin.mp3 - jsjsjsdjdsjdsjadsjjads"))
 	{

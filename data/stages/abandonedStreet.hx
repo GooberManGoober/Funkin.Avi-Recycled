@@ -40,7 +40,6 @@ var heatWaveEffect:FlxRuntimeShader = newShader('heatWave');
 
 var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
 
-var colorsOrSmthElse:FlxSprite;
 var floor:FlxSprite;
 var stageCurtains:FlxSprite;
 var rain:FlxSprite;
@@ -82,21 +81,16 @@ function onLoad()
     defaultCamZoom = 0.87;
     cameraSpeed = 1;
     
-    colorsOrSmthElse = new FlxSprite(-500, -100).loadGraphic(Paths.image(pathway + 'bg'));
-    colorsOrSmthElse.antialiasing = ClientPrefs.globalAntialiasing;
-    colorsOrSmthElse.scale.set(1.2, 1.2);
-    add(colorsOrSmthElse);
-
     floor = new FlxSprite(-500, -100).loadGraphic(Paths.image(pathway + 'street'));
     floor.antialiasing = ClientPrefs.globalAntialiasing;
-    floor.scale.set(1.2, 1.2);
+    floor.scale.set(1.5, 1.5);
     floor.scrollFactor.set(1, 1);
     floor.active = false;
     add(floor);	
 
     if (PlayState.SONG.song == 'Delusional')
     {	
-        fakeLightOfHope = new FlxSprite(-990, 1600).loadGraphic(Paths.image(pathway + 'falseHope'));
+        fakeLightOfHope = new FlxSprite(-990, 1500).loadGraphic(Paths.image(pathway + 'falseHope'));
         fakeLightOfHope.setGraphicSize(Std.int(fakeLightOfHope.width * 4));
         fakeLightOfHope.updateHitbox();
         fakeLightOfHope.antialiasing = ClientPrefs.globalAntialiasing;
@@ -129,9 +123,6 @@ function onLoad()
 	stageBGFlash.scrollFactor.set();
 	add(stageBGFlash);
 
-    tumbleGrp = new FlxTypedGroup();
-    add(tumbleGrp);
-
     if(!ClientPrefs.lowQulity)
     {
         stageCurtains = new FlxSprite(0, 0).loadGraphic(Paths.image(pathway + 'i_forgor'));
@@ -157,9 +148,12 @@ function onLoad()
 
 function onCreatePost()
 {
+    tumbleGrp = new FlxTypedGroup();
+    add(tumbleGrp);
+    
     if(!ClientPrefs.lowQulity)
     {
-        rain = new FlxSprite(-550, -900);
+        rain = new FlxSprite(-550, -800);
         rain.frames = Paths.getSparrowAtlas(pathway + 'rain');
         rain.animation.addByPrefix('drippin', 'Rain', 30, true);
         rain.scale.set(2, 2);
@@ -1038,8 +1032,7 @@ function onSongStart()
                 FlxTween.tween(fakeLightOfHope, {alpha: 0.001}, 1.7);
             });
 
-            modManager.queueFuncOnce(474 * 4, (s,s2)->{ 
-                colorsOrSmthElse.alpha = 0.0001;
+            modManager.queueFuncOnce(474 * 4, (s,s2)->{
                 
                 floor.alpha = 0.0001;
                 if (rain != null) rain.alpha = 0;
@@ -1086,8 +1079,6 @@ function onSongStart()
                 minnieBackground.destroy();
                 minnieBackground = null;
                 if (rain != null) rain.alpha = 1;
-
-                colorsOrSmthElse.alpha = 1;
                 
                 floor.alpha = 1;
             });
@@ -1159,6 +1150,9 @@ function onSongStart()
             modManager.queueFuncOnce(132 * 4, (s,s2)->{ 
                 defaultCamZoom = 1.3;
                 modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear");
+
+                deluSing.play();
+                deluSing.pause();
             });
 
             modManager.queueFuncOnce(136 * 4, (s,s2)->{ 
@@ -1169,7 +1163,7 @@ function onSongStart()
             modManager.queueFuncOnce(143 * 4, (s,s2)->{ 
                 playHUD.alpha = 0;
                 camHUD.fade(FlxColor.BLACK, 5, true);
-                deluSing.play();
+                deluSing.resume();
                 deluSing.visible = true;
                 if (vocals.volume != 1) vocals.volume = 1; // it should be fixed then
             });
@@ -1423,11 +1417,16 @@ function onSongStart()
                 FlxTween.tween(boyfriend, {alpha: 0.45}, 2.5, {ease: FlxEase.expoOut});
             });
 
+            modManager.queueFuncOnce(671 * 4, (s,s2)->{ 
+                minnieJumpscare.play();
+                minnieJumpscare.pause();
+            });
+
             modManager.queueFuncOnce(672 * 4, (s,s2)->{ 
                 blendFlash.cameras = [camGame];
                 boyfriend.alpha = 0.0001;
                 camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.38, timer: 0.85, colors: [255, 255, 255]});
-                minnieJumpscare.play();
+                minnieJumpscare.resume();
                 minnieJumpscare.visible = true;
             });
 
@@ -1634,10 +1633,10 @@ function onBeatHit()
 
 function summonWeedMakerLmfao()
 {
-    tumbleWeed = new FlxSprite(1800, 600);
+    tumbleWeed = new FlxSprite(1800, 700);
     tumbleWeed.antialiasing = ClientPrefs.globalAntialiasing;
     var velocityX:Float = 0;
-    var bounceVal:Int = 735;
+    var bounceVal:Int = 835;
     var loopTime:Array<Float> = [];
     if (FlxG.random.bool(1))
     {
