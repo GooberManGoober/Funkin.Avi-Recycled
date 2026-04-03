@@ -76,6 +76,9 @@ var iconTween:FlxTween;
 var drainValue:Float = 0;
 var boundValue:Float = 0;
 
+var camBars:FlxCamera;
+var camVideo:FlxCamera;
+
 function onLoad()
 {
     defaultCamZoom = 0.87;
@@ -148,6 +151,14 @@ function onLoad()
 
 function onCreatePost()
 {
+    camVideo = new FlxCamera();
+	camVideo.bgColor = 0x0;
+    FlxG.cameras.insert(camVideo, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
+    
+    camBars = new FlxCamera();
+	camBars.bgColor = 0x0;
+    FlxG.cameras.insert(camBars, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
+    
     tumbleGrp = new FlxTypedGroup();
     add(tumbleGrp);
     
@@ -234,12 +245,12 @@ function onCreatePost()
     switch (PlayState.SONG.song)
     {
         case "Delusional":
-            camGame.fade(FlxColor.BLACK, 0.0001);
+            camBars.fade(FlxColor.BLACK, 0.0001);
         
             death = new FunkinVideoSprite(false);
             death.load(Paths.video("mickeyDeath"));
-            death.cameras = [camHUD];
-            death.alpha = 0.0001;
+            death.cameras = [camVideo];
+            death.visible = false;
             death.onEnd(() -> {
                 death.kill();
                 death.destroy();
@@ -248,7 +259,7 @@ function onCreatePost()
             deluSing = new FunkinVideoSprite(false);
             deluSing.visible = false;
             deluSing.load(Paths.video("deluLyrics"), [FunkinVideoSprite.muted]);
-            deluSing.cameras = [camHUD];
+            deluSing.cameras = [camVideo];
             deluSing.onEnd(() -> {
                 deluSing.kill();
                 deluSing.destroy();
@@ -257,7 +268,7 @@ function onCreatePost()
             minnieJumpscare = new FunkinVideoSprite(false);
             minnieJumpscare.visible = false;
             minnieJumpscare.load(Paths.video("minniePart"), [FunkinVideoSprite.muted]);
-            minnieJumpscare.cameras = [camHUD];
+            minnieJumpscare.cameras = [camVideo];
             minnieJumpscare.onEnd(() -> {
                 minnieJumpscare.kill();
                 minnieJumpscare.destroy();
@@ -267,14 +278,9 @@ function onCreatePost()
             add(deluSing);
             add(minnieJumpscare);
 
-            minnieJumpscare.zIndex = 4;
-
-            playHUD.zIndex = 7;
-            playFields.zIndex = 8;
-
 
         case 'Isolated', 'Lunacy':
-            camGame.fade(FlxColor.BLACK, 0.0001);
+            camBars.fade(FlxColor.BLACK, 0.0001);
             camHUD.alpha = 0.001;
     }
 }
@@ -315,15 +321,6 @@ function onUpdate(elapsed)
         isolatedHappy.y = iconP2.y;
         lunacyIcon.y = iconP2.y;
         delusionalIcon.y = iconP2.y;
-    }
-}
-
-function onEndSong()
-{
-    if (PlayState.SONG.song == "Delusional" && isStoryMode && FlxG.save.data.episode1FPLock != 'unlocked')
-    {
-        FlxG.save.data.episode1FPLock = 'unlocked';
-        FlxG.save.flush();
     }
 }
 
@@ -375,7 +372,7 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(12 * 4, (s,s2)->{ 
-                camGame.fade(FlxColor.BLACK, 3, true);
+                camBars.fade(FlxColor.BLACK, 3, true);
             });
 
             modManager.queueFuncOnce(30 * 4, (s,s2)->{ 
@@ -842,7 +839,7 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
-                camGame.fade(FlxColor.BLACK, 3, true);
+                camBars.fade(FlxColor.BLACK, 3, true);
             });
 
             modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
@@ -1021,7 +1018,7 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(540 * 4, (s,s2)->{ 
-                camGame.fade(FlxColor.BLACK, 5);
+                camBars.fade(FlxColor.BLACK, 5);
             });
         case "Delusional":
             modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
@@ -1128,23 +1125,10 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
-                cinematicBarControls("create", 1);
 
                 boundValue = 1;
                 drainValue = 0.02;
-                camGame.fade(FlxColor.BLACK, 2, true);
-            });
-
-            modManager.queueFuncOnce(470 * 4, (s,s2)->{ 
-                cinematicBarControls("moveboth", 0.65, 'backIn', 380);
-            });
-
-            modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
-                cinematicBarControls("moveboth", 10, 'linear', 70);
-            });
-
-            modManager.queueFuncOnce(672 * 4, (s,s2)->{ 
-                cinematicBarControls("moveboth", 1, "circOut", 0);
+                camBars.fade(FlxColor.BLACK, 2, true);
             });
 
             modManager.queueFuncOnce(132 * 4, (s,s2)->{ 
@@ -1156,12 +1140,12 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(136 * 4, (s,s2)->{ 
-                camGame.fade(FlxColor.BLACK, 0.6);
+                camBars.fade(FlxColor.BLACK, 0.6);
                 camHUD.fade(FlxColor.BLACK, 1.75);
             });
 
             modManager.queueFuncOnce(143 * 4, (s,s2)->{ 
-                playHUD.alpha = 0;
+                camHUD.alpha = 0;
                 camHUD.fade(FlxColor.BLACK, 5, true);
                 deluSing.resume();
                 deluSing.visible = true;
@@ -1170,7 +1154,7 @@ function onSongStart()
 
             modManager.queueFuncOnce(144 * 4, (s,s2)->{ 
                 defaultCamZoom = 0.8;
-                camGame.fade(0x000000, 5, true);
+                camBars.fade(0x000000, 5, true);
                 camFlashSystem(FlashType.BG_DARK, {alpha: 1, timer: 0.3, ease: FlxEase.quartInOut});
                 defaultCamZoom = 1.2;
                 camFollow.x -= 100;
@@ -1229,7 +1213,7 @@ function onSongStart()
             });
             // The Drop Starts
             modManager.queueFuncOnce(216 * 4, (s,s2)->{ 
-                FlxTween.tween(playHUD, {alpha: 1}, 1, {ease: FlxEase.quadOut});
+                FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.quadOut});
                 if (chromTween != null) 
                     chromTween.cancel();
                 
@@ -1394,11 +1378,10 @@ function onSongStart()
 
             modManager.queueFuncOnce(1912, (s,s2)->{ 
                 camFollow.x = 630;
-                camFollow.y = 750;
+                camFollow.y = 700;
                 isCameraOnForcedPos = true;
                 defaultCamZoom = 0.5;
-                boyfriend.cameras = [camHUD];
-                boyfriend.zIndex = 3;
+                boyfriend.cameras = [camVideo];
 
                 playHUD.alpha = 0;
                 modManager.setValue("alpha", 1, 0);
@@ -1526,20 +1509,22 @@ function onSongStart()
                 defaultCamZoom = 0.9;
                 death.play();
                 death.pause();
-                modManager.queueEase(1082 * 4, 1086 * 4, "alpha", 1, "sineInOut");
             });
 
             modManager.queueFuncOnce(1082 * 4, (s,s2)->{ 
                 FlxTween.tween(camGame, {zoom: 1.6}, 1, {ease: FlxEase.sineInOut});
-                camGame.fade(FlxColor.BLACK, 0.7);
-                FlxTween.tween(playHUD, {alpha: 0}, 1, {ease: FlxEase.sineInOut});
+                camVideo.fade(FlxColor.BLACK, 0.7);
             });
 
             modManager.queueFuncOnce(1086 * 4, (s,s2)->{ 
                 camFlashSystem(FlashType.BG_DARK, {timer: 5});
 
+                camGame.visible = false;
+				FlxTween.tween(camHUD, {alpha: 0}, 2);
+
                 death.seekTo(0);
                 death.resume();
+                death.visible = true;
 
                 if (ClientPrefs.shaders)
                 {
@@ -1548,8 +1533,10 @@ function onSongStart()
                         new ShaderFilter(delusionalShift)
                     ]);
                 }
-
-                FlxTween.tween(death, {alpha: 1}, 0.2, {ease: FlxEase.sineInOut});
+                
+                camVideo.zoom += 0.3;
+				camVideo.fade(FlxColor.BLACK, 0.2, true);
+				FlxTween.tween(camVideo, {zoom: 1}, 0.5, {ease: FlxEase.sineOut});
             });
 
             modManager.queueFuncOnce(1136 * 4, (s,s2)->{ 
@@ -1573,9 +1560,17 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(1144 * 4, (s,s2)->{ 
-                 FlxTween.tween(camHUD, {alpha: 0}, 4);
+                FlxTween.tween(camVideo, {alpha: 0}, 4);
+
+                if (PlayState.SONG.song == "Delusional" && isStoryMode && FlxG.save.data.episode1FPLock != 'unlocked')
+                {
+                    FlxG.save.data.episode1FPLock = 'unlocked';
+                    FlxG.save.flush();
+                }
             });
     }
+
+    addCinematicBarEvents(PlayState.SONG.song);
 }
 
 function onBeatHit()
@@ -1854,8 +1849,7 @@ function cinematicBarControls(?controlType:String = "add", ?speed:Float, ?ease:S
 			{
 				cinematicBars["top"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 				cinematicBars["top"].screenCenter(FlxAxes.X);
-                cinematicBars["top"].zIndex = 5;
-				cinematicBars["top"].cameras = [camHUD];
+				cinematicBars["top"].cameras = [camBars];
 				cinematicBars["top"].y = 0 - cinematicBars["top"].height; // offscreen
 				add(cinematicBars["top"]);
 			}
@@ -1864,8 +1858,7 @@ function cinematicBarControls(?controlType:String = "add", ?speed:Float, ?ease:S
 			{
 				cinematicBars["bottom"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 				cinematicBars["bottom"].screenCenter(FlxAxes.X);
-                cinematicBars["bottom"].zIndex = 6;
-				cinematicBars["bottom"].cameras = [camHUD];
+				cinematicBars["bottom"].cameras = [camBars];
 				cinematicBars["bottom"].y = FlxG.height; // offscreen
 				add(cinematicBars["bottom"]);
 			}
@@ -1950,5 +1943,320 @@ function opponentNoteHit(note)
             if (ClientPrefs.mechanics)
                 if (health > boundValue)
                     health -= drainValue;
+    }
+}
+
+function addCinematicBarEvents(songName:String)
+{
+    switch (songName)
+    {
+        case 'Isolated':
+            var beatBopArray:Array<Int> = [32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92];
+			var beatBopArray2:Array<Int> = [168, 172, 176, 184, 188];
+			var beatBopArray3:Array<Int> = [194, 196, 198, 200, 202, 204, 206, 208, 210, 212, 214, 216, 217, 218, 219];
+
+            modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
+                cinematicBarControls("add", 0.0001, 'linear', 0);
+                cinematicBarControls("moveboth", 0.0001, 'linear', 130);
+            });
+
+            modManager.queueFuncOnce(28 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1, 'circInOut', 65);
+            });
+
+            for (i in 0...beatBopArray.length)
+            {
+                modManager.queueFuncOnce(beatBopArray[i] * 4, (s,s2)->{ 
+                    cinematicBarControls('bopboth', 1, 'quartOut', 32, 33);
+                });
+            }
+
+            modManager.queueFuncOnce(96 * 4, (s,s2)->{ 
+                cinematicBarControls('moveboth', 0.3, 'sineOut', 0);
+            });
+
+            for (i in [160, 352])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls('moveboth', 1, 'circOut', 140);
+                });
+            }
+
+             for (i in [164, 180])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls('bopboth', 0.85, 'quartOut', 125, 15);
+                });
+            }
+
+            for (i in 0...beatBopArray2.length)
+            {
+                modManager.queueFuncOnce(beatBopArray2[i] * 4, (s,s2)->{ 
+                    cinematicBarControls('bopboth', 1, 'quartOut', 90, 60);
+                });
+            }
+
+            modManager.queueFuncOnce(192 * 4, (s,s2)->{ 
+                cinematicBarControls('moveboth', 0.7, 'sineOut', 85);
+            });
+
+            for (i in 0...beatBopArray3.length)
+            {
+                modManager.queueFuncOnce(beatBopArray3[i] * 4, (s,s2)->{ 
+                    cinematicBarControls('bopboth', 0.3, 'sineOut', 40, 45);
+                });
+            }
+
+            modManager.queueFuncOnce(224 * 4, (s,s2)->{ 
+                cinematicBarControls('moveboth', 0.3, 'quartOut', 0);
+            });
+
+            modManager.queueFuncOnce(376 * 4, (s,s2)->{ 
+                cinematicBarControls('moveboth', 3, 'sineInOut', 0);
+            });
+
+            modManager.queueFuncOnce(415 * 4, (s,s2)->{ 
+                cinematicBarControls('moveboth', 0.63, 'circInOut', 600);
+            });
+
+        case 'Lunacy':
+            var beatArray1:Array<Int> = [38, 40, 46, 48, 54, 56, 62];
+            var beatArray2:Array<Int> = [70, 72, 78, 80, 86, 88];
+            var beatArray3:Array<Int> = [224, 230, 240, 248, 256, 262, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344];
+            var beatArray4:Array<Int> = [228, 238, 244, 252, 260, 270, 276, 284, 292, 300, 308, 316, 324, 332, 340, 348];
+
+            modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
+                cinematicBarControls("add", 0.0001, 'linear', 0);
+                cinematicBarControls("moveboth", 0.0001, 'linear', 60);
+            });
+
+            modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1.2, "circOut", 120);
+            });
+
+            modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1.2, "circOut", 190);
+            });
+
+            modManager.queueFuncOnce(90 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2, "circInOut", 0);
+            });
+
+            modManager.queueFuncOnce(156 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 0.4, "circOut", 120);
+            });
+
+            modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1, "circOut", 80);
+            });
+
+            modManager.queueFuncOnce(192 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 10, "circInOut", 180);
+            });
+
+            modManager.queueFuncOnce(352 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2, "circOut", 50);
+            });
+
+            modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 0.0001, 'linear', 110);
+            });
+
+            for (i in 0...beatArray1.length)
+            {
+                modManager.queueFuncOnce(beatArray1[i] * 4, (s,s2)->{ 
+                    cinematicBarControls("bopboth", 0.5, "quartOut", 100, 20);
+                });
+            }
+            for (i in 0...beatArray2.length)
+            {
+                modManager.queueFuncOnce(beatArray2[i] * 4, (s,s2)->{ 
+                    cinematicBarControls("bopboth", 0.5, "quartOut", 170, 20);
+                });
+            }
+            for (i in 0...beatArray3.length)
+            {
+                modManager.queueFuncOnce(beatArray3[i] * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.5, "circOut", 60);
+                });
+            }
+            for (i in 0...beatArray4.length)
+            {
+                modManager.queueFuncOnce(beatArray4[i] * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.15, "circOut", 130);
+                });
+            }
+        
+        case 'Delusional':
+            var beatShit1:Array<Int> = [752, 760, 768, 772, 776, 784, 792, 800, 804, 808, 824, 836, 856, 868];
+            var beatShit2:Array<Int> = [812, 828, 844, 860];
+            var beatShit3:Array<Int> = [816, 832, 848, 864];
+
+            modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
+                cinematicBarControls("create", 1);
+                cinematicBarControls("moveboth", 0.0001, 'linear', 100);
+            });
+
+            modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2, 'circOut', 120);
+            });
+
+            modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2, 'circInOut', 75);
+            });
+
+            for (i in [128, 1072])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 1, "circOut", 90);
+                });
+            }
+
+            modManager.queueFuncOnce(132 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2, "circOut", 180);
+            });
+
+            modManager.queueFuncOnce(144 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 0.0001, 'linear', 70);
+            });
+
+            for (i in [152, 168])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.5, 'circOut', 80);
+                });
+            }
+
+            for (i in [154, 172])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.5, 'circOut', 90);
+                });
+            }
+
+            for (i in [156, 288, 320])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.5, 'circOut', 100);
+                });
+            }
+
+            for (i in [158, 296, 328])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.5, 'circOut', 110);
+                });
+            }
+
+            modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1, 'circOut', 70);
+            });
+            modManager.queueFuncOnce(176 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2, 'circOut', 0);
+            });
+
+            for (i in [280, 312])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 1.5, 'circOut', 90);
+                });
+            }
+
+            for (i in [304, 336, 356, 388])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.5, 'circOut', 120);
+                });
+            }
+
+            for (i in [308, 358, 390])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 0.5, 'circOut', 130);
+                });
+            }
+        
+            modManager.queueFuncOnce(338 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1, 'circOut', 80);
+            });
+
+            for (i in [344, 360, 392])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 1, 'circOut', 100);
+                });
+            }
+
+            modManager.queueFuncOnce(408 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2, 'circOut', 140);
+            });
+
+            modManager.queueFuncOnce(470 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 0.65, 'backIn', 380);
+            });
+
+            modManager.queueFuncOnce(480 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 10, 'linear', 70);
+            });
+
+            modManager.queueFuncOnce(744 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 0.0001, 'linear', 120);
+            });
+
+            modManager.queueFuncOnce(872 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 2.5, "circInOut", 180);
+            });
+
+            for (i in [880, 1040])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 1, "circOut", 100);
+                });
+            }
+
+            for (i in [944, 1056])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 1.5, "circOut", 120);
+                });
+            }
+            
+            for (i in [1008, 1064])
+            {
+                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
+                    cinematicBarControls("moveboth", 1, "circOut", 140);
+                });
+            }
+
+            modManager.queueFuncOnce(1024 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1, "circOut", 80);
+            });
+
+            modManager.queueFuncOnce(1030 * 4, (s,s2)->{ 
+                cinematicBarControls("moveboth", 1, "circOut", 100);
+            });
+
+            modManager.queueFuncOnce(1136 * 4, (s,s2)->{ 
+                cinematicBarControls("kill", 0);
+            });
+
+            for (i in 0...beatShit1.length)
+            {
+                modManager.queueFuncOnce(beatShit1[i] * 4, (s,s2)->{ 
+                    cinematicBarControls("bopboth", 0.5, "circOut", 90, 30);
+                });
+            }
+            for (i in 0...beatShit2.length)
+            {
+                modManager.queueFuncOnce(beatShit2[i] * 4, (s,s2)->{
+                    cinematicBarControls("moveboth", 0.8, "circIn", 185);
+                });
+            }
+            for (i in 0...beatShit3.length)
+            {
+                modManager.queueFuncOnce(beatShit3[i] * 4, (s,s2)->{
+                    cinematicBarControls("moveboth", 0.8, "circOut", 120);
+                });
+            }
     }
 }

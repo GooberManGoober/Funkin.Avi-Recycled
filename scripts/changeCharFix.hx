@@ -37,9 +37,26 @@ function resetCharPos()
             switch (boyfriend.curCharacter)
             {
                 case 'evildelu': boyfriend.setPosition(550, 290);
+                case 'bf-delu-intro': boyfriend.setPosition(750, 450);
                 case 'bf-demon': boyfriend.setPosition(275, 165);
                 case 'Mickey-Bedroom': boyfriend.setPosition(575, 50);
                 default: boyfriend.setPosition(275, 150);
+            }
+        case 'delusionStreet':
+            switch (dad.curCharacter)
+            {
+                case 'delusional-mickey':
+                    dad.setPosition(-260, 120);
+                case 'mick-lunacyEnd':
+                    dad.setPosition(-750, -210);
+                default:
+                    dad.setPosition(-870, -190);
+            }
+            switch (boyfriend.curCharacter)
+            {
+                case 'bf-demon': game.boyfriend.setPosition(275, 65);
+                case 'bf-delu-intro': boyfriend.setPosition(750, 350);
+                default: boyfriend.setPosition(275, 50);
             }
         case 'forestNew':
             // It was before perfect but then Jason had put the new spritesheet... im gonna explode :) - MalyPlus

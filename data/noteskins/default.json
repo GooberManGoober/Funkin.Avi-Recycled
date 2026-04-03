@@ -282,7 +282,7 @@
 			}
 		]
 	],
-	"splashTexture": "noteSplashes-vanilla",
+	"splashTexture": "noteSplashes/noteSplashes",
 	"antialiasing": true,
 	"inGameColoring": true,
 	"sustainAlpha": 0.6,

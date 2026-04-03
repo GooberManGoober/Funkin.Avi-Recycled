@@ -56,7 +56,7 @@ function onLoad() {
 
 	switch (PlayState.SONG.song)
 	{
-		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday":
+		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday", "Delusion":
 			introSoundsSuffix = "-cartoon";
 		case "Malfunction":
 			introSoundsSuffix = "-error";
@@ -135,15 +135,12 @@ function onCreatePost()
 		default: curEpisode = "Episode ???";
 	}
 
-	if (PlayState.SONG.song == "Devilish Deal" && PlayState.isStoryMode && FlxG.save.data.episode1FPLock != "unlocked")
-		windowName = "Funkin.avi: Recycled - Episode 1 - Isolated (Composed by: obscurity) - Chart by: Purg [NORMAL] - Mechanics: " + (ClientPrefs.mechanics ? "Enabled" : "Disabled"); // shitty long ass name that credits literally every fucking thing
-	else
-		windowName = "Funkin.avi: Recycled - " + 
-		(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + 
-		" (Composed by: " + PluginsManager.callPluginFunc('CreditsData', 'getArtistName', [PlayState.SONG.song]) + 
-		") - Chart by: " + PluginsManager.callPluginFunc('CreditsData', 'getCharterCredits', [PlayState.SONG.song]) + 
-		" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]" + 
-		(checkMechanics ? ' - Mechanics: ' + (ClientPrefs.mechanics ? "Enabled" : "Disabled") : ""); // shitty long ass name that credits literally every fucking thing
+	windowName = "Funkin.avi: Recycled - " + 
+	(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + 
+	" (Composed by: " + PluginsManager.callPluginFunc('CreditsData', 'getArtistName', [PlayState.SONG.song]) + 
+	") - Chart by: " + PluginsManager.callPluginFunc('CreditsData', 'getCharterCredits', [PlayState.SONG.song]) + 
+	" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]" + 
+	(checkMechanics ? ' - Mechanics: ' + (ClientPrefs.mechanics ? "Enabled" : "Disabled") : ""); // shitty long ass name that credits literally every fucking thing
 
 	Application.current.window.title = windowName;
 
@@ -198,7 +195,7 @@ function onCountdownTick(swagCounter)
 	var antialias:Bool = ClientPrefs.globalAntialiasing;
 	switch (PlayState.SONG.song)
 	{
-		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday":
+		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday", "Delusion":
 			introAlts = ['Funkin_avi/countdownAssets/cartoon-prepare', 'Funkin_avi/countdownAssets/cartoon-ready', 'Funkin_avi/countdownAssets/cartoon-set', 'Funkin_avi/countdownAssets/cartoon-go'];
 		case "Malfunction":
 			introAlts = ['Funkin_avi/countdownAssets/mal-prepare', 'Funkin_avi/countdownAssets/mal-ready', 'Funkin_avi/countdownAssets/mal-set', 'Funkin_avi/countdownAssets/mal-go'];

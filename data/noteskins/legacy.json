@@ -303,7 +303,7 @@
 			}
 		]
 	],
-	"splashTexture": "noteSplashes-psych",
+	"splashTexture": "noteSplashes/noteSplashes-legacy",
 	"antialiasing": true,
 	"inGameColoring": true,
 	"sustainAlpha": 0.6,

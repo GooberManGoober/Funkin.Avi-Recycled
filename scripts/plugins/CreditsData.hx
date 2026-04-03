@@ -89,6 +89,13 @@ var blessLegacy:String = '{
 	]
 }';
 
+var delusion:String = '{
+	"settings":
+	[
+		"Art: Domingo & Moe\n\nChart: Unknown\n\nCode: ThatOneSillyGuy\n\nMusic: FluffyHairs", -10, 15
+	]
+}';
+
 var json:String = null;
 var array:Array<Dynamic>;
 var data:PauseData;
@@ -114,6 +121,7 @@ function jsonStuff(fuckingName:String)
         case "Malfunction": json = malfunction;
 		case "Neglection": json = neglection;
         case "Birthday": json = birthday;
+		case "Delusion": json = delusion;
     }
 
     if (json != null && json.length > 0)
@@ -144,7 +152,7 @@ function getDiffRank(name)
 	switch (name.toLowerCase().replace(' ', '-'))
 	{
 		case 'devilish-deal': difficultyRank = 'EASY';
-		case 'isolated', 'hunted', 'neglection': difficultyRank = 'NORMAL';
+		case 'isolated', 'hunted', 'neglection', 'delusion': difficultyRank = 'NORMAL';
 		case 'delusional': difficultyRank = 'INSANE';
 		case 'malfunction': difficultyRank = 'null';
 		case "don't-cross!": difficultyRank = 'GOOD LUCK';
@@ -167,6 +175,7 @@ function getArtistName(name)
 		case "Twisted Grins": songArtist = "ForFurtherNotice";
 		case "Neglection": songArtist = "AttackPan";
 		case "Bless Legacy": songArtist = "END_SELLA";
+		case "Delusion": songArtist = "Fluffyhairs";
 		default: songArtist = "Unknown";
 	}
 	return songArtist;

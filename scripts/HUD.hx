@@ -93,7 +93,7 @@ function onCreatePost()
 
     switch (PlayState.SONG.stage)
     {	
-        case 'abandonedStreet', 'alleyway', 'ddStage':
+        case 'abandonedStreet', 'ddStage':
             watermarkTxt = new FlxText(0, 0, 0, engineDisplay);
             watermarkTxt.setFormat(Paths.font('DisneyFont.ttf'), 32, FlxColor.WHITE);
             watermarkTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
@@ -107,6 +107,14 @@ function onCreatePost()
             songTxt.alpha = 0.6;
             songTxt.screenCenter(FlxAxes.X);
             playHUD.add(songTxt);
+
+            autoplayMark = new FlxText(scoreTxt.x + 400, scoreTxt.y, FlxG.width - 780, '', 32);
+            autoplayMark.text = '[' + botTxtArray[FlxG.random.int(0, botTxtArray.length-1)] + ']';
+            autoplayMark.setFormat(Paths.font("DisneyFont.ttf"), 24, FlxColor.WHITE, "center");
+            autoplayMark.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1.25);
+            autoplayMark.alpha = 0;
+            autoplayMark.visible = false;
+            playHUD.add(autoplayMark);
         default:
             watermarkTxt = new FlxText(0, 0, 0, engineDisplay);
             watermarkTxt.setFormat(Paths.font('VanillaExtractRegular.ttf'), 16, FlxColor.WHITE);
@@ -213,19 +221,18 @@ function onUpdatePost(elapsed)
     botplayTxt.visible = timeBar.visible = timeTxt.visible = false;
     if (cpuControlled)
     {
-        switch (PlayState.SONG.stage)
+        scoreTxt.visible = false;
+        autoplayMark.visible = true;
+        if (autoplayMark.visible)
         {
-            case 'abandonedStreet', 'alleyway', 'ddStage':
-                scoreTxt.visible = false;
-            default:
-                scoreTxt.visible = false;
-                autoplayMark.visible = true;
-                if (autoplayMark.visible)
-                {
-                    autoplaySine += 180 * (elapsed / 4);
-                    autoplayMark.alpha = 1 - Math.sin((Math.PI * autoplaySine) / 80);
-                }
+            autoplaySine += 180 * (elapsed / 4);
+            autoplayMark.alpha = 1 - Math.sin((Math.PI * autoplaySine) / 80);
         }
+    }
+    else
+    {
+        scoreTxt.visible = true;
+        autoplayMark.visible = false;
     }
 
     if (!startingSong)
@@ -253,22 +260,5 @@ function onUpdatePost(elapsed)
         }
 
         // Conductor.lastSongPos = FlxG.sound.music.time;
-    }
-}
-
-function onPopUpScore(note, daRating)
-{
-    switch (daRating.name)
-    {
-        case 'epic':
-            epics += 1;
-        case 'sick':
-            sicks += 1;
-        case 'good':
-            goods += 1;
-        case 'bad':
-            bads += 1;
-        case 'shit':
-            shits += 1;
     }
 }

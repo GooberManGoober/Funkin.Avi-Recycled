@@ -103,6 +103,7 @@ function onCreate()
 			smilesShader = newShader('tvStatic'); // Twisted Grins
 
 			addSong('Hunted', 3, 'goofy', FlxColor.fromRGB(94, 28, 35), 'JBlitz', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
+			addSong('Delusion', 3, 'deluavier', FlxColor.fromRGB(25, 25, 25), 'FluffyHairs', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			addSong('Laugh Track', 3, 'ricky', FlxColor.fromRGB(60, 60, 60), 'Yama haki/Toko', 'HARD', FlxColor.fromRGB(255, 187, 187));
 			addSong('Bless', 3, 'whitenew', FlxColor.WHITE, 'Lasagnacat (Legacy composed by: END_SELLA)', 'HARD', FlxColor.fromRGB(255, 187, 187), true);
 			addSong("Don't Cross!", 3, 'cross', FlxColor.fromRGB(255, 0, 0), 'Yama haki/Toko', 'GOOD LUCK', FlxColor.fromRGB(201, 0, 0));
