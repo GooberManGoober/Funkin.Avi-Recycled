@@ -3011,11 +3011,6 @@
 			{
 				"sectionNotes": [
 					[
-						78037.9746835444,
-						1,
-						0
-					],
-					[
 						78227.8481012659,
 						2,
 						0
@@ -3031,14 +3026,23 @@
 						0
 					],
 					[
-						78797.4683544304,
-						2,
-						0
-					],
-					[
 						77468.3544303798,
 						1,
 						189.873417721519
+					],
+					[
+						78037.9746835444,
+						1,
+						0,
+						"Alt Animation",
+						true
+					],
+					[
+						78797.4683544304,
+						2,
+						0,
+						"Alt Animation",
+						true
 					]
 				],
 				"sectionBeats": 4,
@@ -3098,19 +3102,23 @@
 						0
 					],
 					[
+						80506.3291139241,
+						3,
+						189.873417721519
+					],
+					[
 						81645.5696202532,
 						2,
-						0
+						0,
+						"Alt Animation",
+						true
 					],
 					[
 						81835.4430379748,
 						1,
-						0
-					],
-					[
-						80506.3291139241,
-						3,
-						189.873417721519
+						0,
+						"Alt Animation",
+						true
 					]
 				],
 				"sectionBeats": 4,
@@ -3165,23 +3173,8 @@
 						0
 					],
 					[
-						83829.1139240507,
-						1,
-						0
-					],
-					[
 						84113.924050633,
 						1,
-						0
-					],
-					[
-						84303.7974683545,
-						2,
-						0
-					],
-					[
-						84493.670886076,
-						0,
 						0
 					],
 					[
@@ -3190,9 +3183,32 @@
 						0
 					],
 					[
+						83829.1139240507,
+						1,
+						0,
+						"Alt Animation",
+						true
+					],
+					[
+						84303.7974683545,
+						2,
+						0,
+						"Alt Animation",
+						true
+					],
+					[
+						84493.670886076,
+						0,
+						0,
+						"",
+						true
+					],
+					[
 						84873.4177215191,
 						2,
-						0
+						0,
+						"Alt Animation",
+						true
 					]
 				],
 				"sectionBeats": 4,
@@ -5297,6 +5313,51 @@
 				"bpm": 158
 			},
 			{
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"gfSection": false,
+				"altAnim": false,
+				"bpm": 158,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"gfSection": false,
+				"altAnim": false,
+				"bpm": 158,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 158
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 158
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"sectionNotes": [],
+				"bpm": 158,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
 				"gfSection": false,
 				"altAnim": false,
 				"sectionNotes": [],
@@ -5319,7 +5380,7 @@
 		"gfVersion": "gf",
 		"events": [
 			[
-				51455.6962025317,
+				51645.5696202532,
 				[
 					[
 						"Change Character",
@@ -5329,7 +5390,7 @@
 				]
 			],
 			[
-				57341.7721518988,
+				57721.5189873418,
 				[
 					[
 						"Change Character",
@@ -5339,7 +5400,7 @@
 				]
 			],
 			[
-				75569.6202531646,
+				75949.3670886077,
 				[
 					[
 						"Change Character",
@@ -5349,12 +5410,12 @@
 				]
 			],
 			[
-				85822.7848101267,
+				77468.3544303798,
 				[
 					[
 						"Change Character",
 						"bf",
-						"bf-demon"
+						"bf-delu-intro"
 					]
 				]
 			],
@@ -5367,15 +5428,25 @@
 						"delusional-mickey"
 					]
 				]
+			],
+			[
+				88098.8924050634,
+				[
+					[
+						"Change Character",
+						"bf",
+						"bf-demon"
+					]
+				]
 			]
 		],
 		"keys": 4,
-		"song": "Delusion",
 		"arrowSkins": [
 			"grayscale",
 			"grayscale"
 		],
 		"allowGFskin": true,
+		"song": "Delusion",
 		"validScore": true,
 		"needsVoices": false,
 		"stage": "delusionStreet",

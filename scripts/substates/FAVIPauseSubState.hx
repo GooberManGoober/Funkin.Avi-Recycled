@@ -269,8 +269,6 @@ function onUpdate(elapsed)
 					restartSong();
 				case 2:
 					remove(disc);
-					FlxG.mouse.load(Paths.image('Funkin_avi/Hand').bitmap);
-					FlxG.mouse.visible = true;
 					FlxG.switchState(new ScriptedState("Options"));
 					OptionsState.onPlayState = true;
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -314,7 +312,6 @@ function onUpdate(elapsed)
 								}
 								FlxG.sound.playMusic(Paths.music('freakyMenu'));
 							}
-							FlxG.mouse.load(Paths.image('Funkin_avi/Hand').bitmap);
 					}
 			}
 		}

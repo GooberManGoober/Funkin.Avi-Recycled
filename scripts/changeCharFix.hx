@@ -30,7 +30,7 @@ function resetCharPos()
                 case 'delusional-mickey':
                     dad.setPosition(-260, 220);
                 case 'mick-lunacyEnd':
-                    dad.setPosition(-750, -110);
+                    dad.setPosition(-750, -210);
                 default:
                     dad.setPosition(-870, -90);
             }
@@ -48,7 +48,7 @@ function resetCharPos()
                 case 'delusional-mickey':
                     dad.setPosition(-260, 120);
                 case 'mick-lunacyEnd':
-                    dad.setPosition(-750, -210);
+                    dad.setPosition(-750, -310);
                 default:
                     dad.setPosition(-870, -190);
             }
@@ -107,7 +107,7 @@ function resetCharPos()
             boyfriend.setPosition(900, 300);
         case 'ddStage':
             boyfriend.setPosition(1450, 1100);
-		    dad.setPosition(1660, 120);
+		    dad.setPosition(1660, -280);
         default:
             boyfriend.setPosition(770, 450);
             dad.setPosition(100, 100);

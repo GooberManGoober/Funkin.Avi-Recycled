@@ -38,6 +38,10 @@ var monitorFilter:FlxRuntimeShader = newShader('monitorFilter');
 var delusionalShift:FlxRuntimeShader = newShader('delusionalShift');
 var redVignette:FlxRuntimeShader = newShader('redFromAngryBirds');
 
+var fireThing:FlxSprite;
+
+var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
+
 var floor:FlxSprite;
 var stageCurtains:FlxSprite;
 var rain:FlxSprite;
@@ -56,6 +60,8 @@ var effectRed:Float = 0.0;
 
 var tumbleWeed:FlxSprite;
 var tumbleGrp:FlxTypedGroup;
+
+var camBars:FlxCamera;
 
 var dumbCamTwn:FlxTween;
 
@@ -106,6 +112,19 @@ function onLoad()
         fakeLightOfHope.scale.set(3, 3);
         fakeLightOfHope.scrollFactor.set(0.9, 0.9);
         add(fakeLightOfHope);
+
+        if (!ClientPrefs.lowQuality)
+		{
+			fireThing = new FlxSprite(0, -80);
+			fireThing.scale.set(5.85, 3);
+			fireThing.alpha = 0.0001;
+			fireThing.antialiasing = ClientPrefs.globalAntialiasing;
+			fireThing.frames = Paths.getSparrowAtlas(pathway + 'delusional-fire');
+			fireThing.animation.addByPrefix('burning', 'delusional-fire fire-idle', 16, true);
+			fireThing.scrollFactor.set(0.8, 0.8);
+			add(fireThing);
+			fireThing.animation.play('burning');
+		}
         
         brightSky = new FlxSprite(-990, 1600).loadGraphic(Paths.image(pathway + 'brightSky'));
         brightSky.setGraphicSize(Std.int(brightSky.width * 4));
@@ -182,6 +201,10 @@ function onCreatePost()
 {
     tumbleGrp = new FlxTypedGroup();
     add(tumbleGrp);
+
+    camBars = new FlxCamera();
+	camBars.bgColor = 0x0;
+    FlxG.cameras.insert(camBars, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
     
     if(!ClientPrefs.lowQulity)
     {
@@ -283,27 +306,33 @@ function onSongStart()
 {
     modManager.queueFuncOnce(1 * 4, (s,s2)->{ 
         camGame.fade(FlxColor.BLACK, 2, true);
+        cinematicBarControls("create", 1);
+        cinematicBarControls("moveboth", 0.0001, 'linear', 100);
     });
     
     modManager.queueFuncOnce(8 * 4, (s,s2)->{ 
         defaultCamZoom -= 0.08;
         camFlashSystem(FlashType.BG_FLASH, {timer: 0.35});
+        cinematicBarControls("moveboth", 0.35, 'circOut', 70);
         FlxTween.tween(camHUD, {alpha: 1}, 0.4);
     });
 
     modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
         defaultCamZoom += 0.1;
+        cinematicBarControls("moveboth", 0.35, 'circOut', 80);
     });
 
     modManager.queueFuncOnce(24 * 4, (s,s2)->{ 
         camGame.zoom += 0.12;
         defaultCamZoom -= 0.2;
         camFlashSystem(FlashType.BG_FLASH, {alpha: 0.35, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
+        cinematicBarControls("bopboth", 0.45, 'circOut', 60, 40);
     });
 
     modManager.queueFuncOnce(40 * 4, (s,s2)->{ 
         defaultCamZoom -= 0.25;
         camFlashSystem(FlashType.BG_FLASH, {alpha: 0.6, timer: 0.3, ease: FlxEase.circOut, colors: [255, 135, 135]});
+        cinematicBarControls("bopboth", 0.3, 'circOut', 55, 40);
         camGame.zoom += 0.16;
     });
 
@@ -312,12 +341,14 @@ function onSongStart()
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camGame.zoom += 0.25;
 			camFlashSystem(FlashType.BG_FLASH, {alpha: 0.6, timer: 0.3, ease: FlxEase.circOut, colors: [255, 135, 135]});
+            cinematicBarControls("bopboth", 0.3, 'circOut', 70, 30);
         });
     }
 
     modManager.queueFuncOnce(136 * 4, (s,s2)->{ 
         camFlashSystem(FlashType.BG_FLASH, {alpha: 0.35, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
         camGame.zoom += 0.1;
+        cinematicBarControls("bopboth", 0.45, 'circOut', 85, 30);
         defaultCamZoom += 0.11;
     });
 
@@ -325,6 +356,7 @@ function onSongStart()
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem(FlashType.BG_DARK, {alpha: 0.2, timer: 0.35, ease: FlxEase.sineOut});
+            cinematicBarControls("moveboth", 0.35, 'sineOut', 100);
         });
     }
 
@@ -332,6 +364,7 @@ function onSongStart()
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem(FlashType.BG_DARK, {alpha: 0.5, timer: 0.35, ease: FlxEase.sineOut});
+            cinematicBarControls("moveboth", 0.35, 'sineOut', 120);
         });
     }
 
@@ -352,6 +385,7 @@ function onSongStart()
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem(FlashType.BG_FLASH, {alpha: 0.35, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
+            cinematicBarControls("bopboth", 0.45, 'circOut', 70, 30);
             camGame.zoom += 0.1;
         });
     }
@@ -360,6 +394,7 @@ function onSongStart()
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem(FlashType.BG_FLASH, {alpha: 0.56, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
+            cinematicBarControls("bopboth", 0.45, 'circOut', 80, 30);
             camGame.zoom += 0.16;
         });
     }
@@ -368,6 +403,7 @@ function onSongStart()
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem(FlashType.BG_FLASH, {alpha: 0.89, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
+            cinematicBarControls("bopboth", 0.45, 'circOut', 100, 30);
             camGame.zoom += 0.21;
         });
     }
@@ -376,9 +412,14 @@ function onSongStart()
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem(FlashType.BG_DARK, {alpha: 0.8, timer: 0.21, ease: FlxEase.sineOut});
+            cinematicBarControls("moveboth", 0.21, 'sineOut', 120);
             defaultCamZoom += 0.3;
         });
     }
+
+    modManager.queueFuncOnce(136 * 4, (s,s2)->{ 
+        defaultCamZoom -= 0.3;
+    });
 
     modManager.queueFuncOnce(24 * 4, (s,s2)->{ 
         FlxTween.tween(streetDaytime, {alpha: 0}, 5);
@@ -389,6 +430,8 @@ function onSongStart()
     modManager.queueFuncOnce(232 * 4, (s,s2)->{ 
         fakeLightOfHope.visible = true;
         streetRuins.visible = true;
+
+        if (!ClientPrefs.lowQuality) fireThing.alpha = 1;
 
         camGame.flash(FlxColor.fromRGB(255, 135, 135), 0.3);
 
@@ -556,4 +599,103 @@ function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String>):Void
         defaultCamZoom = zoom;
         dumbCamTwn = null;
     }});
+}
+
+var topBarTwn:FlxTween;
+var bottomBarTwn:FlxTween;
+
+function cinematicBarControls(?controlType:String = "add", ?speed:Float, ?ease:String = "circInOut", ?position:Float = 0, ?bopValue:Float = 0)
+{
+	switch (controlType.toLowerCase())
+	{
+		case "add", "create":
+			// idk if i should change this cus i dont wanna fuck up and i lazy to test them lol -sylinpix (jason)
+			if (cinematicBars["top"] == null)
+			{
+				cinematicBars["top"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+				cinematicBars["top"].screenCenter(FlxAxes.X);
+				cinematicBars["top"].cameras = [camBars];
+				cinematicBars["top"].y = 0 - cinematicBars["top"].height; // offscreen
+				add(cinematicBars["top"]);
+			}
+
+			if (cinematicBars["bottom"] == null)
+			{
+				cinematicBars["bottom"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+				cinematicBars["bottom"].screenCenter(FlxAxes.X);
+				cinematicBars["bottom"].cameras = [camBars];
+				cinematicBars["bottom"].y = FlxG.height; // offscreen
+				add(cinematicBars["bottom"]);
+			}
+			
+		case "remove", "kill", "delete":
+			if (cinematicBars["top"] != null)
+			{
+				cinematicBars["top"].kill();
+				cinematicBars["top"] = null;
+			}
+			if (cinematicBars["bottom"] != null)
+			{
+				cinematicBars["bottom"].kill();
+				cinematicBars["bottom"] = null;
+			}
+			
+		case "movetop", "move top":
+			if (topBarTwn != null)
+				topBarTwn.cancel();
+
+			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
+			{
+				topBarTwn = null;
+			}});
+			
+		case "movebottom", "move bottom":
+			if (bottomBarTwn != null)
+				bottomBarTwn.cancel();
+
+			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: FlxG.height - position}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
+			{
+				bottomBarTwn = null;
+			}});
+			
+		case "moveboth", "move both":
+			if (topBarTwn != null)
+				topBarTwn.cancel();
+			if (bottomBarTwn != null)
+				bottomBarTwn.cancel();
+
+			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
+			{
+				topBarTwn = null;
+			}});
+			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: FlxG.height - position}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
+			{
+				bottomBarTwn = null;
+			}});
+			
+		case "boptop", "bop top":
+			cinematicBars["top"].y = position - FlxG.height;
+			FlxTween.tween(cinematicBars["top"], {y: (position - FlxG.height) + bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease)});
+			
+		case "bopbottom", "bop bottom":
+			cinematicBars["bottom"].y = FlxG.height - position;
+			FlxTween.tween(cinematicBars["bottom"], {y: (FlxG.height - position) - bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease)});
+			
+		case "bopboth", "bop both":
+			if (topBarTwn != null)
+				topBarTwn.cancel();
+			if (bottomBarTwn != null)
+				bottomBarTwn.cancel();
+
+			cinematicBars["top"].y = position - FlxG.height;
+			cinematicBars["bottom"].y = FlxG.height - position;
+			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: (position - FlxG.height) + bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
+			{
+				topBarTwn = null;
+			}});
+			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: (FlxG.height - position) - bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
+			{
+				bottomBarTwn = null;
+			}});
+	}
 }

@@ -14,6 +14,8 @@ import funkin.states.options.MiscSubState;
 import funkin.states.options.OptionsState;
 import funkin.states.MainMenuState;
 
+import lime.app.Application;
+
 import funkin.backend.PlayerSettings;
 
 using StringTools;
@@ -23,7 +25,7 @@ var options:Array<String> = [
     'Graphics',
     'Visuals and UI',
     'Gameplay',
-    "Misc"
+    "NMV"
 ];
 var grpOptions:FlxTypedGroup;
 var curSelected:Int = 0;
@@ -44,7 +46,7 @@ function openSelectedSubstate(label:String) {
             openSubState(new VisualsUISubState());
         case 'Gameplay':
             openSubState(new GameplaySettingsSubState());
-        case 'Misc':
+        case 'NMV':
             openSubState(new MiscSubState());
     }
     persistentUpdate = false;
@@ -57,6 +59,8 @@ function onCreate() {
             new ShaderFilter(newShader('monitorFilter'))
         ];
     }
+
+    Application.current.window.title = "Funkin.avi: Recycled - Options Menu";
 
     var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
     bg.color = 0xFFea71fd;

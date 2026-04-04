@@ -9,12 +9,11 @@ var songCrdGrp:FlxSpriteGroup;
 // JSON Var Helpers
 var fontStuff:String = "vcr";
 
+var isLegacy:Bool = false;
+
 // Base Card Setup
 var cardTxt:FlxText;
 var cardSprite:FlxSprite;
-
-// A bit of Decoration
-var musicNoteIcon:FlxSprite;
 
 // Health Icons
 var dadIcon:HealthIcon;
@@ -34,6 +33,9 @@ function setupCardData()
 			fontStuff = "PhantomMuff Full Letters 1.1.5.ttf";
 		case 'Malfunction':
 			fontStuff = "m40.ttf";
+		case 'Bless Legacy':
+			fontStuff = "vcr.ttf";
+			isLegacy = true;
 		default: 
 			fontStuff = "vcr.ttf";
 	}
@@ -50,54 +52,98 @@ function onCreatePost()
 	add(songCrdGrp);
 	songCrdGrp.cameras = [camOther];
 
-	cardSprite = new FlxSprite();
-
-	dadIcon = new HealthIcon(oIconName, false);
-	dadIcon.x = 260;
-	dadIcon.y = 130;
-
-	playerIcon = new HealthIcon(pIconName, true);
-	playerIcon.x = 850;
-	playerIcon.y = 460;
-
-	cardSprite.makeGraphic(600, 350, 0xFF000000);
-	cardSprite.screenCenter();
-
-	cardTxt = new FlxText(cardSprite.x, cardSprite.y, 0, '- ' + songTitle + ' -\nBy: ' + composer);
-	cardTxt.setFormat(Paths.font(fontStuff), 42, FlxColor.WHITE, "center");
-	cardTxt.screenCenter();
-
-	cardSprite.alpha = 0.001;
-
-	songCrdGrp.add(cardSprite);
-	songCrdGrp.add(dadIcon);
-	songCrdGrp.add(playerIcon);
-
-	dadIcon.alpha = 0.001;
-
-	playerIcon.alpha = 0.001;
-
-	cardTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
-	cardTxt.alpha = 0.001;
-
-	songCrdGrp.add(cardTxt);
-	songCrdGrp.add(dadIcon);
-	songCrdGrp.add(playerIcon);
-
-	if (!isStoryMode)
+	if (!isLegacy)
 	{
-		playCardAnim(0.08);
+		cardSprite = new FlxSprite().makeGraphic(600, 350, 0xFF000000);
+		cardSprite.screenCenter();
+		cardSprite.alpha = 0.001;
+		songCrdGrp.add(cardSprite);
+
+		cardTxt = new FlxText(cardSprite.x, cardSprite.y, 0, '- ' + songTitle + ' -\nBy: ' + composer);
+		cardTxt.setFormat(Paths.font(fontStuff), 42, FlxColor.WHITE, "center");
+		cardTxt.screenCenter();
+		cardTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
+		cardTxt.alpha = 0.001;
+		songCrdGrp.add(cardTxt);
 	}
-	else if (isStoryMode)
+	else
 	{
-		switch (PlayState.SONG.song)
+		cardSprite = new FlxSprite(0, 0).makeGraphic(999, 136, FlxColor.WHITE);
+		cardSprite.scrollFactor.set();
+		cardSprite.blend = BlendMode.ADD;
+		cardSprite.alpha = 0;
+		cardSprite.screenCenter();
+		songCrdGrp.add(cardSprite);
+
+		cardTxt = new FlxText(0, 0, 600, '$songTitle\nBy: $composer');
+		cardTxt.setFormat(Paths.font(fontStuff), 36, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		cardTxt.scrollFactor.set();
+		cardTxt.borderSize = 1.25;
+		cardTxt.alpha = 0;
+		cardTxt.screenCenter();
+		songCrdGrp.add(cardTxt);
+	}
+
+	if (!isLegacy)
+	{
+		dadIcon = new HealthIcon(oIconName, false);
+		dadIcon.x = 260;
+		dadIcon.y = 130;
+
+		playerIcon = new HealthIcon(pIconName, true);
+		playerIcon.x = 850;
+		playerIcon.y = 460;
+
+		dadIcon.alpha = 0.001;
+		playerIcon.alpha = 0.001;
+	
+		songCrdGrp.add(dadIcon);
+		songCrdGrp.add(playerIcon);
+	}
+
+
+	if (!isLegacy)
+	{
+		if (!isStoryMode)
 		{
-			case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
-			// do nothing, it's already set under stepHit()
-			default:
-				playCardAnim(0.08);
+			playCardAnim(0.08);
+		}
+		else if (isStoryMode)
+		{
+			switch (PlayState.SONG.song)
+			{
+				case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
+				// do nothing, it's already set under stepHit()
+				default:
+					playCardAnim(0.08);
+			}
 		}
 	}
+}
+
+function onSongStart()
+{
+	if (isLegacy)
+	{
+		playLegacyCardAnim();
+	}
+}
+
+function playLegacyCardAnim()
+{
+	FlxTween.tween(cardSprite, {alpha: 0.5}, 1, {ease: FlxEase.circOut,
+		onComplete: function(twn:FlxTween)
+		{
+			FlxTween.tween(cardSprite, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
+		}
+	});
+
+	FlxTween.tween(cardTxt, {alpha: 1}, 1, {ease: FlxEase.circOut,
+		onComplete: function(twn:FlxTween)
+		{
+			FlxTween.tween(cardTxt, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
+		}
+	});
 }
 
 // This is a function in case you want the card to show up later in the song instead of instantly

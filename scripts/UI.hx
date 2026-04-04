@@ -87,7 +87,7 @@ function onCreatePost()
 
 	if (!ClientPrefs.lowQuality)
 	{
-		if (PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom')
+		if (PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom' && PlayState.SONG.stage != 'vaultRoomLegacy')
 		{
 			scratch = new FlxSprite();
 			scratch.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
@@ -143,50 +143,43 @@ function onCreatePost()
 	(checkMechanics ? ' - Mechanics: ' + (ClientPrefs.mechanics ? "Enabled" : "Disabled") : ""); // shitty long ass name that credits literally every fucking thing
 
 	Application.current.window.title = windowName;
-
-	windowTimer = new FlxTimer().start(5, function(tmr:FlxTimer)
-	{
-		windowName = "Funkin.avi: Recycled - " + 
-		(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + 
-		PlayState.SONG.song + 
-		" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // short version that displays after 5 seconds yayaya
-
-		Application.current.window.title = windowName;
-	});
 }
 
 function onUpdate(elapsed)
 {
-    // the COOLER cam pos thing or whatever
-    // x, y, angle
-    var camOffset = [0.0, 0.0, 0];
+    if (PlayState.SONG.song != "Bless Legacy")
+	{
+		// the COOLER cam pos thing or whatever
+		// x, y, angle
+		var camOffset = [0.0, 0.0, 0];
 
-    var char = cameraOnDad ? dad : boyfriend;
+		var char = cameraOnDad ? dad : boyfriend;
 
-    if (char.animation.curAnim != null && !isCameraOnForcedPos && ClientPrefs.camFollowsCharacters) 
-    {
-        switch (char.animation.curAnim.name.substring(4))
-        {
-            case 'RIGHT':
-                camOffset[2] += 1.3;
-            case 'LEFT':
-                camOffset[2] -= 1.45;
+		if (char.animation.curAnim != null && !isCameraOnForcedPos && ClientPrefs.camFollowsCharacters) 
+		{
+			switch (char.animation.curAnim.name.substring(4))
+			{
+				case 'RIGHT':
+					camOffset[2] += 1.3;
+				case 'LEFT':
+					camOffset[2] -= 1.45;
 
-            case 'RIGHT-alt':
-                camOffset[2] += 1.3;
-            case 'LEFT-alt':
-                camOffset[2] -= 1.45;
+				case 'RIGHT-alt':
+					camOffset[2] += 1.3;
+				case 'LEFT-alt':
+					camOffset[2] -= 1.45;
 
-            case 'RIGHTmiss':
-                camOffset[2] += 1.3;
-            case 'LEFTmiss':
-                camOffset[2] -= 1.45;
-        }
-    }
+				case 'RIGHTmiss':
+					camOffset[2] += 1.3;
+				case 'LEFTmiss':
+					camOffset[2] -= 1.45;
+			}
+		}
 
-    if(!inCutscene) {
-        camGame.angle = FlxMath.lerp(camGame.angle, 0 + camOffset[2], FlxMath.bound(elapsed * 2.4 * cameraSpeed, 0, 1));
-    }
+		if(!inCutscene) {
+			camGame.angle = FlxMath.lerp(camGame.angle, 0 + camOffset[2], FlxMath.bound(elapsed * 2.4 * cameraSpeed, 0, 1));
+		}
+	}
 }
 
 function onCountdownTick(swagCounter)

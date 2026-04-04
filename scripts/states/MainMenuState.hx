@@ -98,82 +98,9 @@ var defaultShader2:FlxRuntimeShader;
 
 var howmuchyoufuckinkeptdoingit:Int = 0;
 
-var windowShit:Array<Any> = [
-	"Anyone up right now?",
-	"Shipy's SNS Mickey & F.AVI Mickey would make love to each other",
-	"We lied about Episode 2's release...",
-	"I trapped don in my basement.",
-	"Someone put an end to my misery.",
-	"I dare you to press 7 on that keyboard of yours.",
-	"Cock & ball torture.",
-	"OKAY, YOU GOT DELUSIONAL, NOW STFU.",
-	"Look at that cute little devil, he's cute :)",
-	"Do you like the new menu art?",
-	"You're gonna love the final song.",
-	"Malfunction isn't easy anymore, fuck you, skill issue.",
-	"SOMEONE PLEASE GIVE MICKEY HIS FUCKING SANDVICH", // intentional misspell lolol
-	"Have fun, you'll be here for like an hour or longer.",
-	"10 Seconds before I shut your fucking game again >:(",
-	"Oh the misery, everybody wants to be my enemy.",
-	"Sex, NOW.",
-	"Quick, hide behind that conveniently shaped lamp!",
-	"Welcome to hell",
-	"blue lobster *jumpscare*",
-	"hi. *starts dancing on the floor*",
-	"sample text 2: electric boogaloo",
-	"The bastard named squidward cheated on poor mickey :[",
-	"D E A T H",
-	"Man i'm hungry",
-	"Shit, the mouse got a gun again.",
-	"You should /kill @s NOW", // haha, funi Minecraft reference
-	"Why are you here? FNF is still cancelled.",
-	"This community is fr the big stinky.",
-	"Go ahead, cancel us, you'll only make us come back stronger.",
-	"NOOOOOOOOOOO, YOU CAN'T JUST CHEAT THE GAME!!!!!!!",
-	"Mom, can we have Wednesday's Infidelity?",
-	"WHAT THE FUCK IS A KILOMETER?",
-	"Don't leave Muckney's party, please, you'll make him sad if you do :(",
-	"It's about drive, it's about power, we stay hungry, we devour.",
-	"Peter, the horse is here.",
-	"*horse walks in*",
-	"When she Isolated on my Lunacy til I Delusional.",
-	"Anyone here watch Yahiamice?",
-	"*cantaloupe jumpscare*",
-	"Prank 'em John",
-	"POV: You're a YouTuber doing some generic intro right about now",
-	"Another very well thought out idea of a random message that this game can randomly pick from within the code.",
-	"AHHH, FUCK, THERE'S RULE 34 OF SUICIDE MOUSE, WHYYYYYY????",
-	"Check out this cool rare little easter egg that I found, which I want to show to you but I can't cause I'm just a title screen message.",
-	"There's still uranium in my ass, send help.",
-	"Main Menu Music: Alone",
-	"Mickey lost his ballsack.",
-	"Oh the horror of AI generated images.",
-	"You should [R] Reset Character NOW", // boblox reference
-	"awesome mouse experience.",
-	"This mod was stressful to make.",
-	"Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled",
-	"Just like Domingo is constantly remaking Mickey's sprites, Dreupy is the Domingo of Delusional Recharts.",
-	"When did Funkin.avi start development?",
-	"I think one of the codes is a certain date",
-	"The idea of the mod was created on 21/03/22, pretty crazy, right?",
-	"Everyday is Muckney's Birthday",
-	"there is no message, go play some minecraft",
-	"THEY HIT THE FUCKING PENTAGON",
-	"Want a break from the ads? If you tap now to take a short servey, you'll recieve 30 minutes of ad-free music.",
-	"I bet you're complaining that this isn't easy to steal assets from right about now, silly kiddo",
-	"Development was so long Mickey died of waiting",
-	"um um um um um um um",
-	"uhuhuhuh",
-	"women.",
-	"men."
-];
-
 function onCreate()
 {
-	FlxG.mouse.load(Paths.image('Funkin_avi/Hand').bitmap);
-	if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
-
-	Application.current.window.title = "Funkin.avi: Recycled - " + windowShit[FlxG.random.int(0, windowShit.length - 1)];
+	Application.current.window.title = "Funkin.avi: Recycled - Main Menu";
 	
 	camFilter = new FlxCamera();
 	camFilter.bgColor = 0x0;
@@ -406,13 +333,10 @@ function onUpdate(elapsed)
 							switch (daChoice)
 							{
 								case 'story_mode':
-									FlxG.mouse.visible = false;
 									FlxG.switchState(new ScriptedState('StoryMenu'));
 								case 'credits':
-									FlxG.mouse.visible = false;
 									FlxG.switchState(new ScriptedState('CreditsMenu'));
 								case 'options':
-									OptionsState.onPlayState = false;
 									FlxG.switchState(new ScriptedState('Options'));
 							}
 						});

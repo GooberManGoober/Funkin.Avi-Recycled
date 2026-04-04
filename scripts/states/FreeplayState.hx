@@ -377,7 +377,6 @@ function onUpdate(elapsed)
 		FlxG.sound.play(Paths.sound('cancelMenu'));
 		
 		FlxG.switchState(new ScriptedState('EpicSelectorWOOO'));
-		FlxG.mouse.visible = true;
 	}
 
 	if (accepted)
