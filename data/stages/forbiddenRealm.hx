@@ -1,7 +1,11 @@
 import openfl.filters.ShaderFilter;
 import funkin.utils.CoolUtil;
 
-//var mickeyEmitter:FlxEmitter;
+import flixel.effects.particles.FlxParticle;
+import flixel.effects.particles.FlxEmitter.FlxEmitterMode;
+
+var mickeyEmitter:FlxEmitter;
+var blackParticles:FlxEmitter;
 var fuckingsquares:FlxSprite;
 
 var chromZoomShader:FlxRuntimeShader = newShader('aberration');
@@ -28,9 +32,9 @@ function onLoad()
     fuckingsquares.scrollFactor.set(1, 1);
     fuckingsquares.active = false;
     add(fuckingsquares);
-/*
+
     var greyParticles:FlxEmitter = new FlxEmitter(-2080.5, 650.4);
-    greyParticles.launchMode = SQUARE;
+    greyParticles.launchMode = FlxEmitterMode.SQUARE;
     greyParticles.velocity.set(-50, -200, 50, -600, -90, 0, 90, -600);
     greyParticles.scale.set(4, 4, 4, 4, 0, 0, 0, 0);
     greyParticles.drag.set(0, 0, 0, 0, 5, 5, 10, 10);
@@ -39,9 +43,10 @@ function onLoad()
     greyParticles.lifespan.set(1.9, 4.9);
     greyParticles.loadParticles(Paths.image(pathway + 'greyParticle'), 500, 16, true);
     greyParticles.start(false, FlxG.random.float(.0521, .1060), 1000000);
+    add(greyParticles);
 
-    var blackParticles:FlxEmitter = new FlxEmitter(-2080.5, 912.4);
-    blackParticles.launchMode = SQUARE;
+    blackParticles = new FlxEmitter(-2080.5, 912.4);
+    blackParticles.launchMode = FlxEmitterMode.SQUARE;
     blackParticles.velocity.set(-70, -220, 70, -620, -110, 20, 110, -620);
     blackParticles.scale.set(6, 6, 6, 6, 2, 2, 2, 2);
     blackParticles.drag.set(2, 2, 2, 2, 7, 7, 12, 12);
@@ -62,7 +67,7 @@ function onLoad()
         //mickeyParticle.animation.curAnim.curFrame = FlxG.random.int(0, 3);
         mickeyEmitter.add(mickeyParticle);
     }
-    mickeyEmitter.launchMode = SQUARE;
+    mickeyEmitter.launchMode = FlxEmitterMode.SQUARE;
     mickeyEmitter.velocity.set(-50, -400, 50, -800, -100, 0, 100, -800);
     mickeyEmitter.scale.set(3.4, 3.4, 3.4, 3.4, 0, 0, 0, 0);
     mickeyEmitter.drag.set(0, 0, 0, 0, 5, 5, 10, 10);
@@ -71,7 +76,7 @@ function onLoad()
     mickeyEmitter.lifespan.set(4, 4.5);
     mickeyEmitter.start(false, FlxG.random.float(.125, .287), 100000);
     mickeyEmitter.emitting = false;
-*/
+
     whiteBG = new FlxSprite(-800, -200).makeGraphic(1, 1, 0xFFFFFFFF);
     whiteBG.scale.set(FlxG.width, FlxG.height);
     whiteBG.alpha = 0.001;
@@ -83,14 +88,13 @@ function onCreatePost()
 {
     playHUD.ratingPrefix = "pixelUI/";
     playHUD.ratingSuffix = "-pixel";
-/*
+
     if (PlayState.SONG.song != 'Malfunction Legacy')
     {
-        add(greyParticles);
-        foreground.add(blackParticles);
-        foreground.add(mickeyEmitter);
+        add(blackParticles);
+        add(mickeyEmitter);
     }
-*/
+
 /*
     if (ClientPrefs.shaders)
     {
@@ -207,7 +211,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(191 * 4, (s,s2)->{ 
-        //mickeyEmitter.emitting = true;
+        mickeyEmitter.emitting = true;
         if (ClientPrefs.shaders)
         {
             if (!ClientPrefs.lowQuality)

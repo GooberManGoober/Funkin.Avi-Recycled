@@ -7,6 +7,8 @@ import flixel.effects.FlxFlicker;
 import flixel.text.FlxText;
 import lime.system.System;
 
+import funkin.states.editors.MasterEditorMenu;
+
 import funkin.scripting.PluginsManager;
 
 import funkin.utils.MathUtil;
@@ -346,7 +348,12 @@ function onUpdate(elapsed)
 		}
 
 		if (FlxG.keys.justPressed.SEVEN)
-			FlxG.switchState(new ScriptedState("SexState"));
+		{
+			if (!ClientPrefs.inDevMode) 
+				FlxG.switchState(new ScriptedState("SexState"));
+			else
+				FlxG.switchState(new MasterEditorMenu());
+		}
 		if (FlxG.keys.justPressed.ONE && ClientPrefs.inDevMode)
 		{
 			PluginsManager.callPluginFunc('GameData', 'fullSave');
