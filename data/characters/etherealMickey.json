@@ -1,0 +1,94 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				690,
+				1070
+			],
+			"anim": "idle",
+			"fps": 12,
+			"name": "ethereal_mickey Idle",
+			"indices": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				680,
+				1070
+			],
+			"anim": "singLEFT",
+			"fps": 12,
+			"name": "ethereal_mickey Left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				690,
+				1070
+			],
+			"anim": "singDOWN",
+			"fps": 12,
+			"name": "ethereal_mickey Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				700,
+				1080
+			],
+			"anim": "singRIGHT",
+			"fps": 12,
+			"name": "ethereal_mickey Right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				690,
+				1070
+			],
+			"anim": "singUP",
+			"fps": 12,
+			"name": "ethereal_mickey Up",
+			"indices": [
+				2,
+				0,
+				1
+			]
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/ethereal_mickey",
+	"position": [
+		0,
+		0
+	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
+	"healthicon": "ethernalm",
+	"gameover_character": null,
+	"vslice_sustains": true,
+	"flip_x": true,
+	"healthbar_colour": -11649714,
+	"camera_position": [
+		340,
+		-600
+	],
+	"gameover_loop_sound": null,
+	"sing_duration": 6.1,
+	"scale": 0.5,
+	"_editor_isPlayer": true
+}

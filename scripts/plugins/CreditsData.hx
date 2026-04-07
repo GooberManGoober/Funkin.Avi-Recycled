@@ -57,6 +57,12 @@ var devilishDeal:String = '{
 		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: Lasagnacat", -55, 20
 	]
 }';
+	var warDilemma:String = '{
+	"settings":
+	[
+		"Art: BladzAMC_Emerald,\nAustinWProductions, & Teelbe\n\nChart: Purg\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: Sayan Sama & obscurity.", -30, 0
+	]
+}';
 	var twistedGrins:String = '{
 	"settings":
 	[
@@ -122,6 +128,7 @@ function jsonStuff(fuckingName:String)
 		case "Neglection": json = neglection;
         case "Birthday": json = birthday;
 		case "Delusion": json = delusion;
+		case "War Dilemma": json = warDilemma;
     }
 
     if (json != null && json.length > 0)
@@ -137,7 +144,7 @@ function getCharterCredits(name)
 {
 	switch (name)
 	{
-		case "Devilish Deal", "Twisted Grins": charter = "Purg";
+		case "Devilish Deal", "Twisted Grins", "War Dilemma": charter = "Purg";
 		case "Delusional", "Birthday": charter = "Dreupy";
 		case "Hunted": charter = "JustJasonLol & ThatOneSillyGuy";
 		case "Lunacy", "Isolated", "Malfunction", "Laugh Track", "Neglection", "Bless Legacy": charter = "ThatOneSillyGuy"; 

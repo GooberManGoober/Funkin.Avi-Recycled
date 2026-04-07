@@ -48,7 +48,7 @@ var stageCurtains:FlxSprite;
 var rain:FlxSprite;
 var fakeLightOfHope:FlxSprite;
 var rainTween:FlxTween;
-var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/images/';
+var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/';
 
 var tumbleWeed:FlxSprite;
 var tumbleGrp:FlxTypedGroup;

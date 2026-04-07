@@ -4,6 +4,9 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import lime.app.Application;
 import openfl.filters.ShaderFilter;
 import funkin.backend.PlayerSettings;
+import funkin.states.MainMenuState;
+import funkin.states.FreeplayState;
+
 using StringTools;
 
 var freeplayCats:Array<String> = ['Story', 'Extras'];
@@ -80,14 +83,14 @@ function onUpdate(elapsed)
 	{
 		Conductor.bpm = (60);
 		FlxG.sound.play(Paths.sound("cancelMenu"));
-		FlxG.switchState(new ScriptedState('MainMenuState'));
+		FlxG.switchState(new MainMenuState());
 	}
 
 	if (controls.ACCEPT)
 	{
 		FlxG.save.data.freeplayMenuList = curSelected;
 		FlxG.save.flush();
-		FlxG.switchState(new ScriptedState('FreeplayState'));
+		FlxG.switchState(new FreeplayState());
 	}
 }
 

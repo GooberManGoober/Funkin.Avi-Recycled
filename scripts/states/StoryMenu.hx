@@ -13,6 +13,7 @@ import funkin.objects.MenuItem;
 import funkin.data.Highscore;
 import funkin.backend.PlayerSettings;
 import openfl.filters.ShaderFilter;
+import funkin.states.MainMenuState;
 
 using StringTools;
 
@@ -78,7 +79,7 @@ function onCreate()
 	rankText.size = scoreText.size;
 	rankText.screenCenter(FlxAxes.X);
 
-	var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
+	var ui_tex = Paths.getSparrowAtlas('menus/story/ui_elements');
 	var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 	bgSprite = new FlxSprite(0, 56);
 	bgSprite.antialiasing = ClientPrefs.globalAntialiasing;
@@ -141,7 +142,7 @@ function onCreate()
 	add(bgYellow);
 	add(bgSprite);
 
-	var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 425).loadGraphic(Paths.image('Menu_Tracks'));
+	var tracksSprite:FlxSprite = new FlxSprite(FlxG.width * 0.07, bgSprite.y + 425).loadGraphic(Paths.image('menus/story/Menu_Tracks'));
 	tracksSprite.antialiasing = ClientPrefs.globalAntialiasing;
 	add(tracksSprite);
 
@@ -248,7 +249,7 @@ function onUpdate(elapsed)
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'));
 		movedBack = true;
-		FlxG.switchState(new ScriptedState('MainMenuState'));
+		FlxG.switchState(new MainMenuState());
 	}
 
 	grpLocks.forEach(function(lock:FlxSprite)
@@ -306,7 +307,7 @@ function changeDifficulty(?change:Int = 0):Void
 {
 	WeekData.setDirectoryFromWeek(loadedWeeks[curWeek]);
 
-	var newImage:FlxGraphic = Paths.image('menudifficulties/hard');
+	var newImage:FlxGraphic = Paths.image('menus/story/difficulties/hard');
 
 	if(sprDifficulty.graphic != newImage)
 	{
@@ -360,7 +361,7 @@ function changeWeek(?change:Int = 0):Void
 	if(assetName == null || assetName.length < 1) {
 		bgSprite.visible = false;
 	} else {
-		bgSprite.loadGraphic(Paths.image('menubackgrounds/menu_' + assetName));
+		bgSprite.loadGraphic(Paths.image('menus/story/bgs/menu_' + assetName));
 	}
 	PlayState.storyWeek = curWeek;
 

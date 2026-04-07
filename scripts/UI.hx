@@ -44,7 +44,8 @@ function onPause() {
 	if (audio.inst != null)
 		audio.pause();
 
-	openSubState(new ScriptedSubstate("FAVIPauseSubState"));
+	if (PlayState.SONG.song == "Bless Legacy") openSubState(new ScriptedSubstate("LegacyPauseSubState"));
+	else openSubState(new ScriptedSubstate("FAVIPauseSubState"));
 	FlxTween.globalManager.forEach((i:FlxTween) -> if (!i.finished) i.active = true); // makes the objects in the pause menu actually able to tween
 	return ScriptConstants.STOP_FUNC;
 }
@@ -65,29 +66,17 @@ function onLoad() {
 				introSoundsSuffix = '-pixel';
 			}
 	}
+
+	canAccessEditors = ClientPrefs.inDevMode;
 }
 
 function onCreatePost()
 {
-    if (ClientPrefs.middleScroll)
-	{
-		if (PlayState.SONG.song != 'Devilish Deal')
-		{
-			modManager.setValue("opponentSwap", 0.5);
-			opponentStrums.baseAlpha = 1;
-			modManager.setValue("alpha", 0.65, 1);
-			modManager.setValue("transform0X", -350, 1);
-			modManager.setValue("transform1X", -350, 1);
-			modManager.setValue("transform2X", 350, 1);
-			modManager.setValue("transform3X", 350, 1);
-		}
-	}
-
-	cameraSpeed *= 2;
+    cameraSpeed *= 2;
 
 	if (!ClientPrefs.lowQuality)
 	{
-		if (PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom' && PlayState.SONG.stage != 'vaultRoomLegacy')
+		if (PlayState.SONG.stage != 'war' && PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom' && PlayState.SONG.stage != 'vaultRoomLegacy')
 		{
 			scratch = new FlxSprite();
 			scratch.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
@@ -114,21 +103,6 @@ function onCreatePost()
 		scripts.set('globalGradient', globalGradient);
 	}
 
-	var checkSongForGimmicks:Array<String> = [
-		"Isolated",
-		"Lunacy",
-		"Delusional",
-		"Hunted",
-		"Laugh Track",
-		"Don't Cross!",
-		"Bless"
-	];
-
-	var checkMechanics:Bool = false;
-	for (i in 0...checkSongForGimmicks.length)
-		if (PlayState.SONG.song == checkSongForGimmicks[i])
-			checkMechanics = true;
-
 	switch (PlayState.SONG.song)
 	{
 		case "Devilish Deal", "Isolated", "Lunacy", "Delusional": curEpisode = "Episode 1";
@@ -139,8 +113,7 @@ function onCreatePost()
 	(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + 
 	" (Composed by: " + PluginsManager.callPluginFunc('CreditsData', 'getArtistName', [PlayState.SONG.song]) + 
 	") - Chart by: " + PluginsManager.callPluginFunc('CreditsData', 'getCharterCredits', [PlayState.SONG.song]) + 
-	" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]" + 
-	(checkMechanics ? ' - Mechanics: ' + (ClientPrefs.mechanics ? "Enabled" : "Disabled") : ""); // shitty long ass name that credits literally every fucking thing
+	" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // shitty long ass name that credits literally every fucking thing
 
 	Application.current.window.title = windowName;
 }
@@ -186,17 +159,21 @@ function onCountdownTick(swagCounter)
 {
     var introAlts:Array<String> = ['Funkin_avi/countdownAssets/default-prepare', 'Funkin_avi/countdownAssets/default-ready', 'Funkin_avi/countdownAssets/default-set', 'Funkin_avi/countdownAssets/default-go'];
 	var antialias:Bool = ClientPrefs.globalAntialiasing;
+	var scaleSetter:Int = 1;
 	switch (PlayState.SONG.song)
 	{
 		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday", "Delusion":
 			introAlts = ['Funkin_avi/countdownAssets/cartoon-prepare', 'Funkin_avi/countdownAssets/cartoon-ready', 'Funkin_avi/countdownAssets/cartoon-set', 'Funkin_avi/countdownAssets/cartoon-go'];
+			scaleSetter = 1;
 		case "Malfunction":
 			introAlts = ['Funkin_avi/countdownAssets/mal-prepare', 'Funkin_avi/countdownAssets/mal-ready', 'Funkin_avi/countdownAssets/mal-set', 'Funkin_avi/countdownAssets/mal-go'];
 			antialias = false;
+			scaleSetter = 6;
 		default:
 			if(PlayState.isPixelStage) {
 				introAlts = ['pixelUI/prepare-pixel', 'pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel'];
 				antialias = false;
+				scaleSetter = 6;
 			}
 	}
 
@@ -206,22 +183,30 @@ function onCountdownTick(swagCounter)
 			FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix));
 			var prepare:FlxSprite = makeCountdownSprite(introAlts[0]);
 			prepare.cameras = [camOther];
+			prepare.scale.set(scaleSetter, scaleSetter);
+			prepare.antialiasing = antialias;
 			add(prepare);
 		case 1:
 			FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix));
 			var ready:FlxSprite = makeCountdownSprite(introAlts[1]);
+			ready.scale.set(scaleSetter, scaleSetter);
+			ready.antialiasing = antialias;
             add(ready);
 			ready.cameras = [camOther];
             remove(countdownReady);
 		case 2:
             FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix));
 			var set:FlxSprite = makeCountdownSprite(introAlts[2]);
+			set.scale.set(scaleSetter, scaleSetter);
+			set.antialiasing = antialias;
             add(set);
 			set.cameras = [camOther];
             remove(countdownSet);
         case 3:
             FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix));
 			var go:FlxSprite = makeCountdownSprite(introAlts[3]);
+			go.scale.set(scaleSetter, scaleSetter);
+			go.antialiasing = antialias;
             add(go);
 			go.cameras = [camOther];
             remove(countdownGo);

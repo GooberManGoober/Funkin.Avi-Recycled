@@ -2,8 +2,8 @@
 	"animations": [
 		{
 			"offsets": [
-				7,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"anim": "idle",
@@ -13,8 +13,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -24,8 +24,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -35,8 +35,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -46,8 +46,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -57,8 +57,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -68,8 +68,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -79,8 +79,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -90,8 +90,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				0
+				31,
+				34
 			],
 			"loop": false,
 			"fps": 24,
@@ -100,27 +100,27 @@
 			"name": "BF DOWN MISS"
 		}
 	],
-	"vocals_file": "",
 	"no_antialiasing": true,
 	"image": "characters/bfPixel",
 	"position": [
 		0,
 		350
 	],
-	"intenseIcon": false,
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "bf-pixel",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": true,
-	"healthbar_colors": [
-		123,
-		194,
-		246
-	],
+	"healthbar_colour": -8666378,
 	"camera_position": [
 		130,
 		-220
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 4,
-	"iconBops": false,
 	"scale": 6,
 	"_editor_isPlayer": true
 }

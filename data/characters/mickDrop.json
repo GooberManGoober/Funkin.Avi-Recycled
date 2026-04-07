@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
+			"offsets": [
+				-394,
+				-467
+			],
+			"loop": false,
+			"fps": 9,
+			"anim": "idle",
+			"indices": [],
+			"name": "mickeyIsolateDrop idle"
+		},
+		{
 			"loop": false,
 			"offsets": [
-				94,
-				-2
+				-410,
+				-466
 			],
-			"anim": "idle",
-			"fps": 9,
-			"name": "mickeyIsolateDrop idle",
+			"anim": "singLEFT",
+			"fps": 12,
+			"name": "mickeyIsolateDrop left",
 			"indices": []
 		},
 		{
-			"offsets": [
-				93,
-				0
-			],
 			"loop": false,
-			"fps": 12,
-			"anim": "singLEFT",
-			"indices": [],
-			"name": "mickeyIsolateDrop left"
-		},
-		{
 			"offsets": [
-				95,
-				0
+				-383,
+				-468
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "mickeyIsolateDrop down"
+			"fps": 12,
+			"name": "mickeyIsolateDrop down",
+			"indices": []
 		},
 		{
-			"offsets": [
-				95,
-				1
-			],
 			"loop": false,
-			"fps": 12,
+			"offsets": [
+				-364,
+				-471
+			],
 			"anim": "singUP",
-			"indices": [],
-			"name": "mickeyIsolateDrop up"
+			"fps": 12,
+			"name": "mickeyIsolateDrop up",
+			"indices": []
 		},
 		{
-			"offsets": [
-				94,
-				-4
-			],
 			"loop": false,
-			"fps": 12,
+			"offsets": [
+				-412,
+				-468
+			],
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "mickeyIsolateDrop right"
+			"fps": 12,
+			"name": "mickeyIsolateDrop right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
@@ -62,17 +62,21 @@
 		320,
 		520
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "avier",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": false,
-	"healthbar_colors": [
-		216,
-		216,
-		216
-	],
+	"healthbar_colour": -2565928,
 	"camera_position": [
 		315,
 		320
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.6
+	"scale": 0.6,
+	"_editor_isPlayer": false
 }

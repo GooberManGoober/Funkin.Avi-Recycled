@@ -28,17 +28,17 @@ var devilishGaming:FunkinVideoSprite;
 
 function onLoad()
 {
-    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/sky"));
+    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/sky"));
     bg.scale.set(0.84, 0.84);
     bg.scrollFactor.set(0.8, 0.8);
     add(bg);
 
-    var buildings:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/back-buildings"));
+    var buildings:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/back-buildings"));
     buildings.scale.set(0.84, 0.84);
     buildings.scrollFactor.set(0.9, 0.9);
     add(buildings);
 
-    var alley:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/alley_and_bench"));
+    var alley:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/alley_and_bench"));
     alley.scale.set(0.84, 0.84);
     add(alley);
 }
@@ -48,7 +48,7 @@ function onCreatePost()
     healthBar.leftToRight = true;
     
     var rain:FlxSprite = new FlxSprite(-600, 130);
-    rain.frames = Paths.getSparrowAtlas("Funkin_avi/stages/ddStage/images/Rain");
+    rain.frames = Paths.getSparrowAtlas("Funkin_avi/stages/ddStage/Rain");
     rain.animation.addByPrefix("crying bitch", "rain but the side", 30, true);
     rain.scale.set(2.1, 2.1);
     rain.scrollFactor.set(1.1, 1.1);
@@ -56,7 +56,7 @@ function onCreatePost()
     rain.alpha = 0.5;
     add(rain);
 
-    var fgWall:FlxSprite = new FlxSprite(-600, 290).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/images/big-ass-wall"));
+    var fgWall:FlxSprite = new FlxSprite(-600, 290).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/big-ass-wall"));
     fgWall.scale.set(0.84, 0.84);
     fgWall.scrollFactor.set(1.18, 1.18);
     add(fgWall);

@@ -16,11 +16,10 @@ var chromTween:FlxTween;
 
 var dumbCamTwn:FlxTween;
 
-var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/images/';
+var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/';
 
 function onLoad()
 {
-    PlayState.isPixelStage = true;
     defaultCamZoom = 0.75;
     //spawnGirlfriend = false;
 
@@ -33,7 +32,7 @@ function onLoad()
     fuckingsquares.active = false;
     add(fuckingsquares);
 
-    var greyParticles:FlxEmitter = new FlxEmitter(-2080.5, 650.4);
+    var greyParticles:FlxEmitter = new FlxEmitter(-2080.5, 1212.4);
     greyParticles.launchMode = FlxEmitterMode.SQUARE;
     greyParticles.velocity.set(-50, -200, 50, -600, -90, 0, 90, -600);
     greyParticles.scale.set(4, 4, 4, 4, 0, 0, 0, 0);
@@ -45,7 +44,7 @@ function onLoad()
     greyParticles.start(false, FlxG.random.float(.0521, .1060), 1000000);
     add(greyParticles);
 
-    blackParticles = new FlxEmitter(-2080.5, 912.4);
+    blackParticles = new FlxEmitter(-2080.5, 1212.4);
     blackParticles.launchMode = FlxEmitterMode.SQUARE;
     blackParticles.velocity.set(-70, -220, 70, -620, -110, 20, 110, -620);
     blackParticles.scale.set(6, 6, 6, 6, 2, 2, 2, 2);
@@ -229,6 +228,8 @@ function onSongStart()
     modManager.queueFuncOnce(324 * 4, (s,s2)->{ 
         var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-prepare');
         count.scrollFactor.set();
+        count.scale.set(6, 6);
+		count.antialiasing = false;
         count.updateHitbox();
         count.screenCenter();
         count.cameras = [camGame];
@@ -239,6 +240,8 @@ function onSongStart()
     modManager.queueFuncOnce(325 * 4, (s,s2)->{ 
         var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-ready');
         count.scrollFactor.set();
+        count.scale.set(6, 6);
+		count.antialiasing = false;
         count.updateHitbox();
         count.screenCenter();
         count.cameras = [camGame];
@@ -250,6 +253,8 @@ function onSongStart()
     modManager.queueFuncOnce(326 * 4, (s,s2)->{ 
         var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-set');
         count.scrollFactor.set();
+        count.scale.set(6, 6);
+		count.antialiasing = false;
         count.updateHitbox();
         count.screenCenter();
         count.cameras = [camGame];
@@ -261,6 +266,8 @@ function onSongStart()
     modManager.queueFuncOnce(327 * 4, (s,s2)->{ 
         var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-go');
         count.scrollFactor.set();
+        count.scale.set(6, 6);
+		count.antialiasing = false;
         count.updateHitbox();
         count.screenCenter();
         count.cameras = [camGame];

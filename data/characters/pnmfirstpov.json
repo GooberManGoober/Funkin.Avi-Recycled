@@ -2,9 +2,12 @@
 	"animations": [
 		{
 			"offsets": [
-				0,
-				0
+				213,
+				128
 			],
+			"loop": false,
+			"fps": 9,
+			"anim": "idle",
 			"indices": [
 				0,
 				2,
@@ -19,16 +22,16 @@
 				20,
 				22
 			],
-			"fps": 9,
-			"anim": "idle",
-			"loop": false,
 			"name": "IdleFirst"
 		},
 		{
 			"offsets": [
-				0,
-				0
+				212,
+				129
 			],
+			"loop": false,
+			"fps": 10,
+			"anim": "singDOWN",
 			"indices": [
 				0,
 				2,
@@ -38,16 +41,16 @@
 				10,
 				12
 			],
-			"fps": 10,
-			"anim": "singDOWN",
-			"loop": false,
 			"name": "Down"
 		},
 		{
 			"offsets": [
-				0,
-				1
+				213,
+				127
 			],
+			"loop": false,
+			"fps": 11,
+			"anim": "singLEFT",
 			"indices": [
 				0,
 				2,
@@ -57,16 +60,16 @@
 				10,
 				12
 			],
-			"fps": 11,
-			"anim": "singLEFT",
-			"loop": false,
 			"name": "Left"
 		},
 		{
 			"offsets": [
-				12,
-				10
+				218,
+				133
 			],
+			"loop": false,
+			"fps": 10,
+			"anim": "singRIGHT",
 			"indices": [
 				0,
 				2,
@@ -76,16 +79,16 @@
 				10,
 				12
 			],
-			"fps": 10,
-			"anim": "singRIGHT",
-			"loop": false,
 			"name": "Right"
 		},
 		{
 			"offsets": [
-				2,
-				100
+				214,
+				182
 			],
+			"loop": false,
+			"fps": 10,
+			"anim": "singUP",
 			"indices": [
 				0,
 				2,
@@ -95,16 +98,16 @@
 				10,
 				12
 			],
-			"fps": 10,
-			"anim": "singUP",
-			"loop": false,
 			"name": "Up"
 		},
 		{
 			"offsets": [
-				44,
-				-1
+				237,
+				129
 			],
+			"loop": false,
+			"fps": 10,
+			"anim": "laugh",
 			"indices": [
 				0,
 				2,
@@ -114,9 +117,6 @@
 				10,
 				12
 			],
-			"fps": 10,
-			"anim": "laugh",
-			"loop": false,
 			"name": "LaughFirst"
 		}
 	],
@@ -126,17 +126,21 @@
 		0,
 		0
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "pnm",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		161,
-		161,
-		161
-	],
+	"healthbar_colour": -6184543,
 	"camera_position": [
 		-550,
 		-270
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 1.8
+	"scale": 1.8,
+	"_editor_isPlayer": false
 }

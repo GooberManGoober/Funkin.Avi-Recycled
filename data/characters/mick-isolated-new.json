@@ -1,57 +1,61 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				94,
-				-2
-			],
 			"loop": false,
-			"fps": 10,
+			"offsets": [
+				-393,
+				-467
+			],
 			"anim": "idle",
-			"indices": [],
-			"name": "idle"
-		},
-		{
-			"offsets": [
-				95,
-				1
-			],
-			"loop": false,
 			"fps": 10,
+			"name": "idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-381,
+				-462
+			],
 			"anim": "singUP",
-			"indices": [],
-			"name": "up"
+			"fps": 10,
+			"name": "up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-379,
+				-460
+			],
+			"anim": "singRIGHT",
+			"fps": 10,
+			"name": "right",
+			"indices": []
 		},
 		{
 			"offsets": [
-				95,
-				0
+				-388,
+				-466
 			],
-			"loop": true,
+			"flipY": false,
+			"loop": false,
 			"fps": 14,
 			"anim": "singDOWN",
+			"flipX": false,
 			"indices": [],
 			"name": "down"
 		},
 		{
 			"offsets": [
-				94,
-				-4
+				-380,
+				-466
 			],
+			"flipY": false,
 			"loop": false,
-			"fps": 10,
-			"anim": "singRIGHT",
-			"indices": [],
-			"name": "right"
-		},
-		{
-			"offsets": [
-				93,
-				0
-			],
-			"loop": true,
 			"fps": 14,
 			"anim": "singLEFT",
+			"flipX": false,
 			"indices": [],
 			"name": "left"
 		}
@@ -62,17 +66,21 @@
 		320,
 		520
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "avier",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": false,
-	"healthbar_colors": [
-		216,
-		216,
-		216
-	],
+	"healthbar_colour": -2565928,
 	"camera_position": [
 		315,
 		320
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.6
+	"scale": 0.6,
+	"_editor_isPlayer": false
 }

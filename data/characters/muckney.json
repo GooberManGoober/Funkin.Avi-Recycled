@@ -2,57 +2,57 @@
 	"animations": [
 		{
 			"offsets": [
-				0,
-				0
+				-428,
+				-502
 			],
-			"indices": [],
+			"loop": true,
 			"fps": 12,
 			"anim": "idle",
-			"loop": true,
+			"indices": [],
 			"name": "idle"
 		},
 		{
 			"offsets": [
-				0,
-				0
+				-428,
+				-502
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 12,
 			"anim": "singLEFT",
-			"loop": false,
+			"indices": [],
 			"name": "left"
 		},
 		{
 			"offsets": [
-				0,
-				0
+				-428,
+				-502
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 12,
 			"anim": "singDOWN",
-			"loop": false,
+			"indices": [],
 			"name": "down"
 		},
 		{
 			"offsets": [
-				0,
-				0
+				-428,
+				-503
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 12,
 			"anim": "singUP",
-			"loop": false,
+			"indices": [],
 			"name": "up"
 		},
 		{
 			"offsets": [
-				0,
-				0
+				-428,
+				-502
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 12,
 			"anim": "singRIGHT",
-			"loop": false,
+			"indices": [],
 			"name": "right"
 		}
 	],
@@ -62,17 +62,21 @@
 		0,
 		0
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "muckney",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		141,
-		141,
-		141
-	],
+	"healthbar_colour": -7500403,
 	"camera_position": [
 		380,
 		340
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.6
+	"scale": 0.6,
+	"_editor_isPlayer": false
 }

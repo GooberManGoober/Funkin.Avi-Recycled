@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
-				-60,
-				120
+				-408,
+				-150
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 10,
-			"name": "Mickeycross Idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "Mickeycross Idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-60,
-				120
+				-408,
+				-150
 			],
+			"loop": false,
+			"fps": 12,
 			"anim": "singLEFT",
-			"fps": 12,
-			"name": "Mickeycross Left",
-			"indices": []
+			"indices": [],
+			"name": "Mickeycross Left"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-60,
-				120
+				-408,
+				-150
 			],
+			"loop": false,
+			"fps": 12,
 			"anim": "singDOWN",
-			"fps": 12,
-			"name": "Mickeycross Down",
-			"indices": []
+			"indices": [],
+			"name": "Mickeycross Down"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-60,
-				120
+				-408,
+				-150
 			],
+			"loop": false,
+			"fps": 12,
 			"anim": "singUP",
-			"fps": 12,
-			"name": "Mickeycross Up",
-			"indices": []
+			"indices": [],
+			"name": "Mickeycross Up"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-60,
-				120
+				-408,
+				-150
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 12,
-			"name": "Mickeycross Right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Mickeycross Right"
 		}
 	],
 	"no_antialiasing": false,
@@ -62,17 +62,21 @@
 		-750,
 		-370
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "cross",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		198,
-		198,
-		198
-	],
+	"healthbar_colour": -3750202,
 	"camera_position": [
 		220,
 		280
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.7
+	"scale": 0.7,
+	"_editor_isPlayer": false
 }

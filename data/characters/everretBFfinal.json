@@ -62,17 +62,21 @@
 		0,
 		350
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "everett",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": true,
-	"healthbar_colors": [
-		132,
-		132,
-		132
-	],
+	"healthbar_colour": -8092540,
 	"camera_position": [
 		-220,
 		420
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 4,
-	"scale": 1
+	"scale": 1,
+	"_editor_isPlayer": true
 }

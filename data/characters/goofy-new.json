@@ -3,8 +3,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				20,
-				220
+				-7,
+				197
 			],
 			"anim": "idle",
 			"fps": 16,
@@ -14,8 +14,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				24,
-				186
+				4,
+				162
 			],
 			"anim": "singLEFT",
 			"fps": 16,
@@ -25,8 +25,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				81,
-				124
+				51,
+				94
 			],
 			"anim": "singDOWN",
 			"fps": 16,
@@ -37,7 +37,7 @@
 			"loop": false,
 			"offsets": [
 				110,
-				250
+				240
 			],
 			"anim": "singUP",
 			"fps": 16,
@@ -47,8 +47,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				200,
-				350
+				180,
+				340
 			],
 			"anim": "singRIGHT",
 			"fps": 16,
@@ -62,17 +62,21 @@
 		120,
 		300
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "goofy",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": false,
-	"healthbar_colors": [
-		161,
-		161,
-		161
-	],
+	"healthbar_colour": -6184543,
 	"camera_position": [
 		190,
 		-80
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.9
+	"scale": 0.9,
+	"_editor_isPlayer": false
 }

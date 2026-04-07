@@ -2,6 +2,8 @@
 	"song": {
 		"player1": "GraveyandBf",
 		"gfVersion": "gf",
+		"composer": "END_SELLA",
+		"charter": "DEMOLITIONDON96",
 		"arrowSkins": ["legacy", "legacy"],
 		"notes": [
 			{

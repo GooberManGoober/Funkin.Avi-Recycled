@@ -6,8 +6,8 @@
 		"singRIGHT"
 	],
 	"splashesEnabled": true,
-	"susSplashesEnabled": false,
-	"noteTexture": "NOTE_assets",
+	"noteTexture": "UI/notes/NOTE_assets",
+	"sustainSplashTexture": "UI/notes/sustain_cover",
 	"receptorAnimations": [
 		[
 			{
@@ -279,6 +279,92 @@
 				],
 				"xmlName": "red hold end",
 				"anim": "holdend"
+			}
+		]
+	],
+	"susSplashAnimations": [
+		[
+			{
+				"anim": "start",
+				"xmlName": "holdCoverStart",
+				"offsets": [0, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "holdCover0",
+				"offsets": [-3, 3],
+				"looping": true,
+				"fps": 18
+			},
+			{
+				"anim": "end",
+				"xmlName": "holdCoverEnd",
+				"offsets": [0, 0],
+				"looping": false
+			}
+		],
+		[
+			{
+				"anim": "start",
+				"xmlName": "holdCoverStart",
+				"offsets": [0, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "holdCover0",
+				"offsets": [-3, 3],
+				"looping": true,
+				"fps": 18
+			},
+			{
+				"anim": "end",
+				"xmlName": "holdCoverEnd",
+				"offsets": [0, 0],
+				"looping": false
+			}
+		],
+		[
+			{
+				"anim": "start",
+				"xmlName": "holdCoverStart",
+				"offsets": [0, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "holdCover0",
+				"offsets": [-3, 3],
+				"looping": true,
+				"fps": 18
+			},
+			{
+				"anim": "end",
+				"xmlName": "holdCoverEnd",
+				"offsets": [0, 0],
+				"looping": false
+			}
+		],
+		[
+			{
+				"anim": "start",
+				"xmlName": "holdCoverStart",
+				"offsets": [0, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "holdCover0",
+				"offsets": [-3, 3],
+				"looping": true,
+				"fps": 18
+			},
+			{
+				"anim": "end",
+				"xmlName": "holdCoverEnd",
+				"offsets": [0, 0],
+				"looping": false
 			}
 		]
 	],

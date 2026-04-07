@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
-				0,
-				0
+				-833,
+				-800
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 10,
-			"name": "BlessBf idle",
-			"indices": []
-		},
-		{
-			"offsets": [
-				60,
-				0
-			],
-			"loop": false,
-			"fps": 11,
-			"anim": "singLEFT",
+			"anim": "idle",
 			"indices": [],
-			"name": "BlessBf left"
+			"name": "BlessBf idle"
 		},
 		{
 			"loop": false,
 			"offsets": [
-				0,
-				70
+				-657,
+				-833
 			],
+			"anim": "singLEFT",
+			"fps": 11,
+			"name": "BlessBf left",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-833,
+				-742
+			],
+			"loop": false,
+			"fps": 11,
 			"anim": "singDOWN",
-			"fps": 11,
-			"name": "BlessBf down",
-			"indices": []
+			"indices": [],
+			"name": "BlessBf down"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				0,
-				-30
+				-839,
+				-947
 			],
+			"loop": false,
+			"fps": 11,
 			"anim": "singUP",
-			"fps": 11,
-			"name": "BlessBf up",
-			"indices": []
+			"indices": [],
+			"name": "BlessBf up"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				100,
-				50
+				-630,
+				-771
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 11,
-			"name": "BlessBf right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "BlessBf right"
 		}
 	],
 	"no_antialiasing": false,
@@ -62,17 +62,21 @@
 		-580,
 		-430
 	],
-	"healthicon": "face",
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
+	"healthicon": "everettmodern",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": true,
-	"healthbar_colors": [
-		161,
-		161,
-		161
-	],
+	"healthbar_colour": -13585967,
 	"camera_position": [
 		-360,
 		580
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.5
+	"scale": 0.5,
+	"_editor_isPlayer": true
 }

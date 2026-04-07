@@ -32,6 +32,9 @@ var hasFinishedAnim:Bool = false;
 var pauseNameTxt:FlxText;
 var pauseSongStr:String;
 
+var funnyButtonX:Float = 0;
+var funnyButtonY:Float = 0;
+
 var yourName:String;
 
 var satanTxt:FlxTypeText;
@@ -131,7 +134,10 @@ function onLoad()
 	countDown.setFormat(Paths.font("betterSatanFont.ttf"), 90, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	satanTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 32, FlxColor.fromRGB(255, 117, 107), 'center', FlxTextBorderStyle.OUTLINE, FlxColor.fromRGB(92, 0, 26));
 	satanTxt.borderSize = 2;
-	songArt.loadGraphic(Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset));
+	if (Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset) != null)
+		songArt.loadGraphic(Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset));
+	else if (Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset) == null)
+		songArt.loadGraphic(Paths.image('Funkin_avi/pause/songs/unknown-song'));
 
 	// scales
 	bg.scale.set(FlxG.width * 4, FlxG.height * 4);
@@ -196,7 +202,7 @@ function onLoad()
 	switch (PlayState.SONG.song)
 	{
 		case 'War Dilemma':
-			funnyButton.loadGraphic(Paths.image('Funkin_avi/pause/selectorSkin/wd-selector'));
+				funnyButton.loadGraphic(Paths.image('Funkin_avi/pause/selectorSkin/wd-selector'));
 		case 'Malfunction':
 			funnyButton.loadGraphic(Paths.image('Funkin_avi/pause/selectorSkin/mal-selector'));
 		default:
@@ -220,33 +226,50 @@ function onUpdate(elapsed)
 	switch (menuItems[curSelected])
 	{
 		case 'continue':
-			funnyButton.x = songText.x + 300;
-			funnyButton.y = 120;
+			funnyButtonX = songText.x + 300;
+			funnyButtonY = 120;
 		case 'restart':
-			funnyButton.x = songText.x + 310;
-			funnyButton.y = 265;
+			funnyButtonX = songText.x + 310;
+			funnyButtonY = 265;
 		case 'settings':
-			funnyButton.x = songText.x + 540;
-			funnyButton.y = 420;
+			funnyButtonX = songText.x + 540;
+			funnyButtonY = 420;
 		case 'escape':
-			funnyButton.x = songText.x + 300;
-			funnyButton.y = 580;
+			funnyButtonX = songText.x + 300;
+			funnyButtonY = 580;
 		case 'leave':
-			funnyButton.x = songText.x + 530;
-			funnyButton.y = 580;
+			funnyButtonX = songText.x + 530;
+			funnyButtonY = 580;
+		case 'wd-continue':
+			funnyButtonX = songText.x + 430;
+			funnyButtonY = 124;
+		case 'wd-restart':
+			funnyButtonX = songText.x + 370;
+			funnyButtonY = 280;
+		case 'wd-settings':
+			funnyButtonX = songText.x + 720;
+			funnyButtonY = 430;
+		case 'wd-escape':
+			funnyButtonX = songText.x + 570;
+			funnyButtonY = 585;
 		case 'mal-continue':
-			funnyButton.x = songText.x + 410;
-			funnyButton.y = 104;
+			funnyButtonX = songText.x + 410;
+			funnyButtonY = 104;
 		case 'mal-restart':
-			funnyButton.x = songText.x + 420;
-			funnyButton.y = 250;
+			funnyButtonX = songText.x + 420;
+			funnyButtonY = 250;
 		case 'mal-settings':
-			funnyButton.x = songText.x + 770;
-			funnyButton.y = 410;
+			funnyButtonX = songText.x + 770;
+			funnyButtonY = 410;
 		case 'rage':
-			funnyButton.x = songText.x + 960;
-			funnyButton.y = 570;
+			funnyButtonX = songText.x + 960;
+			funnyButtonY = 570;
 	}
+
+	if (funnyButton != null) funnyButton.setPosition(
+		FlxMath.lerp(funnyButtonX, funnyButton.x, FlxMath.bound(1 - (elapsed * 15), 0, 1)), 
+		FlxMath.lerp(funnyButtonY, funnyButton.y, FlxMath.bound(1 - (elapsed * 15), 0, 1))
+	);
 
 	updateSelection();
 
@@ -256,8 +279,7 @@ function onUpdate(elapsed)
 			changeSelection(-1);
 		if (controls.UI_DOWN_P)
 			changeSelection(1);
-		if(FlxG.mouse.wheel != 0)
-			changeSelection(-1 * FlxG.mouse.wheel);
+		
 		if (controls.ACCEPT)
 		{
 			switch (curSelected)
@@ -269,9 +291,19 @@ function onUpdate(elapsed)
 					restartSong();
 				case 2:
 					remove(disc);
-					FlxG.switchState(new ScriptedState("Options"));
+					PlayState.instance.paused = true;
+					PlayState.instance.audio.volume = 0;
+					FlxG.switchState(new OptionsState());
+					@:privateAccess
+					{
+						if (pauseMusic._sound != null)
+						{
+							FlxG.sound.music.time = pauseMusic.time;
+							FunkinSound.playMusic(pauseMusic._sound, 0);
+							FlxTween.tween(FlxG.sound.music, {volume: 0.5}, 0.7);
+						}
+					}
 					OptionsState.onPlayState = true;
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				case 3:
 					switch (PlayState.SONG.song.toLowerCase())
 					{
@@ -390,9 +422,10 @@ function resumeGame()
 						close();
 						remove(disc);
 						Application.current.window.title = "Funkin.avi: Recycled - " + 
-						(PlayState.isStoryMode ? "Episode 1" + " - " : "Freeplay - ") + 
-						PlayState.SONG.song + 
-						" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // short version that displays after 5 seconds yayaya;
+						(PlayState.isStoryMode ? "Episode 1" + " - " : "Freeplay - ") + PlayState.SONG.song + 
+						" (Composed by: " + PluginsManager.callPluginFunc('CreditsData', 'getArtistName', [PlayState.SONG.song]) + 
+						") - Chart by: " + PluginsManager.callPluginFunc('CreditsData', 'getCharterCredits', [PlayState.SONG.song]) + 
+						" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
 					});
 				});
 			});

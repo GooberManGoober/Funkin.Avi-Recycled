@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				590,
-				640
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				520,
+				615
+			],
 			"anim": "idle",
-			"indices": [],
-			"name": "Mickeyphase2 Idle"
+			"fps": 24,
+			"name": "Mickeyphase2 Idle",
+			"indices": []
 		},
 		{
-			"offsets": [
-				570,
-				654
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				494,
+				626
+			],
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "Mickeyphase2 Left"
+			"fps": 24,
+			"name": "Mickeyphase2 Left",
+			"indices": []
 		},
 		{
-			"offsets": [
-				570,
-				630
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				529,
+				617
+			],
 			"anim": "singUP",
-			"indices": [],
-			"name": "Mickeyphase2 Up"
+			"fps": 24,
+			"name": "Mickeyphase2 Up",
+			"indices": []
 		},
 		{
-			"offsets": [
-				590,
-				642
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				522,
+				618
+			],
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "Mickeyphase2 Down"
+			"fps": 24,
+			"name": "Mickeyphase2 Down",
+			"indices": []
 		},
 		{
-			"offsets": [
-				540,
-				640
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				464,
+				613
+			],
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "Mickeyphase2 Right"
+			"fps": 24,
+			"name": "Mickeyphase2 Right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
@@ -62,17 +62,21 @@
 		0,
 		200
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "lunaold",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		176,
-		176,
-		176
-	],
+	"healthbar_colour": -5197648,
 	"camera_position": [
 		-290,
 		-320
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.7
+	"scale": 0.7,
+	"_editor_isPlayer": false
 }

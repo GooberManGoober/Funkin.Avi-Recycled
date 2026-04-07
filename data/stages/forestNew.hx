@@ -16,8 +16,9 @@ var camHudMoves:Bool = false;
 var uhhTurnBackNormalOrSmth:Void->Void;
 
 var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
+var camBars:FlxCamera;
 
-var pathway:String = 'Funkin_avi/stages/forestNew/images/';
+var pathway:String = 'Funkin_avi/stages/forestNew/';
 
 function onLoad()
 {
@@ -59,6 +60,10 @@ function onLoad()
 function onCreatePost()
 {
     add(treesFront);
+
+    camBars = new FlxCamera();
+	camBars.bgColor = 0x0;
+    FlxG.cameras.insert(camBars, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
 
     if (ClientPrefs.shaders)
     {
@@ -125,7 +130,7 @@ function onSongStart()
                 goofyStreet.shader = wobblyBG;
                 treesBack.shader = wobblyBG;
                 treesFront.shader = wobblyBG;
-                cinematicBarControls("moveboth", 0.0001, 'circOut', 0);
+                cinematicBarControls("moveboth", 2, 'circOut', 0);
             }
         }
     });
@@ -151,7 +156,7 @@ function onSongStart()
             goofyStreet.shader = null;
             treesBack.shader = null;
             treesFront.shader = null;
-            cinematicBarControls("moveboth", 0.0001, 'circOut', 80);
+            cinematicBarControls("moveboth", 2, 'circOut', 80);
         }
 
         uhhTurnBackNormalOrSmth();
@@ -177,13 +182,6 @@ function onSongStart()
         FlxTween.tween(playHUD, {alpha: 0}, 2.5, {ease: FlxEase.backInOut});
     });
 
-    for (i in [8, 12, 16, 24, 28, 32, 40, 44, 48, 56, 60])
-    {
-        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            cinematicBarControls("bopboth", 2, 'circOut', 80, 10);
-        });
-    }
-
     //modchart beginning
     modManager.queueEase(736, 736 + 20, "alpha", 1, "backInOut", 1);
     modManager.queueEase(736, 736 + 20, "opponentSwap", 0.5, 'backInOut', 0);
@@ -207,7 +205,6 @@ function onBeatHit()
     {
         FlxG.camera.zoom += ((curBeat > 176 && curBeat < 184) ? 0 : .05);
         camHUD.zoom += .04;
-        if (curBeat < 192) cinematicBarControls("bopboth", 2, 'circOut', 80, 20);
 
     }
 }
@@ -256,8 +253,7 @@ function cinematicBarControls(?controlType:String = "add", ?speed:Float, ?ease:S
 			{
 				cinematicBars["top"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 				cinematicBars["top"].screenCenter(FlxAxes.X);
-                cinematicBars["top"].zIndex = 5;
-				cinematicBars["top"].cameras = [camHUD];
+				cinematicBars["top"].cameras = [camBars];
 				cinematicBars["top"].y = 0 - cinematicBars["top"].height; // offscreen
 				add(cinematicBars["top"]);
 			}
@@ -266,8 +262,7 @@ function cinematicBarControls(?controlType:String = "add", ?speed:Float, ?ease:S
 			{
 				cinematicBars["bottom"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 				cinematicBars["bottom"].screenCenter(FlxAxes.X);
-                cinematicBars["bottom"].zIndex = 5;
-				cinematicBars["bottom"].cameras = [camHUD];
+				cinematicBars["bottom"].cameras = [camBars];
 				cinematicBars["bottom"].y = FlxG.height; // offscreen
 				add(cinematicBars["bottom"]);
 			}

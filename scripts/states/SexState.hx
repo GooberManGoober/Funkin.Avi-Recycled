@@ -5,6 +5,7 @@ import flixel.text.FlxText;
 import funkin.backend.PlayerSettings;
 import lime.app.Application;
 import openfl.filters.ShaderFilter;
+import funkin.states.MainMenuState;
 
 using StringTools;
 
@@ -66,6 +67,6 @@ function onUpdate(elapsed) {
     if (controls.BACK)
     {
         Application.current.window.alert('Bro think there was sex', 'L moment');
-        FlxG.switchState(new ScriptedState('MainMenuState'));
+        FlxG.switchState(new MainMenuState());
     }
 }

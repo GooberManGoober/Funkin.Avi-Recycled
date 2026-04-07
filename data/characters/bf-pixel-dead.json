@@ -1,37 +1,37 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
-				-26,
-				-12
+				34,
+				31
 			],
-			"fps": 24,
+			"loop": false,
 			"anim": "deathConfirm",
-			"indices": [],
-			"name": "RETRY CONFIRM"
+			"fps": 24,
+			"name": "RETRY CONFIRM",
+			"indices": []
 		},
 		{
+			"offsets": [
+				34,
+				31
+			],
 			"loop": true,
-			"offsets": [
-				-30,
-				-12
-			],
-			"fps": 24,
 			"anim": "deathLoop",
-			"indices": [],
-			"name": "Retry Loop"
+			"fps": 24,
+			"name": "Retry Loop",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
-				0,
-				0
+				39,
+				33
 			],
-			"fps": 24,
+			"loop": false,
 			"anim": "firstDeath",
-			"indices": [],
-			"name": "BF Dies pixel"
+			"fps": 24,
+			"name": "BF Dies pixel",
+			"indices": []
 		}
 	],
 	"no_antialiasing": true,
@@ -40,17 +40,21 @@
 		0,
 		350
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "bf-pixel",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": true,
-	"healthbar_colors": [
-		123,
-		214,
-		246
-	],
+	"healthbar_colour": -8661258,
 	"camera_position": [
 		50,
 		-60
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 4,
-	"scale": 6
+	"scale": 6,
+	"_editor_isPlayer": true
 }

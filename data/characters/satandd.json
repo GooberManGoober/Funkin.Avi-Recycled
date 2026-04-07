@@ -1,15 +1,15 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				159,
-				-1030
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				258,
+				-685
+			],
 			"anim": "idle",
-			"indices": [],
-			"name": "satandd idle"
+			"fps": 24,
+			"name": "satandd idle",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
@@ -18,17 +18,21 @@
 		0,
 		0
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "satandd",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		1,
-		1,
-		1
-	],
+	"healthbar_colour": -16711423,
 	"camera_position": [
-		-560,
-		1070
+		-460,
+		770
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 1.3
+	"scale": 1.3,
+	"_editor_isPlayer": false
 }

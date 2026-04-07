@@ -10,7 +10,7 @@ var thingyI:FlxSprite;
 var chrom:FlxRuntimeShader;
 var invert:FlxRuntimeShader = newShader('invertShader');
 
-var pathway:String = 'Funkin_avi/stages/' + 'vaultRoom' + '/images/legacy/';
+var pathway:String = 'Funkin_avi/stages/' + 'vaultRoom' + '/legacy/';
 
 function onLoad()
 {

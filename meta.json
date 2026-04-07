@@ -4,11 +4,14 @@
     "iconFile": "icon64",
     "windowTitle": "Funkin.avi: Recycled",
 
+    "countdownPrefix": "",
+
     "stateRedirects": {
         "TitleState": "TitleState",
         "MainMenuState": "MainMenuState",
         "StoryMenuState": "StoryMenu",
         "FreeplayState": "FreeplayState",
-        "CreditsState": "CreditsMenu"
+        "CreditsState": "CreditsMenu",
+        "OptionsState": "Options"
     }
 }

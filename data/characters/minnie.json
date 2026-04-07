@@ -5,10 +5,10 @@
 				740,
 				-140
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "idle",
-			"loop": false,
+			"indices": [],
 			"name": "idle"
 		},
 		{
@@ -16,10 +16,10 @@
 				815,
 				-164
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
+			"indices": [],
 			"name": "left0"
 		},
 		{
@@ -27,10 +27,10 @@
 				769,
 				-94
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
+			"indices": [],
 			"name": "up0"
 		},
 		{
@@ -38,10 +38,10 @@
 				728,
 				-96
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
+			"indices": [],
 			"name": "right0"
 		},
 		{
@@ -49,10 +49,10 @@
 				748,
 				-97
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singRIGHTmiss",
-			"loop": false,
+			"indices": [],
 			"name": "right_misses"
 		},
 		{
@@ -60,10 +60,10 @@
 				760,
 				-90
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singLEFTmiss",
-			"loop": false,
+			"indices": [],
 			"name": "left_misses"
 		},
 		{
@@ -71,10 +71,10 @@
 				756,
 				-104
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singDOWNmiss",
-			"loop": false,
+			"indices": [],
 			"name": "down_misses"
 		},
 		{
@@ -82,10 +82,10 @@
 				731,
 				-113
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
+			"indices": [],
 			"name": "down0"
 		},
 		{
@@ -93,10 +93,10 @@
 				744,
 				-81
 			],
-			"indices": [],
+			"loop": false,
 			"fps": 24,
 			"anim": "singUPmiss",
-			"loop": false,
+			"indices": [],
 			"name": "up_misses"
 		}
 	],
@@ -106,17 +106,21 @@
 		0,
 		0
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "minnie",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": true,
-	"healthbar_colors": [
-		101,
-		101,
-		141
-	],
+	"healthbar_colour": -10132083,
 	"camera_position": [
 		400,
 		100
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 1
+	"scale": 1,
+	"_editor_isPlayer": true
 }

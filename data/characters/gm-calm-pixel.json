@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
-				0,
-				0
+				203,
+				203
 			],
-			"indices": [],
-			"fps": 11,
 			"anim": "idle",
-			"loop": false,
-			"name": "glitched-mickey-calm idle"
+			"fps": 11,
+			"name": "glitched-mickey-calm idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				0,
-				0
+				203,
+				203
 			],
-			"indices": [],
-			"fps": 19,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "glitched-mickey-calm left"
+			"fps": 19,
+			"name": "glitched-mickey-calm left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				0,
-				0
+				203,
+				203
 			],
-			"indices": [],
-			"fps": 18,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "glitched-mickey-calm down"
+			"fps": 18,
+			"name": "glitched-mickey-calm down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				0,
-				0
+				203,
+				203
 			],
-			"indices": [],
-			"fps": 20,
 			"anim": "singUP",
-			"loop": false,
-			"name": "glitched-mickey-calm up"
+			"fps": 20,
+			"name": "glitched-mickey-calm up",
+			"indices": []
 		},
 		{
-			"offsets": [
-				0,
-				0
-			],
-			"indices": [],
-			"fps": 20,
-			"anim": "singRIGHT",
 			"loop": false,
-			"name": "glitched-mickey-calm right"
+			"offsets": [
+				203,
+				203
+			],
+			"anim": "singRIGHT",
+			"fps": 20,
+			"name": "glitched-mickey-calm right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": true,
@@ -62,17 +62,21 @@
 		0,
 		-60
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "mal-pixel",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		0,
-		0,
-		0
-	],
+	"healthbar_colour": -16777216,
 	"camera_position": [
 		-300,
 		-250
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 2.3
+	"scale": 2.3,
+	"_editor_isPlayer": false
 }

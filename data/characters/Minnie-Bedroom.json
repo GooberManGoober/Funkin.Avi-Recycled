@@ -2,8 +2,8 @@
 	"animations": [
 		{
 			"offsets": [
-				-1120,
-				-350
+				-960,
+				-270
 			],
 			"loop": false,
 			"fps": 6,
@@ -13,8 +13,8 @@
 		},
 		{
 			"offsets": [
-				-1120,
-				-350
+				-960,
+				-270
 			],
 			"loop": false,
 			"fps": 9,
@@ -24,8 +24,8 @@
 		},
 		{
 			"offsets": [
-				-1120,
-				-350
+				-960,
+				-270
 			],
 			"loop": false,
 			"fps": 9,
@@ -35,8 +35,8 @@
 		},
 		{
 			"offsets": [
-				-1120,
-				-350
+				-960,
+				-270
 			],
 			"loop": false,
 			"fps": 9,
@@ -46,8 +46,8 @@
 		},
 		{
 			"offsets": [
-				-1120,
-				-350
+				-960,
+				-270
 			],
 			"loop": false,
 			"fps": 7,
@@ -62,17 +62,21 @@
 		-580,
 		60
 	],
-	"healthicon": "f_avi/episode1/mickey",
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
+	"healthicon": "minnie",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": false,
-	"healthbar_colors": [
-		216,
-		216,
-		216
-	],
+	"healthbar_colour": -2565928,
 	"camera_position": [
 		550,
 		50
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 1.1
+	"scale": 1.1,
+	"_editor_isPlayer": false
 }

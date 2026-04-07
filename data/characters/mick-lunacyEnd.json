@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
-				-445,
-				-491
+				-341,
+				-360
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 18,
-			"name": "Mickey idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "Mickey idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-404,
-				-491
+				-305,
+				-361
 			],
+			"loop": false,
+			"fps": 19,
 			"anim": "singLEFT",
-			"fps": 19,
-			"name": "Mickey note left",
-			"indices": []
+			"indices": [],
+			"name": "Mickey note left"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-446,
-				-622
+				-341,
+				-469
 			],
+			"loop": false,
+			"fps": 19,
 			"anim": "singDOWN",
-			"fps": 19,
-			"name": "Mickey note down",
-			"indices": []
+			"indices": [],
+			"name": "Mickey note down"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-413,
-				-382
+				-314,
+				-269
 			],
+			"loop": false,
+			"fps": 19,
 			"anim": "singUP",
-			"fps": 19,
-			"name": "Mickey note up",
-			"indices": []
+			"indices": [],
+			"name": "Mickey note up"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-445,
-				-486
+				-341,
+				-355
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 19,
-			"name": "Mickey note right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Mickey note right"
 		}
 	],
 	"no_antialiasing": false,
@@ -62,17 +62,21 @@
 		0,
 		0
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "lunaavier",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": false,
-	"healthbar_colors": [
-		136,
-		136,
-		136
-	],
+	"healthbar_colour": -7829368,
 	"camera_position": [
-		611,
-		490
+		511,
+		390
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 1.2
+	"scale": 1.2,
+	"_editor_isPlayer": false
 }

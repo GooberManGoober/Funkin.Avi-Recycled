@@ -7,6 +7,7 @@ import sys.io.File;
 import lime.app.Application;
 import flixel.addons.display.FlxGridOverlay;
 import funkin.backend.PlayerSettings;
+import funkin.states.MainMenuState;
 /** Credit shit or smth !!
 
 How it Works:
@@ -207,7 +208,7 @@ function onUpdate(elapsed)
 
 	if (controls.BACK)
 	{
-		FlxG.switchState(new ScriptedState('MainMenuState'));
+		FlxG.switchState(new MainMenuState());
 		Conductor.bpm = (60); // changes back to titlescreen bpm
 		FlxG.sound.playMusic(Paths.music('freakyMenu'), 1); // resets music back to menu music
 		FlxG.sound.music.fadeIn();

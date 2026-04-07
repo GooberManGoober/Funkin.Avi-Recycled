@@ -6,6 +6,8 @@ import lime.app.Application;
 import funkin.FunkinAssets;
 import openfl.filters.ShaderFilter;
 
+import funkin.states.MainMenuState;
+
 using StringTools;
 
 var initialized:Bool = false;
@@ -175,7 +177,7 @@ function onUpdate(elapsed)
 				closedState = true;
 				ClientPrefs.quants = false;
 				ClientPrefs.flush();
-				FlxG.switchState(new ScriptedState("MainMenuState"));
+				FlxG.switchState(new MainMenuState());
 			});
 		}
 	}

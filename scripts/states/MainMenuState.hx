@@ -23,6 +23,9 @@ import lime.app.Application;
 import openfl.filters.ShaderFilter;
 
 import funkin.states.options.OptionsState;
+import funkin.states.MainMenuState;
+import funkin.states.CreditsState;
+import funkin.states.StoryMenuState;
 
 using StringTools;
 
@@ -135,7 +138,7 @@ function onCreate()
 		var menuItem:FlxSprite = new FlxSprite(700, 0);
 		menuItem.scale.x = scale;
 		menuItem.scale.y = scale;
-		menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
+		menuItem.frames = Paths.getSparrowAtlas('menus/mainmenu/menu_' + optionShit[i]);
 		menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 		menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 		menuItem.animation.play('idle');
@@ -263,7 +266,7 @@ function onUpdate(elapsed)
 		{
 			selectedSomethin = true;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			FlxG.switchState(new ScriptedState('TitleState'));
+			FlxG.switchState(new TitleState());
 		}
 
 		if (controls.ACCEPT)
@@ -335,11 +338,11 @@ function onUpdate(elapsed)
 							switch (daChoice)
 							{
 								case 'story_mode':
-									FlxG.switchState(new ScriptedState('StoryMenu'));
+									FlxG.switchState(new StoryMenuState());
 								case 'credits':
-									FlxG.switchState(new ScriptedState('CreditsMenu'));
+									FlxG.switchState(new CreditsState());
 								case 'options':
-									FlxG.switchState(new ScriptedState('Options'));
+									FlxG.switchState(new OptionsState());
 							}
 						});
 					}

@@ -1,17 +1,6 @@
 {
 	"animations": [
 		{
-			"loop": true,
-			"offsets": [
-				0,
-				0
-			],
-			"anim": "idle",
-			"fps": 24,
-			"name": "ricky idle",
-			"indices": []
-		},
-		{
 			"loop": false,
 			"offsets": [
 				60,
@@ -54,6 +43,42 @@
 			"fps": 24,
 			"name": "ricky right",
 			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"flipX": false,
+			"flipY": false,
+			"anim": "idle",
+			"loop": false,
+			"name": "ricky idle"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16
+			],
+			"fps": 24,
+			"flipX": false,
+			"flipY": false,
+			"anim": "idle-loop",
+			"loop": true,
+			"name": "ricky idle"
 		}
 	],
 	"no_antialiasing": false,
@@ -62,17 +87,21 @@
 		-300,
 		70
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": false,
+	"gameover_confirm_sound": null,
 	"healthicon": "ricky",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		61,
-		61,
-		61
-	],
+	"healthbar_colour": -12763843,
 	"camera_position": [
 		210,
 		30
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 1
+	"scale": 1,
+	"_editor_isPlayer": false
 }

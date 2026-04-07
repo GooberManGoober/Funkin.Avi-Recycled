@@ -6,7 +6,6 @@
 		"singRIGHT"
 	],
 	"splashesEnabled": true,
-	"susSplashesEnabled": false,
 	"noteTexture": "pixelUI/NOTE_assets",
 	"receptorAnimations": [
 		[
@@ -31,8 +30,8 @@
 			{
 				"looping": false,
 				"offsets": [
-					-1,
-					-1
+					0,
+					0
 				],
 				"xmlName": "left confirm",
 				"anim": "confirm"
@@ -60,7 +59,7 @@
 			{
 				"looping": false,
 				"offsets": [
-					-2,
+					0,
 					0
 				],
 				"xmlName": "down confirm",
@@ -89,8 +88,8 @@
 			{
 				"looping": false,
 				"offsets": [
-					-1,
-					-1
+					0,
+					0
 				],
 				"xmlName": "up confirm",
 				"anim": "confirm"
@@ -118,7 +117,7 @@
 			{
 				"looping": false,
 				"offsets": [
-					-1,
+					0,
 					0
 				],
 				"xmlName": "right confirm",
@@ -278,6 +277,92 @@
 			}
 		]
 	],
+	"susSplashAnimations": [
+		[
+			{
+				"anim": "start",
+				"xmlName": "start",
+				"offsets": [-160, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "loop",
+				"offsets": [-160, 0],
+				"looping": true,
+				"fps": 12
+			},
+			{
+				"anim": "end",
+				"xmlName": "end",
+				"offsets": [-160, 0],
+				"looping": false
+			}
+		],
+		[
+			{
+				"anim": "start",
+				"xmlName": "start",
+				"offsets": [-160, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "loop",
+				"offsets": [-160, 0],
+				"looping": true,
+				"fps": 12
+			},
+			{
+				"anim": "end",
+				"xmlName": "end",
+				"offsets": [-160, 0],
+				"looping": false
+			}
+		],
+		[
+			{
+				"anim": "start",
+				"xmlName": "start",
+				"offsets": [-160, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "loop",
+				"offsets": [-160, 0],
+				"looping": true,
+				"fps": 12
+			},
+			{
+				"anim": "end",
+				"xmlName": "end",
+				"offsets": [-160, 0],
+				"looping": false
+			}
+		],
+		[
+			{
+				"anim": "start",
+				"xmlName": "start",
+				"offsets": [-160, 0],
+				"looping": false
+			},
+			{
+				"anim": "loop",
+				"xmlName": "loop",
+				"offsets": [-160, 0],
+				"looping": true,
+				"fps": 12
+			},
+			{
+				"anim": "end",
+				"xmlName": "end",
+				"offsets": [-160, 0],
+				"looping": false
+			}
+		]
+	],
 	"arrowRGB": [
 		{"r": -1935617, "g": -1537, "b": -10485619},
 		{"r": -12727553, "g": -720897, "b": -16764832},
@@ -285,10 +370,12 @@
 		{"r": -30642, "g": -1291, "b": -9699328}
 	],
 	"splashTexture": "pixelUI/pixel-splashes",
+    "sustainSplashTexture": "pixelUI/holdCover",
 	"antialiasing": false,
 	"inGameColoring": true,
 	"receptorScale": 6,
 	"noteScale": 6,
 	"splashScale": 4,
-	"susSplashOrigin": [-10, 15]
+    "susSplashScale": 6,
+	"susSplashOrigin": [-160, 15]
 }

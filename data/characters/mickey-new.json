@@ -1,59 +1,63 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				94,
-				-2
-			],
 			"loop": false,
-			"fps": 10,
+			"offsets": [
+				-393,
+				-468
+			],
 			"anim": "idle",
-			"indices": [],
-			"name": "Mickey1 Idle"
+			"fps": 10,
+			"name": "Mickey1 Idle",
+			"indices": []
 		},
 		{
-			"offsets": [
-				95,
-				1
-			],
 			"loop": false,
-			"fps": 10,
+			"offsets": [
+				-391,
+				-506
+			],
 			"anim": "singUP",
-			"indices": [],
-			"name": "Mickey1 Up"
-		},
-		{
-			"offsets": [
-				94,
-				-4
-			],
-			"loop": false,
 			"fps": 10,
+			"name": "Mickey1 Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-399,
+				-463
+			],
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "Mickey1 Right"
+			"fps": 10,
+			"name": "Mickey1 Right",
+			"indices": []
 		},
 		{
+			"loop": false,
+			"flipY": false,
 			"offsets": [
-				93,
-				0
+				-402,
+				-462
 			],
-			"loop": true,
-			"fps": 14,
-			"anim": "singLEFT",
-			"indices": [],
-			"name": "Mickey1 Left"
-		},
-		{
-			"offsets": [
-				95,
-				0
-			],
-			"indices": [],
-			"fps": 14,
 			"anim": "singDOWN",
-			"loop": true,
-			"name": "Mickey1 Down"
+			"fps": 14,
+			"name": "Mickey1 Down",
+			"indices": [],
+			"flipX": false
+		},
+		{
+			"loop": false,
+			"flipY": false,
+			"offsets": [
+				-411,
+				-470
+			],
+			"anim": "singLEFT",
+			"fps": 14,
+			"name": "Mickey1 Left",
+			"indices": [],
+			"flipX": false
 		}
 	],
 	"no_antialiasing": false,
@@ -62,17 +66,21 @@
 		320,
 		520
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": true,
+	"gameover_confirm_sound": null,
 	"healthicon": "avier",
+	"gameover_character": null,
+	"vslice_sustains": true,
 	"flip_x": false,
-	"healthbar_colors": [
-		216,
-		216,
-		216
-	],
+	"healthbar_colour": -2565928,
 	"camera_position": [
 		315,
 		320
 	],
+	"gameover_loop_sound": null,
 	"sing_duration": 6.1,
-	"scale": 0.6
+	"scale": 0.6,
+	"_editor_isPlayer": false
 }
