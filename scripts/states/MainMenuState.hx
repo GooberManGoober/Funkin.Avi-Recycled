@@ -14,8 +14,6 @@ import funkin.scripting.PluginsManager;
 import funkin.utils.MathUtil;
 import flixel.FlxObject;
 
-import funkin.backend.PlayerSettings;
-
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -26,6 +24,7 @@ import funkin.states.options.OptionsState;
 import funkin.states.MainMenuState;
 import funkin.states.CreditsState;
 import funkin.states.StoryMenuState;
+import funkin.states.TitleState;
 
 using StringTools;
 
@@ -83,8 +82,6 @@ var menuItems:FlxTypedGroup;
 var camFilter:FlxCamera;
 var messager;
 
-var controls = PlayerSettings.player1.controls;
-
 var optionShit:Array<String> = [
 	'story_mode',
 	'freeplay',
@@ -113,14 +110,14 @@ function onCreate()
 
 	persistentUpdate = persistentDraw = true;
 
-	eyes = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/menu/HahaSadBoi'));
+	eyes = new FlxSprite().loadGraphic(Paths.image('menus/mainmenu/HahaSadBoi'));
 	eyes.scrollFactor.set(0, 0);
 	eyes.screenCenter();
 	eyes.updateHitbox();
 	eyes.antialiasing = ClientPrefs.globalAntialiasing;
 	add(eyes);
 
-	menuart = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/menu/newspaper'));
+	menuart = new FlxSprite().loadGraphic(Paths.image('menus/mainmenu/newspaper'));
 	menuart.scrollFactor.set(0, 0);
 	//menuart.setGraphicSize(StdDaInt(menuart.width * 1.175));
 	menuart.updateHitbox();
@@ -183,7 +180,7 @@ function onCreate()
 	changeItem(0);
 
 	var scratchStuff:FlxSprite = new FlxSprite();
-	scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+	scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 	scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 	scratchStuff.animation.play('idle');
 	scratchStuff.screenCenter();
@@ -192,7 +189,7 @@ function onCreate()
 	add(scratchStuff);
 
 	var grain:FlxSprite = new FlxSprite();
-	grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+	grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 	grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 	grain.animation.play('idle');
 	grain.screenCenter();
@@ -250,26 +247,26 @@ function onUpdate(elapsed)
 
 	if (!selectedSomethin)
 	{
-		if (controls.UI_UP_P)
+		if (Controls.UI_UP_P)
 		{
 			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 			changeItem(-1);
 		}
 
-		if (controls.UI_DOWN_P)
+		if (Controls.UI_DOWN_P)
 		{
 			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 			changeItem(1);
 		}
 
-		if (controls.BACK)
+		if (Controls.BACK)
 		{
 			selectedSomethin = true;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			FlxG.switchState(new TitleState());
 		}
 
-		if (controls.ACCEPT)
+		if (Controls.ACCEPT)
 		{
 			if (optionShit[curSelected] == 'freeplay')
 			{
@@ -400,7 +397,7 @@ function changeItem(huh:Int = 0)
 
 function cantaloupeJumpscare()
 {
-	var cantaloupe = new FlxSprite(-200, -100).loadGraphic(Paths.image('Funkin_avi/cantaloupe'));
+	var cantaloupe = new FlxSprite(-200, -100).loadGraphic(Paths.image('menus/mainmenu/cantaloupe'));
 	cantaloupe.scale.set(0.05, 0.05);
 	cantaloupe.screenCenter();
 	FlxTween.tween(cantaloupe.scale, {x: 2, y: 2}, 3, {ease: FlxEase.bounceOut, onComplete: _ -> FlxTween.tween(cantaloupe, {alpha: 0}, 2)});

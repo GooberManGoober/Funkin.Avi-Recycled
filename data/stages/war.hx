@@ -1,4 +1,4 @@
-var defaultPath:String = 'Funkin_avi/stages/war/';
+var defaultPath:String = 'stages/war/';
 
 var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
 

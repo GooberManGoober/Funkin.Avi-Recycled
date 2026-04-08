@@ -11,7 +11,6 @@ import flixel.FlxCamera;
 import funkin.backend.Difficulty;
 import funkin.utils.CameraUtil;
 import funkin.states.options.OptionsState;
-import funkin.backend.PlayerSettings;
 
 var grpMenuShit:FlxTypedGroup;
 var cornerTexts:Array<FlxText> = [];
@@ -23,8 +22,6 @@ var pauseMusic:FlxSound;
 var practiceText:FlxText;
 
 var pauseNameTxt:FlxText;
-
-var controls = PlayerSettings.player1.controls;
 
 function onCreate()
 {
@@ -124,18 +121,18 @@ function onUpdate(elapsed)
 {
 	if (pauseMusic.volume < 0.5) pauseMusic.volume += 0.01 * elapsed;
 	
-	if (controls.UI_UP_P)
+	if (Controls.UI_UP_P)
 	{
 		changeSelection(-1);
 	}
-	if (controls.UI_DOWN_P)
+	if (Controls.UI_DOWN_P)
 	{
 		changeSelection(1);
 	}
 	
 	var daSelected:String = menuItems[curSelected];
 	
-	if (controls.ACCEPT)
+	if (Controls.ACCEPT)
 	{
 		switch (daSelected)
 		{

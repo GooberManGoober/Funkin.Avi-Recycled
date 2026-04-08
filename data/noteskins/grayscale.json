@@ -6,7 +6,8 @@
 		"singRIGHT"
 	],
 	"splashesEnabled": true,
-	"noteTexture": "noteSkins/GreyNOTE_assets",
+	"susSplashesEnabled": false,
+	"noteTexture": "UI/notes/GreyNOTE_assets",
 	"sustainSplashTexture": "UI/notes/sustain_cover",
 	"receptorAnimations": [
 		[
@@ -374,7 +375,7 @@
 		{"r": 10658466, "g": 16777215, "b": 4342338},
 		{"r": 1907997, "g": 16777215, "b": 0}
 	],
-	"splashTexture": "noteSplashes/noteSplashes",
+	"splashTexture": "UI/notes/noteSplashes",
 	"antialiasing": true,
 	"quantsEnabled": false,
 	"inGameColoring": true,

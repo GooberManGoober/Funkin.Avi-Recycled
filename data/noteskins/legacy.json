@@ -278,7 +278,7 @@
 			}
 		]
 	],
-	"splashTexture": "noteSplashes/noteSplashes-legacy",
+	"splashTexture": "UI/notes/noteSplashes-legacy",
 	"antialiasing": true,
 	"inGameColoring": true,
 	"sustainAlpha": 0.6,

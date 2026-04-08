@@ -11,7 +11,7 @@ import flixel.graphics.FlxGraphic;
 import funkin.data.WeekData;
 import funkin.objects.MenuItem;
 import funkin.data.Highscore;
-import funkin.backend.PlayerSettings;
+import funkin.backend.Controls;
 import openfl.filters.ShaderFilter;
 import funkin.states.MainMenuState;
 
@@ -29,8 +29,6 @@ var curWeek:Int = 0;
 var txtTracklist:FlxText;
 
 var grpWeekText:FlxTypedGroup;
-
-var controls = PlayerSettings.player1.controls;
 
 var grpLocks:FlxTypedGroup;
 
@@ -158,7 +156,7 @@ function onCreate()
 	changeWeek();
 	changeDifficulty();
 
-	transitionThing = new FlxSprite(-1700, 0).loadGraphic(Paths.image('storyMenuTransition'));
+	transitionThing = new FlxSprite(-1700, 0).loadGraphic(Paths.image('menus/story/storyMenuTransition'));
 	add(transitionThing);
 
 	FlxTween.tween(transitionThing, {x: 1600}, 2.1, {ease: FlxEase.quadInOut});
@@ -166,7 +164,7 @@ function onCreate()
 	if(!ClientPrefs.lowQuality) 
 	{
 		var scratch:FlxSprite = new FlxSprite();
-		scratch.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+		scratch.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratch.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 		scratch.animation.play('idle');
 		scratch.screenCenter();
@@ -175,7 +173,7 @@ function onCreate()
 		add(scratch);
 
 		var grain:FlxSprite = new FlxSprite();
-		grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+		grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 		grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 		grain.animation.play('idle');
 		grain.screenCenter();
@@ -215,8 +213,8 @@ function onUpdate(elapsed)
 
 	if (!movedBack && !selectedWeek)
 	{
-		var upP = controls.UI_UP_P;
-		var downP = controls.UI_DOWN_P;
+		var upP = Controls.UI_UP_P;
+		var downP = Controls.UI_DOWN_P;
 		if (upP)
 		{
 			changeWeek(-1);
@@ -229,23 +227,23 @@ function onUpdate(elapsed)
 			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 		}
 
-		if (controls.UI_RIGHT)
+		if (Controls.UI_RIGHT)
 			rightArrow.animation.play('press')
 		else
 			rightArrow.animation.play('idle');
 
-		if (controls.UI_LEFT)
+		if (Controls.UI_LEFT)
 			leftArrow.animation.play('press');
 		else
 			leftArrow.animation.play('idle');
 
-		if (controls.ACCEPT)
+		if (Controls.ACCEPT)
 		{
 			selectWeek();
 		}
 	}
 
-	if (controls.BACK && !movedBack && !selectedWeek)
+	if (Controls.BACK && !movedBack && !selectedWeek)
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'));
 		movedBack = true;

@@ -23,7 +23,7 @@ function setupCardData()
 {
 	switch (PlayState.SONG.song)
 	{
-		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'Laugh Track', 'Birthday':
+		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'Laugh Track', 'Birthday', 'Delusion':
 			fontStuff = "DisneyFont.ttf";
 		case 'Delusional':
 			fontStuff = "betterSatanFont.ttf";
@@ -87,15 +87,20 @@ function onCreatePost()
 	if (!isLegacy)
 	{
 		dadIcon = new HealthIcon(oIconName, false);
+		dadIcon.frameCount = 3;
 		dadIcon.x = 260;
 		dadIcon.y = 130;
 
 		playerIcon = new HealthIcon(pIconName, true);
+		playerIcon.frameCount = 3;
 		playerIcon.x = 850;
 		playerIcon.y = 460;
 
 		dadIcon.alpha = 0.001;
 		playerIcon.alpha = 0.001;
+
+		dadIcon.animation.curAnim.curFrame = 2;
+		playerIcon.animation.curAnim.curFrame = 2;
 	
 		songCrdGrp.add(dadIcon);
 		songCrdGrp.add(playerIcon);

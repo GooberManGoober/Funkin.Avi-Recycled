@@ -36,7 +36,7 @@ function onLoad()
 	crashLives.scrollFactor.set();
 	crashLives.cameras = [camHUD];
 
-	crashLivesIcon.frames = Paths.getSparrowAtlas('Funkin_avi/ui/malfunctionGimmickIcon');
+	crashLivesIcon.frames = Paths.getSparrowAtlas('UI/malfunctionGimmickIcon');
 	crashLivesIcon.animation.addByPrefix('idle', 'lives-icon idle', 15);
 	crashLivesIcon.animation.addByPrefix('OMFG IT GLITCHES', 'lives-icon glitchin', 15);
 	crashLivesIcon.animation.play('idle');
@@ -51,14 +51,14 @@ function onLoad()
 }
 
 function setupNote(note) {
-	note.reloadNote('ERROR');
+	//note.reloadNote('ERROR');
 	note.hitCausesMiss = false;
 	note.canMiss = true;
 	note.ignoreNote = note.mustPress;
 	note.rgbShader.setColors(arrowRGBError[note.noteData]);
 }
 
-function update(note, elapsed)
+function postSpawnNote(note)
 {
 	note.rgbShader.r = arrowRGBError[note.noteData][0];
 	note.rgbShader.g = arrowRGBError[note.noteData][1];

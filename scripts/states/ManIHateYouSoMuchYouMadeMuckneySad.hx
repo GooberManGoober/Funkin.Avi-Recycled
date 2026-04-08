@@ -30,7 +30,7 @@ function onCreate() {
    gradient.scale.y = 1.22;
    add(gradient);
 
-   leMuckney = new FlxSprite().loadGraphic(Paths.image("Funkin_avi/youHeartlessShit/muckneySadBoi"));
+   leMuckney = new FlxSprite().loadGraphic(Paths.image("menus/youHeartlessShit/muckneySadBoi"));
    leMuckney.setGraphicSize(0, FlxG.height);
    leMuckney.screenCenter();
    add(leMuckney);

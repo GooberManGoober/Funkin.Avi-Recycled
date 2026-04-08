@@ -47,7 +47,7 @@ var flashTween:FlxTween;
 
 var letsFight:FunkinVideoSprite;
 
-var pathway:String = 'Funkin_avi/stages/' + 'vaultRoom' + '/';
+var pathway:String = 'stages/vaultRoom/';
 
 function onLoad()
 {

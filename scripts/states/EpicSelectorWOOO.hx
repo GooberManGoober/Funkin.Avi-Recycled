@@ -3,7 +3,6 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import lime.app.Application;
 import openfl.filters.ShaderFilter;
-import funkin.backend.PlayerSettings;
 import funkin.states.MainMenuState;
 import funkin.states.FreeplayState;
 
@@ -15,11 +14,9 @@ var curSelected:Int = 0;
 var BG:FlxSprite;
 var defaultShader2:FlxRuntimeShader;
 
-var controls = PlayerSettings.player1.controls;
-
 function onCreate()
 {
-	BG = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/freeplay/menuFreeplay'));
+	BG = new FlxSprite().loadGraphic(Paths.image('menus/freeplay/menuFreeplay'));
 	BG.updateHitbox();
 	BG.screenCenter();
 	add(BG);
@@ -50,7 +47,7 @@ function onCreate()
 	if(!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
-		scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 		scratchStuff.animation.play('idle');
 		scratchStuff.screenCenter();
@@ -59,7 +56,7 @@ function onCreate()
 		add(scratchStuff);
 
 		var grain:FlxSprite = new FlxSprite();
-		grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+		grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 		grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 		grain.animation.play('idle');
 		grain.screenCenter();
@@ -73,20 +70,20 @@ function onCreate()
 
 function onUpdate(elapsed)
 {
-	if (controls.UI_UP_P) 
+	if (Controls.UI_UP_P) 
 		changeSelection(-1);
 	
-	if (controls.UI_DOWN_P) 
+	if (Controls.UI_DOWN_P) 
 		changeSelection(1);
 
-	if (controls.BACK) 
+	if (Controls.BACK) 
 	{
 		Conductor.bpm = (60);
 		FlxG.sound.play(Paths.sound("cancelMenu"));
 		FlxG.switchState(new MainMenuState());
 	}
 
-	if (controls.ACCEPT)
+	if (Controls.ACCEPT)
 	{
 		FlxG.save.data.freeplayMenuList = curSelected;
 		FlxG.save.flush();

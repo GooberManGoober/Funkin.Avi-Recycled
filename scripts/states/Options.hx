@@ -16,8 +16,6 @@ import funkin.states.MainMenuState;
 
 import lime.app.Application;
 
-import funkin.backend.PlayerSettings;
-
 using StringTools;
 
 var options:Array<String> = [
@@ -33,8 +31,6 @@ var menuBG:FlxSprite;
 
 var selectorLeft:Alphabet;
 var selectorRight:Alphabet;
-
-var controls = PlayerSettings.player1.controls;
 
 function openSelectedSubstate(label:String) {
     switch(label) {
@@ -91,7 +87,7 @@ function onCreate() {
     if(!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
-		scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 		scratchStuff.animation.play('idle');
 		scratchStuff.screenCenter();
@@ -100,7 +96,7 @@ function onCreate() {
 		add(scratchStuff);
 
 		var grain:FlxSprite = new FlxSprite();
-		grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+		grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 		grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 		grain.animation.play('idle');
 		grain.screenCenter();
@@ -117,14 +113,14 @@ function onCloseSubState() {
 }
 
 function onUpdate(elapsed:Float) {
-    if (controls.UI_UP_P) {
+    if (Controls.UI_UP_P) {
         changeSelection(-1);
     }
-    if (controls.UI_DOWN_P) {
+    if (Controls.UI_DOWN_P) {
         changeSelection(1);
     }
 
-    if (controls.BACK)
+    if (Controls.BACK)
     {
         FlxG.sound.play(Paths.sound('cancelMenu'));
         if (OptionsState.onPlayState) 
@@ -139,7 +135,7 @@ function onUpdate(elapsed:Float) {
         }
     }
 
-    if (controls.ACCEPT) {
+    if (Controls.ACCEPT) {
         openSelectedSubstate(options[curSelected]);
     }
 }

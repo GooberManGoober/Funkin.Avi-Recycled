@@ -4,7 +4,7 @@ function onLoad()
     whiteVoid.screenCenter();
     add(whiteVoid);
 
-    var line:FlxSprite = new FlxSprite(-80, 0).loadGraphic(Paths.image('Funkin_avi/stages/fuckingLine/theLine'));
+    var line:FlxSprite = new FlxSprite(-80, 0).loadGraphic(Paths.image('stages/fuckingLine/theLine'));
     line.scale.set(1.3, 1.3);
     add(line);
 }

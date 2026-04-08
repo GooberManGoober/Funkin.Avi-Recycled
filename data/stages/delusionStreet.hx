@@ -41,8 +41,6 @@ var monitorFilter:FlxRuntimeShader = newShader('monitorFilter');
 var delusionalShift:FlxRuntimeShader = newShader('delusionalShift');
 var redVignette:FlxRuntimeShader = newShader('redFromAngryBirds');
 
-var mickeySpirit:Character;
-
 var fireThing:FlxSprite;
 
 var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
@@ -51,7 +49,7 @@ var floor:FlxSprite;
 var stageCurtains:FlxSprite;
 var rain:FlxSprite;
 var rainTween:FlxTween;
-var pathway:String = 'Funkin_avi/stages/abandonedStreet/delusion/';
+var pathway:String = 'stages/abandonedStreet/delusion/';
 
 var streetDaytime:FlxSprite;
 var clouds:FlxSprite;
@@ -134,10 +132,6 @@ function onLoad()
 			fireThing.animation.play('burning');
 		}
 
-        mickeySpirit = new Character(-200, -700, "avier-bg");
-	    mickeySpirit.alpha = 0.0001;
-		add(mickeySpirit);
-        
         brightSky = new FlxSprite(-990, 1600).loadGraphic(Paths.image(pathway + 'brightSky'));
         brightSky.setGraphicSize(Std.int(brightSky.width * 4));
         brightSky.updateHitbox();
@@ -511,14 +505,11 @@ function onSongStart()
         camFollow.y = 360;
         defaultCamZoom = 0.5;
         isCameraOnForcedPos = true;
-
-        FlxTween.tween(mickeySpirit, {alpha: 0.6}, 2, {ease: FlxEase.sineOut});
     });
 
     modManager.queueFuncOnce(264 * 4, (s,s2)->{ 
         isCameraOnForcedPos = false;
         defaultCamZoom = 0.9;
-        FlxTween.tween(mickeySpirit, {alpha: 0}, 4, {ease: FlxEase.quartOut});
     });
 
     modManager.queueFuncOnce(295 * 4, (s,s2)->{ 
@@ -527,18 +518,6 @@ function onSongStart()
         camGame.alpha = 0;
         camHUD.flash(FlxColor.fromRGB(255, 135, 135), 1);
     });
-}
-
-function opponentNoteHit(note)
-{
-    var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
-    
-    // forces the 3rd character in the background in Delusional to work
-    if(mickeySpirit != null)
-    {
-        mickeySpirit.playAnim(singAnimations[Std.int(Math.abs(Math.min(singAnimations.length-1, note.noteData)))], true);
-        mickeySpirit.holdTimer = 0;
-    }
 }
 
 function summonWeedMakerLmfao()

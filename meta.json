@@ -1,10 +1,9 @@
 {
     "name": "Funkin.avi: Recycled",
     "global": true,
-    "iconFile": "icon64",
+    "iconFile": "UI/icon64",
     "windowTitle": "Funkin.avi: Recycled",
-
-    "countdownPrefix": "",
+    "defaultTransition": "swiper",
 
     "stateRedirects": {
         "TitleState": "TitleState",

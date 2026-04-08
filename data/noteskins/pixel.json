@@ -6,6 +6,7 @@
 		"singRIGHT"
 	],
 	"splashesEnabled": true,
+	"susSplashesEnabled": false,
 	"noteTexture": "pixelUI/NOTE_assets",
 	"receptorAnimations": [
 		[

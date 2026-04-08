@@ -18,7 +18,7 @@ var uhhTurnBackNormalOrSmth:Void->Void;
 var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
 var camBars:FlxCamera;
 
-var pathway:String = 'Funkin_avi/stages/forestNew/';
+var pathway:String = 'stages/forestNew/';
 
 function onLoad()
 {

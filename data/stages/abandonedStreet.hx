@@ -48,7 +48,7 @@ var stageCurtains:FlxSprite;
 var rain:FlxSprite;
 var fakeLightOfHope:FlxSprite;
 var rainTween:FlxTween;
-var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/';
+var pathway:String = 'stages/abandonedStreet/';
 
 var tumbleWeed:FlxSprite;
 var tumbleGrp:FlxTypedGroup;
@@ -220,26 +220,33 @@ function onCreatePost()
     {
         demonBFIcon = new HealthIcon('evilcy', true);
         demonBFIcon.visible = false;
+        demonBFIcon.frameCount = 3;
         playHUD.add(demonBFIcon);
     
         demonBFScary = new HealthIcon('evildelu', true);
         demonBFScary.visible = false;
+        demonBFScary.frameCount = 3;
+        demonBFScary.animation.curAnim.curFrame = 1;
         playHUD.add(demonBFScary);
     
         fakeBFLosingFrame = new HealthIcon('evilrett', true);
         fakeBFLosingFrame.visible = false;
+        fakeBFLosingFrame.frameCount = 3;
         playHUD.add(fakeBFLosingFrame);
     
         isolatedHappy = new HealthIcon('lunaavier', false);
         isolatedHappy.visible = false;
+        isolatedHappy.frameCount = 3;
         playHUD.add(isolatedHappy);
         
         lunacyIcon = new HealthIcon('lunaavier', false);
         lunacyIcon.visible = false;
+        lunacyIcon.frameCount = 3;
         playHUD.add(lunacyIcon);
         
         delusionalIcon = new HealthIcon('deluavier', false);
         delusionalIcon.visible = false;
+        delusionalIcon.frameCount = 3;
         playHUD.add(delusionalIcon);
     }
 
@@ -280,6 +287,7 @@ function onCreatePost()
     lyricsIcon.x = lyrics.x - 150;
     lyricsIcon.y = lyrics.y - 65;
     lyricsIcon.visible = false;
+    lyricsIcon.frameCount = 3;
     lyricsIcon.cameras = [camOther];
     add(lyricsIcon);
 
@@ -319,6 +327,8 @@ function onCreatePost()
             add(deluSing);
             add(minnieJumpscare);
 
+            modManager.setValue("drunkSpeed", 900, 1);
+            modManager.setValue("drunk", 0.025, 1);
 
         case 'Isolated', 'Lunacy':
             camBars.fade(FlxColor.BLACK, 0.0001);
@@ -362,6 +372,28 @@ function onUpdate(elapsed)
         isolatedHappy.y = iconP2.y;
         lunacyIcon.y = iconP2.y;
         delusionalIcon.y = iconP2.y;
+
+        if (healthBar.percent > 80)
+        {
+            lunacyIcon.animation.curAnim.curFrame = 1;
+			delusionalIcon.animation.curAnim.curFrame = 1;
+
+            demonBFIcon.animation.curAnim.curFrame = 2;
+        }
+        else if (healthBar.percent < 20)
+        {
+            lunacyIcon.animation.curAnim.curFrame = 2;
+			delusionalIcon.animation.curAnim.curFrame = 2;
+
+            demonBFIcon.animation.curAnim.curFrame = 1;
+        }
+        else
+        {
+            lunacyIcon.animation.curAnim.curFrame = 0;
+			delusionalIcon.animation.curAnim.curFrame = 0;
+
+            demonBFIcon.animation.curAnim.curFrame = 1;
+        }
     }
 }
 

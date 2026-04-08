@@ -4,7 +4,7 @@ function onCreatePost() {
 	if(!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
-		scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 		scratchStuff.animation.play('idle');
 		scratchStuff.screenCenter();
@@ -13,7 +13,7 @@ function onCreatePost() {
 		add(scratchStuff);
 
 		var grain:FlxSprite = new FlxSprite();
-		grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+		grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 		grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 		grain.animation.play('idle');
 		grain.screenCenter();

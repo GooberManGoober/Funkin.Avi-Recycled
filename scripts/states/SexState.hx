@@ -2,7 +2,6 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
-import funkin.backend.PlayerSettings;
 import lime.app.Application;
 import openfl.filters.ShaderFilter;
 import funkin.states.MainMenuState;
@@ -11,8 +10,6 @@ using StringTools;
 
 var upText:FlxText;
 var downText:FlxText;
-
-var controls = PlayerSettings.player1.controls;
 
 var monitor:FlxRuntimeShader;
 
@@ -25,7 +22,7 @@ function onCreate()
         FlxG.camera.filters = [new ShaderFilter(monitor)];
     }
 
-    var eyes:FlxSprite = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/menu/HahaSadBoi'));
+    var eyes:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menus/mainmenu/HahaSadBoi'));
     eyes.scrollFactor.set(0, 0);
     eyes.screenCenter();
     eyes.updateHitbox();
@@ -44,7 +41,7 @@ function onCreate()
     add(downText);
 
     var scratch:FlxSprite = new FlxSprite();
-    scratch.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+    scratch.frames = Paths.getSparrowAtlas('filters/scratchShit');
     scratch.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
     scratch.animation.play('idle');
     scratch.screenCenter();
@@ -53,7 +50,7 @@ function onCreate()
     add(scratch);
 
     var grain:FlxSprite = new FlxSprite();
-    grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+    grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
     grain.animation.addByPrefix('idle', 'grains 1', 24, true);
     grain.animation.play('idle');
     grain.screenCenter();
@@ -64,7 +61,7 @@ function onCreate()
 
 function onUpdate(elapsed) {
 
-    if (controls.BACK)
+    if (Controls.BACK)
     {
         Application.current.window.alert('Bro think there was sex', 'L moment');
         FlxG.switchState(new MainMenuState());

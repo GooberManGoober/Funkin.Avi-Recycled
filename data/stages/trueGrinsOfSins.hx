@@ -12,13 +12,13 @@ function onLoad()
 
     beatsPerZoom = 8;
 
-    var office:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('Funkin_avi/stages/trueGrinsOfSins/office'));
+    var office:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stages/trueGrinsOfSins/office'));
     office.antialiasing = true;
     office.scrollFactor.set(1, 1);
     office.active = false;
     add(office);
 
-    var chair:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('Funkin_avi/stages/trueGrinsOfSins/chair'));
+    var chair:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stages/trueGrinsOfSins/chair'));
     chair.antialiasing = true;
     chair.scrollFactor.set(1, 1);
     chair.active = false;
@@ -32,7 +32,7 @@ function onCreatePost()
 {
     playHUD.updateIconScale = false;
     
-    var funiLight:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('Funkin_avi/stages/trueGrinsOfSins/light'));
+    var funiLight:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stages/trueGrinsOfSins/light'));
     funiLight.antialiasing = true;
     funiLight.scrollFactor.set(1, 1);
     funiLight.alpha = 0.6;

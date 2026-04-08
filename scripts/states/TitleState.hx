@@ -51,14 +51,14 @@ function onCreate()
 	persistentUpdate = true;
 
 	var bg:FlxSprite = new FlxSprite();
-	bg.loadGraphic(Paths.image('Funkin_avi/title/Title_bg'), false);
+	bg.loadGraphic(Paths.image('menus/title/Title_bg'), false);
 	bg.screenCenter();
 	bg.scale.x = 0.68;
 	bg.scale.y = 0.67;
 	add(bg);
 
 	logoBl = new FlxSprite(150, -75);
-	logoBl.frames = Paths.getSparrowAtlas('Funkin_avi/title/MickeyLogo');
+	logoBl.frames = Paths.getSparrowAtlas('menus/title/MickeyLogo');
 	logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 	logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 	logoBl.animation.play('bump');
@@ -108,7 +108,7 @@ function onCreate()
 
 	if(!ClientPrefs.lowQuality) {
 		var scratchStuff:FlxSprite = new FlxSprite();
-		scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 		scratchStuff.animation.play('idle');
 		scratchStuff.screenCenter();
@@ -117,7 +117,7 @@ function onCreate()
 		add(scratchStuff);
 
 		var grain:FlxSprite = new FlxSprite();
-		grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+		grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 		grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 		grain.animation.play('idle');
 		grain.screenCenter();

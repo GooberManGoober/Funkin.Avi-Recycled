@@ -6,6 +6,7 @@
 		"singRIGHT"
 	],
 	"splashesEnabled": true,
+	"susSplashesEnabled": false,
 	"noteTexture": "UI/notes/NOTE_assets",
 	"sustainSplashTexture": "UI/notes/sustain_cover",
 	"receptorAnimations": [
@@ -368,7 +369,7 @@
 			}
 		]
 	],
-	"splashTexture": "noteSplashes/noteSplashes",
+	"splashTexture": "UI/notes/noteSplashes",
 	"antialiasing": true,
 	"inGameColoring": true,
 	"sustainAlpha": 0.6,

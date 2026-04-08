@@ -6,11 +6,11 @@ function onLoad()
 {
     defaultCamZoom = 0.9;
     
-    mascotRoom = new FlxSprite(0, 0).loadGraphic(Paths.image("Funkin_avi/stages/treasureIsland/mascotRoom"));
+    mascotRoom = new FlxSprite(0, 0).loadGraphic(Paths.image("stages/treasureIsland/mascotRoom"));
     mascotRoom.scale.set(1.4, 1.4);
     add(mascotRoom);
 
-    mascotRoomPOV = new FlxSprite(-500, 0).loadGraphic(Paths.image("Funkin_avi/stages/treasureIsland/mascotRoomPOV"));
+    mascotRoomPOV = new FlxSprite(-500, 0).loadGraphic(Paths.image("stages/treasureIsland/mascotRoomPOV"));
     mascotRoomPOV.scale.set(1.4, 1.4);
     mascotRoomPOV.alpha = 0.0001;
     add(mascotRoomPOV);

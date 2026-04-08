@@ -12,6 +12,8 @@ var autoplayMark:FlxText; // botplay/autoplay indicator at the center
 var judgementCounter:FlxText;
 var judgementUnderlay:FlxSprite;
 
+var fancyBarOverlay:FlxSprite;
+
 var botTxtArray:Array<Any> = [
     "AUTOPLAY",
     "BOTPLAY",
@@ -48,42 +50,12 @@ var songTxt:FlxText;
 
 function onCreatePost()
 {
+    iconP1.frameCount = 3;
+    iconP2.frameCount = 3;
+    
     if (PlayState.SONG.song != "Bless Legacy")
     {
         health = 0.5;
-        
-        switch (PlayState.SONG.stage)
-        {	
-            case 'abandonedStreet', 'ddStage':
-            default:
-                if (ClientPrefs.downScroll) 
-                    spectraSongTime = new FlxText(-108, 655, 400, "", 32); 
-                else 
-                    spectraSongTime = new FlxText(-108, 100, 400, "", 32);
-                spectraSongTime.setFormat(Paths.font("VanillaExtractRegular.ttf"), 13, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-                if (!ClientPrefs.middleScroll) 
-                    spectraSongTime.screenCenter(FlxAxes.X);
-                spectraSongTime.scrollFactor.set();
-                spectraSongTime.visible = (!ClientPrefs.hideHud);
-                spectraSongTime.borderSize = 2;
-                playHUD.add(spectraSongTime);
-        }
-
-        switch (PlayState.SONG.stage)
-        {	
-            case 'abandonedStreet', 'ddStage':
-                scoreTxt.setFormat(Paths.font("DisneyFont.ttf"), 24, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-                scoreTxt.scrollFactor.set();
-                scoreTxt.borderSize = 1.25;
-                scoreTxt.visible = (!ClientPrefs.hideHud || !cpuControlled);
-                playHUD.add(scoreTxt);
-            default:
-                scoreTxt.y = 600;
-                scoreTxt.x -= 75;
-                scoreTxt.setFormat(Paths.font("VanillaExtractRegular.ttf"), 14, FlxColor.WHITE, "right", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-                scoreTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1.5);
-                scoreTxt.visible = (!ClientPrefs.hideHud || !cpuControlled);
-        }
 
         switch (PlayState.SONG.song)
         {
@@ -98,16 +70,38 @@ function onCreatePost()
                 else
                     engineDisplay = "Funkin.avi: Recycled";
         }
-
+        
         switch (PlayState.SONG.stage)
         {	
             case 'abandonedStreet', 'ddStage':
+                fancyBarOverlay = new FlxSprite(healthBar.x, healthBar.y).loadGraphic(Paths.image('UI/episode1Overlay'));
+				fancyBarOverlay.scale.set(1.01, 1);
+				fancyBarOverlay.screenCenter(FlxAxes.X);
+				fancyBarOverlay.scrollFactor.set();
+				if (ClientPrefs.downScroll)
+				{
+					fancyBarOverlay.y -= 10;
+				}
+				else
+				{
+					fancyBarOverlay.y -= 117;
+					fancyBarOverlay.flipY = true;
+				}
+				fancyBarOverlay.visible = !ClientPrefs.hideHud;
+                playHUD.insert(0, fancyBarOverlay);
+
+                scoreTxt.setFormat(Paths.font("DisneyFont.ttf"), 24, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+                scoreTxt.scrollFactor.set();
+                scoreTxt.borderSize = 1.25;
+                scoreTxt.visible = (!ClientPrefs.hideHud || !cpuControlled);
+                playHUD.add(scoreTxt);
+
                 watermarkTxt = new FlxText(0, 0, 0, engineDisplay);
                 watermarkTxt.setFormat(Paths.font('DisneyFont.ttf'), 32, FlxColor.WHITE);
                 watermarkTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
                 if (ClientPrefs.downScroll) watermarkTxt.setPosition(0, 655); else watermarkTxt.setPosition(0, 8);
                 watermarkTxt.screenCenter(FlxAxes.X);
-                watermarkTxt.visible = (!ClientPrefs.hideHud);
+                watermarkTxt.visible = !ClientPrefs.hideHud;
                 playHUD.add(watermarkTxt);
 
                 songTxt = new FlxText(watermarkTxt.x, watermarkTxt.y + 30, 1280, infoDisplay);
@@ -115,17 +109,42 @@ function onCreatePost()
                 songTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
                 songTxt.alpha = 0.6;
                 songTxt.screenCenter(FlxAxes.X);
-                songTxt.visible = (!ClientPrefs.hideHud);
+                songTxt.visible = !ClientPrefs.hideHud;
                 playHUD.add(songTxt);
 
-                autoplayMark = new FlxText(scoreTxt.x + 400, scoreTxt.y, FlxG.width - 780, '', 32);
+                autoplayMark = new FlxText(scoreTxt.x + 400, scoreTxt.y, FlxG.width, '', 32);
                 autoplayMark.text = '[' + botTxtArray[FlxG.random.int(0, botTxtArray.length-1)] + ']';
                 autoplayMark.setFormat(Paths.font("DisneyFont.ttf"), 24, FlxColor.WHITE, "center");
                 autoplayMark.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1.25);
+                autoplayMark.screenCenter(FlxAxes.X);
                 autoplayMark.alpha = 0;
                 autoplayMark.visible = false;
                 playHUD.add(autoplayMark);
             default:
+                if (ClientPrefs.downScroll) 
+                    spectraSongTime = new FlxText(-108, 655, 400, "", 32); 
+                else 
+                    spectraSongTime = new FlxText(-108, 100, 400, "", 32);
+                spectraSongTime.setFormat(Paths.font("VanillaExtractRegular.ttf"), 13, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+                if (!ClientPrefs.middleScroll) 
+                    spectraSongTime.screenCenter(FlxAxes.X);
+                spectraSongTime.scrollFactor.set();
+                spectraSongTime.visible = !ClientPrefs.hideHud;
+                spectraSongTime.borderSize = 2;
+                playHUD.add(spectraSongTime);
+
+                healthBar.bg.loadGraphic(Paths.image('UI/healthBar-Long'));
+                healthBar.barWidth = healthBar.bg.width;
+
+                healthBar.x -= 100;
+                healthBar.barCenter -= 100;
+
+                scoreTxt.y = 600;
+                scoreTxt.x -= 75;
+                scoreTxt.setFormat(Paths.font("VanillaExtractRegular.ttf"), 14, FlxColor.WHITE, "right", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+                scoreTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 1.5);
+                scoreTxt.visible = (!ClientPrefs.hideHud || !cpuControlled);
+
                 watermarkTxt = new FlxText(0, 0, 0, engineDisplay);
                 watermarkTxt.setFormat(Paths.font('VanillaExtractRegular.ttf'), 16, FlxColor.WHITE);
                 watermarkTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
@@ -134,21 +153,21 @@ function onCreatePost()
                 else 
                     watermarkTxt.setPosition(0, 8);
                 watermarkTxt.screenCenter(FlxAxes.X);
-                watermarkTxt.visible = (!ClientPrefs.hideHud);
+                watermarkTxt.visible = !ClientPrefs.hideHud;
                 playHUD.add(watermarkTxt);
 
                 songTxt = new FlxText(50, (ClientPrefs.downScroll ? FlxG.height - 120 : 50), 0, 'Playing:');
                 songTxt.setFormat(Paths.font('VanillaExtractRegular.ttf'), 16, FlxColor.WHITE);
                 songTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
                 if (!ClientPrefs.middleScroll) songTxt.screenCenter(FlxAxes.X);
-                songTxt.visible = (!ClientPrefs.hideHud);
+                songTxt.visible = !ClientPrefs.hideHud;
                 playHUD.add(songTxt);
 
                 centerMark = new FlxText(50, (ClientPrefs.downScroll ? FlxG.height - 100 : 70), 0, infoDisplay);
                 centerMark.setFormat(Paths.font('VanillaExtractRegular.ttf'), 24, FlxColor.WHITE);
                 centerMark.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
                 if (!ClientPrefs.middleScroll) centerMark.screenCenter(FlxAxes.X);
-                centerMark.visible = (!ClientPrefs.hideHud);
+                centerMark.visible = !ClientPrefs.hideHud;
                 playHUD.add(centerMark);
 
                 autoplayMark = new FlxText(0, 0, FlxG.width - 780, '', 32);
@@ -160,7 +179,6 @@ function onCreatePost()
                 autoplayMark.alpha = 0;
                 autoplayMark.visible = false;
                 playHUD.add(autoplayMark);
-
         }
 
         if (ClientPrefs.showRatings)
@@ -168,9 +186,9 @@ function onCreatePost()
             if(!PlayState.isPixelStage)
             {
                 if(ClientPrefs.downScroll) 
-                    judgementUnderlay = new FlxSprite(910, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay')); 
+                    judgementUnderlay = new FlxSprite(910, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
                 else 
-                    judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay'));
+                    judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('UI/judge-underlay'));
                 judgementUnderlay.scrollFactor.set();
                 judgementUnderlay.scale.set(0.35, 0.32);
                 judgementUnderlay.alpha = 0.45;
@@ -180,9 +198,9 @@ function onCreatePost()
             else
             {
                 if(ClientPrefs.downScroll) 
-                    judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay')); 
+                    judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
                 else 
-                    judgementUnderlay = new FlxSprite(870, 0).loadGraphic(Paths.image('Funkin_avi/ui/judge-underlay'));
+                    judgementUnderlay = new FlxSprite(870, 0).loadGraphic(Paths.image('UI/judge-underlay'));
                 judgementUnderlay.scrollFactor.set();
                 judgementUnderlay.scale.set(0.37, 0.32);
                 judgementUnderlay.alpha = 0.45;
@@ -242,7 +260,7 @@ function onUpdatePost(elapsed)
         if (cpuControlled)
         {
             scoreTxt.visible = false;
-            autoplayMark.visible = (!ClientPrefs.hideHud);
+            autoplayMark.visible = !ClientPrefs.hideHud;
             if (autoplayMark.visible)
             {
                 autoplaySine += 180 * (elapsed / 4);
@@ -251,7 +269,7 @@ function onUpdatePost(elapsed)
         }
         else
         {
-            scoreTxt.visible = (!ClientPrefs.hideHud);
+            scoreTxt.visible = !ClientPrefs.hideHud;
             autoplayMark.visible = false;
         }
 
@@ -288,6 +306,37 @@ function onUpdatePost(elapsed)
             }
 
             // Conductor.lastSongPos = FlxG.sound.music.time;
+        }
+
+        switch (PlayState.SONG.stage)
+        {	
+            case 'abandonedStreet', 'ddStage':
+                songTxt.alpha = 0.6 * playHUD.alpha;
+
+        }
+
+        if (ClientPrefs.showRatings)
+        {
+            judgementUnderlay.alpha = 0.45 * playHUD.alpha;
+        }
+    }
+
+    if (PlayState.SONG.song != "Devilish Deal")
+    {
+        if (healthBar.percent > 80)
+        {
+            iconP1.animation.curAnim.curFrame = 2;
+            iconP2.animation.curAnim.curFrame = 1;
+        }
+        else if (healthBar.percent < 20)
+        {
+            iconP1.animation.curAnim.curFrame = 1;
+            iconP2.animation.curAnim.curFrame = 2;
+        }
+        else
+        {
+            iconP1.animation.curAnim.curFrame = 0;
+            iconP2.animation.curAnim.curFrame = 0;
         }
     }
 }

@@ -8,7 +8,6 @@ import flixel.text.FlxText;
 import funkin.api.DiscordClient;
 import funkin.scripting.PluginsManager;
 import lime.app.Application;
-import funkin.backend.PlayerSettings;
 import funkin.utils.CameraUtil;
 import funkin.states.options.OptionsState;
 import flixel.addons.text.FlxTypeText;
@@ -41,8 +40,6 @@ var satanTxt:FlxTypeText;
 var satanQuotes:Array<String> = [];
 
 var fuckingName:String;
-
-var controls = PlayerSettings.player1.controls;
 
 var itemStack:Array<String>;
 
@@ -120,7 +117,7 @@ function onLoad()
 	levelInfo = new FlxText(FlxG.width * 0.75 + array[2], 100, 0, "", 32);
 	songArt = new FlxSprite(780, 110);
 	songArtOutline = new FlxSprite(songArt.x - 20, songArt.y - 20 /*POV: you're lazy to do the math yourself*/).makeGraphic(890, 890, FlxColor.WHITE);
-	disc = new FlxSprite(songArt.x + 75, songArt.y - 12).loadGraphic(Paths.image('Funkin_avi/pause/disc'));
+	disc = new FlxSprite(songArt.x + 75, songArt.y - 12).loadGraphic(Paths.image('menus/pause/disc'));
 	songName = new FlxText(FlxG.width * 0.78 + array[1], 10, 0, ((PlayState.SONG.song == "Delusional" && (PlayState.instance.curBeat >= 472 && PlayState.instance.curBeat <= 744)) ? "Regret" : PlayState.SONG.song), 32);
 	countDown = new FlxText(0, 0, 1280, "", 0);
 	satanTxt = new FlxTypeText(0, 25, 1280, "");
@@ -134,10 +131,10 @@ function onLoad()
 	countDown.setFormat(Paths.font("betterSatanFont.ttf"), 90, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	satanTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 32, FlxColor.fromRGB(255, 117, 107), 'center', FlxTextBorderStyle.OUTLINE, FlxColor.fromRGB(92, 0, 26));
 	satanTxt.borderSize = 2;
-	if (Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset) != null)
-		songArt.loadGraphic(Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset));
-	else if (Paths.image('Funkin_avi/pause/songs/' + pauseArtAsset) == null)
-		songArt.loadGraphic(Paths.image('Funkin_avi/pause/songs/unknown-song'));
+	if (Paths.image('menus/pause/songs/' + pauseArtAsset) != null)
+		songArt.loadGraphic(Paths.image('menus/pause/songs/' + pauseArtAsset));
+	else if (Paths.image('menus/pause/songs/' + pauseArtAsset) == null)
+		songArt.loadGraphic(Paths.image('menus/pause/songs/unknown-song'));
 
 	// scales
 	bg.scale.set(FlxG.width * 4, FlxG.height * 4);
@@ -171,7 +168,7 @@ function onLoad()
 
 	for (i in 0...menuItems.length)
 	{
-		songText = new FlxSprite(0, (10 * i) + 30).loadGraphic(Paths.image('Funkin_avi/pause/menuButtons/' + menuItems[i]));
+		songText = new FlxSprite(0, (10 * i) + 30).loadGraphic(Paths.image('menus/pause/menuButtons/' + menuItems[i]));
 		songText.alpha = 0;
 		buttonGroup.add(songText);
 		FlxTween.tween(songText, {alpha: 1}, 0.8, {ease: FlxEase.quartInOut});
@@ -202,11 +199,11 @@ function onLoad()
 	switch (PlayState.SONG.song)
 	{
 		case 'War Dilemma':
-				funnyButton.loadGraphic(Paths.image('Funkin_avi/pause/selectorSkin/wd-selector'));
+				funnyButton.loadGraphic(Paths.image('menus/pause/selectorSkin/wd-selector'));
 		case 'Malfunction':
-			funnyButton.loadGraphic(Paths.image('Funkin_avi/pause/selectorSkin/mal-selector'));
+			funnyButton.loadGraphic(Paths.image('menus/pause/selectorSkin/mal-selector'));
 		default:
-			funnyButton.loadGraphic(Paths.image('Funkin_avi/pause/selectorSkin/select'));
+			funnyButton.loadGraphic(Paths.image('menus/pause/selectorSkin/select'));
 	}
 	add(funnyButton);
 
@@ -275,12 +272,12 @@ function onUpdate(elapsed)
 
 	if (!hasResumed && hasFinishedAnim)
 	{
-		if (controls.UI_UP_P)
+		if (Controls.UI_UP_P)
 			changeSelection(-1);
-		if (controls.UI_DOWN_P)
+		if (Controls.UI_DOWN_P)
 			changeSelection(1);
 		
-		if (controls.ACCEPT)
+		if (Controls.ACCEPT)
 		{
 			switch (curSelected)
 			{

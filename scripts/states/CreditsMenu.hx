@@ -6,7 +6,6 @@ import openfl.filters.ShaderFilter;
 import sys.io.File;
 import lime.app.Application;
 import flixel.addons.display.FlxGridOverlay;
-import funkin.backend.PlayerSettings;
 import funkin.states.MainMenuState;
 /** Credit shit or smth !!
 
@@ -27,8 +26,6 @@ var creditDescText:FlxText;
 var creditNameText:FlxText;
 var creditWorkText:FlxText;
 var backdrop:FlxBackdrop;
-
-var controls = PlayerSettings.player1.controls;
 
 var background:FlxSprite;
 var dark:FlxSprite;
@@ -62,7 +59,7 @@ function onCreate()
 
 	Application.current.window.title = "Funkin.avi: Recycled - Credits";
 
-	path = 'Funkin_avi/credits';
+	path = 'menus/credits';
 
 	FlxG.sound.playMusic(Paths.music('aviOST/curtainCall'));
 
@@ -160,7 +157,7 @@ function onCreate()
 	if (!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
-		scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 		scratchStuff.animation.play('idle');
 		scratchStuff.screenCenter();
@@ -169,7 +166,7 @@ function onCreate()
 		add(scratchStuff);
 
 		var grain:FlxSprite = new FlxSprite();
-		grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+		grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 		grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 		grain.animation.play('idle');
 		grain.screenCenter();
@@ -195,18 +192,18 @@ function onUpdate(elapsed)
 	upArrow.y = FlxMath.lerp(100, upArrow.y, FlxMath.bound(1 - (elapsed * 15), 0, 1));
 	downArrow.y = FlxMath.lerp(500, downArrow.y, FlxMath.bound(1 - (elapsed * 15), 0, 1));
 
-	if (controls.UI_UP_P)
+	if (Controls.UI_UP_P)
 	{
 		changeSelection(-1);
 		upArrow.y -= 25;
 	}
-	else if (controls.UI_DOWN_P)
+	else if (Controls.UI_DOWN_P)
 	{
 		changeSelection(1);
 		downArrow.y += 25;
 	}
 
-	if (controls.BACK)
+	if (Controls.BACK)
 	{
 		FlxG.switchState(new MainMenuState());
 		Conductor.bpm = (60); // changes back to titlescreen bpm

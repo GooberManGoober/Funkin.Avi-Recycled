@@ -28,17 +28,17 @@ var devilishGaming:FunkinVideoSprite;
 
 function onLoad()
 {
-    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/sky"));
+    bg = new FlxSprite(-600, 130).loadGraphic(Paths.image("stages/ddStage/sky"));
     bg.scale.set(0.84, 0.84);
     bg.scrollFactor.set(0.8, 0.8);
     add(bg);
 
-    var buildings:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/back-buildings"));
+    var buildings:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("stages/ddStage/back-buildings"));
     buildings.scale.set(0.84, 0.84);
     buildings.scrollFactor.set(0.9, 0.9);
     add(buildings);
 
-    var alley:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/alley_and_bench"));
+    var alley:FlxSprite = new FlxSprite(-600, 130).loadGraphic(Paths.image("stages/ddStage/alley_and_bench"));
     alley.scale.set(0.84, 0.84);
     add(alley);
 }
@@ -48,7 +48,7 @@ function onCreatePost()
     healthBar.leftToRight = true;
     
     var rain:FlxSprite = new FlxSprite(-600, 130);
-    rain.frames = Paths.getSparrowAtlas("Funkin_avi/stages/ddStage/Rain");
+    rain.frames = Paths.getSparrowAtlas("stages/ddStage/Rain");
     rain.animation.addByPrefix("crying bitch", "rain but the side", 30, true);
     rain.scale.set(2.1, 2.1);
     rain.scrollFactor.set(1.1, 1.1);
@@ -56,7 +56,7 @@ function onCreatePost()
     rain.alpha = 0.5;
     add(rain);
 
-    var fgWall:FlxSprite = new FlxSprite(-600, 290).loadGraphic(Paths.image("Funkin_avi/stages/ddStage/big-ass-wall"));
+    var fgWall:FlxSprite = new FlxSprite(-600, 290).loadGraphic(Paths.image("stages/ddStage/big-ass-wall"));
     fgWall.scale.set(0.84, 0.84);
     fgWall.scrollFactor.set(1.18, 1.18);
     add(fgWall);
@@ -73,7 +73,7 @@ function onCreatePost()
         devilishGaming.bitmap.time = 0;
     });
     
-    gradient = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/filters/gradient'));
+    gradient = new FlxSprite().loadGraphic(Paths.image('filters/gradient'));
     gradient.cameras = [camOther];
     gradient.screenCenter();
     gradient.scale.set(0.5, 0.5);
@@ -84,6 +84,7 @@ function onCreatePost()
     satanIconPulse.y = healthBar.y - 90;
     satanIconPulse.animation.curAnim.curFrame = 1;
     satanIconPulse.visible = false;
+    satanIconPulse.frameCount = 3;
     playHUD.add(satanIconPulse);
 
     dad.setColorTransform(-1, -1, -1, 1, 0, 0, 0, 0);
@@ -104,6 +105,9 @@ function onCreatePost()
     modManager.setValue("transform2X", 3500, 1);
 	modManager.setValue("transform3X", 3500, 1);
     modManager.setValue("alpha", 1, -1);
+
+    iconP1.updateFrames = false;
+    iconP2.updateFrames = false;
     
     if (ClientPrefs.shaders)
     {
@@ -141,6 +145,7 @@ function onCreatePost()
     lyricsIcon = new HealthIcon('bf', false);
     lyricsIcon.x = lyrics.x - 150;
     lyricsIcon.y = lyrics.y - 65;
+    lyricsIcon.frameCount = 3;
     lyricsIcon.visible = false;
     lyricsIcon.cameras = [camOther];
     add(lyricsIcon);
@@ -267,8 +272,22 @@ function onSongStart()
                 }
             }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
         }
+
+        iconP2.animation.curAnim.curFrame = 2;
     });
 
+    modManager.queueFuncOnce(63 * 4, (s,s2)->{ 
+        iconP1.animation.curAnim.curFrame = 1;
+    });
+
+    modManager.queueFuncOnce(96 * 4, (s,s2)->{ 
+        iconP1.animation.curAnim.curFrame = 2;
+    });
+
+    modManager.queueFuncOnce(112 * 4, (s,s2)->{ 
+        iconP1.animation.curAnim.curFrame = 0;
+    });
+    
     modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
         defaultCamZoom = 0.55;
         FlxTween.tween(camHUD, {alpha: 1}, 1.2, {ease: FlxEase.quartInOut});

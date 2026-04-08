@@ -79,7 +79,7 @@ function onCreatePost()
 		if (PlayState.SONG.stage != 'war' && PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom' && PlayState.SONG.stage != 'vaultRoomLegacy')
 		{
 			scratch = new FlxSprite();
-			scratch.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+			scratch.frames = Paths.getSparrowAtlas('filters/scratchShit');
 			scratch.animation.addByPrefix('e', 'scratch thing', 24, true);
 			scratch.animation.play('e');
 			scratch.cameras = [camOther];
@@ -94,7 +94,7 @@ function onCreatePost()
 
 	if (!ClientPrefs.lowQuality)
 	{
-		globalGradient = new FlxSprite().loadGraphic(Paths.image('Funkin_avi/filters/gradient'));
+		globalGradient = new FlxSprite().loadGraphic(Paths.image('filters/gradient'));
 		globalGradient.screenCenter();
 		globalGradient.setGraphicSize(Std.int(globalGradient.width * 0.68));
 		globalGradient.cameras = [camOther];
@@ -157,16 +157,16 @@ function onUpdate(elapsed)
 
 function onCountdownTick(swagCounter)
 {
-    var introAlts:Array<String> = ['Funkin_avi/countdownAssets/default-prepare', 'Funkin_avi/countdownAssets/default-ready', 'Funkin_avi/countdownAssets/default-set', 'Funkin_avi/countdownAssets/default-go'];
+    var introAlts:Array<String> = ['prepare', 'ready', 'set', 'go'];
 	var antialias:Bool = ClientPrefs.globalAntialiasing;
 	var scaleSetter:Int = 1;
 	switch (PlayState.SONG.song)
 	{
 		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday", "Delusion":
-			introAlts = ['Funkin_avi/countdownAssets/cartoon-prepare', 'Funkin_avi/countdownAssets/cartoon-ready', 'Funkin_avi/countdownAssets/cartoon-set', 'Funkin_avi/countdownAssets/cartoon-go'];
+			introAlts = ['cartoon-prepare', 'cartoon-ready', 'cartoon-set', 'cartoon-go'];
 			scaleSetter = 1;
 		case "Malfunction":
-			introAlts = ['Funkin_avi/countdownAssets/mal-prepare', 'Funkin_avi/countdownAssets/mal-ready', 'Funkin_avi/countdownAssets/mal-set', 'Funkin_avi/countdownAssets/mal-go'];
+			introAlts = ['mal-prepare', 'mal-ready', 'mal-set', 'mal-go'];
 			antialias = false;
 			scaleSetter = 6;
 		default:

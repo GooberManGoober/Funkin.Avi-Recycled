@@ -16,7 +16,7 @@ var chromTween:FlxTween;
 
 var dumbCamTwn:FlxTween;
 
-var pathway:String = 'Funkin_avi/stages/' + PlayState.SONG.stage + '/';
+var pathway:String = 'stages/forbiddenRealm/';
 
 function onLoad()
 {
@@ -226,7 +226,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(324 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-prepare');
+        var count = makeCountdownSprite('mal-prepare');
         count.scrollFactor.set();
         count.scale.set(6, 6);
 		count.antialiasing = false;
@@ -238,7 +238,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(325 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-ready');
+        var count = makeCountdownSprite('mal-ready');
         count.scrollFactor.set();
         count.scale.set(6, 6);
 		count.antialiasing = false;
@@ -251,7 +251,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(326 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-set');
+        var count = makeCountdownSprite('mal-set');
         count.scrollFactor.set();
         count.scale.set(6, 6);
 		count.antialiasing = false;
@@ -264,7 +264,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(327 * 4, (s,s2)->{ 
-        var count = makeCountdownSprite('Funkin_avi/countdownAssets/mal-go');
+        var count = makeCountdownSprite('mal-go');
         count.scrollFactor.set();
         count.scale.set(6, 6);
 		count.antialiasing = false;

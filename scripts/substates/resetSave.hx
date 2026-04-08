@@ -1,5 +1,4 @@
 import funkin.scripting.PluginsManager;
-import funkin.backend.PlayerSettings;
 import flixel.text.FlxText.FlxTextFormat;
 import flixel.text.FlxText.FlxTextFormatMarkerPair;
 import funkin.utils.CameraUtil;
@@ -14,8 +13,6 @@ var desc:FlxText;
 var onYes:Bool = false;
 var yesText:FlxText;
 var noText:FlxText;
-
-var controls = PlayerSettings.player1.controls;
 
 function onLoad()
 {
@@ -63,7 +60,7 @@ function onLoad()
 	updateOptions();
 
 	var scratchStuff:FlxSprite = new FlxSprite();
-	scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+	scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 	scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 	scratchStuff.animation.play('idle');
 	scratchStuff.screenCenter();
@@ -72,7 +69,7 @@ function onLoad()
 	add(scratchStuff);
 
 	var grain:FlxSprite = new FlxSprite();
-	grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+	grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 	grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 	grain.animation.play('idle');
 	grain.screenCenter();
@@ -95,18 +92,18 @@ function onUpdate(elapsed)
 	desc.alpha += elapsed * 1.5;
 	if(desc.alpha > 1) desc.alpha = 1;
 
-	if(controls.UI_LEFT_P || controls.UI_RIGHT_P) 
+	if(Controls.UI_LEFT_P || Controls.UI_RIGHT_P) 
 	{
 		FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 1);
 		onYes = !onYes;
 		updateOptions();
 	}
-	if(controls.BACK) 
+	if(Controls.BACK) 
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 		close();
 	} 
-	else if(controls.ACCEPT)
+	else if(Controls.ACCEPT)
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 		if(onYes) 

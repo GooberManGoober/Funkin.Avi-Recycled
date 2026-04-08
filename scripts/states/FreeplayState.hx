@@ -6,7 +6,6 @@ import funkin.data.Highscore;
 import funkin.utils.MathUtil;
 import funkin.data.WeekData;
 import flixel.text.FlxText;
-import funkin.backend.PlayerSettings;
 import funkin.data.Chart;
 import funkin.backend.Difficulty;
 import funkin.Mods;
@@ -43,9 +42,7 @@ var lerpRating:Float = 0;
 var intendedScore:Int = 0;
 var intendedRating:Float = 0;
 
-var controls = PlayerSettings.player1.controls;
-
-var path:String = 'Funkin_avi/freeplay';
+var path:String = 'menus/freeplay';
 
 var grpSongs:FlxTypedGroup;
 
@@ -155,6 +152,7 @@ function onCreate()
 		// using a FlxGroup is too much fuss!
 		var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 		icon.sprTracker = songText;
+		icon.frameCount = 3;
 		iconArray.push(icon);
 		add(icon);
 	}
@@ -204,7 +202,7 @@ function onCreate()
 	if(!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
-		scratchStuff.frames = Paths.getSparrowAtlas('Funkin_avi/filters/scratchShit');
+		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
 		scratchStuff.animation.play('idle');
 		scratchStuff.screenCenter();
@@ -213,7 +211,7 @@ function onCreate()
 		add(scratchStuff);
 
 		var grain:FlxSprite = new FlxSprite();
-		grain.frames = Paths.getSparrowAtlas('Funkin_avi/filters/Grainshit');
+		grain.frames = Paths.getSparrowAtlas('filters/Grainshit');
 		grain.animation.addByPrefix('idle', 'grains 1', 24, true);
 		grain.animation.play('idle');
 		grain.screenCenter();
@@ -309,9 +307,9 @@ function onUpdate(elapsed)
 	scoreText.text = 'PERSONAL BEST: ' + FlxStringUtil.formatMoney(lerpScore, false) + ' (' + ratingSplit.join('.') + '%)';
 	positionHighscore();
 
-	var upP = controls.UI_UP_P;
-	var downP = controls.UI_DOWN_P;
-	var accepted = controls.ACCEPT;
+	var upP = Controls.UI_UP_P;
+	var downP = Controls.UI_DOWN_P;
+	var accepted = Controls.ACCEPT;
 	var ctrl = FlxG.keys.justPressed.CONTROL;
 
 	var shiftMult:Int = 1;
@@ -330,7 +328,7 @@ function onUpdate(elapsed)
 			holdTime = 0;
 		}
 
-		if(controls.UI_UP || controls.UI_DOWN)
+		if(Controls.UI_UP || Controls.UI_DOWN)
 		{
 			var checkLastHold:Int = Math.floor((holdTime - 0.5) * 10);
 			holdTime += elapsed;
@@ -338,7 +336,7 @@ function onUpdate(elapsed)
 
 			if(holdTime > 0.5 && checkNewHold - checkLastHold > 0)
 			{
-				changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult), true);
+				changeSelection((checkNewHold - checkLastHold) * (Controls.UI_UP ? -shiftMult : shiftMult), true);
 				changeDiff();
 			}
 		}
@@ -357,6 +355,8 @@ function onUpdate(elapsed)
 		//i swear to god theres too much .replace
 		else if(songs[i].songName == "Don't Cross!")
 		{
+			iconArray[i].animation.curAnim.curFrame = 0;
+			
 			var stop:Bool = false;
 			if(!stop)
 			{
@@ -367,9 +367,11 @@ function onUpdate(elapsed)
 			
 			new FlxTimer().start(0.1, timer->stop = true);
 		}
+		else
+			iconArray[i].animation.curAnim.curFrame = 2;
 	}
 
-	if (controls.BACK)
+	if (Controls.BACK)
 	{
 		persistentUpdate = false;
 		if(colorTween != null) {

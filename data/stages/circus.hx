@@ -1,4 +1,4 @@
-var circusPath:String = 'Funkin_avi/stages/circus/';
+var circusPath:String = 'stages/circus/';
 
 function onLoad()
 {

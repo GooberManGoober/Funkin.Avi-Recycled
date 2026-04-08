@@ -18,12 +18,12 @@ function onLoad()
     aberrationBoom.setFloat('effectTime', 0.001);
 
     delusionalStreet = new FlxSprite(-500, -700);
-    delusionalStreet.loadGraphic(Paths.image('Funkin_avi/stages/clubhouse/Mickeybg'));
+    delusionalStreet.loadGraphic(Paths.image('stages/clubhouse/Mickeybg'));
     delusionalStreet.alpha = 0.0001;
     add(delusionalStreet);
 
     clubhouse = new FlxSprite(-410, -100);
-    clubhouse.frames = Paths.getSparrowAtlas('Funkin_avi/stages/clubhouse/daHouse');
+    clubhouse.frames = Paths.getSparrowAtlas('stages/clubhouse/daHouse');
     clubhouse.animation.addByPrefix('balloons bounce', 'daHouse idle', 12, true);
     clubhouse.animation.play('balloons bounce');
     clubhouse.scale.set(1.15, 1.15);
@@ -32,7 +32,7 @@ function onLoad()
     clubhouse.scrollFactor.set(1, 1);
     add(clubhouse);
 
-    var vignette:FlxSprite = new FlxSprite(-250, -140).loadGraphic(Paths.image('Funkin_avi/stages/clubhouse/vignetteOverlay'));
+    var vignette:FlxSprite = new FlxSprite(-250, -140).loadGraphic(Paths.image('stages/clubhouse/vignetteOverlay'));
     vignette.cameras = [camOther];
     vignette.scale.set(0.75, 0.75);
     vignette.antialiasing = true;
