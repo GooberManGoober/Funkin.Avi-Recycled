@@ -51,7 +51,7 @@ function onLoad()
 }
 
 function setupNote(note) {
-	//note.reloadNote('ERROR');
+	note.reloadNote('ERROR');
 	note.hitCausesMiss = false;
 	note.canMiss = true;
 	note.ignoreNote = note.mustPress;

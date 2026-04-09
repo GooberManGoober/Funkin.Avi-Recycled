@@ -3,7 +3,6 @@
     "global": true,
     "iconFile": "UI/icon64",
     "windowTitle": "Funkin.avi: Recycled",
-    "defaultTransition": "swiper",
 
     "stateRedirects": {
         "TitleState": "TitleState",

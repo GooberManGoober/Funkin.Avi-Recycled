@@ -125,6 +125,19 @@ function onSongStart()
 	{
 		playLegacyCardAnim();
 	}
+
+	// Modified Card Delays
+	switch (PlayState.SONG.song)
+	{
+		case 'Devilish Deal', 'Isolated', 'Lunacy':
+			modManager.queueFuncOnce(1, (s,s2)->{ 
+				playCardAnim(0.2);
+			});
+		case 'Delusional':
+			modManager.queueFuncOnce(1, (s,s2)->{ 
+				playCardAnim(0.001);
+			});
+	}
 }
 
 function playLegacyCardAnim()
@@ -171,22 +184,4 @@ function playCardAnim(delaySet:Float = 0)
 			FlxTween.tween(cardTxt, {alpha: 0}, 2, {ease: FlxEase.sineInOut, startDelay: 3.5});
 		}
 	});
-}
-
-function onStepHit()
-{
-	// Modified Card Delays
-	switch (PlayState.SONG.song)
-	{
-		case 'Devilish Deal', 'Isolated', 'Lunacy':
-			switch (curStep)
-			{
-				case 1: playCardAnim(0.2);
-			}
-		case 'Delusional':
-			switch (curStep)
-			{
-				case 1: playCardAnim(0.001);
-			}
-	}
 }
