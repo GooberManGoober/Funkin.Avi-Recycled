@@ -88,7 +88,7 @@ function onCreatePost()
 					fancyBarOverlay.flipY = true;
 				}
 				fancyBarOverlay.visible = !ClientPrefs.hideHud;
-                playHUD.insert(0, fancyBarOverlay);
+                playHUD.insert(1, fancyBarOverlay);
 
                 scoreTxt.setFormat(Paths.font("DisneyFont.ttf"), 24, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
                 scoreTxt.scrollFactor.set();
@@ -237,7 +237,7 @@ function onUpdatePost(elapsed)
         if (ClientPrefs.showRatings)
         {
             if (ClientPrefs.useEpicRankings)
-                judgementCounter.text = 'Epics: ${epics}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
+                judgementCounter.text = 'Marvs: ${epics}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
             else
                 judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
         }

@@ -109,19 +109,12 @@ function onCreatePost()
 
 	if (!isLegacy)
 	{
-		if (!isStoryMode)
+		switch (PlayState.SONG.song)
 		{
-			playCardAnim(0.08);
-		}
-		else if (isStoryMode)
-		{
-			switch (PlayState.SONG.song)
-			{
-				case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
-				// do nothing, it's already set under stepHit()
-				default:
-					playCardAnim(0.08);
-			}
+			case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
+			// do nothing, it's already set under stepHit()
+			default:
+				playCardAnim(0.08);
 		}
 	}
 }
@@ -186,20 +179,14 @@ function onStepHit()
 	switch (PlayState.SONG.song)
 	{
 		case 'Devilish Deal', 'Isolated', 'Lunacy':
-			if (isStoryMode)
+			switch (curStep)
 			{
-				switch (curStep)
-				{
-					case 1: playCardAnim(0.2);
-				}
+				case 1: playCardAnim(0.2);
 			}
 		case 'Delusional':
-			if (isStoryMode)
+			switch (curStep)
 			{
-				switch (curStep)
-				{
-					case 1: playCardAnim(0.001);
-				}
+				case 1: playCardAnim(0.001);
 			}
 	}
 }

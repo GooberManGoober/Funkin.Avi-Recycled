@@ -68,7 +68,7 @@
 	"gameover_confirm_sound": null,
 	"healthicon": "lunaavier",
 	"gameover_character": null,
-	"vslice_sustains": true,
+	"vslice_sustains": false,
 	"flip_x": false,
 	"healthbar_colour": -8816263,
 	"camera_position": [

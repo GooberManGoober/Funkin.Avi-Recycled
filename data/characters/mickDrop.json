@@ -68,7 +68,7 @@
 	"gameover_confirm_sound": null,
 	"healthicon": "avier",
 	"gameover_character": null,
-	"vslice_sustains": true,
+	"vslice_sustains": false,
 	"flip_x": false,
 	"healthbar_colour": -2565928,
 	"camera_position": [

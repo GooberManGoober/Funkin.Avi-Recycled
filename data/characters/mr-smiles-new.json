@@ -76,7 +76,7 @@
 	"gameover_confirm_sound": null,
 	"healthicon": "smile",
 	"gameover_character": null,
-	"vslice_sustains": true,
+	"vslice_sustains": false,
 	"flip_x": false,
 	"healthbar_colour": -13487566,
 	"camera_position": [

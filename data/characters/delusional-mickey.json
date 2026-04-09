@@ -68,7 +68,7 @@
 	"gameover_confirm_sound": null,
 	"healthicon": "deluavier",
 	"gameover_character": null,
-	"vslice_sustains": true,
+	"vslice_sustains": false,
 	"flip_x": false,
 	"healthbar_colour": -12763843,
 	"camera_position": [

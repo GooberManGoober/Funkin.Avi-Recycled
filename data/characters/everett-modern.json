@@ -68,7 +68,7 @@
 	"gameover_confirm_sound": null,
 	"healthicon": "everettmodern",
 	"gameover_character": null,
-	"vslice_sustains": true,
+	"vslice_sustains": false,
 	"flip_x": true,
 	"healthbar_colour": -13585967,
 	"camera_position": [

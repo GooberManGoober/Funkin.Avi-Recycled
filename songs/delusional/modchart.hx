@@ -87,6 +87,7 @@ function onSongStart()
     modManager.queueSet(4096, "alpha", 0.6, 1);
     modManager.queueSet(4096, "reverse", 1, 1);
     modManager.queueSet(4096, "transformZ", 0.3, 1);
+    modManager.queueSet(4096, "speed", 0, 1);
     modManager.queueSet(4096, "transform0Y", !ClientPrefs.downScroll ? 150 : -150, 1);
     modManager.queueSet(4096, "transform1Y", !ClientPrefs.downScroll ? 150 : -150, 1);
     modManager.queueSet(4096, "transform2Y", !ClientPrefs.downScroll ? 150 : -150, 1);
@@ -103,8 +104,8 @@ function onSongStart()
     modManager.queueSet(864, "drunkSpeed", 1000, 0);
     modManager.queueSet(864, "drunk", 0.015, 0);
 
-    modManager.queueSet(1888, "drunkSpeed", 2, 1);
-    modManager.queueSet(1888, "drunk", 1, 1);
+    modManager.queueSet(1888, "drunkSpeed", 0.15, 1);
+    modManager.queueSet(1888, "drunk", 0.3, 1);
 
     modManager.queueSet(2976, "drunkSpeed", 1000, 1);
     modManager.queueSet(2976, "drunk", 0.1, 1);

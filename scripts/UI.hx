@@ -1,15 +1,4 @@
-/**
- * [UI.hx]
- * Used for handling D-Side's custom UI.
- * Also used for accessing the custom pause menu.
- */
-
-import flixel.text.FlxText;
-import flixel.FlxObject;
-import flixel.FlxCameraFollowStyle;
-import funkin.utils.CameraUtil;
 import funkin.scripting.PluginsManager;
-import funkin.FunkinAssets;
 import lime.app.Application;
 
 var curEpisode:String;
@@ -27,14 +16,6 @@ function onMoveCamera(char)
         cameraOnDad = false;
 }
 
-/**
- * [onPause]
- * Runs when the player pauses the game.
- * 
- * In this script:
- *  Stops existing pause menu from opening if not on low quality mode
- *  Opens custom pause menu (if not on lq mode)
- */
 function onPause() {
 	FlxG.camera.followLerp = 0;
 	persistentUpdate = false;
@@ -116,6 +97,16 @@ function onCreatePost()
 	" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // shitty long ass name that credits literally every fucking thing
 
 	Application.current.window.title = windowName;
+
+	new FlxTimer().start(5, function(tmr:FlxTimer)
+	{
+		windowName = "Funkin.avi: Recycled - " + 
+		(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + 
+		PlayState.SONG.song + 
+		" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // short version that displays after 5 seconds yayaya
+
+		Application.current.window.title = windowName;
+	});
 }
 
 function onUpdate(elapsed)
@@ -211,4 +202,75 @@ function onCountdownTick(swagCounter)
 			go.cameras = [camOther];
             remove(countdownGo);
     }
+}
+
+function onSongStart()
+{
+	if (PlayState.SONG.song == "Delusional") // just to add the window title changing stuffs
+	{
+		modManager.queueFuncOnce(472 * 4, (s,s2)->{ 
+			windowName = "...";
+			Application.current.window.title = windowName;
+		});
+
+		modManager.queueFuncOnce(476 * 4, (s,s2)->{ 
+			windowName = "Where am I...?";
+			Application.current.window.title = windowName;
+		});
+
+		modManager.queueFuncOnce(480 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [________]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(484 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [P_______]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(488 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PE______]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(492 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEA_____]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(496 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEAC____]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(500 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACE___]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(504 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACEF__]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(508 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACEFU_]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(512 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACEFUL]";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(728 * 4, (s,s2)->{
+			windowName = "...";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(736 * 4, (s,s2)->{
+			windowName = "Welcome back.... Little mouse.";
+			Application.current.window.title = windowName;
+		});
+		modManager.queueFuncOnce(744 * 4, (s,s2)->{
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + " [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
+			Application.current.window.title = windowName;
+		});
+	}
+}
+
+function onUpdatePost(elapsed)
+{
+	if (ratingFC == "KFC")
+		ratingFC = "MFC";
 }
