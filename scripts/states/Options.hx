@@ -32,6 +32,8 @@ var menuBG:FlxSprite;
 var selectorLeft:Alphabet;
 var selectorRight:Alphabet;
 
+var controls = Controls.instance;
+
 function openSelectedSubstate(label:String) {
     switch(label) {
         case 'Controls':
@@ -113,14 +115,14 @@ function onCloseSubState() {
 }
 
 function onUpdate(elapsed:Float) {
-    if (Controls.UI_UP_P) {
+    if (controls.UI_UP_P) {
         changeSelection(-1);
     }
-    if (Controls.UI_DOWN_P) {
+    if (controls.UI_DOWN_P) {
         changeSelection(1);
     }
 
-    if (Controls.BACK)
+    if (controls.BACK)
     {
         FlxG.sound.play(Paths.sound('cancelMenu'));
         if (OptionsState.onPlayState) 
@@ -135,7 +137,7 @@ function onUpdate(elapsed:Float) {
         }
     }
 
-    if (Controls.ACCEPT) {
+    if (controls.ACCEPT) {
         openSelectedSubstate(options[curSelected]);
     }
 }

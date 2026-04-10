@@ -25,6 +25,7 @@ import funkin.states.MainMenuState;
 import funkin.states.CreditsState;
 import funkin.states.StoryMenuState;
 import funkin.states.TitleState;
+import funkin.states.FreeplayState;
 
 using StringTools;
 
@@ -81,6 +82,8 @@ var menuItems:FlxTypedGroup;
 
 var camFilter:FlxCamera;
 var messager;
+
+var controls = Controls.instance;
 
 var optionShit:Array<String> = [
 	'story_mode',
@@ -247,31 +250,32 @@ function onUpdate(elapsed)
 
 	if (!selectedSomethin)
 	{
-		if (Controls.UI_UP_P)
+		if (controls.UI_UP_P)
 		{
 			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 			changeItem(-1);
 		}
 
-		if (Controls.UI_DOWN_P)
+		if (controls.UI_DOWN_P)
 		{
 			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 			changeItem(1);
 		}
 
-		if (Controls.BACK)
+		if (controls.BACK)
 		{
 			selectedSomethin = true;
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			FlxG.switchState(new TitleState());
 		}
 
-		if (Controls.ACCEPT)
+		if (controls.ACCEPT)
 		{
 			if (optionShit[curSelected] == 'freeplay')
 			{
 				if (FlxG.save.data.episode1FPLock == "unlocked")
 				{
+					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('funkinAVI/menu/selectSfx'));
 					
 					menuItems.forEach(function(spr:FlxSprite)
@@ -294,7 +298,7 @@ function onUpdate(elapsed)
 						{
 							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 							{
-								FlxG.switchState(new ScriptedState('EpicSelectorWOOO'));
+								FlxG.switchState(new FreeplayState());
 							});
 						}
 					});

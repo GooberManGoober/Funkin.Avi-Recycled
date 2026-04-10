@@ -13,6 +13,8 @@ var downText:FlxText;
 
 var monitor:FlxRuntimeShader;
 
+var controls = Controls.instance;
+
 function onCreate() 
 {
     monitor = newShader('monitorFilter');
@@ -61,7 +63,7 @@ function onCreate()
 
 function onUpdate(elapsed) {
 
-    if (Controls.BACK)
+    if (controls.BACK)
     {
         Application.current.window.alert('Bro think there was sex', 'L moment');
         FlxG.switchState(new MainMenuState());

@@ -14,6 +14,8 @@ var onYes:Bool = false;
 var yesText:FlxText;
 var noText:FlxText;
 
+var controls = Controls.instance;
+
 function onLoad()
 {
 	bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -92,18 +94,18 @@ function onUpdate(elapsed)
 	desc.alpha += elapsed * 1.5;
 	if(desc.alpha > 1) desc.alpha = 1;
 
-	if(Controls.UI_LEFT_P || Controls.UI_RIGHT_P) 
+	if(controls.UI_LEFT_P || controls.UI_RIGHT_P) 
 	{
 		FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 1);
 		onYes = !onYes;
 		updateOptions();
 	}
-	if(Controls.BACK) 
+	if(controls.BACK) 
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 		close();
 	} 
-	else if(Controls.ACCEPT)
+	else if(controls.ACCEPT)
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 		if(onYes) 

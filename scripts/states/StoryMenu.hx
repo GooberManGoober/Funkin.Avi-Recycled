@@ -11,7 +11,6 @@ import flixel.graphics.FlxGraphic;
 import funkin.data.WeekData;
 import funkin.objects.MenuItem;
 import funkin.data.Highscore;
-import funkin.backend.Controls;
 import openfl.filters.ShaderFilter;
 import funkin.states.MainMenuState;
 
@@ -43,6 +42,8 @@ var transitionThing:FlxSprite;
 
 var lerpScore:Int = 0;
 var intendedScore:Int = 0;
+
+var controls = Controls.instance;
 
 var loadedWeeks:Array<WeekData> = [];
 
@@ -213,8 +214,8 @@ function onUpdate(elapsed)
 
 	if (!movedBack && !selectedWeek)
 	{
-		var upP = Controls.UI_UP_P;
-		var downP = Controls.UI_DOWN_P;
+		var upP = controls.UI_UP_P;
+		var downP = controls.UI_DOWN_P;
 		if (upP)
 		{
 			changeWeek(-1);
@@ -227,23 +228,23 @@ function onUpdate(elapsed)
 			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 		}
 
-		if (Controls.UI_RIGHT)
+		if (controls.UI_RIGHT)
 			rightArrow.animation.play('press')
 		else
 			rightArrow.animation.play('idle');
 
-		if (Controls.UI_LEFT)
+		if (controls.UI_LEFT)
 			leftArrow.animation.play('press');
 		else
 			leftArrow.animation.play('idle');
 
-		if (Controls.ACCEPT)
+		if (controls.ACCEPT)
 		{
 			selectWeek();
 		}
 	}
 
-	if (Controls.BACK && !movedBack && !selectedWeek)
+	if (controls.BACK && !movedBack && !selectedWeek)
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'));
 		movedBack = true;

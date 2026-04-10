@@ -36,6 +36,8 @@ var titleText:FlxText;
 
 var skippedIntro:Bool = false;
 
+var controls = Controls.instance;
+
 var transitioning:Bool = false;
 var playJingle:Bool = false;
 

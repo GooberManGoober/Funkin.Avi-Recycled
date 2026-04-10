@@ -15,6 +15,8 @@ import funkin.states.options.OptionsState;
 var grpMenuShit:FlxTypedGroup;
 var cornerTexts:Array<FlxText> = [];
 
+var controls = Controls.instance;
+
 var menuItems:Array<String> = ['Resume', 'Restart Song', 'Options', 'Exit to menu'];
 var curSelected:Int = 0;
 
@@ -121,18 +123,18 @@ function onUpdate(elapsed)
 {
 	if (pauseMusic.volume < 0.5) pauseMusic.volume += 0.01 * elapsed;
 	
-	if (Controls.UI_UP_P)
+	if (controls.UI_UP_P)
 	{
 		changeSelection(-1);
 	}
-	if (Controls.UI_DOWN_P)
+	if (controls.UI_DOWN_P)
 	{
 		changeSelection(1);
 	}
 	
 	var daSelected:String = menuItems[curSelected];
 	
-	if (Controls.ACCEPT)
+	if (controls.ACCEPT)
 	{
 		switch (daSelected)
 		{

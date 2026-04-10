@@ -1,9 +1,4 @@
-/**
- * [onLoad()]
- * Runs upon loading the mod.
- */
 function onLoad() {
-	FlxG.save.data.loading = false;
 	saveFix();
 }
 
@@ -57,8 +52,6 @@ function fullSave()
 
 	FlxG.save.data.birthdayLocky = 'beaten';
 
-	FlxG.save.data.loading = false;
-
 	FlxG.save.flush();
 }
 
@@ -78,8 +71,6 @@ function resetData()
     FlxG.save.data.rickyLock = 'locked';
 
     FlxG.save.data.birthdayLocky = "uncompleted";
-
-	FlxG.save.data.loading = false;
 
 	FlxG.save.flush();
 }

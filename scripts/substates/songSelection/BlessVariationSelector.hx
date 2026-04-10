@@ -11,6 +11,8 @@ var onDefault:Bool = true;
 var defaultText:FlxText;
 var legacyText:FlxText;
 
+var controls = Controls.instance;
+
 function onLoad()
 {
 	bg = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -85,18 +87,18 @@ function onUpdate(elapsed)
 	desc.alpha += elapsed * 1.5;
 	if(desc.alpha > 1) desc.alpha = 1;
 
-	if(Controls.UI_LEFT_P || Controls.UI_RIGHT_P) 
+	if(controls.UI_LEFT_P || controls.UI_RIGHT_P) 
 	{
 		FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 1);
 		onDefault = !onDefault;
 		updateOptions();
 	}
-	if(Controls.BACK) 
+	if(controls.BACK) 
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 		close();
 	} 
-	else if (Controls.ACCEPT && canAccept)
+	else if (controls.ACCEPT && canAccept)
 	{
 		switch (defaultText.alpha)
 		{

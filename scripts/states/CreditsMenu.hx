@@ -19,6 +19,8 @@ typedef CreditStuff = {
 
 var creditArray:Array<Dynamic>;
 
+var controls = Controls.instance;
+
 var curSelected:Int = 0;
 
 var creditIconSprite:FlxSprite;
@@ -192,18 +194,18 @@ function onUpdate(elapsed)
 	upArrow.y = FlxMath.lerp(100, upArrow.y, FlxMath.bound(1 - (elapsed * 15), 0, 1));
 	downArrow.y = FlxMath.lerp(500, downArrow.y, FlxMath.bound(1 - (elapsed * 15), 0, 1));
 
-	if (Controls.UI_UP_P)
+	if (controls.UI_UP_P)
 	{
 		changeSelection(-1);
 		upArrow.y -= 25;
 	}
-	else if (Controls.UI_DOWN_P)
+	else if (controls.UI_DOWN_P)
 	{
 		changeSelection(1);
 		downArrow.y += 25;
 	}
 
-	if (Controls.BACK)
+	if (controls.BACK)
 	{
 		FlxG.switchState(new MainMenuState());
 		Conductor.bpm = (60); // changes back to titlescreen bpm

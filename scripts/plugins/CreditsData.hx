@@ -14,74 +14,85 @@ var devilishDeal:String = '{
 		"Art: Domingo, Moe, Hikki,\n& SkylarFilm\n\nChart: Purg\n\nCode: ThatOneSillyGuy & Jason\n\nMusic: obscurity.", -40, -5
 	]
 }';
-    var isolated:String = '{
+var isolated:String = '{
 	"settings":
 	[
 		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: obscurity.", 0, -5
 	]
 }';
-    var lunacy:String = '{
+
+var lunacy:String = '{
 	"settings":
 	[
 		"Art: Domingo & Moe\n\nChart: Venage5603\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: obscurity.", 25, -5
 	]
 }';
-    var delusional:String = '{
+
+var delusional:String = '{
 	"settings":
 	[
 		"Art: Domingo, Moe, BladzAMC_Emerald,\nTeelbe, Hikki, GreyDoodlez,\nAustinWProductions\n& ThatOneSillyGuy\n\nChart: Dreupy\n\nCode: Jason, MalyPlus\n& ThatOneSillyGuy\n\nMusic: FR3SHMoure\n\nVoice Actor: BonoanAnything", -21, -43
 	]
 }';
-    // fuck you goofy fnf
-    var hunted:String = '{
+
+// fuck you goofy fnf
+var hunted:String = '{
 	"settings":
 	[
 		"Art: GreyDoodlez, Jason,\n8tastic & rezeo\n\nChart: Jason & ThatOneSillyGuy\n\nCode: Jason, ThatOneSillyGuy \n& MalyPlus\n\nMusic: JBlitz", 18, 0
 	]
 }';
-    var laughTrack:String = '{
+
+var laughTrack:String = '{
 	"settings":
 	[
 		"Art: Just_Kuro, Jason &\nGreyDoodlez\n\nChart: ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: Lasagnacat", -35, -5
 	]
 }';
-    var bless:String = '{
+
+var bless:String = '{
 	"settings":
 	[
 		"Art: ThatOneSillyGuy\nAustinWProductions, JDrive, Teelbe\n& Moe\n\nChart: ThatOneSillyGuy\n\nCode: Jason, MalyPlus \n& ThatOneSillyGuy\n\nMusic: Lasagnacat", 33, -30
 	]
 }';
-    var dontCross:String = '{
+
+var dontCross:String = '{
 	"settings":
 	[
 		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: Lasagnacat", -55, 20
 	]
 }';
-	var warDilemma:String = '{
+
+var warDilemma:String = '{
 	"settings":
 	[
 		"Art: BladzAMC_Emerald,\nAustinWProductions, & Teelbe\n\nChart: Purg\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: Sayan Sama & obscurity.", -30, 0
 	]
 }';
-	var twistedGrins:String = '{
+
+var twistedGrins:String = '{
 	"settings":
 	[
 		"Art: AustinWProduction,\nTeelbe & TrellXD\n\nChart: Purg\n\nCode: ThatOneSillyGuy & Goober Man\n\nMusic: ForFurtherNotice\n\nVoice Actor: Jogadorice", -68, -23
 	]
 }';
-	var malfunction:String = '{
+
+var malfunction:String = '{
 	"settings":
 	[
 		"Art: ThatOneSillyGuy, 8tastic &\njaooazul\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: obscurity.", -43, -13
 	]
 }';
-    var birthday:String = '{
+
+var birthday:String = '{
 	"settings":
 	[
 		"Art: Teelbe\n\nChart: Jason & ThatOneSillyGuy\n\nCode: Jason & ThatOneSillyGuy\n\nMusic: FR3SHMoure", 0, 15
 	]
 }';
-	var neglection:String = '{
+
+var neglection:String = '{
 	"settings":
 	[
 		"Art: Moe\n\n3D Modeling: MalyPlus\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: AttackPan", -21, 21
@@ -146,7 +157,7 @@ function getCharterCredits(name)
 	{
 		case "Devilish Deal", "Twisted Grins", "War Dilemma": charter = "Purg";
 		case "Delusional", "Birthday": charter = "Dreupy";
-		case "Hunted": charter = "JustJasonLol & ThatOneSillyGuy";
+		case "Hunted": charter = "Jason & ThatOneSillyGuy";
 		case "Lunacy", "Isolated", "Malfunction", "Laugh Track", "Neglection", "Bless Legacy": charter = "ThatOneSillyGuy"; 
 		case "Don't Cross!": charter = "ThatOneSillyGuy & fakeburrito123";
 		default: charter = "Unknown";

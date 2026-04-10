@@ -10,6 +10,8 @@ import funkin.scripting.PluginsManager;
 import lime.app.Application;
 import funkin.utils.CameraUtil;
 import funkin.states.options.OptionsState;
+import funkin.states.FreeplayState;
+import funkin.states.StoryMenuState;
 import flixel.addons.text.FlxTypeText;
 
 using StringTools;
@@ -30,6 +32,8 @@ var hasResumed:Bool = false;
 var hasFinishedAnim:Bool = false;
 var pauseNameTxt:FlxText;
 var pauseSongStr:String;
+
+var controls = Controls.instance;
 
 var funnyButtonX:Float = 0;
 var funnyButtonY:Float = 0;
@@ -272,12 +276,12 @@ function onUpdate(elapsed)
 
 	if (!hasResumed && hasFinishedAnim)
 	{
-		if (Controls.UI_UP_P)
+		if (controls.UI_UP_P)
 			changeSelection(-1);
-		if (Controls.UI_DOWN_P)
+		if (controls.UI_DOWN_P)
 			changeSelection(1);
 		
-		if (Controls.ACCEPT)
+		if (controls.ACCEPT)
 		{
 			switch (curSelected)
 			{
@@ -323,7 +327,7 @@ function onUpdate(elapsed)
 
 							if (PlayState.isStoryMode)
 							{
-								FlxG.switchState(new ScriptedState('StoryMenu'));
+								FlxG.switchState(new StoryMenuState());
 								FlxG.sound.playMusic(Paths.music('freakyMenu'));
 							}
 							else
@@ -333,11 +337,11 @@ function onUpdate(elapsed)
 									case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
 										FlxG.save.data.freeplayMenuList = 0;
 										FlxG.save.flush();
-										FlxG.switchState(new ScriptedState('FreeplayState'));
+										FlxG.switchState(new FreeplayState());
 									default:
 										FlxG.save.data.freeplayMenuList = 1;
 										FlxG.save.flush();
-										FlxG.switchState(new ScriptedState('FreeplayState')); // yeah, there's no way I'm making a case for EVERY fucking song in that menu, too much work!
+										FlxG.switchState(new FreeplayState()); // yeah, there's no way I'm making a case for EVERY fucking song in that menu, too much work!
 								}
 								FlxG.sound.playMusic(Paths.music('freakyMenu'));
 							}
