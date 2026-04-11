@@ -447,7 +447,7 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 		case 1:
 			Application.current.window.title = "Funkin.avi: Recycled - Freeplay: Extras Menu - " + songName + " - Composed by: " + songArtist;
 		case 2:
-			Application.current.window.title = "Funkin.avi: Recycled - Freeplay: Covers/Crossovers Menu - " + songName + " - Composed by: " + songArtist;
+			Application.current.window.title = "Funkin.avi: Recycled - Freeplay: Covers / Crossovers Menu - " + songName + " - Composed by: " + songArtist;
 	}
 
 	var newColor:Int = songs[curSelected].color;
@@ -584,7 +584,11 @@ function generateSongs(?tabIndex:Int = 0)
 	switch (tabIndex)
 	{
 		case 0: // Story Songs Menu
-			tabName = "Story Songs";
+			tabName = "Story";
+
+			FlxG.save.data.freeplayMenuList = 0;
+			FlxG.save.flush();
+
 			addSong('Devilish Deal', 3, 'satandd', FlxColor.fromRGB(65, 88, 94), 'obscurity', 'EASY', FlxColor.WHITE);
 			addSong('Isolated', 3, 'avier', FlxColor.fromRGB(60, 60, 60), 'obscurity', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			addSong('Lunacy', 3, 'lunaavier', FlxColor.fromRGB(69, 54, 54), 'obscurity', 'HARD', FlxColor.fromRGB(255, 187, 187));
@@ -593,15 +597,17 @@ function generateSongs(?tabIndex:Int = 0)
 			glitchyStuff = newShader('vignetteGlitch'); // Malfunction
 			smilesShader = newShader('tvStatic'); // Twisted Grins
 
-			tabName = "Extra Songs";
+			tabName = "Extras";
+
+			FlxG.save.data.freeplayMenuList = 1;
+			FlxG.save.flush();
 
 			addSong('Hunted', 3, 'goofy', FlxColor.fromRGB(94, 28, 35), 'JBlitz', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
-			addSong('Delusion', 3, 'deluavier', FlxColor.fromRGB(25, 25, 25), 'FluffyHairs', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			addSong('Laugh Track', 3, 'ricky', FlxColor.fromRGB(60, 60, 60), 'Yama haki/Toko', 'HARD', FlxColor.fromRGB(255, 187, 187));
 			addSong('Bless', 3, 'whitenew', FlxColor.WHITE, 'Lasagnacat (Legacy composed by: END_SELLA)', 'HARD', FlxColor.fromRGB(255, 187, 187), true);
 			addSong("Don't Cross!", 3, 'cross', FlxColor.fromRGB(255, 0, 0), 'Yama haki/Toko', 'GOOD LUCK', FlxColor.fromRGB(201, 0, 0));
 			addSong('War Dilemma', 3, 'ethernalg', FlxColor.fromRGB(204, 41, 103), 'Sayan Sama & obscurity', 'HARD', FlxColor.fromRGB(255, 187, 187));
-			//addSong('Neglection', 3, 'pnm', FlxColor.fromRGB(117, 86, 27), 'AttackPan', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
+			addSong('Neglection', 3, 'pnm', FlxColor.fromRGB(117, 86, 27), 'AttackPan', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			
 			addSong('Twisted Grins', 3, 'smile', FlxColor.fromRGB(54, 38, 38), 'ForFurtherNotice', 'HARD', FlxColor.fromRGB(255, 187, 187));
 

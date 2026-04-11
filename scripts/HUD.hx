@@ -60,15 +60,9 @@ function onCreatePost()
         switch (PlayState.SONG.song)
         {
             case "Devilish Deal", "Isolated", "Lunacy", "Delusional":
-                if (isStoryMode) 
-                    engineDisplay = "~ Episode 1 ~";
-                else
-                    engineDisplay = "~ Freeplay ~";
+                engineDisplay = isStoryMode ? "~ Episode 1 ~" : "~ Freeplay ~";
             default:
-                if (isStoryMode) 
-                    engineDisplay = "~ Episode ??? ~";
-                else
-                    engineDisplay = "Funkin.avi: Recycled";
+                engineDisplay = isStoryMode ? "~ Episode ??? ~" : "Funkin.avi: Recycled";
         }
         
         switch (PlayState.SONG.stage)
@@ -79,27 +73,21 @@ function onCreatePost()
 				fancyBarOverlay.screenCenter(FlxAxes.X);
 				fancyBarOverlay.scrollFactor.set();
 				if (ClientPrefs.downScroll)
-				{
 					fancyBarOverlay.y -= 10;
-				}
 				else
-				{
 					fancyBarOverlay.y -= 117;
 					fancyBarOverlay.flipY = true;
-				}
 				fancyBarOverlay.visible = !ClientPrefs.hideHud;
                 playHUD.insert(1, fancyBarOverlay);
 
                 scoreTxt.setFormat(Paths.font("DisneyFont.ttf"), 24, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
                 scoreTxt.scrollFactor.set();
                 scoreTxt.borderSize = 1.25;
-                scoreTxt.visible = (!ClientPrefs.hideHud || !cpuControlled);
-                playHUD.add(scoreTxt);
 
                 watermarkTxt = new FlxText(0, 0, 0, engineDisplay);
                 watermarkTxt.setFormat(Paths.font('DisneyFont.ttf'), 32, FlxColor.WHITE);
                 watermarkTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
-                if (ClientPrefs.downScroll) watermarkTxt.setPosition(0, 655); else watermarkTxt.setPosition(0, 8);
+                watermarkTxt.setPosition(0, ClientPrefs.downScroll ? 655 : 8);
                 watermarkTxt.screenCenter(FlxAxes.X);
                 watermarkTxt.visible = !ClientPrefs.hideHud;
                 playHUD.add(watermarkTxt);
@@ -121,10 +109,7 @@ function onCreatePost()
                 autoplayMark.visible = false;
                 playHUD.add(autoplayMark);
             default:
-                if (ClientPrefs.downScroll) 
-                    spectraSongTime = new FlxText(-108, 655, 400, "", 32); 
-                else 
-                    spectraSongTime = new FlxText(-108, 100, 400, "", 32);
+                spectraSongTime = new FlxText(-108, ClientPrefs.downScroll ? 655 : 100, 400, "", 32);
                 spectraSongTime.setFormat(Paths.font("VanillaExtractRegular.ttf"), 13, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
                 if (!ClientPrefs.middleScroll) 
                     spectraSongTime.screenCenter(FlxAxes.X);
@@ -148,10 +133,7 @@ function onCreatePost()
                 watermarkTxt = new FlxText(0, 0, 0, engineDisplay);
                 watermarkTxt.setFormat(Paths.font('VanillaExtractRegular.ttf'), 16, FlxColor.WHITE);
                 watermarkTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
-                if (ClientPrefs.downScroll) 
-                    watermarkTxt.setPosition(0, 685); 
-                else 
-                    watermarkTxt.setPosition(0, 8);
+                watermarkTxt.setPosition(0, ClientPrefs.downScroll ? 685 : 8);
                 watermarkTxt.screenCenter(FlxAxes.X);
                 watermarkTxt.visible = !ClientPrefs.hideHud;
                 playHUD.add(watermarkTxt);
@@ -183,41 +165,15 @@ function onCreatePost()
 
         if (ClientPrefs.showRatings)
         {
-            if(!PlayState.isPixelStage)
-            {
-                if(ClientPrefs.downScroll) 
-                    judgementUnderlay = new FlxSprite(910, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
-                else 
-                    judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('UI/judge-underlay'));
-                judgementUnderlay.scrollFactor.set();
-                judgementUnderlay.scale.set(0.35, 0.32);
-                judgementUnderlay.alpha = 0.45;
-                judgementUnderlay.visible = !ClientPrefs.hideHud;
-                playHUD.add(judgementUnderlay);
-            }
-            else
-            {
-                if(ClientPrefs.downScroll) 
-                    judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
-                else 
-                    judgementUnderlay = new FlxSprite(870, 0).loadGraphic(Paths.image('UI/judge-underlay'));
-                judgementUnderlay.scrollFactor.set();
-                judgementUnderlay.scale.set(0.37, 0.32);
-                judgementUnderlay.alpha = 0.45;
-                judgementUnderlay.visible = !ClientPrefs.hideHud;
-                playHUD.add(judgementUnderlay);
-            }
+            judgementUnderlay = new FlxSprite(ClientPrefs.downScroll ? 910 : 890, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
+            judgementUnderlay.scrollFactor.set();
+            judgementUnderlay.scale.set(0.35, 0.32);
+            judgementUnderlay.alpha = 0.45;
+            judgementUnderlay.visible = !ClientPrefs.hideHud;
+            playHUD.add(judgementUnderlay);
 
-            if (!PlayState.isPixelStage)
-            {
-                judgementCounter = new FlxText(1155, 0, 0, "", 20);
-                judgementCounter.setFormat(Paths.font("VanillaExtractRegular.ttf"), 17, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-            }
-            else 
-            {
-                judgementCounter = new FlxText(1125, 0, 0, "", 20);
-                judgementCounter.setFormat(Paths.font("m40.ttf"), 17, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-            }
+            judgementCounter = new FlxText(1155, 0, 0, "", 20);
+            judgementCounter.setFormat(Paths.font("VanillaExtractRegular.ttf"), 17, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
             judgementCounter.borderSize = 2;
             judgementCounter.borderQuality = 2;
             judgementCounter.scrollFactor.set();

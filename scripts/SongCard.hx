@@ -41,16 +41,19 @@ function setupCardData()
 	}
 }
 
+function onLoad()
+{
+	songCrdGrp = new FlxSpriteGroup();
+	add(songCrdGrp);
+	songCrdGrp.cameras = [camOther];
+}
+
 function onCreatePost()
 {
 	setupCardData();
 
 	var pIconName:String = boyfriend.healthIcon;
 	var oIconName:String = dad.healthIcon;
-
-	songCrdGrp = new FlxSpriteGroup();
-	add(songCrdGrp);
-	songCrdGrp.cameras = [camOther];
 
 	if (!isLegacy)
 	{

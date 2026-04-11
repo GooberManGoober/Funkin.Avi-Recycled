@@ -204,7 +204,7 @@ function onCreate()
 	grain.cameras = [camFilter];
 
 	if (FlxG.stage.window.title.contains('*cantaloupe jumpscare*'))
-		cantaloupeJumpscare();
+		coolMenuEvents(1);
 
 	if (Application.current.window.title.contains('10 Seconds before I shut your fucking game again >:('))
 	{
@@ -231,7 +231,7 @@ function onCloseSubState() {
 
 function onUpdate(elapsed)
 {
-	if (FlxG.keys.pressed.R)
+	if (FlxG.keys.pressed.TAB)
 	{
 		holdTimer += elapsed;
 	}
@@ -244,6 +244,9 @@ function onUpdate(elapsed)
 		openSubState(new ScriptedSubstate("resetSave"));
 		persistentUpdate = false;
 	}
+
+	if (FlxG.keys.justPressed.R)
+		coolMenuEvents(0);
 
 	if (FlxG.sound.music.volume < 0.8)
 		FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -399,15 +402,30 @@ function changeItem(huh:Int = 0)
 	});
 }
 
-function cantaloupeJumpscare()
+function coolMenuEvents(getEvent:Int)
 {
-	var cantaloupe = new FlxSprite(-200, -100).loadGraphic(Paths.image('menus/mainmenu/cantaloupe'));
-	cantaloupe.scale.set(0.05, 0.05);
-	cantaloupe.screenCenter();
-	FlxTween.tween(cantaloupe.scale, {x: 2, y: 2}, 3, {ease: FlxEase.bounceOut, onComplete: _ -> FlxTween.tween(cantaloupe, {alpha: 0}, 2)});
-	add(cantaloupe);
-	FlxG.camera.shake(0.02, 5);
-	FlxG.sound.play(Paths.sound('funkinAVI/fnaf_jumpscare'), 0.7, false, null, true, () -> cantaloupe.destroy());
+	switch (getEvent)
+	{
+		case 0:
+			var redGradient:FlxSprite = new FlxSprite(0, 0, Paths.image('filters/redGradient'));
+			redGradient.setGraphicSize(Std.int(redGradient.width * 0.7));
+			redGradient.screenCenter();
+			redGradient.cameras = [camFilter];
+			FlxTween.tween(redGradient, {alpha: 0}, 0.9, {onComplete: sex -> redGradient.destroy()});
+			add(redGradient);
+			FlxG.sound.play(Paths.sound('funkinAVI/oof'), 1, false, null, true);
+
+		case 1:
+			var cantaloupe = new FlxSprite(-200, -100).loadGraphic(Paths.image('menus/mainmenu/cantaloupe'));
+			cantaloupe.scale.set(0.05, 0.05);
+			cantaloupe.screenCenter(FlxAxes.XY).x -= 700;
+			cantaloupe.y -= 300;
+			FlxTween.tween(cantaloupe.scale, {x: 2, y: 2}, 3, {ease: FlxEase.bounceOut, onComplete: _ -> FlxTween.tween(cantaloupe, {alpha: 0}, 2)});
+			cantaloupe.shake(.05, 0, 5);
+			add(cantaloupe);
+			FlxG.camera.shake(0.02, 5);
+			FlxG.sound.play(Paths.sound('funkinAVI/fnaf_jumpscare'), 0.7, false, null, true, () -> cantaloupe.destroy());
+	}
 }
 
 var box:FlxSprite;

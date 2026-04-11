@@ -60,7 +60,7 @@ var bless:String = '{
 var dontCross:String = '{
 	"settings":
 	[
-		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: Lasagnacat", -55, 20
+		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: Yama Haki / Toko", -55, 20
 	]
 }';
 
