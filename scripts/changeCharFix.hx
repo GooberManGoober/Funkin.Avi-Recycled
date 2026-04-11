@@ -42,6 +42,9 @@ function resetCharPos()
                 case 'Mickey-Bedroom': boyfriend.setPosition(575, 50);
                 default: boyfriend.setPosition(275, 150);
             }
+        case 'crossoverStreet':
+            dad.setPosition(-870, -90);
+            boyfriend.setPosition(1075, 600);
         case 'delusionStreet':
             switch (dad.curCharacter)
             {

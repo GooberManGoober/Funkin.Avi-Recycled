@@ -113,6 +113,13 @@ var delusion:String = '{
 	]
 }';
 
+var disclosure:String = '{
+	"settings":
+	[
+		"(AVI ART) --\nDomingo & Moe\n-- (SNS ART) --\nGonDaLoser,\nSonicBoyForLife, MHighro\n& NuggetNightmare\n\nChart: Goober Man\n\nCode: Goober Man\n\nMusic: Yama Haki / Toko", -30, 15
+	]
+}';
+
 var json:String = null;
 var array:Array<Dynamic>;
 var data:PauseData;
@@ -139,6 +146,7 @@ function jsonStuff(fuckingName:String)
 		case "Neglection": json = neglection;
         case "Birthday": json = birthday;
 		case "Delusion": json = delusion;
+		case "Disclosure": json = disclosure;
 		case "War Dilemma": json = warDilemma;
     }
 
@@ -160,6 +168,7 @@ function getCharterCredits(name)
 		case "Hunted": charter = "Jason & ThatOneSillyGuy";
 		case "Lunacy", "Isolated", "Malfunction", "Laugh Track", "Neglection", "Bless Legacy": charter = "ThatOneSillyGuy"; 
 		case "Don't Cross!": charter = "ThatOneSillyGuy & fakeburrito123";
+		case "Disclosure": charter = "Goober Man";
 		default: charter = "Unknown";
 	}
 	return charter;
@@ -170,7 +179,7 @@ function getDiffRank(name)
 	switch (name.toLowerCase().replace(' ', '-'))
 	{
 		case 'devilish-deal': difficultyRank = 'EASY';
-		case 'isolated', 'hunted', 'neglection', 'delusion': difficultyRank = 'NORMAL';
+		case 'isolated', 'hunted', 'neglection', 'delusion', 'disclosure': difficultyRank = 'NORMAL';
 		case 'delusional': difficultyRank = 'INSANE';
 		case 'malfunction': difficultyRank = 'null';
 		case "don't-cross!": difficultyRank = 'GOOD LUCK';
@@ -187,7 +196,7 @@ function getArtistName(name)
 		case "Devilish Deal", "Isolated", "Lunacy", "Malfunction": songArtist = "obscurity.";
 		case "Birthday", "Delusional": songArtist = "FR3SHMoure";
 		case "Hunted": songArtist = "JBlitz";
-		case "Laugh Track", "Don't Cross!": songArtist = "Yama haki/Toko";
+		case "Laugh Track", "Don't Cross!", "Disclosure": songArtist = "Yama haki/Toko";
 		case "Bless": songArtist = "Lasagnacat";
 		case "War Dilemma": songArtist = "Sayan Sama & obscurity.";
 		case "Twisted Grins": songArtist = "ForFurtherNotice";

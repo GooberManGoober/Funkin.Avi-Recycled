@@ -548,7 +548,7 @@ function changeTab(?diff:Int = 0, ?firstTime:Bool = false)
 {
 	if (!firstTime) FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.4);
 	
-	currentTab = FlxMath.wrap(currentTab + diff, 0, 1);
+	currentTab = FlxMath.wrap(currentTab + diff, 0, 2);
 	
 	if (!firstTime) clearSongs();
 	
@@ -615,6 +615,14 @@ function generateSongs(?tabIndex:Int = 0)
 
 			if (FlxG.save.data.birthdayLocky != "uninvited")
 				addSong('Birthday', 3, 'muckney', FlxColor.fromRGB(84, 255, 181), 'FR3SHMoure', 'PARTY', FlxColor.fromRGB(250, 234, 92));
+		case 2:
+			tabName = "Covers / Crossovers";
+
+			FlxG.save.data.freeplayMenuList = 2;
+			FlxG.save.flush();
+
+			addSong('Delusion', 3, 'deluavier', FlxColor.fromRGB(25, 25, 25), 'FluffyHairs', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
+			addSong('Disclosure', 3, 'sadmouse', FlxColor.fromRGB(120, 120, 120), 'Yama Haki / Toko', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 	}
 
 	for (i in 0...songs.length)

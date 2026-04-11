@@ -332,17 +332,7 @@ function onUpdate(elapsed)
 							}
 							else
 							{
-								switch (PlayState.SONG.song)
-								{
-									case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
-										FlxG.save.data.freeplayMenuList = 0;
-										FlxG.save.flush();
-										FlxG.switchState(new FreeplayState());
-									default:
-										FlxG.save.data.freeplayMenuList = 1;
-										FlxG.save.flush();
-										FlxG.switchState(new FreeplayState()); // yeah, there's no way I'm making a case for EVERY fucking song in that menu, too much work!
-								}
+								FlxG.switchState(new FreeplayState());
 								FlxG.sound.playMusic(Paths.music('freakyMenu'));
 							}
 					}
