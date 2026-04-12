@@ -1,69 +1,69 @@
 {
 	"animations": [
 		{
-			"loop": false,
-			"flipY": false,
 			"offsets": [
 				-23,
 				162
 			],
-			"anim": "idle",
+			"flipY": false,
+			"loop": false,
 			"fps": 12,
-			"name": "sunnySprites idle",
+			"anim": "idle",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "sunnySprites idle"
 		},
 		{
-			"loop": false,
-			"flipY": false,
 			"offsets": [
 				-10,
 				128
 			],
-			"anim": "singDOWN",
+			"flipY": false,
+			"loop": false,
 			"fps": 12,
-			"name": "sunnySprites down",
+			"anim": "singDOWN",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "sunnySprites down"
 		},
 		{
-			"loop": false,
-			"flipY": false,
 			"offsets": [
 				13,
 				157
 			],
-			"anim": "singLEFT",
+			"flipY": false,
+			"loop": false,
 			"fps": 12,
-			"name": "sunnySprites right",
+			"anim": "singLEFT",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "sunnySprites right"
 		},
 		{
-			"loop": false,
-			"flipY": false,
 			"offsets": [
 				-71,
 				199
 			],
-			"anim": "singUP",
+			"flipY": false,
+			"loop": false,
 			"fps": 12,
-			"name": "sunnySprites up",
+			"anim": "singUP",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "sunnySprites up"
 		},
 		{
-			"loop": false,
-			"flipY": false,
 			"offsets": [
 				-56,
 				172
 			],
-			"anim": "singRIGHT",
+			"flipY": false,
+			"loop": false,
 			"fps": 12,
-			"name": "sunnySprites left",
+			"anim": "singRIGHT",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "sunnySprites left"
 		}
 	],
 	"no_antialiasing": false,
@@ -78,7 +78,7 @@
 	"gameover_confirm_sound": null,
 	"healthicon": "sadmouse",
 	"gameover_character": null,
-	"vslice_sustains": false,
+	"vslice_sustains": true,
 	"flip_x": false,
 	"healthbar_colour": -8882056,
 	"camera_position": [
