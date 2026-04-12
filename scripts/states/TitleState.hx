@@ -74,7 +74,7 @@ function onCreate()
 	recycledText.setFormat(Paths.font('DisneyFont.ttf'), 50, FlxColor.fromRGB(255, 255, 255), "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	recycledText.borderSize = 1.5;
 	recycledText.antialiasing = ClientPrefs.globalAntialiasing;
-	recycledText.screenCenter('x');
+	recycledText.screenCenter(FlxAxes.X);
 	recycledText.angle = -4;
 	FlxTween.tween(recycledText, {angle: 4, x: 15}, 4, {ease: FlxEase.quartInOut, type: 4});
 	add(recycledText);

@@ -359,7 +359,7 @@ function onUpdate(elapsed)
 			if (!ClientPrefs.inDevMode) 
 				FlxG.switchState(new ScriptedState("SexState"));
 			else
-				FlxG.switchState(new MasterEditorMenu());
+				FlxG.switchState(new ScriptedState('JukeBoxState'));
 		}
 		if (FlxG.keys.justPressed.ONE && ClientPrefs.inDevMode)
 		{
