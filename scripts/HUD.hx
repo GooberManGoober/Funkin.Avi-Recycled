@@ -52,6 +52,9 @@ function onCreatePost()
 {
     iconP1.frameCount = 3;
     iconP2.frameCount = 3;
+
+    playHUD.markupEnabled = false;
+    playHUD.updateIconScale = false;
     
     if (PlayState.SONG.song != "Bless Legacy")
     {
@@ -75,8 +78,10 @@ function onCreatePost()
 				if (ClientPrefs.downScroll)
 					fancyBarOverlay.y -= 10;
 				else
+                {
 					fancyBarOverlay.y -= 117;
 					fancyBarOverlay.flipY = true;
+                }
 				fancyBarOverlay.visible = !ClientPrefs.hideHud;
                 playHUD.insert(1, fancyBarOverlay);
 
@@ -165,7 +170,7 @@ function onCreatePost()
 
         if (ClientPrefs.showRatings)
         {
-            judgementUnderlay = new FlxSprite(ClientPrefs.downScroll ? 910 : 890, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
+            judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
             judgementUnderlay.scrollFactor.set();
             judgementUnderlay.scale.set(0.35, 0.32);
             judgementUnderlay.alpha = 0.45;

@@ -21,14 +21,13 @@ var shaderAnim:Float = 0;
 
 function onLoad()
 {
-    defaultCamZoom = 0.87;
+    defaultCamZoom = 0.5;
     cameraSpeed = 1;
     
     floor = new FlxSprite(-500, -100).loadGraphic(Paths.image(pathway + 'street'));
     floor.antialiasing = ClientPrefs.globalAntialiasing;
     floor.scale.set(1.5, 1.5);
     floor.scrollFactor.set(1, 1);
-    floor.active = false;
     add(floor);	
 
     if(!ClientPrefs.lowQulity)
@@ -47,20 +46,22 @@ function onLoad()
 
 function onCreatePost()
 {
+    snapCamToPos(475, 450, true);
+    
     if (!ClientPrefs.lowQulity) // i made so the particles only appear on aviers side of the stage because sigma
     {
-        atmosphereParticle = new FlxEmitter(-4430.5, 2100);
+        atmosphereParticle = new FlxEmitter(-2180.5, 2100);
         atmosphereParticle.launchMode = FlxEmitterMode.SQUARE;
         atmosphereParticle.velocity.set(-50, -200, 50, -600, -90, 0, 90, -600);
         atmosphereParticle.scale.set(4, 4, 4, 4, 0, 0, 0, 0);
         atmosphereParticle.drag.set(0, 0, 0, 0, 5, 5, 10, 10);
-        atmosphereParticle.width = 4787.45;
+        atmosphereParticle.width = 4787.45 / 2;
         atmosphereParticle.alpha.set(1, 0.3);
         atmosphereParticle.lifespan.set(1.9, 4.9);
         atmosphereParticle.loadParticles(Paths.image('stages/abandonedStreet/dustParticle'), 500, 16, true);
         atmosphereParticle.start(false, FlxG.random.float(.0521, .1060), 1000000);
 
-        ashParticle = new FlxEmitter(-4430.5, 2250.4);
+        ashParticle = new FlxEmitter(-2180.5, 2250.4);
         for (i in 0 ... 100)
             {
                 var blackParticle = new FlxParticle();
@@ -75,7 +76,7 @@ function onCreatePost()
         ashParticle.velocity.set(-50, -200, 50, -600, -90, 0, 90, -600);
         ashParticle.scale.set(4, 4, 4, 4, 0, 0, 0, 0);
         ashParticle.drag.set(0, 0, 0, 0, 5, 5, 10, 10);
-        ashParticle.width = 4787.45;
+        ashParticle.width = 4787.45 / 2;
         ashParticle.alpha.set(1, 1);
         ashParticle.lifespan.set(1.9, 4.9);
         ashParticle.start(false, FlxG.random.float(.0521, .1060), 1000000);

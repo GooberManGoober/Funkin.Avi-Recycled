@@ -28,7 +28,7 @@ function resetCharPos()
             switch (dad.curCharacter)
             {
                 case 'delusional-mickey':
-                    dad.setPosition(-130, 220);
+                    dad.setPosition(-430, 220);
                 case 'mick-lunacyEnd':
                     dad.setPosition(-750, -110);
                 default:
@@ -38,13 +38,13 @@ function resetCharPos()
             {
                 case 'evildelu': boyfriend.setPosition(550, 290);
                 case 'bf-delu-intro': boyfriend.setPosition(800, 500);
-                case 'bf-demon': boyfriend.setPosition(330, 175);
+                case 'bf-demon': boyfriend.setPosition(430, 175);
                 case 'Mickey-Bedroom': boyfriend.setPosition(575, 50);
                 default: boyfriend.setPosition(275, 150);
             }
         case 'crossoverStreet':
             dad.setPosition(-870, -90);
-            boyfriend.setPosition(1075, 600);
+            boyfriend.setPosition(870, 600);
         case 'delusionStreet':
             switch (dad.curCharacter)
             {

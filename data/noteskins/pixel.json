@@ -128,7 +128,7 @@
 	],
 	"noteSplashAnimations": [
 		{
-			"xmlName": "splash red",
+			"xmlName": "splash purple 1",
 			"offsets": [
 				0,
 				0
@@ -136,7 +136,7 @@
 			"anim": "note0"
 		},
 		{
-			"xmlName": "splash red",
+			"xmlName": "splash blue 1",
 			"offsets": [
 				0,
 				0
@@ -144,7 +144,7 @@
 			"anim": "note1"
 		},
 		{
-			"xmlName": "splash red",
+			"xmlName": "splash green 1",
 			"offsets": [
 				0,
 				0
@@ -152,7 +152,7 @@
 			"anim": "note2"
 		},
 		{
-			"xmlName": "splash red",
+			"xmlName": "splash red 1 ",
 			"offsets": [
 				0,
 				0
@@ -278,102 +278,10 @@
 			}
 		]
 	],
-	"susSplashAnimations": [
-		[
-			{
-				"anim": "start",
-				"xmlName": "start",
-				"offsets": [-160, 0],
-				"looping": false
-			},
-			{
-				"anim": "loop",
-				"xmlName": "loop",
-				"offsets": [-160, 0],
-				"looping": true,
-				"fps": 12
-			},
-			{
-				"anim": "end",
-				"xmlName": "end",
-				"offsets": [-160, 0],
-				"looping": false
-			}
-		],
-		[
-			{
-				"anim": "start",
-				"xmlName": "start",
-				"offsets": [-160, 0],
-				"looping": false
-			},
-			{
-				"anim": "loop",
-				"xmlName": "loop",
-				"offsets": [-160, 0],
-				"looping": true,
-				"fps": 12
-			},
-			{
-				"anim": "end",
-				"xmlName": "end",
-				"offsets": [-160, 0],
-				"looping": false
-			}
-		],
-		[
-			{
-				"anim": "start",
-				"xmlName": "start",
-				"offsets": [-160, 0],
-				"looping": false
-			},
-			{
-				"anim": "loop",
-				"xmlName": "loop",
-				"offsets": [-160, 0],
-				"looping": true,
-				"fps": 12
-			},
-			{
-				"anim": "end",
-				"xmlName": "end",
-				"offsets": [-160, 0],
-				"looping": false
-			}
-		],
-		[
-			{
-				"anim": "start",
-				"xmlName": "start",
-				"offsets": [-160, 0],
-				"looping": false
-			},
-			{
-				"anim": "loop",
-				"xmlName": "loop",
-				"offsets": [-160, 0],
-				"looping": true,
-				"fps": 12
-			},
-			{
-				"anim": "end",
-				"xmlName": "end",
-				"offsets": [-160, 0],
-				"looping": false
-			}
-		]
-	],
-	"arrowRGB": [
-		{"r": -1935617, "g": -1537, "b": -10485619},
-		{"r": -12727553, "g": -720897, "b": -16764832},
-		{"r": -9313536, "g": -589850, "b": -16764672},
-		{"r": -30642, "g": -1291, "b": -9699328}
-	],
 	"splashTexture": "pixelUI/pixel-splashes",
     "sustainSplashTexture": "pixelUI/holdCover",
 	"antialiasing": false,
-	"inGameColoring": true,
+	"inGameColoring": false,
 	"receptorScale": 6,
 	"noteScale": 6,
 	"splashScale": 4,

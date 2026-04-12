@@ -1,54 +1,15 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				-37,
-				140
-			],
-			"flipY": false,
 			"loop": false,
-			"fps": 24,
-			"anim": "singDOWN",
-			"flipX": false,
-			"indices": [],
-			"name": "Sadmouse Down"
-		},
-		{
-			"offsets": [
-				-50,
-				177
-			],
 			"flipY": false,
-			"loop": false,
-			"fps": 24,
-			"anim": "singUP",
-			"flipX": false,
-			"indices": [],
-			"name": "Sadmouse Up"
-		},
-		{
 			"offsets": [
-				-24,
+				-23,
 				162
 			],
-			"flipY": false,
-			"loop": false,
-			"fps": 24,
 			"anim": "idle",
-			"flipX": false,
-			"indices": [],
-			"name": "Sadmouse Idle"
-		},
-		{
-			"loop": false,
-			"flipY": false,
-			"offsets": [
-				-18,
-				155
-			],
-			"anim": "singLEFT",
-			"fps": 24,
-			"name": "Sadmouse Right",
+			"fps": 12,
+			"name": "sunnySprites idle",
 			"indices": [],
 			"flipX": false
 		},
@@ -56,18 +17,57 @@
 			"loop": false,
 			"flipY": false,
 			"offsets": [
-				-50,
-				146
+				-10,
+				128
+			],
+			"anim": "singDOWN",
+			"fps": 12,
+			"name": "sunnySprites down",
+			"indices": [],
+			"flipX": false
+		},
+		{
+			"loop": false,
+			"flipY": false,
+			"offsets": [
+				13,
+				157
+			],
+			"anim": "singLEFT",
+			"fps": 12,
+			"name": "sunnySprites right",
+			"indices": [],
+			"flipX": false
+		},
+		{
+			"loop": false,
+			"flipY": false,
+			"offsets": [
+				-71,
+				199
+			],
+			"anim": "singUP",
+			"fps": 12,
+			"name": "sunnySprites up",
+			"indices": [],
+			"flipX": false
+		},
+		{
+			"loop": false,
+			"flipY": false,
+			"offsets": [
+				-56,
+				172
 			],
 			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "Sadmouse Left",
+			"fps": 12,
+			"name": "sunnySprites left",
 			"indices": [],
 			"flipX": false
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/suicidemouseredesign",
+	"image": "characters/sunnySprites",
 	"position": [
 		0,
 		350
@@ -87,6 +87,6 @@
 	],
 	"gameover_loop_sound": null,
 	"sing_duration": 4,
-	"scale": 1,
+	"scale": 0.95,
 	"_editor_isPlayer": true
 }

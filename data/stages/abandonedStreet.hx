@@ -39,10 +39,10 @@ var chromNormalShader:FlxRuntimeShader = newShader('aberrationDefault');
 var dramaticCamMovement:FlxRuntimeShader = newShader('cameraMovement');
 var monitorFilter:FlxRuntimeShader = newShader('monitorFilter');
 var delusionalShift:FlxRuntimeShader = newShader('delusionalShift');
-var heatWaveEffect:FlxRuntimeShader = newShader('heatWave');
 
 var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
 
+var bg:FlxSprite;
 var floor:FlxSprite;
 var stageCurtains:FlxSprite;
 var rain:FlxSprite;
@@ -90,11 +90,16 @@ function onLoad()
     defaultCamZoom = 0.87;
     cameraSpeed = 1;
     
+    bg = new FlxSprite(-500, -100).loadGraphic(Paths.image(pathway + 'bg'));
+    bg.antialiasing = ClientPrefs.globalAntialiasing;
+    bg.scale.set(1.5, 1.5);
+    bg.scrollFactor.set(1, 1);
+    add(bg);	
+    
     floor = new FlxSprite(-500, -100).loadGraphic(Paths.image(pathway + 'street'));
     floor.antialiasing = ClientPrefs.globalAntialiasing;
     floor.scale.set(1.5, 1.5);
     floor.scrollFactor.set(1, 1);
-    floor.active = false;
     add(floor);	
 
     if (PlayState.SONG.song == 'Delusional')
@@ -144,7 +149,10 @@ function onLoad()
         stageCurtains.scrollFactor.set(1.3, 1.3);
         add(stageCurtains);
     }
+}
 
+function onCreatePost()
+{
     blendFlash = new FlxSprite().makeGraphic(1, 1, 0xFFFFFFFF);
 	blendFlash.scale.set(FlxG.width * 5, FlxG.height * 5);
 	blendFlash.alpha = 0.0001;
@@ -153,10 +161,7 @@ function onLoad()
 	blendFlash.y -= 450;
 	blendFlash.scrollFactor.set();
 	add(blendFlash);
-}
 
-function onCreatePost()
-{
     camVideo = new FlxCamera();
 	camVideo.bgColor = 0x0;
     FlxG.cameras.insert(camVideo, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
@@ -351,7 +356,6 @@ function onUpdate(elapsed)
         {
             delusionalShift.setFloat('iTime', shaderAnim);
             delusionalShift.setFloat('uTime', shaderAnim);
-            heatWaveEffect.setFloat("iTime", shaderAnim);
         }
     }
 
@@ -1105,6 +1109,7 @@ function onSongStart()
             modManager.queueFuncOnce(474 * 4, (s,s2)->{
                 
                 floor.alpha = 0.0001;
+                bg.alpha = 0.0001;
                 if (rain != null) rain.alpha = 0;
                 if (!ClientPrefs.lowQulity)
                 {
@@ -1151,6 +1156,7 @@ function onSongStart()
                 if (rain != null) rain.alpha = 1;
                 
                 floor.alpha = 1;
+                bg.alpha = 1;
             });
 
             modManager.queueFuncOnce(146 * 4, (s,s2)->{ 
@@ -1414,6 +1420,10 @@ function onSongStart()
                 }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
             });
 
+            modManager.queueFuncOnce(408 * 4, (s,s2)->{ 
+                defaultCamZoom = 0.87;
+            });
+
             modManager.queueFuncOnce(472 * 4, (s,s2)->{ 
                 boundValue = 2;
                 drainValue = 0;
@@ -1523,7 +1533,6 @@ function onSongStart()
                     {
                         camGame.filters = ([
                             new ShaderFilter(dramaticCamMovement),
-                            new ShaderFilter(heatWaveEffect),
                             new ShaderFilter(monitorFilter),
                             new ShaderFilter(chromZoomShader),
                             new ShaderFilter(chromNormalShader),
@@ -1573,12 +1582,12 @@ function onSongStart()
                 if (camPosTween != null)
                     camPosTween.cancel();
                     
-                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 750, y: camFollow.y - 70}, 1.5, {ease: FlxEase.circInOut});
+                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 950, y: camFollow.y - 70}, 1.5, {ease: FlxEase.circInOut});
             });
 
             modManager.queueFuncOnce(1040 * 4, (s,s2)->{ 
-                camFollow.x = 440;
-                camFollow.y = 360;
+                camFollow.x = 475;
+                camFollow.y = 450;
                 defaultCamZoom = 0.5;
                 camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 1, ease: FlxEase.circOut});
             });

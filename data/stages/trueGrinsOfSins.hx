@@ -30,8 +30,6 @@ function onLoad()
 
 function onCreatePost()
 {
-    playHUD.updateIconScale = false;
-    
     var funiLight:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stages/trueGrinsOfSins/light'));
     funiLight.antialiasing = true;
     funiLight.scrollFactor.set(1, 1);
@@ -52,18 +50,6 @@ function onCreatePost()
     }
 }
 
-function onBeatHit()
-{
-    if (curBeat % 2 == 0)
-    {
-        iconP1.scale.set(1.2, 1.2);
-		iconP2.scale.set(1.2, 1.2);
-		
-		iconP1.updateHitbox();
-		iconP2.updateHitbox();
-    }
-}
-
 function onUpdate(elapsed)
 {
     shaderAnim = Conductor.songPosition / 1000;
@@ -73,12 +59,4 @@ function onUpdate(elapsed)
         staticEffect.setFloat('uTime', shaderAnim);
         staticEffect.setFloat('iTime', shaderAnim);
     }
-
-    final mult:Float = MathUtil.decayLerp(iconP1.scale.x, 1, 9, elapsed);
-    iconP1.scale.set(mult, mult);
-    iconP1.updateHitbox();
-
-    final mult:Float = MathUtil.decayLerp(iconP2.scale.x, 1, 9, elapsed);
-    iconP2.scale.set(mult, mult);
-    iconP2.updateHitbox();
 }

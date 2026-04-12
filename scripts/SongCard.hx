@@ -23,7 +23,7 @@ function setupCardData()
 {
 	switch (PlayState.SONG.song)
 	{
-		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'Laugh Track', 'Birthday', 'Delusion':
+		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'Laugh Track', 'Birthday', 'Delusion', 'Disclosure':
 			fontStuff = "DisneyFont.ttf";
 		case 'Delusional':
 			fontStuff = "betterSatanFont.ttf";
@@ -143,23 +143,6 @@ function onSongStart()
 	}
 }
 
-function playLegacyCardAnim()
-{
-	FlxTween.tween(cardSprite, {alpha: 0.5}, 1, {ease: FlxEase.circOut,
-		onComplete: function(twn:FlxTween)
-		{
-			FlxTween.tween(cardSprite, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
-		}
-	});
-
-	FlxTween.tween(cardTxt, {alpha: 1}, 1, {ease: FlxEase.circOut,
-		onComplete: function(twn:FlxTween)
-		{
-			FlxTween.tween(cardTxt, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
-		}
-	});
-}
-
 // This is a function in case you want the card to show up later in the song instead of instantly
 function playCardAnim(delaySet:Float = 0)
 {	
@@ -185,6 +168,23 @@ function playCardAnim(delaySet:Float = 0)
 		onComplete: function(twn:FlxTween)
 		{
 			FlxTween.tween(cardTxt, {alpha: 0}, 2, {ease: FlxEase.sineInOut, startDelay: 3.5});
+		}
+	});
+}
+
+function playLegacyCardAnim()
+{
+	FlxTween.tween(cardSprite, {alpha: 0.5}, 1, {ease: FlxEase.circOut,
+		onComplete: function(twn:FlxTween)
+		{
+			FlxTween.tween(cardSprite, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
+		}
+	});
+
+	FlxTween.tween(cardTxt, {alpha: 1}, 1, {ease: FlxEase.circOut,
+		onComplete: function(twn:FlxTween)
+		{
+			FlxTween.tween(cardTxt, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
 		}
 	});
 }

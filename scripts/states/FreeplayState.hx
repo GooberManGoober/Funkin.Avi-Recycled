@@ -385,8 +385,6 @@ function onUpdate(elapsed)
 			
 				if (ret != null)
 				{
-					trace('Failed to load song. \nException: ' + ret);
-					
 					return;
 				}
 
@@ -436,6 +434,7 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 		FlxG.camera.flash(FlxColor.BLACK, 0.1);
 
 	curSelected = FlxMath.wrap(curSelected + change, 0, songs.length - 1);
+	FlxG.save.data.freeplayCurSelected = curSelected;
 
 	var songName:String = songs[curSelected].songName;
 	songArtist = songs[curSelected].composer;
@@ -557,7 +556,7 @@ function changeTab(?diff:Int = 0, ?firstTime:Bool = false)
 
 	curSelected = 0;
 
-	changeSelection();
+	changeSelection(FlxG.save.data.freeplayCurSelected);
 
 	bg.color = songs[curSelected].color;
 	intendedColor = bg.color;
