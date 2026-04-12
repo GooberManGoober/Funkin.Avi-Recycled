@@ -7,7 +7,7 @@
 	],
 	"splashesEnabled": true,
 	"susSplashesEnabled": false,
-	"noteTexture": "UI/notes/GreyNOTE_assets",
+	"noteTexture": "UI/notes/NOTE_assets-CROSS",
 	"receptorAnimations": [
 		[
 			{
@@ -282,12 +282,13 @@
 			}
 		]
 	],
-	"splashTexture": "UI/notes/GREYnoteSplashes",
+	"splashTexture": "UI/notes/noteSplashes",
 	"antialiasing": true,
-	"quantsEnabled": false,
 	"inGameColoring": false,
 	"sustainAlpha": 0.6,
-	"noteScale": 0.7,
+	"noteScale": 0.64,
+	"receptorScale": 0.64,
+	"sustainScale": 0.64,
 	"splashScale": 1,
 	"susSplashOrigin": [-10, 15]
 }

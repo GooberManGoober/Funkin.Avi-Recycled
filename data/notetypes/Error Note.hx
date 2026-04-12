@@ -9,13 +9,6 @@ var crashLivesCounter:Int = 0;
 var heartTween:FlxTween;
 var malfunctionTxt:FlxTween;
 
-var arrowRGBError:Array<Array<FlxColor>> = [
-	[0xD8F01111, 0xFF271818, 0xFF140D0D],
-	[0xFF00FFFF, 0x1C2525, 0x090E0D],
-	[0xD8F01111, 0xFF271818, 0xFF140D0D],
-	[0xFF00FFFF, 0x1C2525, 0x090E0D]
-];
-
 function onLoad() 
 {
 	if (ClientPrefs.downScroll)
@@ -55,14 +48,6 @@ function setupNote(note) {
 	note.hitCausesMiss = false;
 	note.canMiss = true;
 	note.ignoreNote = note.mustPress;
-	note.rgbShader.setColors(arrowRGBError[note.noteData]);
-}
-
-function postSpawnNote(note)
-{
-	note.rgbShader.r = arrowRGBError[note.noteData][0];
-	note.rgbShader.g = arrowRGBError[note.noteData][1];
-	note.rgbShader.b = arrowRGBError[note.noteData][2];
 }
 
 function goodNoteHit(note) {

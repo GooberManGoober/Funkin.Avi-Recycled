@@ -7,7 +7,7 @@
 	],
 	"splashesEnabled": true,
 	"susSplashesEnabled": false,
-	"noteTexture": "UI/notes/NOTE_assets",
+	"noteTexture": "UI/notes/NOTE_assets-legacy",
 	"receptorAnimations": [
 		[
 			{
@@ -128,35 +128,39 @@
 	],
 	"noteSplashAnimations": [
 		{
+			"looping": false,
+			"xmlName": "note splash purple 1",
 			"offsets": [
-				0,
-				0
+				10,
+				30
 			],
-			"xmlName": "note splash",
 			"anim": "note0"
 		},
 		{
+			"looping": false,
+			"xmlName": "note splash blue 1",
 			"offsets": [
-				0,
-				0
+				10,
+				30
 			],
-			"xmlName": "note splash",
 			"anim": "note1"
 		},
 		{
+			"looping": false,
+			"xmlName": "note splash green 1",
 			"offsets": [
-				0,
-				0
+				10,
+				30
 			],
-			"xmlName": "note splash",
 			"anim": "note2"
 		},
 		{
+			"looping": false,
+			"xmlName": "note splash red 1",
 			"offsets": [
-				0,
-				0
+				10,
+				30
 			],
-			"xmlName": "note splash",
 			"anim": "note3"
 		}
 	],
@@ -280,7 +284,7 @@
 	],
 	"splashTexture": "UI/notes/noteSplashes-legacy",
 	"antialiasing": true,
-	"inGameColoring": true,
+	"inGameColoring": false,
 	"sustainAlpha": 0.6,
 	"noteScale": 0.7,
 	"splashScale": 1,

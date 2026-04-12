@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<TextureAtlas imagePath="ERRORNOTE_assets.png" width="2657" height="394" spritePadding="3" borderPadding="3">
+<TextureAtlas imagePath="NOTE_assets.png" width="2657" height="394" spritePadding="3" borderPadding="3">
 	<SubTexture name="arrowLEFT0000" x="0" y="0" width="17" height="17"/>
 	<SubTexture name="arrowDOWN0000" x="17" y="0" width="17" height="17"/>
 	<SubTexture name="arrowUP0000" x="34" y="0" width="17" height="17"/>
