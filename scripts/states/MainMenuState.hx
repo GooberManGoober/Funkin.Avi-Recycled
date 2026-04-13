@@ -161,12 +161,22 @@ function onCreate()
 		}
 	}
 
+	var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, FlxColor.BLACK);
+	textBG.cameras = [camFilter];
+	add(textBG);
+
+    var botplaytext:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, 'Press TAB to see extra menu options', 18);
+	botplaytext.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, "center");
+	botplaytext.scrollFactor.set();
+	botplaytext.cameras = [camFilter];
+	add(botplaytext);
+
 	final ver = 'Nightmare Vision Engine v${Main.NMV_VERSION}\nPsych Engine v${Main.PSYCH_VERSION}\nFriday Night Funkin\' v${Main.FUNKIN_VERSION}';
 	
 	final verionDesc:FlxText = new FlxText(12, 0, 0, ver, 22);
 	verionDesc.setFormat(Paths.font('DisneyFont'), 22, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	verionDesc.borderSize = 1.5;
-	verionDesc.y = FlxG.height - verionDesc.height - 12;
+	verionDesc.y = FlxG.height - verionDesc.height - 22;
 	verionDesc.scrollFactor.set();
 	verionDesc.cameras = [camFilter];
 	add(verionDesc);
