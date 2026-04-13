@@ -3,6 +3,7 @@ import funkin.audio.visualize.PolygonSpectogram.VISTYPE;
 import funkin.audio.visualize.SpectogramSprite.SPECDIRECTION;
 import funkin.states.MainMenuState;
 import funkin.data.Chart;
+import lime.app.Application;
 
 import flixel.util.FlxStringUtil;
 
@@ -63,6 +64,8 @@ function onLoad()
         Paths.image('menus/pause/songs/${songList[i].toLowerCase().replace(' ', '-')}');
     
     FlxG.sound.music.volume = 0;
+
+    Application.current.window.title = "Funkin.avi: Recycled - Juke Box Menu";
 
     var bg:FlxSprite = new FlxSprite();
 	bg.loadGraphic(Paths.image('menus/title/Title_bg'), false);
