@@ -32,6 +32,7 @@ var textBG:FlxSprite;
 var bg2:FlxSprite;
 
 var inSelectorMode:Bool = true;
+var shuffle:Bool = false;
 
 var songList:Array<String> = [
     'Devilish Deal',
@@ -190,6 +191,15 @@ function onUpdate(elapsed)
             changeSongSelection(1, false, true);
     }
 
+    if (songIsPLaying)
+    {
+        if (FlxG.keys.justPressed.S)
+        {
+            shuffle = !shuffle;
+            botplaytext.text = 'Press SPACE to change what song to play / Press S to toggle shuffling (${shuffle ? 'ON' : 'OFF'})';
+        }
+    }
+
     if (FlxG.keys.justPressed.SPACE)
     {
         if (!songIsPLaying)
@@ -204,7 +214,7 @@ function onUpdate(elapsed)
             FlxG.autoPause = false;
             inSelectorMode = false;
 
-            botplaytext.text = "Press SPACE to change what song to play.";
+            botplaytext.text = 'Press SPACE to change what song to play / Press S to toggle shuffling (${shuffle ? 'ON' : 'OFF'})';
 
             FlxTween.tween(songArt.scale, {x: 0.69, y: 0.69}, 0.75, {ease: FlxEase.expoOut});
             FlxTween.tween(disc.scale, {x: 0.68, y: 0.68}, 0.75, {ease: FlxEase.expoOut});
@@ -263,7 +273,7 @@ function playSelectedSong()
     {
         inst.volume = 0;
         
-        changeSongSelection(1, true);
+        changeSongSelection(shuffle ? FlxG.random.int(1, songList.length - 1) : 1, true);
     };
     FlxG.sound.list.add(inst);
 
