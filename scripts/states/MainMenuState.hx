@@ -233,15 +233,7 @@ function onUpdate(elapsed)
 {
 	if (FlxG.keys.pressed.TAB)
 	{
-		holdTimer += elapsed;
-	}
-	else
-		holdTimer = 0;
-
-
-	if (holdTimer >= 0.5)
-	{
-		openSubState(new ScriptedSubstate("resetSave"));
+		openSubState(new ScriptedSubstate("MenuSelector"));
 		persistentUpdate = false;
 	}
 
@@ -359,7 +351,7 @@ function onUpdate(elapsed)
 			if (!ClientPrefs.inDevMode) 
 				FlxG.switchState(new ScriptedState("SexState"));
 			else
-				FlxG.switchState(new ScriptedState('JukeBoxState'));
+				FlxG.switchState(new MasterEditorMenu());
 		}
 		if (FlxG.keys.justPressed.ONE && ClientPrefs.inDevMode)
 		{

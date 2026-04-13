@@ -10,6 +10,8 @@ var bg:FlxSprite;
 var warning:FlxText;
 var desc:FlxText;
 
+var canAccept:Bool = false;
+
 var onYes:Bool = false;
 var yesText:FlxText;
 var noText:FlxText;
@@ -86,7 +88,11 @@ function onLoad()
 function onUpdate(elapsed)
 {
 	bg.alpha += elapsed * 1.5;
-	if(bg.alpha > 0.6) bg.alpha = 0.6;
+	if(bg.alpha > 0.6) 
+	{
+		bg.alpha = 0.6;
+		canAccept = true;
+	}
 
 	warning.alpha += elapsed * 1.5;
 	if(warning.alpha > 1) warning.alpha = 1;
@@ -105,7 +111,7 @@ function onUpdate(elapsed)
 		FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 		close();
 	} 
-	else if(controls.ACCEPT)
+	else if(controls.ACCEPT && canAccept)
 	{
 		FlxG.sound.play(Paths.sound('cancelMenu'), 1);
 		if(onYes) 
