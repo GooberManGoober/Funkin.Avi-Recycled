@@ -413,7 +413,7 @@ function resumeGame()
 						close();
 						remove(disc);
 						Application.current.window.title = "Funkin.avi: Recycled - " + 
-						(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + 
+						(PlayState.isStoryMode ? "Episode 1" + " - " : "Freeplay - ") + 
 						PlayState.SONG.song + 
 						" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
 					});

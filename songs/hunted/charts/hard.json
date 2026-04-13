@@ -6268,8 +6268,8 @@
 		"gfVersion": "lilith",
 		"events": [],
 		"arrowSkins": [
-			"grayscale",
-			"grayscale"
+			"cartoon",
+			"cartoon"
 		],
 		"needsVoices": true,
 		"voiceSfx1": "Everett",

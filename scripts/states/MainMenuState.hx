@@ -154,6 +154,10 @@ function onCreate()
 				menuItem.y = 100;
 			case 1:
 				menuItem.y = 250;
+				if (FlxG.save.data.episode1FPLock != 'unlocked') 
+					menuItem.color = FlxColor.GRAY;
+				else
+					menuItem.color = FlxColor.WHITE;
 			case 2:
 				menuItem.y = 425;
 			case 3:

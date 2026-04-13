@@ -23,7 +23,7 @@ function setupCardData()
 {
 	switch (PlayState.SONG.song)
 	{
-		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'Laugh Track', 'Birthday', 'Delusion', 'Disclosure':
+		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'Laugh Track', 'War Dilemma', 'Birthday', 'Delusion', 'Disclosure':
 			fontStuff = "DisneyFont.ttf";
 		case 'Delusional':
 			fontStuff = "betterSatanFont.ttf";

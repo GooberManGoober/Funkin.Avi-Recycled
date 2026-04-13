@@ -118,14 +118,15 @@ function onUpdate(elapsed)
 		{
 			resetData();
 			FlxG.sound.music.fadeOut(0.3);
-			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, resetZaGame, false);
+			CameraUtil.lastCamera.fade(FlxColor.BLACK, 0.5, false, resetZaGame, false);
 		}
-		close();
 	}
 }
 
 function resetZaGame()
 {
+	close();
+	
 	FlxG.resetGame();
 
 	resetData();
