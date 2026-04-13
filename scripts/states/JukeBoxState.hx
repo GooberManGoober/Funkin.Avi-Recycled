@@ -130,7 +130,7 @@ function onLoad()
 	textBG.alpha = 0.6;
 	add(textBG);
 
-    botplaytext = new FlxText(textBG.x, textBG.y + 4, FlxG.width, 'Press SPACE to play/pause the song', 18);
+    botplaytext = new FlxText(textBG.x, textBG.y + 4, FlxG.width, 'Press SPACE to play a selected song', 18);
 	botplaytext.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, "center");
 	botplaytext.scrollFactor.set();
 	add(botplaytext);
@@ -204,6 +204,8 @@ function onUpdate(elapsed)
             FlxG.autoPause = false;
             inSelectorMode = false;
 
+            botplaytext.text = "Press SPACE to change what song to play.";
+
             FlxTween.tween(songArt.scale, {x: 0.69, y: 0.69}, 0.75, {ease: FlxEase.expoOut});
             FlxTween.tween(disc.scale, {x: 0.68, y: 0.68}, 0.75, {ease: FlxEase.expoOut});
             FlxTween.tween(songArtOutline.scale, {x: 0.69, y: 0.69}, 0.75, {ease: FlxEase.expoOut});
@@ -219,6 +221,8 @@ function onUpdate(elapsed)
 
             FlxG.autoPause = ClientPrefs.autoPause;
             inSelectorMode = true;
+
+            botplaytext.text = "Press SPACE to play a selected song";
 
             FlxTween.tween(songArt.scale, {x: 0.59, y: 0.59}, 0.75, {ease: FlxEase.expoOut});
             FlxTween.tween(disc.scale, {x: 0.58, y: 0.58}, 0.75, {ease: FlxEase.expoOut});
@@ -247,12 +251,14 @@ function playSelectedSong()
     destroyFreeplayVocals();
 
     songIsPLaying = true;
+
+    PlayState.SONG = Chart.fromSong(songList[curSong], 2);
     
     inst = new FlxSound().loadEmbedded(Paths.inst(songList[curSong]));
     inst.play();
     inst.persist = true;
     inst.looped = true;
-    inst.volume = 0.7;
+    inst.volume = 1;
     inst.onComplete = function()
     {
         inst.volume = 0;
@@ -261,15 +267,13 @@ function playSelectedSong()
     };
     FlxG.sound.list.add(inst);
 
-    PlayState.SONG = Chart.fromSong(songList[curSong], 2);
-
     // ??? why would you ever to do rewrite this
     if (PlayState.SONG.needsVoices) vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
     else vocals = new FlxSound();
     vocals.play();
     vocals.persist = true;
     vocals.looped = true;
-    vocals.volume = 0.7;
+    vocals.volume = 1;
     FlxG.sound.list.add(vocals);
 
     viz.setSound(inst);
@@ -280,8 +284,6 @@ function pauseSelectedSong()
     destroyFreeplayVocals();
 
     songIsPLaying = false;
-    
-    viz.setSound(null);
 }
 
 function destroyFreeplayVocals()
