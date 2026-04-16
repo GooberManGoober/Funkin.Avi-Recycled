@@ -4,7 +4,7 @@ import funkin.audio.visualize.SpectogramSprite.SPECDIRECTION;
 import funkin.states.MainMenuState;
 import funkin.data.Chart;
 import lime.app.Application;
-
+import funkin.FunkinAssets;
 import flixel.util.FlxStringUtil;
 
 using StringTools;
@@ -112,7 +112,7 @@ function onLoad()
 	bg2.alpha = 0.75;
 
     songArt = new FlxSprite(-500, -60).loadGraphic(Paths.image('menus/pause/songs/unknown-song'));
-    songArt.screenCenter(FlxAxes.X).x -= 400;
+    songArt.screenCenter(FlxAxes.X);
     songArt.scale.set(0.53, 0.53);
 
     disc = new FlxSprite(songArt.x, songArt.y - 12).loadGraphic(Paths.image('menus/pause/disc'));
@@ -247,7 +247,13 @@ function onUpdate(elapsed)
 function changeSongSelection(change:Int, ?forcePlay:Bool = false, ?goToSelector:Bool = false)
 {
     curSong = FlxMath.wrap(curSong + change, 0, songList.length - 1);
-    songArt.loadGraphic(Paths.image('menus/pause/songs/${songList[curSong].toLowerCase().replace(' ', '-')}'));
+
+    var pauseArtAsset:String = songList[curSong].toLowerCase().replace(" ", "-");
+    
+    if (FunkinAssets.exists(Paths.getPath('images/menus/pause/songs/' + pauseArtAsset + '.png', null, true)))
+		songArt.loadGraphic(Paths.image('menus/pause/songs/' + pauseArtAsset));
+	else 
+		songArt.loadGraphic(Paths.image('menus/pause/songs/unknown-song'));
 
     songNameTxt.text = '< ${songList[curSong]} >';
 

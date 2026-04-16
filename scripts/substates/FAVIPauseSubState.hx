@@ -13,6 +13,7 @@ import funkin.states.options.OptionsState;
 import funkin.states.FreeplayState;
 import funkin.states.StoryMenuState;
 import flixel.addons.text.FlxTypeText;
+import funkin.FunkinAssets;
 
 using StringTools;
 
@@ -135,9 +136,9 @@ function onLoad()
 	countDown.setFormat(Paths.font("betterSatanFont.ttf"), 90, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	satanTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 32, FlxColor.fromRGB(255, 117, 107), 'center', FlxTextBorderStyle.OUTLINE, FlxColor.fromRGB(92, 0, 26));
 	satanTxt.borderSize = 2;
-	if (Paths.image('menus/pause/songs/' + pauseArtAsset) != null)
+	if (FunkinAssets.exists(Paths.getPath('images/menus/pause/songs/' + pauseArtAsset + '.png', null, true)))
 		songArt.loadGraphic(Paths.image('menus/pause/songs/' + pauseArtAsset));
-	else if (Paths.image('menus/pause/songs/' + pauseArtAsset) == null)
+	else 
 		songArt.loadGraphic(Paths.image('menus/pause/songs/unknown-song'));
 
 	// scales

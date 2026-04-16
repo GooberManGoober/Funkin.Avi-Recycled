@@ -352,7 +352,7 @@ function changeWeek(?change:Int = 0):Void
 			item.alpha = 1;
 		else
 			item.alpha = 0.6;
-		bullShit++;
+		bullShit += 1;
 	}
 
 	bgSprite.visible = true;

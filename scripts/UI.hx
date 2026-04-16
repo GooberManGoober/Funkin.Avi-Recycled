@@ -268,9 +268,3 @@ function onSongStart()
 		});
 	}
 }
-
-function onUpdatePost(elapsed)
-{
-	if (ratingFC == "KFC")
-		ratingFC = "MFC";
-}

@@ -60,7 +60,7 @@ var bless:String = '{
 var dontCross:String = '{
 	"settings":
 	[
-		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: Yama Haki / Toko", -55, 20
+		"Art: Domingo & Moe\n\nChart: ThatOneSillyGuy\n\nCode: ThatOneSillyGuy\n\nMusic: Yama haki", -55, 20
 	]
 }';
 
@@ -116,7 +116,7 @@ var delusion:String = '{
 var disclosure:String = '{
 	"settings":
 	[
-		"(AVI ART) --\nDomingo & Moe\n-- (SNS ART) --\nGonDaLoser,\nSonicBoyForLife, MHighro\n& NuggetNightmare\n\nChart: Goober Man\n\nCode: Goober Man\n\nMusic: Yama Haki / Toko", -30, 15
+		"(AVI ART) --\nDomingo & Moe\n-- (SNS ART) --\nGonDaLoser,\nSonicBoyForLife, MHighro\n& NuggetNightmare\n\nChart: Goober Man\n\nCode: Goober Man\n\nMusic: Yama haki", -30, 15
 	]
 }';
 
@@ -196,7 +196,7 @@ function getArtistName(name)
 		case "Devilish Deal", "Isolated", "Lunacy", "Malfunction": songArtist = "obscurity.";
 		case "Birthday", "Delusional": songArtist = "FR3SHMoure";
 		case "Hunted": songArtist = "JBlitz";
-		case "Laugh Track", "Don't Cross!", "Disclosure": songArtist = "Yama haki/Toko";
+		case "Laugh Track", "Don't Cross!", "Disclosure": songArtist = "Yama haki";
 		case "Bless": songArtist = "Lasagnacat";
 		case "War Dilemma": songArtist = "Sayan Sama & obscurity.";
 		case "Twisted Grins": songArtist = "ForFurtherNotice";
