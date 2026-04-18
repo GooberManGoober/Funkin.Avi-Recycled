@@ -58,7 +58,7 @@ function onCreate() {
         ];
     }
 
-    Application.current.window.title = "Funkin.avi: Recycled - Options Menu";
+    Application.current.window.title = "Funkin.avi: Recycled - Options";
 
     var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menus/menuDesat'));
     bg.color = 0xFFea71fd;

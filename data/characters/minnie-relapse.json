@@ -1,0 +1,49 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-550,
+				-470
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle-alt",
+			"indices": [],
+			"name": "death"
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-180,
+				5
+			],
+			"anim": "idle",
+			"fps": 5,
+			"name": "idle",
+			"indices": []
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/minnieRELAPSE",
+	"position": [
+		0,
+		0
+	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": false,
+	"gameover_confirm_sound": null,
+	"healthicon": "face",
+	"gameover_character": null,
+	"vslice_sustains": false,
+	"flip_x": false,
+	"healthbar_colour": -6184543,
+	"camera_position": [
+		0,
+		0
+	],
+	"gameover_loop_sound": null,
+	"sing_duration": 6.1,
+	"scale": 6,
+	"_editor_isPlayer": false
+}

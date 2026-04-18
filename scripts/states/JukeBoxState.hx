@@ -48,6 +48,8 @@ var songList:Array<String> = [
 	'War Dilemma',
 	'Neglection',
 	'Twisted Grins',
+    'Mercy',
+    'Cycled Sins',
     'Malfunction',
     'Birthday',
     //Covers & Collabs
@@ -65,7 +67,7 @@ function onLoad()
     
     FlxG.sound.music.volume = 0;
 
-    Application.current.window.title = "Funkin.avi: Recycled - Juke Box Menu";
+    Application.current.window.title = "Funkin.avi: Recycled - Juke Box";
 
     var bg:FlxSprite = new FlxSprite();
 	bg.loadGraphic(Paths.image('menus/title/Title_bg'), false);

@@ -1,0 +1,49 @@
+{
+	"animations": [
+		{
+			"loop": true,
+			"offsets": [
+				209,
+				469
+			],
+			"anim": "idle",
+			"fps": 10,
+			"name": "walt death dead-loop",
+			"indices": []
+		},
+		{
+			"offsets": [
+				209,
+				469
+			],
+			"loop": false,
+			"fps": 9,
+			"anim": "death",
+			"indices": [],
+			"name": "walt death dead0"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/walt death",
+	"position": [
+		-800,
+		900
+	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": false,
+	"gameover_confirm_sound": null,
+	"healthicon": "walt",
+	"gameover_character": null,
+	"vslice_sustains": false,
+	"flip_x": false,
+	"healthbar_colour": -4655,
+	"camera_position": [
+		-310,
+		-213
+	],
+	"gameover_loop_sound": null,
+	"sing_duration": 6.1,
+	"scale": 0.3,
+	"_editor_isPlayer": false
+}

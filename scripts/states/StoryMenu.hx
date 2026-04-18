@@ -92,7 +92,7 @@ function onCreate()
 	grpLocks = new FlxTypedGroup();
 	add(grpLocks);
 
-	Application.current.window.title = "Funkin.avi: Recycled - Choosing Episode";
+	Application.current.window.title = "Funkin.avi: Recycled - Story Mode";
 
 	var num:Int = 0;
 	for (i in 0...WeekData.weeksList.length)

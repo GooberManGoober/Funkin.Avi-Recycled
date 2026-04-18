@@ -14,6 +14,8 @@ var judgementUnderlay:FlxSprite;
 
 var fancyBarOverlay:FlxSprite;
 
+var healthLerp:Float = 1;
+
 var botTxtArray:Array<Any> = [
     "AUTOPLAY",
     "BOTPLAY",
@@ -54,11 +56,11 @@ function onCreatePost()
     iconP2.frameCount = 3;
 
     playHUD.markupEnabled = false;
-    playHUD.updateIconScale = false;
+    playHUD.updateIconScale = PlayState.SONG.song != "Cycled Sins" ? true : false;
     
     if (PlayState.SONG.song != "Bless Legacy")
     {
-        health = 0.5;
+        if (PlayState.SONG.stage != "waltRoom") health = 0.5;
 
         switch (PlayState.SONG.song)
         {
@@ -116,7 +118,7 @@ function onCreatePost()
             default:
                 spectraSongTime = new FlxText(-108, ClientPrefs.downScroll ? 655 : 100, 400, "", 32);
                 spectraSongTime.setFormat(Paths.font("VanillaExtractRegular.ttf"), 13, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-                if (!ClientPrefs.middleScroll) 
+                if (PlayState.SONG.song != "Cycled Sins") 
                     spectraSongTime.screenCenter(FlxAxes.X);
                 spectraSongTime.scrollFactor.set();
                 spectraSongTime.visible = !ClientPrefs.hideHud;
@@ -146,14 +148,14 @@ function onCreatePost()
                 songTxt = new FlxText(50, (ClientPrefs.downScroll ? FlxG.height - 120 : 50), 0, 'Playing:');
                 songTxt.setFormat(Paths.font('VanillaExtractRegular.ttf'), 16, FlxColor.WHITE);
                 songTxt.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
-                if (!ClientPrefs.middleScroll) songTxt.screenCenter(FlxAxes.X);
+                if (PlayState.SONG.song != "Cycled Sins") songTxt.screenCenter(FlxAxes.X);
                 songTxt.visible = !ClientPrefs.hideHud;
                 playHUD.add(songTxt);
 
                 centerMark = new FlxText(50, (ClientPrefs.downScroll ? FlxG.height - 100 : 70), 0, infoDisplay);
                 centerMark.setFormat(Paths.font('VanillaExtractRegular.ttf'), 24, FlxColor.WHITE);
                 centerMark.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
-                if (!ClientPrefs.middleScroll) centerMark.screenCenter(FlxAxes.X);
+                if (PlayState.SONG.song != "Cycled Sins") centerMark.screenCenter(FlxAxes.X);
                 centerMark.visible = !ClientPrefs.hideHud;
                 playHUD.add(centerMark);
 
@@ -167,8 +169,10 @@ function onCreatePost()
                 autoplayMark.visible = false;
                 playHUD.add(autoplayMark);
         }
+        
+        healthBar.valueFunction = function() return healthLerp;
 
-        if (ClientPrefs.showRatings)
+        if (ClientPrefs.showRatings && PlayState.SONG.song != "Cycled Sins")
         {
             judgementUnderlay = new FlxSprite(890, 0).loadGraphic(Paths.image('UI/judge-underlay')); 
             judgementUnderlay.scrollFactor.set();
@@ -195,13 +199,15 @@ function onUpdatePost(elapsed)
     {
         var str:String = '${MathUtil.floorDecimal(ratingPercent * 100, 2)}% [${(totalPlayed != 0 ? ratingFC : 'N/A')}]';
 
-        if (ClientPrefs.showRatings)
+        if (ClientPrefs.showRatings && PlayState.SONG.song != "Cycled Sins")
         {
             if (ClientPrefs.useEpicRankings)
                 judgementCounter.text = 'Marvs: ${epics}\nSicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
             else
                 judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
         }
+
+        updateHealthBar();
 
         scoreTxt.scale.set(1, 1);
         
@@ -265,8 +271,6 @@ function onUpdatePost(elapsed)
                     }
                 }
             }
-
-            // Conductor.lastSongPos = FlxG.sound.music.time;
         }
 
         switch (PlayState.SONG.stage)
@@ -276,7 +280,7 @@ function onUpdatePost(elapsed)
 
         }
 
-        if (ClientPrefs.showRatings)
+        if (ClientPrefs.showRatings && PlayState.SONG.song != "Cycled Sins")
         {
             judgementUnderlay.alpha = 0.45 * playHUD.alpha;
         }
@@ -300,4 +304,9 @@ function onUpdatePost(elapsed)
             iconP2.animation.curAnim.curFrame = 0;
         }
     }
+}
+
+function updateHealthBar():Void
+{
+    healthLerp = FlxMath.lerp(healthLerp, health, .2 / (ClientPrefs.framerate / 60));
 }

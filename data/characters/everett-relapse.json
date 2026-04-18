@@ -1,0 +1,137 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "left"
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "down"
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singUP",
+			"indices": [],
+			"name": "up"
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "right"
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singRIGHTmiss",
+			"indices": [],
+			"name": "missRight"
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "missLeft"
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singUPmiss",
+			"indices": [],
+			"name": "missUp"
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": false,
+			"fps": 6,
+			"anim": "singDOWNmiss",
+			"indices": [],
+			"name": "missDown"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				310,
+				185
+			],
+			"anim": "dodge",
+			"fps": 9,
+			"name": "dodge",
+			"indices": []
+		},
+		{
+			"offsets": [
+				310,
+				185
+			],
+			"loop": true,
+			"fps": 5,
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
+		}
+	],
+	"no_antialiasing": true,
+	"image": "characters/everettRELAPSE",
+	"position": [
+		0,
+		0
+	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": false,
+	"gameover_confirm_sound": null,
+	"healthicon": "everettsins-pixel",
+	"gameover_character": null,
+	"vslice_sustains": false,
+	"flip_x": true,
+	"healthbar_colour": -3223858,
+	"camera_position": [
+		0,
+		0
+	],
+	"gameover_loop_sound": null,
+	"sing_duration": 6.1,
+	"scale": 6,
+	"_editor_isPlayer": true
+}

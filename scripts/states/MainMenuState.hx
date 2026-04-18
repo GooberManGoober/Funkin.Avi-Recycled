@@ -91,6 +91,73 @@ var optionShit:Array<String> = [
 	'credits',
 	'options'
 ];
+var windowShit:Array<Any> = [
+	"Anyone up right now?",
+	"Shipy's SNS Mickey & F.AVI Mickey will make love to each other",
+	"We lied about Episode 2's release...",
+	"I trapped Demolition in my basement.",
+	"V3 will release next year, we need a fucking break",
+	"Someone put an end to my misery. - Mickey 2023",
+	"I dare you to press 7 on that keyboard of yours.",
+	"Cock & ball torture.",
+	"Look at that cute little devil, he c00t :3",
+	"Do you like the new menu art?",
+	"You're gonna love the final song.",
+	"Malfunction isn't easy anymore, fuck you, skill issue B)",
+	"Happy Birthday Muckney!",
+	"Psych Engine basically corrupted all our shit, which is why it's on Another Engine now.",
+	"SOMEONE PLEASE GIVE MICKEY HIS FUCKING SANDWICH",
+	"Have fun, you'll be here for like an hour or longer.",
+	"10 Seconds before I shut your fucking game again >:(",
+	"Oh the misery, everybody wants to be my enemy.",
+	"Sex, NOW.",
+	"Quick, hide behind that conveniently shaped lamp!",
+	"Welcome to hell",
+	"blue lobster *jumpscare*",
+	"hi. *starts dancing on the floor*",
+	"sample text 2: electric boogaloo",
+	"The bastard named squidward cheated on poor mickey :(",
+	"D E A T H",
+	"Man, i'm starving... *Fight or Flight plays*",
+	"Shit, the mouse got a gun again.",
+	"You should /kill @s NOW", // haha, funi Minecraft reference
+	"Why are you here? FNF is still cancelled.",
+	"This community is fr the big stinky.",
+	"Go ahead, cancel us, you'll only make us come back stronger.",
+	"NOOOOOOOOOOO, YOU CAN'T JUST CHEAT THE GAME!!!!!!!",
+	"V3 Update in a Nutshell: Suicidal Remixes",
+	"Mom, can we have Wednesday's Infidelity?",
+	"GUYS, LOOK, IT'S SHIPY, SAY HELLO TO HER! :D",
+	"Don't leave Muckney's party, please, you'll make him sad if you do :(",
+	"It's about drive, it's about power, we stay hungry, we devour.",
+	"Peter, the horse is here.",
+	"*horse walks in*",
+	"Anyone here watch Yahiamice?",
+	"*cantaloupe jumpscare*",
+	"Prank 'em John",
+	"POV: You're a YouTuber doing some generic intro right about now",
+	"Another very well thought out idea of a random message that this game can randomly pick from within the code.",
+	"AHHH, FUCK, THERE'S RULE 34 OF SUICIDE MOUSE, WHYYYYYY????",
+	"Check out this cool rare little easter egg that I found, which I want to show to you but I can't cause I'm just a title screen message.",
+	"There's still uranium in my ass, send help.",
+	"Main Menu Music: Alone",
+	"Mickey lost his ballsack.",
+	"Oh the horror of AI generated images.",
+	"You should [R] Reset Character NOW", // boblox reference
+	"peak mouse experience.",
+	"Austin is the most horniest of the team lmao",
+	"This mod was stressful to make, the organization was a mess lmao",
+	"Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled - Funkin.avi: Recycled",
+	"Just like Domingo is constantly remaking Mickey's sprites, Dreupy is the Domingo of Delusional Recharts.",
+	"When did Funkin.avi start development?",
+	"I think one of the codes is a certain date",
+	"This mod was an idea that started on 03/21/22, pretty crazy, right?",
+	"Everyday is Muckney's Birthday",
+	"there is no message, go play some minecraft",
+	"THEY HIT THE FUCKING PENTAGON, SMILES",
+	"Want a break from the ads? If you tap now to take a short servey, you'll recieve 30 minutes of ad-free music.",
+	"FUCK YOU 8D!!!!!"
+];
 
 var menuart:FlxSprite;
 var eyes:FlxSprite;
@@ -105,7 +172,14 @@ var howmuchyoufuckinkeptdoingit:Int = 0;
 
 function onCreate()
 {
-	Application.current.window.title = "Funkin.avi: Recycled - Main Menu";
+	// shutdowns the game
+	if (Application.current.window.title.contains('10 Seconds before I shut your fucking game again >:('))
+	{
+		new FlxTimer().start(10, function(e)
+		{
+			System.exit(0);
+		});
+	}
 	
 	camFilter = new FlxCamera();
 	camFilter.bgColor = 0x0;
@@ -151,17 +225,17 @@ function onCreate()
 		switch (menuItem.ID)
 		{
 			case 0:
-				menuItem.y = 100;
+				menuItem.y = 75;
 			case 1:
-				menuItem.y = 250;
+				menuItem.y = 225;
 				if (FlxG.save.data.episode1FPLock != 'unlocked') 
 					menuItem.color = FlxColor.GRAY;
 				else
 					menuItem.color = FlxColor.WHITE;
 			case 2:
-				menuItem.y = 425;
+				menuItem.y = 400;
 			case 3:
-				menuItem.y = 600;
+				menuItem.y = 575;
 		}
 	}
 
@@ -220,6 +294,9 @@ function onCreate()
 	if (FlxG.stage.window.title.contains('*cantaloupe jumpscare*'))
 		coolMenuEvents(1);
 
+	Application.current.window.title = "Funkin.avi - " + windowShit[FlxG.random.int(0, windowShit.length - 1)];
+
+	// shutdowns the game
 	if (Application.current.window.title.contains('10 Seconds before I shut your fucking game again >:('))
 	{
 		new FlxTimer().start(10, function(e)
@@ -233,7 +310,9 @@ function onCreate()
 	defaultShader2 = newShader('monitorFilter');
 	if(ClientPrefs.shaders)
 	{
-		FlxG.camera.filters = [new ShaderFilter(defaultShader2)];
+		FlxG.camera.filters = [
+			new ShaderFilter(defaultShader2)
+		];
 	}
 }
 
@@ -269,6 +348,12 @@ function onUpdate(elapsed)
 		{
 			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 			changeItem(1);
+		}
+
+		if(FlxG.mouse.wheel != 0)
+		{
+			FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.2);
+			changeItem(-FlxG.mouse.wheel);
 		}
 
 		if (controls.BACK)

@@ -28,7 +28,6 @@ var pauseMusic:FlxSound;
 var disc:FlxSprite;
 var songArt:FlxSprite;
 var songArtOutline:FlxSprite;
-var songName:FlxText;
 var hasResumed:Bool = false;
 var hasFinishedAnim:Bool = false;
 var pauseNameTxt:FlxText;
@@ -113,25 +112,19 @@ function onLoad()
 
 	FlxG.sound.list.add(pauseMusic);
 
-	var data = PluginsManager.callPluginFunc('CreditsData', 'jsonStuff', [PlayState.SONG.song]);
-
-	var array:Array<Dynamic> = data.settings;
-
 	// all variable initial setups
 	bg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-	levelInfo = new FlxText(FlxG.width * 0.75 + array[2], 100, 0, "", 32);
+	levelInfo = new FlxText(20, 15, 0, "", 32);
 	songArt = new FlxSprite(780, 110);
 	songArtOutline = new FlxSprite(songArt.x - 20, songArt.y - 20 /*POV: you're lazy to do the math yourself*/).makeGraphic(890, 890, FlxColor.WHITE);
 	disc = new FlxSprite(songArt.x + 75, songArt.y - 12).loadGraphic(Paths.image('menus/pause/disc'));
-	songName = new FlxText(FlxG.width * 0.78 + array[1], 10, 0, ((PlayState.SONG.song == "Delusional" && (PlayState.instance.curBeat >= 472 && PlayState.instance.curBeat <= 744)) ? "Regret" : PlayState.SONG.song), 32);
 	countDown = new FlxText(0, 0, 1280, "", 0);
 	satanTxt = new FlxTypeText(0, 25, 1280, "");
 	pauseNameTxt = new FlxText(5, 700, 1280, "Now Playing: " + pauseSongStr + " - ForFurtherNotice");
 
 	// text stuff
 	// I'M NOT DELUSIONAL, YOU'RE DELUSIONAL !!!!!!
-	levelInfo.setFormat(Paths.font("disneyFreeplayFont.ttf"), 18, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	songName.setFormat(Paths.font("disneyFreeplayFont.ttf"), 46, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	levelInfo.setFormat(Paths.font("DisneyFont.ttf"), 32, FlxColor.WHITE, "right", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	pauseNameTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 16, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	countDown.setFormat(Paths.font("betterSatanFont.ttf"), 90, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 	satanTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 32, FlxColor.fromRGB(255, 117, 107), 'center', FlxTextBorderStyle.OUTLINE, FlxColor.fromRGB(92, 0, 26));
@@ -147,9 +140,11 @@ function onLoad()
 	songArt.scale.set(0.29, 0.29);
 	songArtOutline.scale.set(0.29, 0.29); // this was easier for me to scale it off the ORIGINAL image size instead of just trying to get the exact graphic size of the song art being SCALED
 
-	levelInfo.text = array[0];
+	levelInfo.text = getSongPath();
 
-	for (obj in [levelInfo, bg, songName, countDown])
+	levelInfo.x = FlxG.width - (levelInfo.width + 20);
+
+	for (obj in [levelInfo, bg, countDown])
 		obj.scrollFactor.set();
 
 	countDown.screenCenter();
@@ -157,13 +152,13 @@ function onLoad()
 	satanTxt.screenCenter(FlxAxes.X);
 
 	// alpha value setup
-	for (obj in [bg, levelInfo, songName, pauseNameTxt])
+	for (obj in [bg, levelInfo, pauseNameTxt])
 		obj.alpha = 0.0001;
 
 	countDown.visible = false;
 
 	// fuck it. add everything
-	for (obj in [bg, songName, levelInfo, pauseNameTxt, disc, songArtOutline, songArt])
+	for (obj in [bg, levelInfo, pauseNameTxt, disc, songArtOutline, songArt])
 		add(obj);
 
 	// menu buttons
@@ -193,7 +188,6 @@ function onLoad()
 			}
 		});
 	FlxTween.tween(levelInfo, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
-	FlxTween.tween(songName, {alpha: 1}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.2});
 	FlxTween.tween(disc, {x: disc.x - 300}, 0.8, {ease: FlxEase.quartOut});
 	FlxTween.tween(disc, {angle: 360}, 2, {type: 2});
 	FlxTween.tween(songArt, {x: songArt.x - 110}, 0.8, {ease: FlxEase.quartOut});
@@ -219,7 +213,7 @@ function onLoad()
 	changeSelection();
 	Application.current.window.title += " - {Paused}";
 
-	for (i in [bg, levelInfo, funnyButton, buttonGroup, songText, disc, songArt, songArtOutline, songName, pauseNameTxt])
+	for (i in [bg, levelInfo, funnyButton, buttonGroup, songText, disc, songArt, songArtOutline, pauseNameTxt])
 		i.camera = CameraUtil.lastCamera;
 }
 
@@ -379,7 +373,6 @@ function restartSong(?noTrans:Bool = false)
 function resumeGame()
 {
 	hasResumed = true;
-	songName.alpha = 0;
 	levelInfo.alpha = 0;
 	satanTxt.text = "";
 	
@@ -436,4 +429,12 @@ function updateSelection()
 		if (buttonGroup.members[curSelected].alpha == 0.45)
 			buttonGroup.members[curSelected].alpha = hasResumed ? 0 : 1;
 	}
+}
+
+function getSongPath():String
+{
+	if (FunkinAssets.exists(Paths.getPath('songs/${PlayState.SONG.song.toLowerCase().replace(' ', '-')}/credits.txt', null, true)))
+		return FunkinAssets.getContent(Paths.getPath('songs/${PlayState.SONG.song.toLowerCase().replace(' ', '-')}/credits.txt', null, true));
+	else if (!FunkinAssets.exists(Paths.getPath('songs/${PlayState.SONG.song.toLowerCase().replace(' ', '-')}/credits.txt', null, true)))
+		return FunkinAssets.getContent(Paths.txt('defaultSongCredit'));
 }

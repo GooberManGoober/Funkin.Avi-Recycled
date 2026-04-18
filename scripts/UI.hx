@@ -42,6 +42,8 @@ function onLoad() {
 			introSoundsSuffix = "-cartoon";
 		case "Malfunction":
 			introSoundsSuffix = "-error";
+		case "Cycled Sins":
+			skipCountdown = true;
 		default:
 			if(PlayState.isPixelStage) {
 				introSoundsSuffix = '-pixel';
@@ -57,7 +59,7 @@ function onCreatePost()
 
 	if (!ClientPrefs.lowQuality)
 	{
-		if (PlayState.SONG.stage != 'war' && PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom' && PlayState.SONG.stage != 'vaultRoomLegacy')
+		if (PlayState.SONG.stage != 'war' && PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom' && PlayState.SONG.stage != 'vaultRoomLegacy' && PlayState.SONG.stage != "apartment" && PlayState.SONG.stage != "waltRoom")
 		{
 			scratch = new FlxSprite();
 			scratch.frames = Paths.getSparrowAtlas('filters/scratchShit');
@@ -68,7 +70,7 @@ function onCreatePost()
 		}
 	}
 
-	if (PlayState.SONG.stage != "forestNew" && PlayState.SONG.stage != "circus" && PlayState.SONG.stage != 'clubhouse' && PlayState.SONG.stage != 'trueGrinsOfSins')
+	if (PlayState.SONG.stage != "forestNew" && PlayState.SONG.stage != "circus" && PlayState.SONG.stage != 'clubhouse' && PlayState.SONG.stage != 'trueGrinsOfSins' && PlayState.SONG.stage != "apartment")
 	{
 		gf.visible = false;
 	}

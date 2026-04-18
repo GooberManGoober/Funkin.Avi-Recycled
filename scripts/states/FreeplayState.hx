@@ -609,7 +609,8 @@ function generateSongs(?tabIndex:Int = 0)
 			addSong('Neglection', 3, 'pnm', FlxColor.fromRGB(117, 86, 27), 'AttackPan', 'NORMAL', FlxColor.fromRGB(255, 220, 220));
 			
 			addSong('Twisted Grins', 3, 'smile', FlxColor.fromRGB(54, 38, 38), 'ForFurtherNotice', 'HARD', FlxColor.fromRGB(255, 187, 187));
-
+			addSong('Mercy', 3, 'walt', FlxColor.fromRGB(176, 169, 116), 'Ophomix24', 'INSANE', FlxColor.fromRGB(255, 110, 110));
+			addSong('Cycled Sins', 3, 'relapseNEW-pixel', FlxColor.fromRGB(105, 30, 30), 'JBlitz', 'HARD', FlxColor.fromRGB(255, 187, 187));
 			addSong('Malfunction', 3, 'mal-pixel', FlxColor.fromRGB(150, 149, 186), 'obscurity', null, FlxColor.WHITE);
 
 			if (FlxG.save.data.birthdayLocky != "uninvited")

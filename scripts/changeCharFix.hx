@@ -45,6 +45,10 @@ function resetCharPos()
         case 'crossoverStreet':
             dad.setPosition(-870, -90);
             boyfriend.setPosition(870, 600);
+        case 'apartment':
+            dad.setPosition(-1000, 245);
+    		boyfriend.setPosition(590, 250);
+            gf.setPosition(530, 130);
         case 'delusionStreet':
             switch (dad.curCharacter)
             {
@@ -105,6 +109,21 @@ function resetCharPos()
         case 'war':
 			dad.setPosition(-140, 30);
    	 		boyfriend.setPosition(1450, 650);
+        case 'waltRoom':
+            switch (dad.curCharacter)
+            {
+                case 'walt-true':
+                    dad.setPosition(280, -200);
+                case 'walt-new':
+                    dad.setPosition(260, -50);
+                case 'walt-cutscene':
+                    dad.setPosition(260, -10);
+                case 'walt-death':
+                    dad.setPosition(260, -190);
+                default:
+                    dad.setPosition(0, 0);
+            }
+            boyfriend.setPosition(330, 300);
         case 'vaultRoom':
             boyfriend.setPosition(960, 530);
             dad.setPosition(-680, -520);

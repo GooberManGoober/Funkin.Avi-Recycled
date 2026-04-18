@@ -31,6 +31,10 @@ function setupCardData()
 			fontStuff = "MagicOwlFont.otf";
 		case "Don't Cross!":
 			fontStuff = "PhantomMuff Full Letters 1.1.5.ttf";
+		case 'Cycled Sins':
+			fontStuff = "calibri-regular";
+		case 'Mercy':
+			fontStuff = "splatter";
 		case 'Malfunction':
 			fontStuff = "m40.ttf";
 		case 'Bless Legacy':
@@ -116,6 +120,10 @@ function onCreatePost()
 		{
 			case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
 			// do nothing, it's already set under stepHit()
+			case 'Cycled Sins':
+				playCardAnim(6);
+			case 'Mercy':
+				playCardAnim(9);
 			default:
 				playCardAnim(0.08);
 		}
