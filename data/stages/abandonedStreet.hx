@@ -1274,10 +1274,13 @@ function onSongStart()
                 camGame.fade(FlxColor.BLACK, .000001);
                 defaultCamZoom = 1.3;
                 modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear");
+
+                if (deluSing != null)
+                    deluSing.visible = false;
             });
 
             // Mickey Screams Like A Bitch
-            modManager.queueFuncOnce(212 * 4, (s,s2)->{ 
+            modManager.queueFuncOnce(212 * 4, (s,s2)->{
                 boundValue = 0.6;
                 drainValue = 0.025;
                 chromEffect = 0.3;
@@ -1494,7 +1497,7 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(672 * 4, (s,s2)->{ 
-                blendFlash.cameras = [camGame];
+                blendFlash.cameras = [camBars];
                 boyfriend.alpha = 0.0001;
                 camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.38, timer: 0.85, colors: [255, 255, 255]});
                 minnieJumpscare.resume();
