@@ -1524,6 +1524,8 @@ function onSongStart()
                 modManager.setValue("alpha", 0);
                 defaultCamZoom = 0.9;
                 chromEffect = 0.1;
+                if (minnieJumpscare != null)
+                    minnieJumpscare.visible = false;
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 0.5);
                 if (ClientPrefs.shaders)
