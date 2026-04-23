@@ -380,9 +380,10 @@ function onBeatHit()
 				if(!isTweenCancelled)
 					fadeTween = FlxTween.tween(whiteFade, {alpha: 1}, 2, {ease: FlxEase.quartInOut});
 			case 20:
-				if(!isTweenCancelled) {
-				fadeTween.cancel();
-				whiteFade.alpha = 0;	
+				if(!isTweenCancelled) 
+				{
+					fadeTween.cancel();
+					whiteFade.alpha = 0;	
 				}
 				skipIntro();
 		}
