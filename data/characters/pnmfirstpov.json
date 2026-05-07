@@ -1,13 +1,14 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				213,
 				128
 			],
-			"loop": false,
-			"fps": 9,
 			"anim": "idle",
+			"fps": 9,
+			"name": "IdleFirst",
 			"indices": [
 				0,
 				2,
@@ -21,17 +22,17 @@
 				18,
 				20,
 				22
-			],
-			"name": "IdleFirst"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				212,
 				129
 			],
-			"loop": false,
-			"fps": 10,
 			"anim": "singDOWN",
+			"fps": 10,
+			"name": "Down",
 			"indices": [
 				0,
 				2,
@@ -40,17 +41,17 @@
 				8,
 				10,
 				12
-			],
-			"name": "Down"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				213,
 				127
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "singLEFT",
+			"fps": 11,
+			"name": "Left",
 			"indices": [
 				0,
 				2,
@@ -59,17 +60,17 @@
 				8,
 				10,
 				12
-			],
-			"name": "Left"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				218,
 				133
 			],
-			"loop": false,
-			"fps": 10,
 			"anim": "singRIGHT",
+			"fps": 10,
+			"name": "Right",
 			"indices": [
 				0,
 				2,
@@ -78,17 +79,17 @@
 				8,
 				10,
 				12
-			],
-			"name": "Right"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				214,
 				182
 			],
-			"loop": false,
-			"fps": 10,
 			"anim": "singUP",
+			"fps": 10,
+			"name": "Up",
 			"indices": [
 				0,
 				2,
@@ -97,17 +98,17 @@
 				8,
 				10,
 				12
-			],
-			"name": "Up"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				237,
 				129
 			],
-			"loop": false,
-			"fps": 10,
 			"anim": "laugh",
+			"fps": 10,
+			"name": "LaughFirst",
 			"indices": [
 				0,
 				2,
@@ -116,11 +117,11 @@
 				8,
 				10,
 				12
-			],
-			"name": "LaughFirst"
+			]
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/PnmFirstUpdate",
 	"position": [
 		0,
@@ -140,6 +141,7 @@
 		-270
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 1.8,
 	"_editor_isPlayer": false

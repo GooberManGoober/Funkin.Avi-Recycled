@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				-191,
 				-121
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 26,
-			"name": "Demon note left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Demon note left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-223,
 				-185
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 28,
-			"name": "Demon note down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Demon note down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-516,
 				-91
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 28,
-			"name": "Demon note up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "Demon note up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-444,
 				-118
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 27,
-			"name": "Demon note right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Demon note right"
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-447,
 				-141
 			],
-			"loop": false,
-			"fps": 20,
 			"anim": "idle",
-			"indices": [],
-			"name": "Demon idle"
+			"fps": 20,
+			"name": "Demon idle",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/Final_demo_bf",
 	"position": [
 		0,
@@ -76,6 +77,7 @@
 		150
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.8,
 	"_editor_isPlayer": true

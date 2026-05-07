@@ -1,14 +1,13 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				598,
 				-54
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 34,
-			"name": "Leftwalt",
+			"anim": "singLEFT",
 			"indices": [
 				0,
 				1,
@@ -29,28 +28,28 @@
 				16,
 				17,
 				18
-			]
+			],
+			"name": "Leftwalt"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				180,
 				-195
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 30,
-			"name": "Downwalt",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Downwalt"
 		},
 		{
-			"loop": true,
 			"offsets": [
 				0,
 				0
 			],
-			"anim": "idle",
+			"loop": true,
 			"fps": 30,
-			"name": "idlewalt",
+			"anim": "idle",
 			"indices": [
 				0,
 				1,
@@ -72,17 +71,17 @@
 				16,
 				16,
 				16
-			]
+			],
+			"name": "idlewalt"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				48,
 				121
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 22,
-			"name": "Upwalt",
+			"anim": "singUP",
 			"indices": [
 				1,
 				2,
@@ -97,17 +96,17 @@
 				11,
 				12,
 				13
-			]
+			],
+			"name": "Upwalt"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-191,
 				80
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 28,
-			"name": "Rightwalt",
+			"anim": "singRIGHT",
 			"indices": [
 				1,
 				2,
@@ -127,26 +126,33 @@
 				16,
 				17,
 				18
-			]
+			],
+			"name": "Rightwalt"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/Walt",
 	"position": [
 		-800,
 		900
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": false,
+	"gameover_confirm_sound": null,
 	"healthicon": "walt",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		255,
-		237,
-		209
-	],
+	"healthbar_colour": -4655,
 	"camera_position": [
 		-280,
 		220
 	],
+	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
-	"scale": 0.9
+	"scale": 0.9,
+	"_editor_isPlayer": false
 }

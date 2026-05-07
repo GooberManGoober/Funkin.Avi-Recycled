@@ -1,67 +1,72 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				60,
 				50
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "ricky left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "ricky left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "ricky down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "ricky down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				7,
 				20
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "ricky up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "ricky up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				9,
 				5
 			],
-			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "ricky right",
-			"indices": []
-		},
-		{
-			"offsets": [
-				0,
-				0
-			],
-			"indices": [],
-			"fps": 24,
-			"flipX": false,
-			"flipY": false,
-			"anim": "idle",
 			"loop": false,
-			"name": "ricky idle"
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "ricky right"
 		},
 		{
+			"loop": false,
+			"flipY": false,
 			"offsets": [
 				0,
 				0
 			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "ricky idle",
+			"indices": [],
+			"flipX": false
+		},
+		{
+			"loop": true,
+			"flipY": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle-loop",
+			"fps": 24,
+			"name": "ricky idle",
 			"indices": [
 				8,
 				9,
@@ -73,15 +78,11 @@
 				15,
 				16
 			],
-			"fps": 24,
-			"flipX": false,
-			"flipY": false,
-			"anim": "idle-loop",
-			"loop": true,
-			"name": "ricky idle"
+			"flipX": false
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/ricky",
 	"position": [
 		-300,
@@ -101,6 +102,7 @@
 		30
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 1,
 	"_editor_isPlayer": false

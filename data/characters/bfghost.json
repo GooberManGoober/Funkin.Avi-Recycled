@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-833,
 				-800
 			],
-			"loop": false,
-			"fps": 10,
 			"anim": "idle",
-			"indices": [],
-			"name": "BlessBf idle"
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-657,
-				-833
-			],
-			"anim": "singLEFT",
-			"fps": 11,
-			"name": "BlessBf left",
+			"fps": 10,
+			"name": "BlessBf idle",
 			"indices": []
 		},
 		{
 			"offsets": [
-				-833,
-				-742
+				-657,
+				-833
 			],
 			"loop": false,
 			"fps": 11,
-			"anim": "singDOWN",
+			"anim": "singLEFT",
 			"indices": [],
-			"name": "BlessBf down"
+			"name": "BlessBf left"
 		},
 		{
+			"loop": false,
+			"offsets": [
+				-833,
+				-742
+			],
+			"anim": "singDOWN",
+			"fps": 11,
+			"name": "BlessBf down",
+			"indices": []
+		},
+		{
+			"loop": false,
 			"offsets": [
 				-839,
 				-947
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "singUP",
-			"indices": [],
-			"name": "BlessBf up"
+			"fps": 11,
+			"name": "BlessBf up",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-630,
 				-771
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "BlessBf right"
+			"fps": 11,
+			"name": "BlessBf right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/BlessBf",
 	"position": [
 		-580,
@@ -76,6 +77,7 @@
 		580
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.5,
 	"_editor_isPlayer": true

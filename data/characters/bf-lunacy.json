@@ -1,59 +1,48 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-468,
 				-350
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "idle",
-			"indices": [],
-			"name": "idle"
+			"fps": 12,
+			"name": "idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-468,
 				-350
 			],
-			"loop": false,
-			"fps": 13,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "down"
-		},
-		{
-			"offsets": [
-				-468,
-				-350
-			],
-			"loop": false,
 			"fps": 13,
+			"name": "down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-468,
+				-350
+			],
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "right"
+			"fps": 13,
+			"name": "right",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-468,
 				-350
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "left"
-		},
-		{
-			"offsets": [
-				-468,
-				-350
-			],
-			"loop": false,
 			"fps": 12,
-			"anim": "singUP",
-			"indices": [],
-			"name": "up"
+			"name": "left",
+			"indices": []
 		},
 		{
 			"loop": false,
@@ -61,9 +50,9 @@
 				-468,
 				-350
 			],
-			"anim": "idle-alt",
-			"fps": 11,
-			"name": "altIdle",
+			"anim": "singUP",
+			"fps": 12,
+			"name": "up",
 			"indices": []
 		},
 		{
@@ -72,65 +61,77 @@
 				-350
 			],
 			"loop": false,
-			"fps": 6,
+			"fps": 11,
+			"anim": "idle-alt",
+			"indices": [],
+			"name": "altIdle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-468,
+				-350
+			],
 			"anim": "endingAnim",
-			"indices": [],
-			"name": "altUp"
+			"fps": 6,
+			"name": "altUp",
+			"indices": []
 		},
 		{
-			"loop": true,
-			"flipY": false,
 			"offsets": [
 				-468,
 				-350
 			],
+			"flipY": false,
+			"loop": true,
+			"fps": 90,
 			"anim": "singDOWNmiss",
-			"fps": 90,
-			"name": "missDown",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "missDown"
 		},
 		{
-			"loop": true,
-			"flipY": false,
 			"offsets": [
 				-468,
 				-350
 			],
+			"flipY": false,
+			"loop": true,
+			"fps": 90,
 			"anim": "singLEFTmiss",
-			"fps": 90,
-			"name": "missLeft",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "missLeft"
 		},
 		{
-			"loop": true,
-			"flipY": false,
 			"offsets": [
 				-468,
 				-350
 			],
+			"flipY": false,
+			"loop": true,
+			"fps": 90,
 			"anim": "singRIGHTmiss",
-			"fps": 90,
-			"name": "missRight",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "missRight"
 		},
 		{
-			"loop": true,
-			"flipY": false,
 			"offsets": [
 				-468,
 				-350
 			],
-			"anim": "singUPmiss",
+			"flipY": false,
+			"loop": true,
 			"fps": 90,
-			"name": "missUp",
+			"anim": "singUPmiss",
+			"flipX": false,
 			"indices": [],
-			"flipX": false
+			"name": "missUp"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/lunacyBF",
 	"position": [
 		-240,
@@ -150,6 +151,7 @@
 		290
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.6,
 	"_editor_isPlayer": true

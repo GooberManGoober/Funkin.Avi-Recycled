@@ -1,18 +1,19 @@
 {
 	"animations": [
 		{
-			"loop": true,
 			"offsets": [
 				-430,
 				-500
 			],
-			"anim": "idle",
+			"loop": true,
 			"fps": 12,
-			"name": "idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/lilith-birthday",
 	"position": [
 		0,
@@ -32,6 +33,7 @@
 		0
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 2,
 	"sing_duration": 6.1,
 	"scale": 0.6,
 	"_editor_isPlayer": false

@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-960,
 				-270
 			],
-			"loop": false,
-			"fps": 6,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "BedroomMinnie right"
+			"fps": 6,
+			"name": "BedroomMinnie right",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-960,
 				-270
 			],
-			"loop": false,
-			"fps": 9,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "BedroomMinnie left"
+			"fps": 9,
+			"name": "BedroomMinnie left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-960,
 				-270
 			],
-			"loop": false,
-			"fps": 9,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "BedroomMinnie down"
-		},
-		{
-			"offsets": [
-				-960,
-				-270
-			],
-			"loop": false,
 			"fps": 9,
-			"anim": "singUP",
-			"indices": [],
-			"name": "BedroomMinnie up"
+			"name": "BedroomMinnie down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-960,
 				-270
 			],
+			"anim": "singUP",
+			"fps": 9,
+			"name": "BedroomMinnie up",
+			"indices": []
+		},
+		{
 			"loop": false,
-			"fps": 7,
+			"offsets": [
+				-960,
+				-270
+			],
 			"anim": "idle",
-			"indices": [],
-			"name": "BedroomMinnie idle"
+			"fps": 7,
+			"name": "BedroomMinnie idle",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/BedroomMinnie",
 	"position": [
 		-580,
@@ -76,6 +77,7 @@
 		50
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 1.1,
 	"_editor_isPlayer": false

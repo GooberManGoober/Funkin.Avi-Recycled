@@ -52,9 +52,6 @@ var songTxt:FlxText;
 
 function onCreatePost()
 {
-    iconP1.frameCount = 3;
-    iconP2.frameCount = 3;
-
     playHUD.markupEnabled = false;
     playHUD.updateIconScale = PlayState.SONG.song != "Cycled Sins" ? true : false;
     
@@ -288,20 +285,30 @@ function onUpdatePost(elapsed)
 
     if (PlayState.SONG.song != "Devilish Deal")
     {
-        if (healthBar.percent > 80)
+        switch (dad.curCharacter.toLowerCase())
         {
-            iconP1.animation.curAnim.curFrame = 2;
-            iconP2.animation.curAnim.curFrame = 1;
+            case 'alphamouse', 'relapseNEW':
+                //do nothing
+            default:
+                if (healthBar.percent > 80)
+                    iconP2.animation.curAnim.curFrame = 1;
+                else if (healthBar.percent < 20)
+                    iconP2.animation.curAnim.curFrame = 2;
+                else
+                    iconP2.animation.curAnim.curFrame = 0;
         }
-        else if (healthBar.percent < 20)
+
+        switch (boyfriend.curCharacter)
         {
-            iconP1.animation.curAnim.curFrame = 1;
-            iconP2.animation.curAnim.curFrame = 2;
-        }
-        else
-        {
-            iconP1.animation.curAnim.curFrame = 0;
-            iconP2.animation.curAnim.curFrame = 0;
+            case 'sunnyMouse', 'everett-relapse':
+                //do nothing
+            default:
+                if (healthBar.percent > 80)
+                    iconP1.animation.curAnim.curFrame = 2;
+                else if (healthBar.percent < 20)
+                    iconP1.animation.curAnim.curFrame = 1;
+                else
+                    iconP1.animation.curAnim.curFrame = 0;
         }
     }
 }

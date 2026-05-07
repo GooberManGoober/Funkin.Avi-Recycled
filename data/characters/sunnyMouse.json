@@ -1,72 +1,73 @@
 {
 	"animations": [
 		{
+			"loop": false,
+			"flipY": false,
 			"offsets": [
 				-23,
 				162
 			],
-			"flipY": false,
-			"loop": false,
-			"fps": 12,
 			"anim": "idle",
-			"flipX": false,
+			"fps": 12,
+			"name": "sunnySprites idle",
 			"indices": [],
-			"name": "sunnySprites idle"
+			"flipX": false
 		},
 		{
+			"loop": false,
+			"flipY": false,
 			"offsets": [
 				-10,
 				128
 			],
-			"flipY": false,
-			"loop": false,
-			"fps": 12,
 			"anim": "singDOWN",
-			"flipX": false,
+			"fps": 12,
+			"name": "sunnySprites down",
 			"indices": [],
-			"name": "sunnySprites down"
+			"flipX": false
 		},
 		{
+			"loop": false,
+			"flipY": false,
 			"offsets": [
 				13,
 				157
 			],
-			"flipY": false,
-			"loop": false,
-			"fps": 12,
 			"anim": "singLEFT",
-			"flipX": false,
+			"fps": 12,
+			"name": "sunnySprites right",
 			"indices": [],
-			"name": "sunnySprites right"
+			"flipX": false
 		},
 		{
+			"loop": false,
+			"flipY": false,
 			"offsets": [
 				-71,
 				199
 			],
-			"flipY": false,
-			"loop": false,
-			"fps": 12,
 			"anim": "singUP",
-			"flipX": false,
+			"fps": 12,
+			"name": "sunnySprites up",
 			"indices": [],
-			"name": "sunnySprites up"
+			"flipX": false
 		},
 		{
+			"loop": false,
+			"flipY": false,
 			"offsets": [
 				-56,
 				172
 			],
-			"flipY": false,
-			"loop": false,
-			"fps": 12,
 			"anim": "singRIGHT",
-			"flipX": false,
+			"fps": 12,
+			"name": "sunnySprites left",
 			"indices": [],
-			"name": "sunnySprites left"
+			"flipX": false
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/sunnySprites",
 	"position": [
 		0,
@@ -86,6 +87,7 @@
 		-218
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 2,
 	"sing_duration": 4,
 	"scale": 0.95,
 	"_editor_isPlayer": true

@@ -1,84 +1,85 @@
 {
 	"animations": [
 		{
+			"offsets": [
+				147,
+				147
+			],
 			"loop": true,
-			"offsets": [
-				147,
-				147
-			],
+			"fps": 24,
 			"anim": "idle",
-			"fps": 24,
-			"name": "square idle",
-			"indices": []
+			"indices": [],
+			"name": "square idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				147,
 				147
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singLEFT",
-			"fps": 24,
-			"name": "square left",
-			"indices": []
+			"indices": [],
+			"name": "square left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				147,
 				147
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singDOWN",
-			"fps": 24,
-			"name": "square down",
-			"indices": []
+			"indices": [],
+			"name": "square down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				147,
 				147
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singUP",
-			"fps": 24,
-			"name": "square up",
-			"indices": []
+			"indices": [],
+			"name": "square up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				147,
 				147
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "square right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "square right"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				247,
 				247
 			],
-			"anim": "ohfuckhesdoingthething",
+			"loop": false,
 			"fps": 19,
-			"name": "square ohfucknotmynotes",
-			"indices": []
+			"anim": "ohfuckhesdoingthething",
+			"indices": [],
+			"name": "square ohfucknotmynotes"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				247,
 				247
 			],
-			"anim": "laughing",
+			"loop": false,
 			"fps": 16,
-			"name": "square laughing",
-			"indices": []
+			"anim": "laughing",
+			"indices": [],
+			"name": "square laughing"
 		}
 	],
 	"no_antialiasing": true,
+	"ghosts_enabled": false,
 	"image": "characters/glitchedMickeyNEWANIMS",
 	"position": [
 		0,
@@ -98,6 +99,7 @@
 		-250
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 2.3,
 	"_editor_isPlayer": false

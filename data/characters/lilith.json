@@ -1,18 +1,19 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-450,
 				-90
 			],
-			"loop": false,
-			"fps": 20,
 			"anim": "idle",
-			"indices": [],
-			"name": "lilith"
+			"fps": 20,
+			"name": "lilith",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/Lilith",
 	"position": [
 		0,
@@ -32,6 +33,7 @@
 		0
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 2,
 	"sing_duration": 4,
 	"scale": 0.7,
 	"_editor_isPlayer": false

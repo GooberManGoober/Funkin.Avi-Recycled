@@ -1,78 +1,84 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"loop": false,
-			"fps": 14,
 			"anim": "idle",
-			"indices": [],
-			"name": "Idle"
+			"fps": 14,
+			"name": "Idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				170,
 				20
 			],
-			"loop": false,
-			"fps": 13,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "Left"
+			"fps": 13,
+			"name": "Left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				80,
 				-120
 			],
-			"loop": false,
-			"fps": 14,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "Down"
+			"fps": 14,
+			"name": "Down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				10,
 				75
 			],
-			"loop": false,
-			"fps": 13,
 			"anim": "singUP",
-			"indices": [],
-			"name": "Up"
+			"fps": 13,
+			"name": "Up",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-200,
 				26
 			],
-			"loop": false,
-			"fps": 14,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "Right"
+			"fps": 14,
+			"name": "Right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/Walt-fnf-NEW",
 	"position": [
 		0,
 		0
 	],
+	"dance_every": 2,
+	"gameover_intial_sound": null,
+	"scalableOffsets": false,
+	"gameover_confirm_sound": null,
 	"healthicon": "walt",
+	"gameover_character": null,
+	"vslice_sustains": false,
 	"flip_x": false,
-	"healthbar_colors": [
-		255,
-		237,
-		209
-	],
+	"healthbar_colour": -4655,
 	"camera_position": [
 		-165,
 		110
 	],
+	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
-	"scale": 0.85
+	"scale": 0.85,
+	"_editor_isPlayer": false
 }

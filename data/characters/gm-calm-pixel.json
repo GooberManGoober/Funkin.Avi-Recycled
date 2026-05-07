@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				203,
 				203
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 11,
-			"name": "glitched-mickey-calm idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "glitched-mickey-calm idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				203,
 				203
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 19,
-			"name": "glitched-mickey-calm left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "glitched-mickey-calm left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				203,
 				203
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 18,
-			"name": "glitched-mickey-calm down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "glitched-mickey-calm down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				203,
 				203
 			],
+			"loop": false,
+			"fps": 20,
 			"anim": "singUP",
-			"fps": 20,
-			"name": "glitched-mickey-calm up",
-			"indices": []
+			"indices": [],
+			"name": "glitched-mickey-calm up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				203,
 				203
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 20,
-			"name": "glitched-mickey-calm right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "glitched-mickey-calm right"
 		}
 	],
 	"no_antialiasing": true,
+	"ghosts_enabled": false,
 	"image": "characters/glitched-mickey-calm",
 	"position": [
 		0,
@@ -76,6 +77,7 @@
 		-250
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 2.3,
 	"_editor_isPlayer": false

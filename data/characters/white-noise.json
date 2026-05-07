@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				20,
 				67
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 13,
-			"name": "White_Idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "White_Idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				167,
 				68
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "White_Left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "White_Left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				-10
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "White_Down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "White_Down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				155,
 				143
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "White_Up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "White_Up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				90,
 				26
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "White_Right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "White_Right"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/WHITE_NOISE",
 	"position": [
 		70,
@@ -76,6 +77,7 @@
 		-70
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 1.1,
 	"_editor_isPlayer": false

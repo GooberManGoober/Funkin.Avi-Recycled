@@ -1,18 +1,19 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				258,
 				-685
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 24,
-			"name": "satandd idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "satandd idle"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/satandd",
 	"position": [
 		0,
@@ -32,6 +33,7 @@
 		770
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 1.3,
 	"_editor_isPlayer": false

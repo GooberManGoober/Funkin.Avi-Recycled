@@ -281,15 +281,21 @@ function onUpdate(elapsed)
 	for (i in 0...iconArray.length)
 	{
 		if(songs[i].songName == "Birthday")
-			iconArray[i].animation.curAnim.curFrame = 1; // funi
-		//i swear to god theres too much .replace
+		{
+			iconArray[i].animation.curAnim.curFrame = 1;
+		}
 		else if(songs[i].songName == "Don't Cross!")
 		{
 			iconArray[i].animation.curAnim.curFrame = 0;
 			iconArray[i].shake(4, 30, 0.1);
 		}
 		else
-			iconArray[i].animation.curAnim.curFrame = 2;
+		{
+			if (iconArray[i].frameCount != 2) 
+				iconArray[i].animation.curAnim.curFrame = 2;
+			else
+				iconArray[i].animation.curAnim.curFrame = 0;
+		}
 	}
 
 	if (!selectedSomethin)
@@ -628,7 +634,13 @@ function generateSongs(?tabIndex:Int = 0)
 		// using a FlxGroup is too much fuss!
 		var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 		icon.sprTracker = songText;
-		icon.frameCount = 3;
+		switch (songs[i].songCharacter)
+		{
+			case 'relapseNEW-pixel', 'sadmouse':
+				icon.frameCount = 2;
+			default: 
+				icon.frameCount = 3;
+		}
 		iconArray.push(icon);
 		add(icon);
 	}

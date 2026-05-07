@@ -1,14 +1,13 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				143,
 				3
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 12,
-			"name": "Idle",
+			"anim": "idle",
 			"indices": [
 				0,
 				1,
@@ -17,54 +16,56 @@
 				4,
 				5,
 				6
-			]
+			],
+			"name": "Idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				143,
 				17
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 12,
-			"name": "Left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				143,
 				11
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 12,
-			"name": "Down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				143,
 				3
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 12,
-			"name": "Up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "Up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				71,
 				3
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 12,
-			"name": "Right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Right"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/ethereal_goofy",
 	"position": [
 		0,
@@ -84,6 +85,7 @@
 		-100
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.7,
 	"_editor_isPlayer": false

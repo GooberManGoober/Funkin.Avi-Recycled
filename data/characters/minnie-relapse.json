@@ -1,29 +1,30 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-550,
 				-470
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "idle-alt",
-			"indices": [],
-			"name": "death"
+			"fps": 24,
+			"name": "death",
+			"indices": []
 		},
 		{
-			"loop": true,
 			"offsets": [
 				-180,
 				5
 			],
-			"anim": "idle",
+			"loop": true,
 			"fps": 5,
-			"name": "idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "idle"
 		}
 	],
 	"no_antialiasing": true,
+	"ghosts_enabled": false,
 	"image": "characters/minnieRELAPSE",
 	"position": [
 		0,
@@ -43,6 +44,7 @@
 		0
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 2,
 	"sing_duration": 6.1,
 	"scale": 6,
 	"_editor_isPlayer": false

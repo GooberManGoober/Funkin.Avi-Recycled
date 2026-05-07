@@ -57,6 +57,7 @@
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/lunacyEndMick",
 	"position": [
 		0,
@@ -76,6 +77,7 @@
 		390
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 1.2,
 	"_editor_isPlayer": false

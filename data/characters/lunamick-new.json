@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-368,
 				-294
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "idle",
-			"indices": [],
-			"name": "Mickey2 Idle"
+			"fps": 11,
+			"name": "Mickey2 Idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-363,
 				-295
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "singUP",
-			"indices": [],
-			"name": "Mickey2 Up"
+			"fps": 11,
+			"name": "Mickey2 Up",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-370,
 				-292
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "Mickey2 Down"
+			"fps": 11,
+			"name": "Mickey2 Down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-387,
 				-300
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "Mickey2 Left"
+			"fps": 11,
+			"name": "Mickey2 Left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-373,
 				-266
 			],
-			"loop": false,
-			"fps": 11,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "Mickey2 Right"
+			"fps": 11,
+			"name": "Mickey2 Right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/lunamick-new",
 	"position": [
 		-270,
@@ -76,6 +77,7 @@
 		230
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 4,
 	"scale": 0.65,
 	"_editor_isPlayer": false

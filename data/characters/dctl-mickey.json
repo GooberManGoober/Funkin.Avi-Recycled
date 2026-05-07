@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-408,
 				-150
 			],
-			"loop": false,
-			"fps": 10,
 			"anim": "idle",
-			"indices": [],
-			"name": "Mickeycross Idle"
+			"fps": 10,
+			"name": "Mickeycross Idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-408,
 				-150
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "Mickeycross Left"
+			"fps": 12,
+			"name": "Mickeycross Left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-408,
 				-150
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "Mickeycross Down"
+			"fps": 12,
+			"name": "Mickeycross Down",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-408,
 				-150
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "singUP",
-			"indices": [],
-			"name": "Mickeycross Up"
+			"fps": 12,
+			"name": "Mickeycross Up",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-408,
 				-150
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "Mickeycross Right"
+			"fps": 12,
+			"name": "Mickeycross Right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/Mickeycross",
 	"position": [
 		-750,
@@ -76,6 +77,7 @@
 		280
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.7,
 	"_editor_isPlayer": false

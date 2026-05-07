@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				355,
 				-167
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 18,
-			"name": "Mickey idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "Mickey idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				516,
 				-122
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 20,
-			"name": "Mickey note left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Mickey note left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				366,
 				-376
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 20,
-			"name": "Mickey note down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Mickey note down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				202,
 				273
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 20,
-			"name": "Mickey note up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "Mickey note up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				599,
 				-172
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 20,
-			"name": "Mickey note right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Mickey note right"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/Delusional_mickey",
 	"position": [
 		0,
@@ -76,6 +77,7 @@
 		60
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.7,
 	"_editor_isPlayer": false

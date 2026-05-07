@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-394,
 				-467
 			],
-			"loop": false,
-			"fps": 9,
 			"anim": "idle",
-			"indices": [],
-			"name": "mickeyIsolateDrop idle"
+			"fps": 9,
+			"name": "mickeyIsolateDrop idle",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-410,
 				-466
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 12,
-			"name": "mickeyIsolateDrop left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "mickeyIsolateDrop left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-383,
 				-468
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 12,
-			"name": "mickeyIsolateDrop down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "mickeyIsolateDrop down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-364,
 				-471
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 12,
-			"name": "mickeyIsolateDrop up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "mickeyIsolateDrop up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-412,
 				-468
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 12,
-			"name": "mickeyIsolateDrop right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "mickeyIsolateDrop right"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/mickeyIsolateDrop",
 	"position": [
 		320,
@@ -76,6 +77,7 @@
 		320
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.6,
 	"_editor_isPlayer": false

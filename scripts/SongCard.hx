@@ -94,20 +94,27 @@ function onCreatePost()
 	if (!isLegacy)
 	{
 		dadIcon = new HealthIcon(oIconName, false);
-		dadIcon.frameCount = 3;
+		dadIcon.frameCount = dad.iconFrames;
 		dadIcon.x = 260;
 		dadIcon.y = 130;
 
 		playerIcon = new HealthIcon(pIconName, true);
-		playerIcon.frameCount = 3;
+		playerIcon.frameCount = boyfriend.iconFrames;
 		playerIcon.x = 850;
 		playerIcon.y = 460;
 
 		dadIcon.alpha = 0.001;
 		playerIcon.alpha = 0.001;
 
-		dadIcon.animation.curAnim.curFrame = 2;
-		playerIcon.animation.curAnim.curFrame = 2;
+		if (dadIcon.frameCount == 3)
+			dadIcon.animation.curAnim.curFrame = 2;
+		else
+			dadIcon.animation.curAnim.curFrame = 0;
+
+		if (playerIcon.frameCount == 3)
+			playerIcon.animation.curAnim.curFrame = 2;
+		else
+			playerIcon.animation.curAnim.curFrame = 0;
 	
 		songCrdGrp.add(dadIcon);
 		songCrdGrp.add(playerIcon);

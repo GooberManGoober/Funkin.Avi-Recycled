@@ -1,14 +1,13 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				690,
 				1070
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 12,
-			"name": "ethereal_mickey Idle",
+			"anim": "idle",
 			"indices": [
 				0,
 				1,
@@ -17,58 +16,60 @@
 				4,
 				5,
 				6
-			]
+			],
+			"name": "ethereal_mickey Idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				680,
 				1070
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 12,
-			"name": "ethereal_mickey Left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "ethereal_mickey Left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				690,
 				1070
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 12,
-			"name": "ethereal_mickey Down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "ethereal_mickey Down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				700,
 				1080
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 12,
-			"name": "ethereal_mickey Right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "ethereal_mickey Right"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				690,
 				1070
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 12,
-			"name": "ethereal_mickey Up",
+			"anim": "singUP",
 			"indices": [
 				2,
 				0,
 				1
-			]
+			],
+			"name": "ethereal_mickey Up"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/ethereal_mickey",
 	"position": [
 		0,
@@ -88,6 +89,7 @@
 		-600
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.5,
 	"_editor_isPlayer": true

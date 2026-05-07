@@ -1,13 +1,14 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				-19,
 				93
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "idle",
+			"fps": 12,
+			"name": "idle",
 			"indices": [
 				0,
 				0,
@@ -19,17 +20,17 @@
 				0,
 				0,
 				0
-			],
-			"name": "idle"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-19,
 				93
 			],
-			"loop": false,
-			"fps": 12,
 			"anim": "laugh",
+			"fps": 12,
+			"name": "idle",
 			"indices": [
 				0,
 				0,
@@ -74,26 +75,26 @@
 				13,
 				14,
 				15
-			],
-			"name": "idle"
+			]
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-19,
 				93
 			],
-			"anim": "laughButSpammable",
+			"loop": false,
 			"fps": 12,
-			"name": "idle",
+			"anim": "laughButSpammable",
 			"indices": [
 				13,
 				14,
 				15
-			]
+			],
+			"name": "idle"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/waltLaugh",
 	"position": [
 		0,
@@ -113,6 +114,7 @@
 		110
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.3,
 	"_editor_isPlayer": false

@@ -1,29 +1,30 @@
 {
 	"animations": [
 		{
-			"loop": true,
 			"offsets": [
 				209,
 				469
 			],
-			"anim": "idle",
+			"loop": true,
 			"fps": 10,
-			"name": "walt death dead-loop",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "walt death dead-loop"
 		},
 		{
+			"loop": false,
 			"offsets": [
 				209,
 				469
 			],
-			"loop": false,
-			"fps": 9,
 			"anim": "death",
-			"indices": [],
-			"name": "walt death dead0"
+			"fps": 9,
+			"name": "walt death dead0",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/walt death",
 	"position": [
 		-800,
@@ -43,6 +44,7 @@
 		-213
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 6.1,
 	"scale": 0.3,
 	"_editor_isPlayer": false

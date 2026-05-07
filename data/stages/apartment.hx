@@ -154,7 +154,6 @@ function onCreatePost()
     relapseIconLol.y = iconP2.y;
     relapseIconLol.scale.set(0.85, 0.85);
     relapseIconLol.alpha = 0.0001;
-    relapseIconLol.frameCount = 3;
     playHUD.add(relapseIconLol);
 
     camGame.fade(FlxColor.BLACK, 0.0001);

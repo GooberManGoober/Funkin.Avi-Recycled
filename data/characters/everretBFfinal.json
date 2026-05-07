@@ -1,62 +1,63 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				-410,
 				-461
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "downfi",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "downfi"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-406,
 				-383
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "upfi",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "upfi"
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-432,
 				-411
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "leftfi"
+			"fps": 24,
+			"name": "leftfi",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-296,
 				-434
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "rightfi"
+			"fps": 24,
+			"name": "rightfi",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-400,
 				-420
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 24,
-			"name": "idlefi",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "idlefi"
 		}
 	],
 	"no_antialiasing": false,
+	"ghosts_enabled": false,
 	"image": "characters/everettBFfinal",
 	"position": [
 		0,
@@ -76,6 +77,7 @@
 		420
 	],
 	"gameover_loop_sound": null,
+	"icon_count": 3,
 	"sing_duration": 4,
 	"scale": 1,
 	"_editor_isPlayer": true
