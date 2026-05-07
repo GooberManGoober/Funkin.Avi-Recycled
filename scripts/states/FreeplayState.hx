@@ -286,16 +286,7 @@ function onUpdate(elapsed)
 		else if(songs[i].songName == "Don't Cross!")
 		{
 			iconArray[i].animation.curAnim.curFrame = 0;
-			
-			var stop:Bool = false;
-			if(!stop)
-			{
-				iconArray[i].offset.x = FlxG.random.float(-4, 4);
-				iconArray[i].offset.y = FlxG.random.float(-4, 4);
-				iconArray[i].angle = FlxG.random.int(-30, 30);	
-			}
-			
-			new FlxTimer().start(0.1, timer->stop = true);
+			iconArray[i].shake(4, 30, 0.1);
 		}
 		else
 			iconArray[i].animation.curAnim.curFrame = 2;
