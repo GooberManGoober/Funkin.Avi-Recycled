@@ -122,14 +122,26 @@ function onBeatHit()
         aberrationBoom.setFloat('aberration', aberrationTimer);
         aberrationBoom.setFloat('effectTime', aberrationTimer);
     }
+
+    if (curBeat % 2 != 0)
+    {
+        modManager.setValue('confusion', modManager.getValue('confusion', 1) + 25, 1);
+        modManager.setValue('drunk', 1, 1);
+    }
 }
 
 function opponentNoteHit(note)
 {
     if (note.noteData == 1 || note.noteData == 2)
+    {
         modManager.setValue('receptor${note.noteData}ScaleY', -0.5, 1);
+        modManager.setValue('transform${note.noteData}Y', (note.noteData == 1) ? 30 : -30, 1);
+    }
     else
+    {
         modManager.setValue('receptor${note.noteData}ScaleX', -0.5, 1);
+        modManager.setValue('transform${note.noteData}X', (note.noteData == 3) ? 30 : -30, 1);
+    }
 }
 
 function onUpdate(elapsed)
@@ -142,7 +154,12 @@ function onUpdate(elapsed)
     {
         modManager.setValue('receptor${i}ScaleX', FlxMath.lerp(modManager.getValue('receptor${i}ScaleX', 1), 0, FlxMath.bound(elapsed * 2.4 * 3, 0, 1)), 1);
         modManager.setValue('receptor${i}ScaleY', FlxMath.lerp(modManager.getValue('receptor${i}ScaleY', 1), 0, FlxMath.bound(elapsed * 2.4 * 3, 0, 1)), 1);
+
+        modManager.setValue('transform${i}X', FlxMath.lerp(modManager.getValue('transform${i}X', 1), 0, FlxMath.bound(elapsed * 2.4 * 3, 0, 1)), 1);
+        modManager.setValue('transform${i}Y', FlxMath.lerp(modManager.getValue('transform${i}Y', 1), 0, FlxMath.bound(elapsed * 2.4 * 3, 0, 1)), 1);
     }
+
+    modManager.setValue('drunk', FlxMath.lerp(modManager.getValue('drunk', 1), 0, FlxMath.bound(elapsed * 2.4 * 3, 0, 1)), 1);
 }
 
 function muckneyHealthColorShitLol()

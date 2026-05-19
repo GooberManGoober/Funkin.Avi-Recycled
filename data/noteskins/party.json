@@ -129,7 +129,7 @@
 	"noteSplashAnimations": [
 		{
 			"looping": false,
-			"xmlName": "note splash purple 1",
+			"xmlName": "note splash birthday purple 1",
 			"offsets": [
 				4,
 				-15
@@ -138,7 +138,7 @@
 		},
 		{
 			"looping": false,
-			"xmlName": "note splash blue 1",
+			"xmlName": "note splash birthday blue 1",
 			"offsets": [
 				3,
 				-5
@@ -147,7 +147,7 @@
 		},
 		{
 			"looping": false,
-			"xmlName": "note splash green 1",
+			"xmlName": "note splash birthday green 1",
 			"offsets": [
 				6,
 				-5
@@ -156,7 +156,7 @@
 		},
 		{
 			"looping": false,
-			"xmlName": "note splash red 1",
+			"xmlName": "note splash birthday red 1",
 			"offsets": [
 				12,
 				-5
@@ -287,9 +287,9 @@
 	"inGameColoring": true,
 	"quantsEnabled": false,
 	"sustainAlpha": 0.6,
-	"noteScale": 0.6,
-	"receptorScale": 0.6,
-	"sustainScale": 0.6,
+	"noteScale": 0.7,
+	"receptorScale": 0.7,
+	"sustainScale": 0.7,
 	"splashScale": 1,
 	"susSplashOrigin": [-10, 15]
 }
