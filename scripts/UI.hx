@@ -59,20 +59,26 @@ function onCreatePost()
 
 	if (!ClientPrefs.lowQuality)
 	{
-		if (PlayState.SONG.stage != 'war' && PlayState.SONG.stage != 'treasureIsland' && PlayState.SONG.stage != 'forbiddenRealm' && PlayState.SONG.stage != 'fuckingLine' && PlayState.SONG.stage != 'vaultRoom' && PlayState.SONG.stage != 'vaultRoomLegacy' && PlayState.SONG.stage != "apartment" && PlayState.SONG.stage != "waltRoom")
+		switch (PlayState.SONG.stage)
 		{
-			scratch = new FlxSprite();
-			scratch.frames = Paths.getSparrowAtlas('filters/scratchShit');
-			scratch.animation.addByPrefix('e', 'scratch thing', 24, true);
-			scratch.animation.play('e');
-			scratch.cameras = [camOther];
-			add(scratch);
+			case 'war', 'treasureIsland', 'forbiddenRealm', 'fuckingLine', 'vaultRoom', 'vaultRoomLegacy', 'apartment', 'waltRoom':
+				//nothing
+			default:
+				scratch = new FlxSprite();
+				scratch.frames = Paths.getSparrowAtlas('filters/scratchShit');
+				scratch.animation.addByPrefix('e', 'scratch thing', 24, true);
+				scratch.animation.play('e');
+				scratch.cameras = [camOther];
+				add(scratch);
 		}
 	}
 
-	if (PlayState.SONG.stage != "forestNew" && PlayState.SONG.stage != "circus" && PlayState.SONG.stage != 'clubhouse' && PlayState.SONG.stage != 'trueGrinsOfSins' && PlayState.SONG.stage != "apartment")
+	switch (PlayState.SONG.stage)
 	{
-		gf.visible = false;
+		case 'forestNew', 'clubhouse', 'trueGrinsOfSins', 'apartment':
+			//nothing
+		default:
+			gf.visible = false;
 	}
 
 	if (!ClientPrefs.lowQuality)
@@ -155,7 +161,7 @@ function onCountdownTick(swagCounter)
 	var scaleSetter:Int = 1;
 	switch (PlayState.SONG.song)
 	{
-		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday", "Delusion":
+		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Birthday", "Delusion":
 			introAlts = ['cartoon-prepare', 'cartoon-ready', 'cartoon-set', 'cartoon-go'];
 			scaleSetter = 1;
 		case "Malfunction":

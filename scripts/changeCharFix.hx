@@ -71,10 +71,6 @@ function resetCharPos()
             dad.setPosition(-320, 160); // goofy ahh goofy offsets - malyplus
             boyfriend.setPosition(850, -45);
             gf.setPosition(480, 120);
-        case 'circus':
-            dad.setPosition(-990, -100);
-            boyfriend.setPosition(0,-360);
-            gf.setPosition(-300, -200);
         case 'treasureIsland':
             boyfriend.setPosition(1080, 310);
             dad.setPosition(0, 190);
