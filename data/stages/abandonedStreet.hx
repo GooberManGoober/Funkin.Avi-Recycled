@@ -1,46 +1,13 @@
 import openfl.filters.ShaderFilter;
-import flixel.addons.text.FlxTypeText;
 
 import flixel.effects.particles.FlxParticle;
 import flixel.effects.particles.FlxEmitter.FlxEmitterMode;
-
-enum FlashType
-{
-	BG_FLASH;
-	BG_DARK;
-	CAM_FLASH_FANCY;
-}
-
-typedef FlashingSettings = 
-{
-	/**
-	* The visiblity of your background you want it to flash at
-	*/
-	@:optional var alpha:Float;
-
-	/**
-	* How long you want the fade out transition to take
-	*/
-	@:optional var timer:Float;
-
-	/**
-	* Fade out transition easing
-	*/
-	@:optional var ease:(t:Float)->Float;
-
-	/**
-	 * The array of the color values (RGB)
-	 */
-	 @:optional var colors:Array<Int>;
-}
 
 var chromZoomShader:FlxRuntimeShader = newShader('aberration');
 var chromNormalShader:FlxRuntimeShader = newShader('aberrationDefault');
 var dramaticCamMovement:FlxRuntimeShader = newShader('cameraMovement');
 var monitorFilter:FlxRuntimeShader = newShader('monitorFilter');
 var delusionalShift:FlxRuntimeShader = newShader('delusionalShift');
-
-var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
 
 var bg:FlxSprite;
 var floor:FlxSprite;
@@ -51,9 +18,6 @@ var rainTween:FlxTween;
 var pathway:String = 'stages/abandonedStreet/';
 
 var tumbleWeed:FlxSprite;
-var tumbleGrp:FlxTypedGroup;
-
-var dumbCamTwn:FlxTween;
 
 var camPosTween:FlxTween;
 
@@ -68,22 +32,8 @@ var chromEffect:Float = 0.0001;
 var shaderAnim:Float = 0;
 var chromTween:FlxTween;
 
-var stageBGFlash:FlxSprite;
-var BGFlashTween:FlxTween;
-
-var blendFlash:FlxSprite;
-var flashTween:FlxTween;
-
-var lyricsIcon:HealthIcon;
-var lyrics:FlxTypeText;
-var lyricsTween:FlxTween;
-var iconTween:FlxTween;
-
 var drainValue:Float = 0;
 var boundValue:Float = 0;
-
-var camBars:FlxCamera;
-var camVideo:FlxCamera;
 
 function onLoad()
 {
@@ -129,14 +79,6 @@ function onLoad()
         add(totallyanoriginalname);
     }
 
-    stageBGFlash = new FlxSprite().makeGraphic(1, 1, 0xFFFFFFFF);
-	stageBGFlash.scale.set(FlxG.width * 5, FlxG.height * 5);
-	stageBGFlash.alpha = 0.0001; // it's at this value so the game doesn't lag when it becomes visible
-	stageBGFlash.x -= 750;
-	stageBGFlash.y -= 450;
-	stageBGFlash.scrollFactor.set();
-	add(stageBGFlash);
-
     if(!ClientPrefs.lowQulity)
     {
         stageCurtains = new FlxSprite(0, 0).loadGraphic(Paths.image(pathway + 'i_forgor'));
@@ -152,27 +94,7 @@ function onLoad()
 }
 
 function onCreatePost()
-{
-    blendFlash = new FlxSprite().makeGraphic(1, 1, 0xFFFFFFFF);
-	blendFlash.scale.set(FlxG.width * 5, FlxG.height * 5);
-	blendFlash.alpha = 0.0001;
-	blendFlash.blend = BlendMode.ADD;
-	blendFlash.x -= 750;
-	blendFlash.y -= 450;
-	blendFlash.scrollFactor.set();
-	add(blendFlash);
-
-    camVideo = new FlxCamera();
-	camVideo.bgColor = 0x0;
-    FlxG.cameras.insert(camVideo, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
-    
-    camBars = new FlxCamera();
-	camBars.bgColor = 0x0;
-    FlxG.cameras.insert(camBars, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
-    
-    tumbleGrp = new FlxTypedGroup();
-    add(tumbleGrp);
-    
+{    
     if(!ClientPrefs.lowQulity)
     {
         atmosphereParticle = new FlxEmitter(-2080.5, 2100);
@@ -207,8 +129,8 @@ function onCreatePost()
         ashParticle.start(false, FlxG.random.float(.0521, .1060), 1000000);
         ashParticle.angle.set(290, 0);
         ashParticle.launchAngle.set(0, 280);
-        add(atmosphereParticle);
-		add(ashParticle); 
+        foreground.add(atmosphereParticle);
+		foreground.add(ashParticle); 
        
         rain = new FlxSprite(-550, -800);
         rain.frames = Paths.getSparrowAtlas(pathway + 'rain');
@@ -217,7 +139,7 @@ function onCreatePost()
         rain.antialiasing = ClientPrefs.globalAntialiasing;
         rain.alpha = 0.0001;
         rain.animation.play('drippin');
-        add(rain);
+        foreground.add(rain);
     }
 
     // Hardcoded Icons
@@ -278,23 +200,6 @@ function onCreatePost()
             ];
         }
     }
-
-    lyrics = new FlxTypeText(0, FlxG.height - 65, 0, '', 15);
-    lyrics.setFormat(Paths.font('vcr'), 30, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-    lyrics.cameras = [camOther];
-    lyrics.alpha = 0;
-    lyrics.borderSize = 4;
-    lyrics.scrollFactor.set();
-    lyrics.screenCenter(FlxAxes.X).x -= 90;
-    add(lyrics);
-
-    lyricsIcon = new HealthIcon('bf', false);
-    lyricsIcon.x = lyrics.x - 150;
-    lyricsIcon.y = lyrics.y - 65;
-    lyricsIcon.visible = false;
-    lyricsIcon.frameCount = 3;
-    lyricsIcon.cameras = [camOther];
-    add(lyricsIcon);
 
     switch (PlayState.SONG.song)
     {
@@ -458,7 +363,7 @@ function onSongStart()
 
             modManager.queueFuncOnce(88 * 4, (s,s2)->{ 
                 tweenCamera(1.4, 3, 'sineInOut');
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
+                camFlashSystem('flash', {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
             });
 
             modManager.queueFuncOnce(96 * 4, (s,s2)->{ 
@@ -467,33 +372,33 @@ function onSongStart()
 
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 1.5);
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35});
+                camFlashSystem('flash', {alpha: 0.4, timer: 0.35});
             });
 
             modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
                 tweenCamera(1.3, 2, 'sineInOut');
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
+                camFlashSystem('dark', {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
             });
 
             modManager.queueFuncOnce(184 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0.77, timer: 0.5, ease: FlxEase.quartOut});
+                camFlashSystem('dark', {alpha: 0.77, timer: 0.5, ease: FlxEase.quartOut});
             });
 
             modManager.queueFuncOnce(188 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0.6, timer: 0.5, ease: FlxEase.quartOut});
+                camFlashSystem('dark', {alpha: 0.6, timer: 0.5, ease: FlxEase.quartOut});
             });
 
             modManager.queueFuncOnce(192 * 4, (s,s2)->{ 
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 1.5);
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
+                camFlashSystem('flash', {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
                 
                 defaultCamZoom = 1.25;
             });
 
             modManager.queueFuncOnce(220 * 4, (s,s2)->{ 
                 tweenCamera(0.85, 2, 'sineInOut');
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
+                camFlashSystem('flash', {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
             });
 
             modManager.queueFuncOnce(288 * 4, (s,s2)->{ 
@@ -501,23 +406,23 @@ function onSongStart()
 
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 1.5);
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+                camFlashSystem('flash', {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
             });
 
             modManager.queueFuncOnce(352 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
+                camFlashSystem('dark', {alpha: 0.85, timer: 0.5, ease: FlxEase.quartOut});
                 tweenCamera(1.07, 5, 'quadInOut');
                 cameraSpeed -= 0.25;
             });
 
             modManager.queueFuncOnce(376 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 4, ease: FlxEase.quartInOut});
+                camFlashSystem('dark', {alpha: 0, timer: 4, ease: FlxEase.quartInOut});
             });
 
             for (i in [36, 40, 44, 52, 56, 60, 64, 68, 72, 76, 80, 84, 92])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
+                    camFlashSystem('flash', {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
                 });
             }
 
@@ -525,7 +430,7 @@ function onSongStart()
                 280, 284, 292, 296, 300, 308, 312, 316, 324, 328, 332, 340, 344, 348])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.2, timer: 0.35, colors: [194, 194, 194]});
+                    camFlashSystem('flash', {alpha: 0.2, timer: 0.35, colors: [194, 194, 194]});
                 });
             }
 
@@ -533,21 +438,21 @@ function onSongStart()
                 250, 254, 258, 262, 266, 270, 274, 278, 282, 286, 290, 294, 298, 302, 306, 310, 314, 318, 322, 326, 330, 334, 338, 342, 346, 350])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.55, timer: 0.35, colors: [194, 194, 194]});
+                    camFlashSystem('flash', {alpha: 0.55, timer: 0.35, colors: [194, 194, 194]});
                 });
             }
 
             for (i in [194, 196, 198, 200, 202, 204, 206, 210, 212, 214, 222])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
+                    camFlashSystem('flash', {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
                 });
             }
 
             for (i in [216, 217, 218, 219])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
+                    camFlashSystem('flash', {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
                     camHUD.zoom += 0.04;
                 });
             }
@@ -557,7 +462,7 @@ function onSongStart()
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
                     if (ClientPrefs.flashing)
                         camGame.flash(FlxColor.WHITE, 1.5);
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+                    camFlashSystem('flash', {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
                 });
             }
 
@@ -566,7 +471,7 @@ function onSongStart()
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
                     if (ClientPrefs.flashing)
                         camGame.flash(FlxColor.BLACK, 1.5);
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
+                    camFlashSystem('flash', {alpha: 0.32, timer: 1.2, colors: [194, 194, 194]});
                 });
             }
 
@@ -580,12 +485,12 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(224 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+                camFlashSystem('flash', {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
                 if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
             });
 
             modManager.queueFuncOnce(320 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
+                camFlashSystem('flash', {alpha: 0.4, timer: 0.35, colors: [194, 194, 194]});
                 if (ClientPrefs.flashing) camGame.flash(FlxColor.WHITE, 1.5);
             });
 
@@ -628,28 +533,28 @@ function onSongStart()
             for (i in [100, 108, 116, 124, 132, 140, 148])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.5, timer: 0.5, ease: FlxEase.sineOut});
+                    camFlashSystem('flash', {alpha: 0.5, timer: 0.5, ease: FlxEase.sineOut});
                 });
             }
 
             for (i in [160, 230, 240, 248, 256, 262, 272, 280, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 0.5, ease: FlxEase.quadOut});
+                    camFlashSystem('dark', {alpha: 0, timer: 0.5, ease: FlxEase.quadOut});
                 });
             }
 
             for (i in [156, 228, 238, 244, 252, 260, 270, 276, 284, 292, 300, 308, 316, 324, 332, 340, 348])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_DARK, {alpha: 0.77, timer: 0.5, ease: FlxEase.quadOut});
+                    camFlashSystem('dark', {alpha: 0.77, timer: 0.5, ease: FlxEase.quadOut});
                 });
             }
 
             for (i in [424, 432, 440, 448, 456, 464, 472])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.65, timer: 0.6, ease: FlxEase.sineOut});
+                    camFlashSystem('flash', {alpha: 0.65, timer: 0.6, ease: FlxEase.sineOut});
                 });
             }
 
@@ -1233,14 +1138,14 @@ function onSongStart()
             modManager.queueFuncOnce(144 * 4, (s,s2)->{ 
                 defaultCamZoom = 0.8;
                 camBars.fade(0x000000, 5, true);
-                camFlashSystem(FlashType.BG_DARK, {alpha: 1, timer: 0.3, ease: FlxEase.quartInOut});
+                camFlashSystem('dark', {alpha: 1, timer: 0.3, ease: FlxEase.quartInOut});
                 defaultCamZoom = 1.2;
                 camFollow.x -= 100;
                 FlxTween.tween(camFollow, {x: camFollow.x + 100}, 12, {ease: FlxEase.sineInOut});
             });
 
             modManager.queueFuncOnce(176 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 0.3, ease: FlxEase.quartInOut});
+                camFlashSystem('dark', {alpha: 0, timer: 0.3, ease: FlxEase.quartInOut});
                 defaultCamZoom = 0.75;
                 camGame.flash(FlxColor.WHITE, 1);
 
@@ -1254,7 +1159,7 @@ function onSongStart()
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
                     camGame.zoom += 0.3;
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.5, timer: 0.35});
+                    camFlashSystem('flash', {alpha: 0.5, timer: 0.35});
                 });
             }
 
@@ -1262,7 +1167,7 @@ function onSongStart()
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
                     camGame.zoom += 0.15;
-                    camFlashSystem(FlashType.BG_FLASH, {alpha: 0.25, timer: 0.35});
+                    camFlashSystem('flash', {alpha: 0.25, timer: 0.35});
                 });
             }
 
@@ -1499,7 +1404,7 @@ function onSongStart()
             modManager.queueFuncOnce(672 * 4, (s,s2)->{ 
                 blendFlash.cameras = [camBars];
                 boyfriend.alpha = 0.0001;
-                camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.38, timer: 0.85, colors: [255, 255, 255]});
+                camFlashSystem('fancy flash', {alpha: 0.38, timer: 0.85, colors: [255, 255, 255]});
                 minnieJumpscare.resume();
                 minnieJumpscare.visible = true;
             });
@@ -1567,7 +1472,7 @@ function onSongStart()
             for (i in [880, 884, 888, 892, 896, 900, 904, 908, 913, 916, 920, 924, 929, 933, 936, 940, 944, 948, 952, 956, 960, 964, 968, 972, 976, 980, 984, 988, 993, 997, 1000, 1004])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.135, timer: 0.85, colors: [255, 0, 0]});
+                    camFlashSystem('fancy flash', {alpha: 0.135, timer: 0.85, colors: [255, 0, 0]});
                 });
             }
 
@@ -1576,8 +1481,8 @@ function onSongStart()
                 boundValue = 1.5;
                 drainValue = 0.01;
                 tweenCamera(1.35, 7, "quartInOut");
-                camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, timer: 2, colors: [255, 0, 0]});
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0.8, timer: 6, ease: FlxEase.quartInOut});
+                camFlashSystem('fancy flash', {alpha: 0.4, timer: 2, colors: [255, 0, 0]});
+                camFlashSystem('dark', {alpha: 0.8, timer: 6, ease: FlxEase.quartInOut});
                 isCameraOnForcedPos = true;
                 camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150, y: camFollow.y + 50}, 4.3, {ease: FlxEase.quartInOut});
             });
@@ -1593,7 +1498,7 @@ function onSongStart()
                 camFollow.x = 475;
                 camFollow.y = 450;
                 defaultCamZoom = 0.5;
-                camFlashSystem(FlashType.BG_DARK, {alpha: 0, timer: 1, ease: FlxEase.circOut});
+                camFlashSystem('dark', {alpha: 0, timer: 1, ease: FlxEase.circOut});
             });
 
             modManager.queueFuncOnce(1072 * 4, (s,s2)->{ 
@@ -1609,7 +1514,7 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(1086 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_DARK, {timer: 5});
+                camFlashSystem('dark', {timer: 5});
 
                 camGame.visible = false;
 				FlxTween.tween(camHUD, {alpha: 0}, 2);
@@ -1632,7 +1537,7 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(1136 * 4, (s,s2)->{ 
-                camFlashSystem(FlashType.BG_FLASH, {alpha: 1, timer: 0.3, ease: FlxEase.sineOut});
+                camFlashSystem('flash', {alpha: 1, timer: 0.3, ease: FlxEase.sineOut});
                 if (ClientPrefs.shaders)
                 {
                     if (!ClientPrefs.lowQuality)
@@ -1744,7 +1649,7 @@ function summonWeedMakerLmfao()
         loopTime[2] = 5.6;
     }
     tumbleWeed.velocity.set(velocityX, 0);
-    tumbleGrp.add(tumbleWeed);
+    foreground.add(tumbleWeed);
     FlxTween.tween(tumbleWeed, {angle: -360}, loopTime[0], {type: 2});
     FlxTween.tween(tumbleWeed, {y: bounceVal}, loopTime[1], {ease: FlxEase.sineInOut, type: 4});
     new FlxTimer().start(loopTime[2], function(tmr:FlxTimer)
@@ -1752,279 +1657,6 @@ function summonWeedMakerLmfao()
         tumbleWeed.kill();
         tumbleWeed = null;
     });
-}
-
-function camFlashSystem(flashType:FlashType, settings:FlashingSettings)
-{
-    // null checkes
-    if (settings.colors == null) settings.colors = [255, 255, 255];
-    if (settings.timer == null) settings.timer = 3;
-    if (settings.ease == null) settings.ease = FlxEase.linear;
-    if (settings.alpha == null) settings.alpha = .5;
-
-    // due to the fact that some silly 19 year old guy called demo overuses the shit
-    // out of the zooms this has to exist in cases of emergency   - jason the silly !!
-    // stageBGFlash.setPosition(-FlxG.width * FlxG.camera.zoom, -FlxG.height * FlxG.camera.zoom);
-
-    if (ClientPrefs.flashing && stageBGFlash != null)
-    {
-        switch (flashType)
-        {
-            case FlashType.BG_FLASH:
-                if (settings.alpha > 1 || settings.alpha < 0) // prevents a crash from making a dumb mistake
-                    stageBGFlash.alpha = 0.5;
-                else
-                    stageBGFlash.alpha = settings.alpha;
-
-                if (settings.timer <= 0) // another check to prevent a crash
-                    settings.timer = 1;
-
-                if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) // blend check cause it makes it look cool
-                    stageBGFlash.blend = BlendMode.NORMAL;
-                else
-                    stageBGFlash.blend = BlendMode.ADD;
-
-                stageBGFlash.color = FlxColor.fromRGB(settings.colors[0], settings.colors[1], settings.colors[2], 255);
-
-                if (BGFlashTween != null) // makes it so it won't look wonky, visually
-                    BGFlashTween.cancel();
-
-                BGFlashTween = FlxTween.tween(stageBGFlash, {alpha: 0}, settings.timer, {
-                    ease: settings.ease,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        BGFlashTween = null;
-                    }
-                });
-
-            case FlashType.BG_DARK:
-                if (stageBGFlash != null)
-                {
-                    if (BGFlashTween != null)
-                        BGFlashTween.cancel();
-
-                    if (stageBGFlash.blend != BlendMode.NORMAL)
-                        stageBGFlash.blend = BlendMode.NORMAL;
-
-                    if (settings.timer <= 0)
-                        settings.timer = 1;
-
-                    stageBGFlash.color = FlxColor.BLACK; // hardcoded to be black
-
-                    BGFlashTween = FlxTween.tween(stageBGFlash, {alpha: settings.alpha}, settings.timer, {
-                        ease: settings.ease,
-                        onComplete: function(twn:FlxTween)
-                        {
-                            BGFlashTween = null;
-                        }
-                    });
-                }
-            
-            case FlashType.CAM_FLASH_FANCY:
-                if (blendFlash != null)
-                {
-                    if (settings.alpha > 1 || settings.alpha < 0) // prevents a crash from making a dumb mistake
-                        blendFlash.alpha = 0.5;
-                    else
-                        blendFlash.alpha = settings.alpha;
-
-                    if (settings.timer <= 0) // another check to prevent a crash
-                        settings.timer = 1;
-
-                    if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) // turn it to white, cause I can
-                        blendFlash.blend = BlendMode.NORMAL;
-                    else
-                        blendFlash.blend = BlendMode.ADD;
-
-                    if (flashTween != null)
-                        flashTween.cancel();
-
-                    blendFlash.color = FlxColor.fromRGB(settings.colors[0], settings.colors[1], settings.colors[2], 255);
-
-                    flashTween = FlxTween.tween(blendFlash, {alpha: 0}, settings.timer, {
-                        ease: settings.ease,
-                        onComplete: function(twn:FlxTween)
-                        {
-                            flashTween = null;
-                        }
-                    });
-                }
-        }
-    }
-}
-
-function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String>):Void
-{
-    if (dumbCamTwn != null)
-        dumbCamTwn.cancel();
-    
-    dumbCamTwn = FlxTween.tween(camGame, {zoom: zoom}, time, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-    {
-        defaultCamZoom = zoom;
-        dumbCamTwn = null;
-    }});
-}
-
-function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5, tweenType:String = 'linear', textDelay:Float = 0.03)
-{
-	if (!lyricsIcon.visible)
-	{
-		lyricsIcon.visible = true;
-		lyricsIcon.alpha = 0;
-	}
-
-	lyricsIcon.changeIcon(icon, false, false, false);
-
-	if (icon == "satandd")
-		lyricsIcon.y = lyrics.y - 80;
-	else
-		lyricsIcon.y = lyrics.y - 65;
-
-	lyrics.font = Paths.font(font);
-	lyrics.resetText(text);
-	lyrics.start(textDelay); // currently placeholder time !!
-
-	if (lyricsTween != null)
-		lyricsTween.cancel();
-
-	if (iconTween != null)
-		iconTween.cancel();
-
-	iconTween = FlxTween.tween(lyricsIcon, {
-		'scale.x': 1,
-		'scale.y': 1,
-		alpha: 1
-	}, 0.5, {
-		ease: CoolUtil.getEaseFromString(tweenType),
-		onComplete: function(twn:FlxTween)
-		{
-			iconTween = FlxTween.tween(lyricsIcon, {alpha: 0, 'scale.x': 0, 'scale.y': 0}, 0.25, {
-				startDelay: duration,
-				ease: CoolUtil.getEaseFromString(tweenType),
-				onComplete: function(twn:FlxTween)
-				{
-					iconTween = null;
-				}
-			});
-		}
-	});
-
-	lyricsTween = FlxTween.tween(lyrics, {
-		size: size,
-		alpha: 1
-	}, 0.5, {
-		ease: CoolUtil.getEaseFromString(tweenType),
-		onComplete: function(twn:FlxTween)
-		{
-			lyricsTween = FlxTween.tween(lyrics, {alpha: 0, size: 0}, 0.25, {
-				startDelay: duration,
-				ease: CoolUtil.getEaseFromString(tweenType),
-				onComplete: function(twn:FlxTween)
-				{
-					lyricsTween = null;
-				}
-			});
-		}
-	});
-}
-
-var topBarTwn:FlxTween;
-var bottomBarTwn:FlxTween;
-
-function cinematicBarControls(?controlType:String = "add", ?speed:Float, ?ease:String = "circInOut", ?position:Float = 0, ?bopValue:Float = 0)
-{
-	switch (controlType.toLowerCase())
-	{
-		case "add", "create":
-			// idk if i should change this cus i dont wanna fuck up and i lazy to test them lol -sylinpix (jason)
-			if (cinematicBars["top"] == null)
-			{
-				cinematicBars["top"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-				cinematicBars["top"].screenCenter(FlxAxes.X);
-				cinematicBars["top"].cameras = [camBars];
-				cinematicBars["top"].y = 0 - cinematicBars["top"].height; // offscreen
-				add(cinematicBars["top"]);
-			}
-
-			if (cinematicBars["bottom"] == null)
-			{
-				cinematicBars["bottom"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-				cinematicBars["bottom"].screenCenter(FlxAxes.X);
-				cinematicBars["bottom"].cameras = [camBars];
-				cinematicBars["bottom"].y = FlxG.height; // offscreen
-				add(cinematicBars["bottom"]);
-			}
-			
-		case "remove", "kill", "delete":
-			if (cinematicBars["top"] != null)
-			{
-				cinematicBars["top"].kill();
-				cinematicBars["top"] = null;
-			}
-			if (cinematicBars["bottom"] != null)
-			{
-				cinematicBars["bottom"].kill();
-				cinematicBars["bottom"] = null;
-			}
-			
-		case "movetop", "move top":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-
-			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				topBarTwn = null;
-			}});
-			
-		case "movebottom", "move bottom":
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
-
-			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: FlxG.height - position}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				bottomBarTwn = null;
-			}});
-			
-		case "moveboth", "move both":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
-
-			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				topBarTwn = null;
-			}});
-			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: FlxG.height - position}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				bottomBarTwn = null;
-			}});
-			
-		case "boptop", "bop top":
-			cinematicBars["top"].y = position - FlxG.height;
-			FlxTween.tween(cinematicBars["top"], {y: (position - FlxG.height) + bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease)});
-			
-		case "bopbottom", "bop bottom":
-			cinematicBars["bottom"].y = FlxG.height - position;
-			FlxTween.tween(cinematicBars["bottom"], {y: (FlxG.height - position) - bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease)});
-			
-		case "bopboth", "bop both":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
-
-			cinematicBars["top"].y = position - FlxG.height;
-			cinematicBars["bottom"].y = FlxG.height - position;
-			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: (position - FlxG.height) + bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				topBarTwn = null;
-			}});
-			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: (FlxG.height - position) - bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				bottomBarTwn = null;
-			}});
-	}
 }
 
 function opponentNoteHit(note)

@@ -1,33 +1,5 @@
 import openfl.filters.ShaderFilter;
 
-enum FlashType
-{
-	CAM_FLASH_FANCY;
-}
-
-typedef FlashingSettings = 
-{
-	/**
-	* The visiblity of your background you want it to flash at
-	*/
-	@:optional var alpha:Float;
-
-	/**
-	* How long you want the fade out transition to take
-	*/
-	@:optional var timer:Float;
-
-	/**
-	* Fade out transition easing
-	*/
-	@:optional var ease:(t:Float)->Float;
-
-	/**
-	 * The array of the color values (RGB)
-	 */
-	 @:optional var colors:Array<Int>;
-}
-
 var waltScreenThing:FlxSprite; // idk, this is needed too for some reason
 var inkFormWarning:FlxText;
 var spaceBarCounter:FlxText;
@@ -49,11 +21,6 @@ var pathway:String = 'stages/waltRoom/';
 var mercyTmr:FlxTimer;
 var disabledDrain:Bool = false;
 var initialCount:Int = 0;
-
-var dumbCamTwn:FlxTween;
-
-var blendFlash:FlxSprite;
-var flashTween:FlxTween;
 
 function onLoad()
 {
@@ -145,15 +112,6 @@ function onCreatePost()
     add(greaterPiss);
     boyfriend.visible = false;
     iconP2.y -= 20;
-
-    blendFlash = new FlxSprite().makeGraphic(1, 1, 0xFFFFFFFF);
-	blendFlash.scale.set(FlxG.width * 5, FlxG.height * 5);
-	blendFlash.alpha = 0.0001;
-	blendFlash.blend = BlendMode.ADD;
-	blendFlash.x -= 750;
-	blendFlash.y -= 450;
-	blendFlash.scrollFactor.set();
-	add(blendFlash);
 
     waltScreenThing = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xFF000000);
     waltScreenThing.scrollFactor.set();
@@ -447,72 +405,15 @@ function onEvent(name, value1, value2)
                 for (bullshit in [retardedButPissBehind, sameAsAdobe, pissOfGlory, greaterPiss])
                     bullshit.visible = false;
                 modManager.setValue("alpha", 1, 1);
-                camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.5, ease: FlxEase.sineOut, timer: 0.2, colors: [247, 230, 166]});
+                camFlashSystem('fancy flash', {alpha: 0.5, ease: FlxEase.sineOut, timer: 0.2, colors: [247, 230, 166]});
 
             case "finish":
                 for (bullshit in [retardedButPissBehind, sameAsAdobe, pissOfGlory, greaterPiss])
                     bullshit.visible = true;
-                camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.5, ease: FlxEase.sineOut, timer: 0.2, colors: [247, 230, 166]});
+                camFlashSystem('fancy flash', {alpha: 0.5, ease: FlxEase.sineOut, timer: 0.2, colors: [247, 230, 166]});
                 FlxTween.tween(sameAsAdobe, {alpha: 0}, 0.25, {ease: FlxEase.sineOut});
                 modManager.setValue("alpha", 0.5, 1);
                 FlxTween.tween(camHUD, {alpha: 1}, 0.31, {ease: FlxEase.sineInOut});
         }
     }
-}
-
-function camFlashSystem(flashType:FlashType, settings:FlashingSettings)
-{
-    // null checkes
-    if (settings.colors == null) settings.colors = [255, 255, 255];
-    if (settings.timer == null) settings.timer = 3;
-    if (settings.ease == null) settings.ease = FlxEase.linear;
-    if (settings.alpha == null) settings.alpha = .5;
-
-    if (ClientPrefs.flashing)
-    {
-        switch (flashType)
-        {
-            case FlashType.CAM_FLASH_FANCY:
-                if (blendFlash != null)
-                {
-                    if (settings.alpha > 1 || settings.alpha < 0) // prevents a crash from making a dumb mistake
-                        blendFlash.alpha = 0.5;
-                    else
-                        blendFlash.alpha = settings.alpha;
-
-                    if (settings.timer <= 0) // another check to prevent a crash
-                        settings.timer = 1;
-
-                    if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) // turn it to white, cause I can
-                        blendFlash.blend = BlendMode.NORMAL;
-                    else
-                        blendFlash.blend = BlendMode.ADD;
-
-                    if (flashTween != null)
-                        flashTween.cancel();
-
-                    blendFlash.color = FlxColor.fromRGB(settings.colors[0], settings.colors[1], settings.colors[2], 255);
-
-                    flashTween = FlxTween.tween(blendFlash, {alpha: 0}, settings.timer, {
-                        ease: settings.ease,
-                        onComplete: function(twn:FlxTween)
-                        {
-                            flashTween = null;
-                        }
-                    });
-                }
-        }
-    }
-}
-
-function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String>):Void
-{
-    if (dumbCamTwn != null)
-        dumbCamTwn.cancel();
-    
-    dumbCamTwn = FlxTween.tween(camGame, {zoom: zoom}, time, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-    {
-        defaultCamZoom = zoom;
-        dumbCamTwn = null;
-    }});
 }

@@ -82,8 +82,8 @@ function onCreatePost()
         ashParticle.start(false, FlxG.random.float(.0521, .1060), 1000000);
         ashParticle.angle.set(290, 0);
         ashParticle.launchAngle.set(0, 280);
-        add(atmosphereParticle);
-		add(ashParticle);
+        foreground.add(atmosphereParticle);
+		foreground.add(ashParticle);
     }
 
     if (ClientPrefs.shaders)

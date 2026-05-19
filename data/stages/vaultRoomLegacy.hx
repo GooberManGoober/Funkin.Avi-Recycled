@@ -32,10 +32,10 @@ function onCreatePost()
 	chains = new FlxSprite(-225, -100).loadGraphic(Paths.image(pathway + 'chains'));
 	chains.scale.set(1.5, 1.3);
 	chains.scrollFactor.set(1.2, 1.25);
-	add(chains);
+	foreground.add(chains);
 	thingy = new FlxSprite(-200, -100).loadGraphic(Paths.image(pathway + 'holyshitdarkness'));
 	thingy.scale.set(1.45, 1.3);
-	add(thingy);
+	foreground.add(thingy);
 }
 
 function onSongStart()

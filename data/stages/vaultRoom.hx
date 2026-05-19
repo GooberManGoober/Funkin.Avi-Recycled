@@ -1,33 +1,5 @@
 import openfl.filters.ShaderFilter;
 
-enum FlashType
-{
-	CAM_FLASH_FANCY;
-}
-
-typedef FlashingSettings = 
-{
-	/**
-	* The visiblity of your background you want it to flash at
-	*/
-	@:optional var alpha:Float;
-
-	/**
-	* How long you want the fade out transition to take
-	*/
-	@:optional var timer:Float;
-
-	/**
-	* Fade out transition easing
-	*/
-	@:optional var ease:(t:Float)->Float;
-
-	/**
-	 * The array of the color values (RGB)
-	 */
-	 @:optional var colors:Array<Int>;
-}
-
 var chains:FlxSprite;
 var vault:FlxSprite;
 var thingy:FlxSprite;
@@ -38,12 +10,6 @@ var flair:FlxSprite;
 
 var othershader:FlxRuntimeShader = newShader('blessLightsShit');
 var invert:FlxRuntimeShader = newShader('invertShader');
-
-var stageBGFlash:FlxSprite;
-var BGFlashTween:FlxTween;
-
-var blendFlash:FlxSprite;
-var flashTween:FlxTween;
 
 var letsFight:FunkinVideoSprite;
 
@@ -83,33 +49,16 @@ function onLoad()
 
     thingy = new FlxSprite(-200, -100).loadGraphic(Paths.image(pathway + 'darkness'));
     thingy.scale.set(2.45, 2.3);
-
-    stageBGFlash = new FlxSprite().makeGraphic(1, 1, 0xFFFFFFFF);
-    stageBGFlash.scale.set(FlxG.width * 5, FlxG.height * 5);
-    stageBGFlash.alpha = 0.0001; // it's at this value so the game doesn't lag when it becomes visible
-    stageBGFlash.x -= 750;
-    stageBGFlash.y -= 450;
-    stageBGFlash.scrollFactor.set();
-    add(stageBGFlash);
 }
 
 function onCreatePost()
 {
-    add(chains3);
-    add(chains2);
-    add(chains);
-    add(light);
-    add(flair);
-    add(thingy);
-
-    blendFlash = new FlxSprite().makeGraphic(1, 1, 0xFFFFFFFF);
-    blendFlash.scale.set(FlxG.width * 5, FlxG.height * 5);
-    blendFlash.alpha = 0.0001;
-    blendFlash.blend = BlendMode.ADD;
-    blendFlash.x -= 750;
-    blendFlash.y -= 450;
-    blendFlash.scrollFactor.set();
-    add(blendFlash);
+    foreground.add(chains3);
+    foreground.add(chains2);
+    foreground.add(chains);
+    foreground.add(light);
+    foreground.add(flair);
+    foreground.add(thingy);
 
     dad.blend = BlendMode.ADD;
     iconP2.blend = BlendMode.ADD;
@@ -192,7 +141,7 @@ function onSongStart()
 
     modManager.queueFuncOnce(615, (s,s2)->{ 
         defaultCamZoom = 0.95;
-        camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
+        camFlashSystem('fancy flash', {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
     });
 
     modManager.queueFuncOnce(862, (s,s2)->{ 
@@ -233,7 +182,7 @@ function onSongStart()
         defaultCamZoom = 0.9;
         camGame.visible = true;
         camGame.zoom += 0.15;
-        camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.45, timer: 0.25});
+        camFlashSystem('fancy flash', {alpha: 0.45, timer: 0.25});
     });
 
     modManager.queueFuncOnce(2018, (s,s2)->{ 
@@ -242,7 +191,7 @@ function onSongStart()
 
     modManager.queueFuncOnce(2024, (s,s2)->{ 
         defaultCamZoom = 0.95;
-        camFlashSystem(FlashType.CAM_FLASH_FANCY, {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
+        camFlashSystem('fancy flash', {alpha: 0.4, ease: FlxEase.circOut, timer: 1.35});
     });
 
     modManager.queueFuncOnce(2187, (s,s2)->{ 
@@ -290,55 +239,6 @@ function onSongStart()
         camGame.visible = false;
         FlxTween.tween(playHUD, {alpha: 0}, 2);
     });
-}
-
-function camFlashSystem(flashType:FlashType, settings:FlashingSettings)
-{
-    // null checkes
-    if (settings.colors == null) settings.colors = [255, 255, 255];
-    if (settings.timer == null) settings.timer = 3;
-    if (settings.ease == null) settings.ease = FlxEase.linear;
-    if (settings.alpha == null) settings.alpha = .5;
-
-    // due to the fact that some silly 19 year old guy called demo overuses the shit
-    // out of the zooms this has to exist in cases of emergency   - jason the silly !!
-    // stageBGFlash.setPosition(-FlxG.width * FlxG.camera.zoom, -FlxG.height * FlxG.camera.zoom);
-
-    if (ClientPrefs.flashing && stageBGFlash != null)
-    {
-        switch (flashType)
-        {
-            case FlashType.CAM_FLASH_FANCY:
-                if (blendFlash != null)
-                {
-                    if (settings.alpha > 1 || settings.alpha < 0) // prevents a crash from making a dumb mistake
-                        blendFlash.alpha = 0.5;
-                    else
-                        blendFlash.alpha = settings.alpha;
-
-                    if (settings.timer <= 0) // another check to prevent a crash
-                        settings.timer = 1;
-
-                    if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) // turn it to white, cause I can
-                        blendFlash.blend = BlendMode.NORMAL;
-                    else
-                        blendFlash.blend = BlendMode.ADD;
-
-                    if (flashTween != null)
-                        flashTween.cancel();
-
-                    blendFlash.color = FlxColor.fromRGB(settings.colors[0], settings.colors[1], settings.colors[2], 255);
-
-                    flashTween = FlxTween.tween(blendFlash, {alpha: 0}, settings.timer, {
-                        ease: settings.ease,
-                        onComplete: function(twn:FlxTween)
-                        {
-                            flashTween = null;
-                        }
-                    });
-                }
-        }
-    }
 }
 
 function onDestroy()

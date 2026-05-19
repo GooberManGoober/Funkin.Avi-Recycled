@@ -1,42 +1,7 @@
-import flixel.addons.text.FlxTypeText;
-
-enum FlashType
-{
-	BG_FLASH;
-}
-
-typedef FlashingSettings = 
-{
-	/**
-	* The visiblity of your background you want it to flash at
-	*/
-	@:optional var alpha:Float;
-
-	/**
-	* How long you want the fade out transition to take
-	*/
-	@:optional var timer:Float;
-
-	/**
-	* Fade out transition easing
-	*/
-	@:optional var ease:(t:Float)->Float;
-
-	/**
-	 * The array of the color values (RGB)
-	 */
-	 @:optional var colors:Array<Int>;
-}
-
 var pathway:String = 'stages/apartment/';
 
 var bg1:FlxSprite;
 var dodgeWarning:FlxSprite;
-
-var lyricsIcon:HealthIcon;
-var lyrics:FlxTypeText;
-var lyricsTween:FlxTween;
-var iconTween:FlxTween;
 
 var dodged:Bool;
 var shootin:Bool;
@@ -82,12 +47,6 @@ var textGroup:FlxTypedGroup;
 
 var sinsEnd:Bool = false;
 
-var stageBGFlash:FlxSprite;
-var BGFlashTween:FlxTween;
-
-var blendFlash:FlxSprite;
-var flashTween:FlxTween;
-
 function onLoad()
 {
     defaultCamZoom = 0.46;
@@ -112,33 +71,6 @@ function onLoad()
 
 function onCreatePost()
 {
-    blendFlash = new FlxSprite().makeGraphic(1, 1, 0xFFFFFFFF);
-	blendFlash.scale.set(FlxG.width * 5, FlxG.height * 5);
-	blendFlash.alpha = 0.0001;
-	blendFlash.blend = BlendMode.ADD;
-	blendFlash.x -= 750;
-	blendFlash.y -= 450;
-	blendFlash.scrollFactor.set();
-	add(blendFlash);
-    
-    lyrics = new FlxTypeText(0, FlxG.height - 65, 0, '', 15);
-    lyrics.setFormat(Paths.font('vcr'), 30, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-    lyrics.cameras = [camOther];
-    lyrics.alpha = 0;
-    lyrics.borderSize = 4;
-    lyrics.scrollFactor.set();
-    lyrics.screenCenter(FlxAxes.X).x -= 90;
-    add(lyrics);
-
-    lyricsIcon = new HealthIcon('bf', false);
-    lyricsIcon.x = lyrics.x - 150;
-    lyricsIcon.y = lyrics.y - 65;
-    lyricsIcon.visible = false;
-    lyricsIcon.scale.set(0.85, 0.85);
-    lyricsIcon.frameCount = 3;
-    lyricsIcon.cameras = [camOther];
-    add(lyricsIcon);
-    
     dodgeWarning = new FlxSprite(1080, 540).loadGraphic(Paths.image('UI/dodgeSins/cycledWarn' + (FlxG.random.bool(2) ? "-alt" : "")));
     dodgeWarning.antialiasing = false;
     dodgeWarning.scale.set(4, 4);
@@ -160,7 +92,7 @@ function onCreatePost()
 	camHUD.alpha = 0.001;
 
     modManager.setValue("opponentSwap", 0.5);
-    modManager.setValue("alpha", 1, 1);
+    modManager.setValue("opponentSwap", 10, 1);
 }
 
 function onUpdate(elapsed)
@@ -379,7 +311,7 @@ function onSongStart()
     for (i in [400, 404, 408, 412, 416, 420, 424, 428])
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            camFlashSystem(FlashType.BG_FLASH, {alpha: 0.32, timer: 1.2, colors: [255, 0, 0]});
+            camFlashSystem('flash', {alpha: 0.32, timer: 1.2, colors: [255, 0, 0]});
             FlxG.camera.zoom += 0.1;
         });
     }
@@ -455,115 +387,6 @@ function relapseGimmick(reactionTime:Float = 2, damageAmount:Float = 0.4, ?doubl
             }
         });
     });
-}
-
-function camFlashSystem(flashType:FlashType, settings:FlashingSettings)
-{
-    // null checkes
-    if (settings.colors == null) settings.colors = [255, 255, 255];
-    if (settings.timer == null) settings.timer = 3;
-    if (settings.ease == null) settings.ease = FlxEase.linear;
-    if (settings.alpha == null) settings.alpha = .5;
-
-    // due to the fact that some silly 19 year old guy called demo overuses the shit
-    // out of the zooms this has to exist in cases of emergency   - jason the silly !!
-    // stageBGFlash.setPosition(-FlxG.width * FlxG.camera.zoom, -FlxG.height * FlxG.camera.zoom);
-
-    if (ClientPrefs.flashing && stageBGFlash != null)
-    {
-        switch (flashType)
-        {
-            case FlashType.BG_FLASH:
-                if (settings.alpha > 1 || settings.alpha < 0) // prevents a crash from making a dumb mistake
-                    stageBGFlash.alpha = 0.5;
-                else
-                    stageBGFlash.alpha = settings.alpha;
-
-                if (settings.timer <= 0) // another check to prevent a crash
-                    settings.timer = 1;
-
-                if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) // blend check cause it makes it look cool
-                    stageBGFlash.blend = BlendMode.NORMAL;
-                else
-                    stageBGFlash.blend = BlendMode.ADD;
-
-                stageBGFlash.color = FlxColor.fromRGB(settings.colors[0], settings.colors[1], settings.colors[2], 255);
-
-                if (BGFlashTween != null) // makes it so it won't look wonky, visually
-                    BGFlashTween.cancel();
-
-                BGFlashTween = FlxTween.tween(stageBGFlash, {alpha: 0}, settings.timer, {
-                    ease: settings.ease,
-                    onComplete: function(twn:FlxTween)
-                    {
-                        BGFlashTween = null;
-                    }
-                });
-        }
-    }
-}
-
-function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5, tweenType:String = 'linear', ?textDelay:Float = 0.03)
-{
-	if (!lyricsIcon.visible)
-	{
-		lyricsIcon.visible = true;
-		lyricsIcon.alpha = 0;
-	}
-
-	lyricsIcon.changeIcon(icon, false, false, false);
-
-	if (icon == "satandd")
-		lyricsIcon.y = lyrics.y - 80;
-	else
-		lyricsIcon.y = lyrics.y - 65;
-
-	lyrics.font = Paths.font(font);
-	lyrics.resetText(text);
-	lyrics.start(textDelay); // currently placeholder time !!
-
-	if (lyricsTween != null)
-		lyricsTween.cancel();
-
-	if (iconTween != null)
-		iconTween.cancel();
-
-	iconTween = FlxTween.tween(lyricsIcon, {
-		'scale.x': 0.85,
-		'scale.y': 0.85,
-		alpha: 1
-	}, 0.5, {
-		ease: CoolUtil.getEaseFromString(tweenType),
-		onComplete: function(twn:FlxTween)
-		{
-			iconTween = FlxTween.tween(lyricsIcon, {alpha: 0, 'scale.x': 0, 'scale.y': 0}, 0.25, {
-				startDelay: duration,
-				ease: CoolUtil.getEaseFromString(tweenType),
-				onComplete: function(twn:FlxTween)
-				{
-					iconTween = null;
-				}
-			});
-		}
-	});
-
-	lyricsTween = FlxTween.tween(lyrics, {
-		size: size,
-		alpha: 1
-	}, 0.5, {
-		ease: CoolUtil.getEaseFromString(tweenType),
-		onComplete: function(twn:FlxTween)
-		{
-			lyricsTween = FlxTween.tween(lyrics, {alpha: 0, size: 0}, 0.25, {
-				startDelay: duration,
-				ease: CoolUtil.getEaseFromString(tweenType),
-				onComplete: function(twn:FlxTween)
-				{
-					lyricsTween = null;
-				}
-			});
-		}
-	});
 }
 
 var mercyTmr:FlxTimer;

@@ -124,11 +124,25 @@ function onBeatHit()
     }
 }
 
+function opponentNoteHit(note)
+{
+    if (note.noteData == 1 || note.noteData == 2)
+        modManager.setValue('receptor${note.noteData}ScaleY', -0.5, 1);
+    else
+        modManager.setValue('receptor${note.noteData}ScaleX', -0.5, 1);
+}
+
 function onUpdate(elapsed)
 {
     aberrationTimer -= 0.01;
 
     muckneyHealthColorShitLol();
+
+    for (i in 0...4)
+    {
+        modManager.setValue('receptor${i}ScaleX', FlxMath.lerp(modManager.getValue('receptor${i}ScaleX', 1), 0, FlxMath.bound(elapsed * 2.4 * 3, 0, 1)), 1);
+        modManager.setValue('receptor${i}ScaleY', FlxMath.lerp(modManager.getValue('receptor${i}ScaleY', 1), 0, FlxMath.bound(elapsed * 2.4 * 3, 0, 1)), 1);
+    }
 }
 
 function muckneyHealthColorShitLol()

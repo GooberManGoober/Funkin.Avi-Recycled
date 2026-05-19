@@ -19,6 +19,7 @@ import lime.app.Application;
 using StringTools;
 
 var options:Array<String> = [
+    'Notes',
     'Controls',
     'Graphics',
     'Visuals and UI',
@@ -36,6 +37,8 @@ var controls = Controls.instance;
 
 function openSelectedSubstate(label:String) {
     switch(label) {
+        case 'Notes':
+            openSubState(new NoteSettingsSubState());
         case 'Controls':
             openSubState(new ControlsSubState());
         case 'Graphics':

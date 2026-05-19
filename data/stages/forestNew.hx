@@ -15,9 +15,6 @@ var camHudMoves:Bool = false;
 
 var uhhTurnBackNormalOrSmth:Void->Void;
 
-var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
-var camBars:FlxCamera;
-
 var pathway:String = 'stages/forestNew/';
 
 function onLoad()
@@ -59,11 +56,7 @@ function onLoad()
 
 function onCreatePost()
 {
-    add(treesFront);
-
-    camBars = new FlxCamera();
-	camBars.bgColor = 0x0;
-    FlxG.cameras.insert(camBars, FlxG.cameras.list.indexOf(PlayState.camHUD) - 1, false);
+    foreground.add(treesFront);
 
     if (ClientPrefs.shaders)
     {
@@ -238,103 +231,4 @@ function onUpdate(elapsed)
         // illegal instruction moment
         FlxTween.tween(PlayState.instance, {health: FlxG.random.float(0.024, 2)}, 0.3);
     }
-}
-
-var topBarTwn:FlxTween;
-var bottomBarTwn:FlxTween;
-
-function cinematicBarControls(?controlType:String = "add", ?speed:Float, ?ease:String = "circInOut", ?position:Float = 0, ?bopValue:Float = 0)
-{
-	switch (controlType.toLowerCase())
-	{
-		case "add", "create":
-			// idk if i should change this cus i dont wanna fuck up and i lazy to test them lol -sylinpix (jason)
-			if (cinematicBars["top"] == null)
-			{
-				cinematicBars["top"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-				cinematicBars["top"].screenCenter(FlxAxes.X);
-				cinematicBars["top"].cameras = [camBars];
-				cinematicBars["top"].y = 0 - cinematicBars["top"].height; // offscreen
-				add(cinematicBars["top"]);
-			}
-
-			if (cinematicBars["bottom"] == null)
-			{
-				cinematicBars["bottom"] = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-				cinematicBars["bottom"].screenCenter(FlxAxes.X);
-				cinematicBars["bottom"].cameras = [camBars];
-				cinematicBars["bottom"].y = FlxG.height; // offscreen
-				add(cinematicBars["bottom"]);
-			}
-			
-		case "remove", "kill", "delete":
-			if (cinematicBars["top"] != null)
-			{
-				cinematicBars["top"].kill();
-				cinematicBars["top"] = null;
-			}
-			if (cinematicBars["bottom"] != null)
-			{
-				cinematicBars["bottom"].kill();
-				cinematicBars["bottom"] = null;
-			}
-			
-		case "movetop", "move top":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-
-			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				topBarTwn = null;
-			}});
-			
-		case "movebottom", "move bottom":
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
-
-			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: FlxG.height - position}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				bottomBarTwn = null;
-			}});
-			
-		case "moveboth", "move both":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
-
-			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				topBarTwn = null;
-			}});
-			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: FlxG.height - position}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				bottomBarTwn = null;
-			}});
-			
-		case "boptop", "bop top":
-			cinematicBars["top"].y = position - FlxG.height;
-			FlxTween.tween(cinematicBars["top"], {y: (position - FlxG.height) + bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease)});
-			
-		case "bopbottom", "bop bottom":
-			cinematicBars["bottom"].y = FlxG.height - position;
-			FlxTween.tween(cinematicBars["bottom"], {y: (FlxG.height - position) - bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease)});
-			
-		case "bopboth", "bop both":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
-
-			cinematicBars["top"].y = position - FlxG.height;
-			cinematicBars["bottom"].y = FlxG.height - position;
-			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: (position - FlxG.height) + bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				topBarTwn = null;
-			}});
-			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: (FlxG.height - position) - bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-			{
-				bottomBarTwn = null;
-			}});
-	}
 }

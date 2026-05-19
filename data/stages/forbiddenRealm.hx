@@ -14,8 +14,6 @@ var chromEffect:Float = 0.0001;
 var shaderAnim:Float = 0;
 var chromTween:FlxTween;
 
-var dumbCamTwn:FlxTween;
-
 var pathway:String = 'stages/forbiddenRealm/';
 
 function onLoad()
@@ -90,32 +88,9 @@ function onCreatePost()
 
     if (PlayState.SONG.song != 'Malfunction Legacy')
     {
-        add(blackParticles);
-        add(mickeyEmitter);
+        foreground.add(blackParticles);
+        foreground.add(mickeyEmitter);
     }
-
-/*
-    if (ClientPrefs.shaders)
-    {
-        if(!ClientPrefs.lowQuality)
-        {
-            camGame.filters = 
-            [
-                new ShaderFilter(chromZoomShader)
-            ];
-            camHUD.filters = 
-            [
-                new ShaderFilter(chromNormalShader)
-            ];
-            
-            new FlxTimer().start(5, function(tmr)
-            {
-                camGame.filters = [new ShaderFilter(chromZoomShader)];
-                camHUD.filters = [new ShaderFilter(chromNormalShader)];
-            });
-        }
-    }
-*/
 
     camGame.alpha = 0.001;
 	camHUD.alpha = 0.001;
@@ -329,16 +304,4 @@ function onSongStart()
             defaultCamZoom = 1.1;
         });
     }
-}
-
-function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String>)
-{
-    if (dumbCamTwn != null)
-        dumbCamTwn.cancel();
-    
-    dumbCamTwn = FlxTween.tween(camGame, {zoom: zoom}, time, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-    {
-        defaultCamZoom = zoom;
-        dumbCamTwn = null;
-    }});
 }

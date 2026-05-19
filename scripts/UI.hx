@@ -8,6 +8,8 @@ var introSoundsSuffix:String = '';
 
 var cameraOnDad = false;
 
+public var globalGradient:FlxSprite;
+
 function onMoveCamera(char)
 {
     if (!PlayState.SONG.notes[curSection].mustHitSection)
@@ -89,7 +91,6 @@ function onCreatePost()
 		globalGradient.cameras = [camOther];
 		globalGradient.alpha = 0;
 		add(globalGradient);
-		scripts.set('globalGradient', globalGradient);
 	}
 
 	switch (PlayState.SONG.song)
@@ -115,43 +116,7 @@ function onCreatePost()
 
 		Application.current.window.title = windowName;
 	});
-}
 
-function onUpdate(elapsed)
-{
-    if (PlayState.SONG.song != "Bless Legacy")
-	{
-		// the COOLER cam pos thing or whatever
-		// x, y, angle
-		var camOffset = [0.0, 0.0, 0];
-
-		var char = cameraOnDad ? dad : boyfriend;
-
-		if (char.animation.curAnim != null && !isCameraOnForcedPos && ClientPrefs.camFollowsCharacters) 
-		{
-			switch (char.animation.curAnim.name.substring(4))
-			{
-				case 'RIGHT':
-					camOffset[2] += 1.3;
-				case 'LEFT':
-					camOffset[2] -= 1.45;
-
-				case 'RIGHT-alt':
-					camOffset[2] += 1.3;
-				case 'LEFT-alt':
-					camOffset[2] -= 1.45;
-
-				case 'RIGHTmiss':
-					camOffset[2] += 1.3;
-				case 'LEFTmiss':
-					camOffset[2] -= 1.45;
-			}
-		}
-
-		if(!inCutscene) {
-			camGame.angle = FlxMath.lerp(camGame.angle, 0 + camOffset[2], FlxMath.bound(elapsed * 2.4 * cameraSpeed, 0, 1));
-		}
-	}
 }
 
 function onCountdownTick(swagCounter)

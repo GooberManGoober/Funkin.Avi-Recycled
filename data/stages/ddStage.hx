@@ -19,11 +19,6 @@ var satanIconPulse:HealthIcon;
 var iconPulseTween:FlxTween;
 var satanTween:FlxTween;
 
-var lyricsIcon:HealthIcon;
-var lyrics:FlxTypeText;
-var lyricsTween:FlxTween;
-var iconTween:FlxTween;
-
 var devilishGaming:FunkinVideoSprite;
 
 function onLoad()
@@ -54,19 +49,18 @@ function onCreatePost()
     rain.scrollFactor.set(1.1, 1.1);
     rain.animation.play("crying bitch");
     rain.alpha = 0.5;
-    add(rain);
+    foreground.add(rain);
 
     var fgWall:FlxSprite = new FlxSprite(-600, 290).loadGraphic(Paths.image("stages/ddStage/big-ass-wall"));
     fgWall.scale.set(0.84, 0.84);
     fgWall.scrollFactor.set(1.18, 1.18);
-    add(fgWall);
+    foreground.add(fgWall);
 
     devilishGaming = new FunkinVideoSprite(false);
     devilishGaming.load(Paths.video("devilishIntro"), [FunkinVideoSprite.muted]);
     add(devilishGaming);
     devilishGaming.cameras = [camOther];
     devilishGaming.play();
-    devilishGaming.visible = false;
     new FlxTimer().start(0.001, function(tmr:FlxTimer)
     {
         devilishGaming.pause();
@@ -92,19 +86,8 @@ function onCreatePost()
 
 	camHUD.alpha = 0.001;
 
-    if (ClientPrefs.middleScroll)
-	{
-		modManager.setValue("opponentSwap", 0.5);
-	}
-    else
-    {
-        modManager.setValue("opponentSwap", 1);
-    }
-    modManager.setValue("transform0X", -3500, 1);
-    modManager.setValue("transform1X", -3500, 1);
-    modManager.setValue("transform2X", 3500, 1);
-	modManager.setValue("transform3X", 3500, 1);
-    modManager.setValue("alpha", 1, -1);
+    modManager.setValue("opponentSwap", 1);
+    modManager.setValue("alpha", 1, 1);
 
     iconP1.updateFrames = false;
     iconP2.updateFrames = false;
@@ -133,23 +116,6 @@ function onCreatePost()
         }
     }
 
-    lyrics = new FlxTypeText(0, FlxG.height - 65, 0, '', 15);
-    lyrics.setFormat(Paths.font('vcr'), 30, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-    lyrics.cameras = [camOther];
-    lyrics.alpha = 0;
-    lyrics.borderSize = 4;
-    lyrics.scrollFactor.set();
-    lyrics.screenCenter(FlxAxes.X).x -= 90;
-    add(lyrics);
-
-    lyricsIcon = new HealthIcon('bf', false);
-    lyricsIcon.x = lyrics.x - 150;
-    lyricsIcon.y = lyrics.y - 65;
-    lyricsIcon.frameCount = 3;
-    lyricsIcon.visible = false;
-    lyricsIcon.cameras = [camOther];
-    add(lyricsIcon);
-
     iconP2.flipX = iconP1.flipX = true;
 }
 
@@ -172,8 +138,6 @@ function onUpdate(elapsed)
 
 function onSongStart()
 {
-    modManager.queueEase(120, 128, "alpha", 0, 'quartInOut', -1);
-
     modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
         satanIconPulse.visible = true;
         satanIconPulse.alpha = 0.001;
@@ -205,7 +169,10 @@ function onSongStart()
         manageLyrics('satandd', '...SPEAK...', 'betterSatanFont.ttf', 30, 0.7, 'sineInOut', 0.05);
     });
 
-    modManager.queueFuncOnce(28 * 4, (s,s2)->{ 
+    modManager.queueFuncOnce(28 * 4, (s,s2)->{
+        isCameraOnForcedPos = true;
+        FlxTween.tween(camFollow, {x: 1500, y: 1300}, 2, {ease: FlxEase.sineInOut});
+        FlxTween.tween(FlxG.camera, {zoom: 0.55}, 2, {ease: FlxEase.sineInOut});
         defaultCamZoom = 0.55;
         manageLyrics('satandd', '...What is on your mind?', 'betterSatanFont.ttf', 30, 2.5, 'sineInOut', 0.06);
     });
@@ -236,6 +203,8 @@ function onSongStart()
     }
 
     modManager.queueFuncOnce(60 * 4, (s,s2)->{ 
+        FlxTween.tween(camFollow, {x: 2200, y: 1400}, 2, {ease: FlxEase.sineInOut});
+        FlxTween.tween(FlxG.camera, {zoom: 1.2}, 2, {ease: FlxEase.sineInOut});
         defaultCamZoom = 1.2;
         FlxTween.tween(camHUD, {alpha: 0.4}, 0.75, {ease: FlxEase.quartInOut});
         FlxTween.tween(dad.colorTransform, {redMultiplier: 1, blueMultiplier: 1, greenMultiplier: 1}, 2, {ease: FlxEase.circInOut});
@@ -289,6 +258,7 @@ function onSongStart()
     });
     
     modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
+        isCameraOnForcedPos = false;
         defaultCamZoom = 0.55;
         FlxTween.tween(camHUD, {alpha: 1}, 1.2, {ease: FlxEase.quartInOut});
     });
@@ -485,80 +455,4 @@ function onBeatHit()
             }
         }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
     }
-}
-
-/**
-	* Manages the `lyrics` of the song in-game
-	* @param icon Lyrics icon as string
-	* @param text The lyrics text
-	* @param font Lyric font
-	* @param size Lyric size
-	* @param duration Delay time to disappear
-	* @param tweenType Tween ease (as string)
-	* @param textDelay Text delay. The amount of seconds to type the next word
-	* 
-	* @author DEMOLITIONDON96 Ft. Jason
-	*/
-function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5,
-		tweenType:String = 'linear', textDelay:Float = 0.03)
-{
-	if (!lyricsIcon.visible)
-	{
-		lyricsIcon.visible = true;
-		lyricsIcon.alpha = 0;
-	}
-
-	lyricsIcon.changeIcon(icon, false, false, false);
-
-	if (icon == "satandd")
-		lyricsIcon.y = lyrics.y - 80;
-	else
-		lyricsIcon.y = lyrics.y - 65;
-
-	lyrics.font = Paths.font(font);
-	lyrics.resetText(text);
-	lyrics.start(textDelay); // currently placeholder time !!
-
-	if (lyricsTween != null)
-		lyricsTween.cancel();
-
-	if (iconTween != null)
-		iconTween.cancel();
-
-	iconTween = FlxTween.tween(lyricsIcon, {
-		'scale.x': 1,
-		'scale.y': 1,
-		alpha: 1
-	}, 0.5, {
-		ease: CoolUtil.getEaseFromString(tweenType),
-		onComplete: function(twn:FlxTween)
-		{
-			iconTween = FlxTween.tween(lyricsIcon, {alpha: 0, 'scale.x': 0, 'scale.y': 0}, 0.25, {
-				startDelay: duration,
-				ease: CoolUtil.getEaseFromString(tweenType),
-				onComplete: function(twn:FlxTween)
-				{
-					iconTween = null;
-				}
-			});
-		}
-	});
-
-	lyricsTween = FlxTween.tween(lyrics, {
-		size: size,
-		alpha: 1
-	}, 0.5, {
-		ease: CoolUtil.getEaseFromString(tweenType),
-		onComplete: function(twn:FlxTween)
-		{
-			lyricsTween = FlxTween.tween(lyrics, {alpha: 0, size: 0}, 0.25, {
-				startDelay: duration,
-				ease: CoolUtil.getEaseFromString(tweenType),
-				onComplete: function(twn:FlxTween)
-				{
-					lyricsTween = null;
-				}
-			});
-		}
-	});
 }

@@ -36,7 +36,7 @@ function onCreatePost()
     funiLight.alpha = 0.6;
     funiLight.blend = CoolUtil.getBlendFromString('add');
     funiLight.active = false;
-    add(funiLight);
+    foreground.add(funiLight);
     funiLight.scale.set(0.85, 0.8);
     
     if (ClientPrefs.shaders)

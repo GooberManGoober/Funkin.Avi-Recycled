@@ -282,8 +282,6 @@ function onUpdate(elapsed)
 
 			new FlxTimer().start(1.3, function(tmr:FlxTimer){
 				closedState = true;
-				ClientPrefs.quants = false;
-				ClientPrefs.flush();
 				FlxG.switchState(new MainMenuState());
 			});
 		}

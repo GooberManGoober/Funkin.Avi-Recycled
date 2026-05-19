@@ -190,7 +190,7 @@
 					0,
 					0
 				],
-				"xmlName": "pruple end hold",
+				"xmlName": "purple hold end",
 				"anim": "holdend"
 			}
 		],
@@ -284,7 +284,8 @@
 	],
 	"splashTexture": "UI/notes/Birthday_splash",
 	"antialiasing": true,
-	"inGameColoring": false,
+	"inGameColoring": true,
+	"quantsEnabled": false,
 	"sustainAlpha": 0.6,
 	"noteScale": 0.6,
 	"receptorScale": 0.6,

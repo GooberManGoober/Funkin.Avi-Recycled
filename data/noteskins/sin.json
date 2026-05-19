@@ -128,7 +128,7 @@
 	],
 	"noteSplashAnimations": [
 		{
-			"xmlName": "splash purple 1",
+			"xmlName": "splash",
 			"offsets": [
 				0,
 				0
@@ -136,7 +136,7 @@
 			"anim": "note0"
 		},
 		{
-			"xmlName": "splash blue 1",
+			"xmlName": "splash",
 			"offsets": [
 				0,
 				0
@@ -144,7 +144,7 @@
 			"anim": "note1"
 		},
 		{
-			"xmlName": "splash green 1",
+			"xmlName": "splash",
 			"offsets": [
 				0,
 				0
@@ -152,7 +152,7 @@
 			"anim": "note2"
 		},
 		{
-			"xmlName": "splash red 1",
+			"xmlName": "splash",
 			"offsets": [
 				0,
 				0
@@ -278,10 +278,11 @@
 			}
 		]
 	],
-	"splashTexture": "pixelUI/pixel-splashes-SIN",
+	"splashTexture": "pixelUI/pixel-splashes",
     "sustainSplashTexture": "pixelUI/holdCover",
 	"antialiasing": false,
-	"inGameColoring": false,
+	"inGameColoring": true,
+	"quantsEnabled": false,
 	"receptorScale": 5,
 	"noteScale": 5,
 	"splashScale": 4,
