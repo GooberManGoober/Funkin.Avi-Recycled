@@ -9,6 +9,10 @@ var aberrationTimer:Float = 0;
 
 var monitorFilter:FlxRuntimeShader = newShader('monitorFilter');
 
+var songCrdGrp:FlxSpriteGroup;
+var cardTxt:FlxText;
+var cardSprite:FlxSprite;
+
 function onLoad()
 {
     defaultCamZoom = 0.85;
@@ -47,6 +51,25 @@ function onLoad()
             new ShaderFilter(monitorFilter)
         ];
     }
+
+    songCrdGrp = new FlxSpriteGroup();
+	add(songCrdGrp);
+	songCrdGrp.cameras = [camOther];
+
+    cardSprite = new FlxSprite(0, 0).makeGraphic(999, 136, FlxColor.WHITE);
+    cardSprite.scrollFactor.set();
+    cardSprite.blend = BlendMode.ADD;
+    cardSprite.alpha = 0;
+    cardSprite.screenCenter();
+    songCrdGrp.add(cardSprite);
+
+    cardTxt = new FlxText(0, 0, 600, 'Delusional\nBy: FR3SHMoure');
+    cardTxt.setFormat(Paths.font('vcr'), 36, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+    cardTxt.scrollFactor.set();
+    cardTxt.borderSize = 1.25;
+    cardTxt.alpha = 0;
+    cardTxt.screenCenter();
+    songCrdGrp.add(cardTxt);
 }
 
 function onSongStart()
@@ -108,10 +131,12 @@ function onSongStart()
 
     modManager.queueFuncOnce(2125, (s,s2)->{ 
         camGame.alpha = 1;
+        playLegacyCardAnim();
     });
 
     modManager.queueFuncOnce(2144, (s,s2)->{ 
         camGame.alpha = 0;
+        songCrdGrp.visible = false;
     });
 }
 
@@ -167,4 +192,21 @@ function muckneyHealthColorShitLol()
     muckneyColors = [FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255)];
 
     healthBar.setColors(FlxColor.fromRGB(muckneyColors[0], muckneyColors[1], muckneyColors[2]), boyfriend.healthColour);
+}
+
+function playLegacyCardAnim()
+{
+	FlxTween.tween(cardSprite, {alpha: 0.5}, 1, {ease: FlxEase.circOut,
+		onComplete: function(twn:FlxTween)
+		{
+			FlxTween.tween(cardSprite, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
+		}
+	});
+
+	FlxTween.tween(cardTxt, {alpha: 1}, 1, {ease: FlxEase.circOut,
+		onComplete: function(twn:FlxTween)
+		{
+			FlxTween.tween(cardTxt, {alpha: 0}, 1.5, {ease: FlxEase.circIn, startDelay: 4});
+		}
+	});
 }
