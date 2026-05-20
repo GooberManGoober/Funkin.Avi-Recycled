@@ -1,4 +1,5 @@
 import openfl.filters.ShaderFilter;
+import funkin.FunkinAssets;
 
 var waltScreenThing:FlxSprite; // idk, this is needed too for some reason
 var inkFormWarning:FlxText;
@@ -25,6 +26,10 @@ var initialCount:Int = 0;
 function onLoad()
 {
     defaultCamZoom = 0.75;
+
+    Paths.getSparrowAtlas("characters/Walt");
+    Paths.getSparrowAtlas("characters/walt death");
+    Paths.getSparrowAtlas("characters/waltLaugh");
 
     camGame.alpha = 0.0001;
     camHUD.alpha = 0.0001;
@@ -332,6 +337,14 @@ function onSongStart()
 
     modManager.queueFuncOnce(256 * 4, (s,s2)->{ 
         FlxTween.tween(camHUD, {alpha: 0}, 1, {ease: FlxEase.sineInOut});
+    });
+
+    modManager.queueFuncOnce(264 * 4, (s,s2)->{ 
+        modManager.setValue("alpha", 1, 1);
+    });
+
+    modManager.queueFuncOnce(275 * 4, (s,s2)->{ 
+        modManager.setValue("alpha", 0, 1);
     });
 
     modManager.queueFuncOnce(468 * 4, (s,s2)->{ 

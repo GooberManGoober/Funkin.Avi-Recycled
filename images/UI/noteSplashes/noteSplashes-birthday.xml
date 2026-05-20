@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="Birthday_splash.png">
+<TextureAtlas imagePath="noteSplashes-birthday.png">
 	<!-- Created with Adobe Animate version 24.0.9.74 -->
 	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="note splash birthday red 10000" x="694" y="260" width="80" height="67" frameX="-131" frameY="-113" frameWidth="343" frameHeight="292"/>

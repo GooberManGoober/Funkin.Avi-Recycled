@@ -1421,7 +1421,6 @@ function onSongStart()
                 isCameraOnForcedPos = false;
                 boundValue = 0.45;
                 drainValue = 0.032;
-                boyfriend.alpha = 1;
                 camFollow.x = 0;
                 camFollow.y = 0;
             });
@@ -1429,6 +1428,7 @@ function onSongStart()
             modManager.queueFuncOnce(744 * 4, (s,s2)->{ 
                 camGame.alpha = 1;
                 playHUD.alpha = 1;
+                boyfriend.alpha = 1;
                 modManager.setValue("alpha", 0);
                 defaultCamZoom = 0.9;
                 chromEffect = 0.1;

@@ -7,7 +7,7 @@
 	],
 	"splashesEnabled": true,
 	"susSplashesEnabled": false,
-	"noteTexture": "UI/notes/NOTE_assets-MERCY",
+	"noteTexture": "UI/noteSkins/NOTE_assets-MERCY",
 	"receptorAnimations": [
 		[
 			{
@@ -282,7 +282,26 @@
 			}
 		]
 	],
-	"splashTexture": "UI/notes/NOTE_splashWalt",
+	"arrowRGB": [
+		{"b": -9482483, "r": -141961, "g": -69942},
+		{"b": -9482483, "r": -141961, "g": -69942},
+		{"b": -9482483, "r": -141961, "g": -69942},
+		{"b": -9482483, "r": -141961, "g": -69942}
+	],
+	"arrowRGBQuant": [
+		{"b": -9482483, "r": -141961, "g": -69942},
+		{"b": -1400827, "r": -2074, "g": -1},
+		{"b": -5927849, "r": -197898, "g": -1},
+		{"b": -5277952, "r": -7002, "g": -260},
+		{"b": -8822481, "r": -1123408, "g": -132105},
+		{"b": -11388926, "r": -13750, "g": -8031},
+		{"b": -13752034, "r": -3559047, "g": -1911626},
+		{"b": -14280192, "r": -17891, "g": -11405},
+		{"b": -15527407, "r": -5531282, "g": -3358812},
+		{"b": -16777216, "r": -8753064, "g": -5792895},
+		{"b": -16777216, "r": -9873877, "g": -5732285}
+	],
+	"splashTexture": "UI/noteSplashes/noteSplashes-walt",
 	"antialiasing": true,
 	"inGameColoring": true,
 	"quantsEnabled": false,

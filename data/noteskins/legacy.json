@@ -7,7 +7,7 @@
 	],
 	"splashesEnabled": true,
 	"susSplashesEnabled": false,
-	"noteTexture": "UI/notes/NOTE_assets-legacy",
+	"noteTexture": "UI/notes/NOTE_assets",
 	"receptorAnimations": [
 		[
 			{
@@ -128,39 +128,35 @@
 	],
 	"noteSplashAnimations": [
 		{
-			"looping": false,
-			"xmlName": "note splash purple 1",
 			"offsets": [
-				10,
-				30
+				-2,
+				-2
 			],
+			"xmlName": "note splash",
 			"anim": "note0"
 		},
 		{
-			"looping": false,
-			"xmlName": "note splash blue 1",
 			"offsets": [
-				10,
-				30
+				-2,
+				-2
 			],
+			"xmlName": "note splash",
 			"anim": "note1"
 		},
 		{
-			"looping": false,
-			"xmlName": "note splash green 1",
 			"offsets": [
-				10,
-				30
+				-2,
+				-2
 			],
+			"xmlName": "note splash",
 			"anim": "note2"
 		},
 		{
-			"looping": false,
-			"xmlName": "note splash red 1",
 			"offsets": [
-				10,
-				30
+				-2,
+				-2
 			],
+			"xmlName": "note splash",
 			"anim": "note3"
 		}
 	],
@@ -282,9 +278,22 @@
 			}
 		]
 	],
-	"splashTexture": "UI/notes/noteSplashes-legacy",
+	"arrowRGBQuant": [
+		{"b": -10153928, "r": -444097, "g": -1},
+		{"b": -15383881, "r": -16711681, "g": -1},
+		{"b": -12837034, "r": -4043879, "g": -1},
+		{"b": -11189472, "r": -990398, "g": -1},
+		{"b": -10741670, "r": -1231187, "g": -1},
+		{"b": -12636910, "r": -1470698, "g": -1},
+		{"b": -15328473, "r": -12097096, "g": -1},
+		{"b": -16104377, "r": -15533563, "g": -1},
+		{"b": -16757427, "r": -16744320, "g": -1},
+		{"b": -12961222, "r": -7697782, "g": -1},
+		{"b": -11511265, "r": -4540308, "g": -1}
+	],
+	"splashTexture": "UI/noteSplashes/noteSplashes-legacy",
 	"antialiasing": true,
-	"inGameColoring": false,
+	"inGameColoring": true,
 	"sustainAlpha": 0.6,
 	"noteScale": 0.7,
 	"splashScale": 1,

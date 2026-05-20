@@ -192,6 +192,11 @@ function onCreatePost()
 
 function onUpdatePost(elapsed)
 {
+    if (!ClientPrefs.opponentStrums)
+	{
+		modManager.setValue("alpha", 1, 1);
+	}
+    
     if (PlayState.SONG.song != "Bless Legacy")
     {
         var str:String = '${MathUtil.floorDecimal(ratingPercent * 100, 2)}% [${(totalPlayed != 0 ? ratingFC : 'N/A')}]';

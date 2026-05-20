@@ -7,7 +7,7 @@
 	],
 	"splashesEnabled": true,
 	"susSplashesEnabled": false,
-	"noteTexture": "UI/notes/NOTE_assets-WAR",
+	"noteTexture": "UI/noteSkins/NOTE_assets-WAR",
 	"receptorAnimations": [
 		[
 			{
@@ -278,7 +278,20 @@
 			}
 		]
 	],
-	"splashTexture": "UI/notes/noteSplashes",
+	"arrowRGBQuant": [
+		{"b": -10153928, "r": -444097, "g": -1},
+		{"b": -15383881, "r": -16711681, "g": -1},
+		{"b": -12837034, "r": -4043879, "g": -1},
+		{"b": -11189472, "r": -990398, "g": -1},
+		{"b": -10741670, "r": -1231187, "g": -1},
+		{"b": -12636910, "r": -1470698, "g": -1},
+		{"b": -15328473, "r": -12097096, "g": -1},
+		{"b": -16104377, "r": -15533563, "g": -1},
+		{"b": -16757427, "r": -16744320, "g": -1},
+		{"b": -12961222, "r": -7697782, "g": -1},
+		{"b": -11511265, "r": -4540308, "g": -1}
+	],
+	"splashTexture": "UI/noteSplashes/noteSplashes",
 	"antialiasing": true,
 	"inGameColoring": true,
 	"sustainAlpha": 0.6,
