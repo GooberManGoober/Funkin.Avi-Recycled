@@ -1116,7 +1116,9 @@ function onSongStart()
 
             modManager.queueFuncOnce(132 * 4, (s,s2)->{ 
                 defaultCamZoom = 1.3;
-                modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear");
+                if (ClientPrefs.opponentStrums)
+                    modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear", 1);
+                modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear", 0);
 
                 deluSing.play();
                 deluSing.pause();
@@ -1178,7 +1180,9 @@ function onSongStart()
             modManager.queueFuncOnce(208 * 4, (s,s2)->{ 
                 camGame.fade(FlxColor.BLACK, .000001);
                 defaultCamZoom = 1.3;
-                modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear");
+                modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear", 0);
+                if (ClientPrefs.opponentStrums)
+                    modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear", 1);
 
                 if (deluSing != null)
                     deluSing.visible = false;
@@ -1373,9 +1377,12 @@ function onSongStart()
                 defaultCamZoom = 0.5;
                 boyfriend.cameras = [camVideo];
 
+                playHUD.showRating = playHUD.showRatingNum = false;
+
                 playHUD.alpha = 0;
                 modManager.setValue("alpha", 1, 0);
-                modManager.setValue("alpha", 1, 1);
+                if (ClientPrefs.opponentStrums)
+                    modManager.setValue("alpha", 1, 1);
 
                 if (!ClientPrefs.lowQuality)
                 {
@@ -1429,6 +1436,7 @@ function onSongStart()
                 camGame.alpha = 1;
                 playHUD.alpha = 1;
                 boyfriend.alpha = 1;
+                playHUD.showRating = playHUD.showRatingNum = ClientPrefs.showRatings;
                 modManager.setValue("alpha", 0);
                 defaultCamZoom = 0.9;
                 chromEffect = 0.1;

@@ -10,6 +10,9 @@ var cameraOnDad = false;
 
 public var globalGradient:FlxSprite;
 
+var isPixelStage:Bool = false;
+var pixelZoom = 1;
+
 function onMoveCamera(char)
 {
     if (!PlayState.SONG.notes[curSection].mustHitSection)
@@ -44,8 +47,12 @@ function onLoad() {
 			introSoundsSuffix = "-cartoon";
 		case "Malfunction":
 			introSoundsSuffix = "-error";
+			isPixelStage = true;
+			pixelZoom = 6;
 		case "Cycled Sins":
 			skipCountdown = true;
+			isPixelStage = true;
+			pixelZoom = 6;
 		default:
 			if(PlayState.isPixelStage) {
 				introSoundsSuffix = '-pixel';
@@ -81,6 +88,16 @@ function onCreatePost()
 			//nothing
 		default:
 			gf.visible = false;
+	}
+
+	switch (PlayState.SONG.stage)
+	{
+		case 'apartment', 'forbiddenRealm':
+			playHUD.ratingPrefix = 'pixelUI/ratings/';
+			playHUD.comboPrefix = 'pixelUI/combo/';
+		default:
+			playHUD.ratingPrefix = 'UI/ratings/';
+			playHUD.comboPrefix = 'UI/combo/';
 	}
 
 	if (!ClientPrefs.lowQuality)
@@ -239,5 +256,76 @@ function onSongStart()
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + " [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
 			Application.current.window.title = windowName;
 		});
+	}
+}
+
+function onPopUpScorePost(note, daRating, ratingGraphic, numGroup) {
+	if (playHUD.showRatingNum)
+	{
+		FlxTween.cancelTweensOf(ratingGraphic, ['scale.x', 'scale.y', 'alpha']);
+		ratingGraphic.alpha = 1;
+		ratingGraphic.loadGraphic(Paths.image(playHUD.ratingPrefix + daRating.image + playHUD.ratingSuffix));
+		ratingGraphic.scale.set(0.4 * pixelZoom, 0.4 * pixelZoom);
+		ratingGraphic.screenCenter();
+		ratingGraphic.x = 15;
+		ratingGraphic.y = 100;
+		if (!ClientPrefs.downScroll)
+			ratingGraphic.y += 495;
+		
+		if (playHUD.comboTween)
+		{
+			ratingGraphic.scale.set(0.485 * pixelZoom, 0.485 * pixelZoom);
+			FlxTween.tween(ratingGraphic.scale, {x: 0.4 * pixelZoom, y: 0.4 * pixelZoom}, 0.5, {ease: FlxEase.expoOut});
+		}
+
+		if (isPixelStage)
+			ratingGraphic.antialiasing = false;
+		else
+			ratingGraphic.antialiasing = ClientPrefs.globalAntialiasing;
+		ratingGraphic.updateHitbox();
+		FlxTween.tween(ratingGraphic, {alpha: 0}, 0.5, {startDelay: Conductor.stepCrotchet * 0.01, ease: FlxEase.expoOut});
+	}
+
+	if (playHUD.showRatingNum)
+	{	
+		var seperatedScore:Array<Int> = [];
+				
+		if (combo >= 1000)
+		{
+			seperatedScore.push(Math.floor(combo / 1000) % 10);
+		}
+		seperatedScore.push(Math.floor(combo / 100) % 10);
+		seperatedScore.push(Math.floor(combo / 10) % 10);
+		seperatedScore.push(combo % 10);
+
+		var daLoop = 0;
+		for (numScore in playHUD.ratingNumGroup.members)
+		{
+			FlxTween.cancelTweensOf(numScore);
+			
+			numScore.alpha = 1;
+			numScore.scale.set(0.22 * pixelZoom, 0.22 * pixelZoom);
+			numScore.screenCenter();
+			numScore.x = (32 * daLoop) - 90;
+			numScore.x += 130;
+			numScore.y = ratingGraphic.y + 60;
+
+			if (playHUD.comboTween)
+			{
+				numScore.scale.set(0.32 * pixelZoom, 0.32 * pixelZoom);
+				FlxTween.cancelTweensOf(numScore, ['scale.x', 'scale.y']);
+				FlxTween.tween(numScore.scale, {x: 0.22 * pixelZoom, y: 0.22 * pixelZoom}, 0.5, {ease: FlxEase.expoOut});
+			}
+
+			if (isPixelStage)
+				numScore.antialiasing = false;
+			else
+				numScore.antialiasing = ClientPrefs.globalAntialiasing;
+			numScore.updateHitbox();
+			playHUD.ratingNumGroup.add(numScore);
+			FlxTween.tween(numScore, {alpha: 0}, 0.5, {startDelay: Conductor.stepCrotchet * 0.01, ease: FlxEase.expoOut});
+
+			daLoop += 1;
+		}
 	}
 }

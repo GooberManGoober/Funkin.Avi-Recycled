@@ -51,7 +51,8 @@ function onSongStart()
     modManager.queueSet(1900, "transform2Y", 0, 0);
 
     modManager.queueSet(1900, "transformZ", -0.75, 1);
-    modManager.queueSet(1920, "alpha", 0.75, 1);
+    if (ClientPrefs.opponentStrums)
+        modManager.queueSet(1920, "alpha", 0.75, 1);
     modManager.queueSet(1900, "reverse", 1, 1);
 
     modManager.queueSet(1900, "reverse3", 0, 0);
@@ -67,7 +68,8 @@ function onSongStart()
     modManager.queueSet(2975, "opponentSwap", 0, 1);
 
     modManager.queueSet(2975, "transformZ", 0, 1);
-    modManager.queueSet(2975, "alpha", 0, 1);
+    if (ClientPrefs.opponentStrums)
+        modManager.queueSet(2975, "alpha", 0, 1);
     modManager.queueSet(2975, "reverse", 0, 1);
 
     modManager.queueEase(4030, 4030 + 24, "confusion0", -120, "bounceOut", 1);
@@ -84,7 +86,8 @@ function onSongStart()
     modManager.queueEase(4072, 4072 + 20, "transformY", ClientPrefs.downScroll ? 67 : -67, "sineInOut", 0);
     modManager.queueEase(4072, 4072 + 20, "transformX", -300, "sineInOut", 0);
 
-    modManager.queueSet(4096, "alpha", 0.6, 1);
+    if (ClientPrefs.opponentStrums)
+        modManager.queueSet(4096, "alpha", 0.6, 1);
     modManager.queueSet(4096, "reverse", 1, 1);
     modManager.queueSet(4096, "transformZ", 0.3, 1);
     modManager.queueSet(4096, "speed", 0, 1);
