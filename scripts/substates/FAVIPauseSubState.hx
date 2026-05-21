@@ -114,52 +114,46 @@ function onLoad()
 
 	// all variable initial setups
 	bg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-	levelInfo = new FlxText(20, 15, 0, "", 32);
-	songArt = new FlxSprite(780, 110);
-	songArtOutline = new FlxSprite(songArt.x - 20, songArt.y - 20 /*POV: you're lazy to do the math yourself*/).makeGraphic(890, 890, FlxColor.WHITE);
-	disc = new FlxSprite(songArt.x + 75, songArt.y - 12).loadGraphic(Paths.image('menus/pause/disc'));
-	countDown = new FlxText(0, 0, 1280, "", 0);
-	satanTxt = new FlxTypeText(0, 25, 1280, "");
-	pauseNameTxt = new FlxText(5, 700, 1280, "Now Playing: " + pauseSongStr + " - ForFurtherNotice");
+	bg.scale.set(FlxG.width * 4, FlxG.height * 4);
+	bg.scrollFactor.set();
+	bg.alpha = 0.0001;
+	add(bg);
 
-	// text stuff
-	// I'M NOT DELUSIONAL, YOU'RE DELUSIONAL !!!!!!
-	levelInfo.setFormat(Paths.font("DisneyFont.ttf"), 32, FlxColor.WHITE, "right", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	levelInfo = new FlxText(20, 15, 0, "", 32);
+	levelInfo.scrollFactor.set();
+	levelInfo.setFormat(Paths.font("DisneyFont.ttf"), 32, FlxColor.WHITE, "right");
+	levelInfo.updateHitbox();
+	levelInfo.scrollFactor.set();
+	levelInfo.alpha = 0.0001;
+	add(levelInfo);
+
+	if (PlayState.SONG.song == "Delusional" && (PlayState.instance.curStep >= 1904 && PlayState.instance.curStep <= 2976))
+		levelInfo.text = "Regret\n\nWhat happened to us?\nWhy are we broken?\nI am sorry for what I have done.\nWill you ever forgive me?\nAfter everything that happened?";
+	else
+		levelInfo.text = getSongPath().replace('/', '\n');
+
+	levelInfo.x = FlxG.width - (levelInfo.width + 20);
+
+	pauseNameTxt = new FlxText(5, 700, 1280, "Now Playing: " + pauseSongStr + " - ForFurtherNotice");
 	pauseNameTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 16, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	countDown.setFormat(Paths.font("betterSatanFont.ttf"), 90, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	satanTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 32, FlxColor.fromRGB(255, 117, 107), 'center', FlxTextBorderStyle.OUTLINE, FlxColor.fromRGB(92, 0, 26));
-	satanTxt.borderSize = 2;
+	pauseNameTxt.alpha = 0.0001;
+	add(pauseNameTxt);
+
+	songArt = new FlxSprite(780, 110);
 	if (FunkinAssets.exists(Paths.getPath('images/menus/pause/songs/' + pauseArtAsset + '.png', null, true)))
 		songArt.loadGraphic(Paths.image('menus/pause/songs/' + pauseArtAsset));
 	else 
 		songArt.loadGraphic(Paths.image('menus/pause/songs/unknown-song'));
-
-	// scales
-	bg.scale.set(FlxG.width * 4, FlxG.height * 4);
-	disc.scale.set(0.28, 0.28);
 	songArt.scale.set(0.29, 0.29);
+
+	songArtOutline = new FlxSprite(songArt.x - 20, songArt.y - 20 /*POV: you're lazy to do the math yourself*/).makeGraphic(890, 890, FlxColor.WHITE);
 	songArtOutline.scale.set(0.29, 0.29); // this was easier for me to scale it off the ORIGINAL image size instead of just trying to get the exact graphic size of the song art being SCALED
 
-	levelInfo.text = getSongPath();
-
-	levelInfo.x = FlxG.width - (levelInfo.width + 20);
-
-	for (obj in [levelInfo, bg, countDown])
-		obj.scrollFactor.set();
-
-	countDown.screenCenter();
-	
-	satanTxt.screenCenter(FlxAxes.X);
-
-	// alpha value setup
-	for (obj in [bg, levelInfo, pauseNameTxt])
-		obj.alpha = 0.0001;
-
-	countDown.visible = false;
-
-	// fuck it. add everything
-	for (obj in [bg, levelInfo, pauseNameTxt, disc, songArtOutline, songArt])
-		add(obj);
+	disc = new FlxSprite(songArt.x + 75, songArt.y - 12).loadGraphic(Paths.image('menus/pause/disc'));
+	disc.scale.set(0.28, 0.28);
+	add(disc);
+	add(songArtOutline);
+	add(songArt);
 
 	// menu buttons
 	buttonGroup = new FlxTypedGroup();
@@ -173,10 +167,19 @@ function onLoad()
 		buttonGroup.add(songText);
 		FlxTween.tween(songText, {alpha: 1}, 0.8, {ease: FlxEase.quartInOut});
 	}
-
+	
+	satanTxt = new FlxTypeText(0, 25, 1280, "");
+	satanTxt.setFormat(Paths.font("disneyFreeplayFont.ttf"), 32, FlxColor.fromRGB(255, 117, 107), 'center', FlxTextBorderStyle.OUTLINE, FlxColor.fromRGB(92, 0, 26));
+	satanTxt.borderSize = 2;
+	satanTxt.screenCenter(FlxAxes.X);
 	satanTxt.camera = CameraUtil.lastCamera;
 	add(satanTxt);
 
+	countDown = new FlxText(0, 0, 1280, "", 0);
+	countDown.setFormat(Paths.font("betterSatanFont.ttf"), 90, FlxColor.WHITE, "center", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+	countDown.screenCenter();
+	countDown.visible = false;
+	countDown.scrollFactor.set();
 	countDown.camera = CameraUtil.lastCamera;
 	add(countDown);
 

@@ -1,5 +1,2 @@
 Isolated
-Artwork: Domingo & Moe
-Charting: ThatOneSillyGuy
-Coding: Jason & ThatOneSillyGuy
-Music: obscurity
+Artwork: Domingo & Moe/Charting: ThatOneSillyGuy/Coding: Jason & ThatOneSillyGuy/Music: obscurity
