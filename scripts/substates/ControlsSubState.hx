@@ -1,5 +1,8 @@
 import flixel.text.FlxText;
 
+import openfl.filters.ShaderFilter;
+import funkin.utils.CameraUtil;
+
 function onCreatePost() {
 	if(!ClientPrefs.lowQuality)
 	{
@@ -21,4 +24,11 @@ function onCreatePost() {
 		grain.scale.y = 1.1;
 		add(grain);
 	}
+
+	if (ClientPrefs.shaders) {
+        CameraUtil.lastCamera.filters = [
+            new ShaderFilter(newShader("grayScale")),
+            new ShaderFilter(newShader('monitorFilter'))
+        ];
+    }
 }

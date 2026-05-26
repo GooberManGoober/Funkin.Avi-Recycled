@@ -71,6 +71,9 @@ function onLoad()
 
 function onCreatePost()
 {
+    playHUD.ratingPrefix = "pixelUI/";
+    playHUD.ratingSuffix = "-pixel";
+    
     dodgeWarning = new FlxSprite(1080, 540).loadGraphic(Paths.image('UI/dodgeSins/cycledWarn' + (FlxG.random.bool(2) ? "-alt" : "")));
     dodgeWarning.antialiasing = false;
     dodgeWarning.scale.set(4, 4);

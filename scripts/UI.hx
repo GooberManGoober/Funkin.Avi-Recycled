@@ -37,8 +37,6 @@ function onPause() {
 }
 
 function onLoad() {
-	ClientPrefs.comboOffset = [99999, 99999, 99999, 99999];
-
 	countdownSounds = false;
 
 	switch (PlayState.SONG.song)
@@ -54,7 +52,7 @@ function onLoad() {
 			isPixelStage = true;
 			pixelZoom = 6;
 		default:
-			if(PlayState.isPixelStage) {
+			if(isPixelStage) {
 				introSoundsSuffix = '-pixel';
 			}
 	}
@@ -65,6 +63,8 @@ function onLoad() {
 function onCreatePost()
 {
     cameraSpeed *= 2;
+
+	playHUD.comboOffsets = [99999, 99999, 99999, 99999];
 
 	if (!ClientPrefs.lowQuality)
 	{
@@ -95,6 +95,9 @@ function onCreatePost()
 		case 'apartment', 'forbiddenRealm':
 			playHUD.ratingPrefix = 'pixelUI/ratings/';
 			playHUD.comboPrefix = 'pixelUI/combo/';
+		case 'vaultRoomLegacy':
+			playHUD.ratingPrefix = 'legacyUI/ratings/';
+			playHUD.comboPrefix = 'legacyUI/combo/';
 		default:
 			playHUD.ratingPrefix = 'UI/ratings/';
 			playHUD.comboPrefix = 'UI/combo/';
@@ -136,6 +139,33 @@ function onCreatePost()
 
 }
 
+function onUpdate(elapsed)
+{
+    if (PlayState.SONG.song != "Bless Legacy")
+	{
+		// the COOLER cam pos thing or whatever
+		// x, y, angle
+		var camOffset = [0.0, 0.0, 0];
+
+		var char = cameraOnDad ? dad : boyfriend;
+
+		if (char.animation.curAnim != null && !isCameraOnForcedPos && ClientPrefs.camFollowsCharacters) 
+		{
+			switch (char.animation.curAnim.name.substring(4))
+			{
+				case 'RIGHT', 'RIGHT-alt':
+					camOffset[2] += 1.3;
+				case 'LEFT', 'LEFT-alt':
+					camOffset[2] -= 1.45;
+			}
+		}
+
+		if(!inCutscene) {
+			camGame.angle = FlxMath.lerp(camGame.angle, 0 + camOffset[2], 0.04 * cameraSpeed);
+		}
+	}
+}
+
 function onCountdownTick(swagCounter)
 {
     var introAlts:Array<String> = ['prepare', 'ready', 'set', 'go'];
@@ -151,7 +181,8 @@ function onCountdownTick(swagCounter)
 			antialias = false;
 			scaleSetter = 6;
 		default:
-			if(PlayState.isPixelStage) {
+			if (isPixelStage)
+			{
 				introAlts = ['pixelUI/prepare-pixel', 'pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel'];
 				antialias = false;
 				scaleSetter = 6;
@@ -260,70 +291,77 @@ function onSongStart()
 }
 
 function onPopUpScorePost(note, daRating, ratingGraphic, numGroup) {
-	if (playHUD.showRatingNum)
+	if (playHUD.showRating)
 	{
-		FlxTween.cancelTweensOf(ratingGraphic, ['scale.x', 'scale.y', 'alpha']);
-		ratingGraphic.alpha = 1;
-		ratingGraphic.loadGraphic(Paths.image(playHUD.ratingPrefix + daRating.image + playHUD.ratingSuffix));
-		ratingGraphic.scale.set(0.4 * pixelZoom, 0.4 * pixelZoom);
-		ratingGraphic.screenCenter();
-		ratingGraphic.x = 15;
-		ratingGraphic.y = 100;
-		if (!ClientPrefs.downScroll)
-			ratingGraphic.y += 495;
+		var rating:FlxSprite = new FlxSprite().loadGraphic(Paths.image(playHUD.ratingPrefix + daRating.image + playHUD.ratingSuffix));
+		rating.scale.set(0.7 * pixelZoom, 0.7 * pixelZoom);
+		rating.screenCenter();
+		rating.x = (FlxG.width * 0.35) - 40;
+		rating.y -= 60;
+		rating.acceleration.y = 550;
+		rating.velocity.y -= FlxG.random.int(140, 175);
+		rating.velocity.x -= FlxG.random.int(0, 10);
 		
-		if (playHUD.comboTween)
-		{
-			ratingGraphic.scale.set(0.485 * pixelZoom, 0.485 * pixelZoom);
-			FlxTween.tween(ratingGraphic.scale, {x: 0.4 * pixelZoom, y: 0.4 * pixelZoom}, 0.5, {ease: FlxEase.expoOut});
-		}
-
 		if (isPixelStage)
-			ratingGraphic.antialiasing = false;
+			rating.antialiasing = false;
 		else
-			ratingGraphic.antialiasing = ClientPrefs.globalAntialiasing;
-		ratingGraphic.updateHitbox();
-		FlxTween.tween(ratingGraphic, {alpha: 0}, 0.5, {startDelay: Conductor.stepCrotchet * 0.01, ease: FlxEase.expoOut});
+			rating.antialiasing = ClientPrefs.globalAntialiasing;
+		rating.updateHitbox();
+		ratingNameGroup.add(rating);
+		FlxTween.tween(rating, {alpha: 0}, 0.2, {startDelay: Conductor.crotchet * 0.001});
 	}
 
 	if (playHUD.showRatingNum)
 	{	
 		var seperatedScore:Array<Int> = [];
-				
+		var xOffset:Int = 0;
+			
 		if (combo >= 1000)
 		{
 			seperatedScore.push(Math.floor(combo / 1000) % 10);
+			xOffset = 9;
 		}
-		seperatedScore.push(Math.floor(combo / 100) % 10);
-		seperatedScore.push(Math.floor(combo / 10) % 10);
+		if (combo >= 100)
+		{
+			seperatedScore.push(Math.floor(combo / 100) % 10);
+			xOffset = 6;
+		}
+		if (combo >= 10)
+		{
+			seperatedScore.push(Math.floor(combo / 10) % 10);
+			xOffset = 3;
+		}
 		seperatedScore.push(combo % 10);
 
 		var daLoop = 0;
-		for (numScore in playHUD.ratingNumGroup.members)
+		for (i in seperatedScore)
 		{
-			FlxTween.cancelTweensOf(numScore);
-			
+			var numScore:FlxSprite = new FlxSprite();
+			numScore.loadGraphic(Paths.image(playHUD.comboPrefix + 'num' + Std.int(i) + playHUD.ratingSuffix));
 			numScore.alpha = 1;
-			numScore.scale.set(0.22 * pixelZoom, 0.22 * pixelZoom);
+			numScore.scale.set(0.5 * pixelZoom, 0.5 * pixelZoom);
 			numScore.screenCenter();
-			numScore.x = (32 * daLoop) - 90;
-			numScore.x += 130;
-			numScore.y = ratingGraphic.y + 60;
+			numScore.x = ((FlxG.width * 0.35) + (43 * daLoop) - 90) + xOffset;
+			numScore.y += 80;
 
-			if (playHUD.comboTween)
-			{
-				numScore.scale.set(0.32 * pixelZoom, 0.32 * pixelZoom);
-				FlxTween.cancelTweensOf(numScore, ['scale.x', 'scale.y']);
-				FlxTween.tween(numScore.scale, {x: 0.22 * pixelZoom, y: 0.22 * pixelZoom}, 0.5, {ease: FlxEase.expoOut});
-			}
+			numScore.acceleration.y = FlxG.random.int(200, 300);
+			numScore.velocity.y -= FlxG.random.int(140, 160);
+			numScore.velocity.x = FlxG.random.float(-5, 5);
 
 			if (isPixelStage)
 				numScore.antialiasing = false;
 			else
 				numScore.antialiasing = ClientPrefs.globalAntialiasing;
+
 			numScore.updateHitbox();
-			playHUD.ratingNumGroup.add(numScore);
-			FlxTween.tween(numScore, {alpha: 0}, 0.5, {startDelay: Conductor.stepCrotchet * 0.01, ease: FlxEase.expoOut});
+			ratingNumGroup.add(numScore);
+			FlxTween.tween(numScore, {alpha: 0}, 0.2, {
+				onComplete: function(tween:FlxTween)
+				{
+					numScore.destroy();
+				},
+				startDelay: Conductor.crotchet * 0.002
+			});
 
 			daLoop += 1;
 		}

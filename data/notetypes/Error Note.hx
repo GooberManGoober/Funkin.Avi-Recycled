@@ -61,9 +61,9 @@ function setupNote(note) {
 	var randomInt:Int = FlxG.random.int(0, 5);
 	var arr = arrowRGBError[randomInt];
 
-	note.rgbShader.r = arr[0];
-	note.rgbShader.g = arr[1];
-	note.rgbShader.b = arr[2];
+	note.rgbGraphics.r = arr[0];
+	note.rgbGraphics.g = arr[1];
+	note.rgbGraphics.b = arr[2];
 }
 
 function goodNoteHit(note) {

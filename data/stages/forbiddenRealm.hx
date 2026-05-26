@@ -208,7 +208,7 @@ function onSongStart()
         count.updateHitbox();
         count.screenCenter();
         count.cameras = [camGame];
-        add(count);
+        foreground.add(count);
         FlxG.sound.play(Paths.sound('intro3-glitch'), 2);
     });
 
@@ -221,7 +221,7 @@ function onSongStart()
         count.screenCenter();
         count.cameras = [camGame];
         count.antialiasing = false;
-        add(count);
+        foreground.add(count);
         FlxG.sound.play(Paths.sound('intro2-glitch'), 2);
     });
 
@@ -234,7 +234,7 @@ function onSongStart()
         count.screenCenter();
         count.cameras = [camGame];
         count.antialiasing = false;
-        add(count);
+        foreground.add(count);
         FlxG.sound.play(Paths.sound('intro1-glitch'), 2);
     });
 
@@ -247,7 +247,7 @@ function onSongStart()
         count.screenCenter();
         count.cameras = [camGame];
         count.antialiasing = false;
-        add(count);
+        foreground.add(count);
         FlxG.sound.play(Paths.sound('introGo-glitch'), 2);
     });
 

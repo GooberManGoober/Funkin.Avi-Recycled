@@ -140,7 +140,9 @@ function onLoad()
 	add(pauseNameTxt);
 
 	songArt = new FlxSprite(780, 110);
-	if (FunkinAssets.exists(Paths.getPath('images/menus/pause/songs/' + pauseArtAsset + '.png', null, true)))
+	if (PlayState.SONG.song == "Delusional" && (PlayState.instance.curStep >= 1904 && PlayState.instance.curStep <= 2976))
+		songArt.loadGraphic(Paths.image('menus/pause/songs/regret'));
+	else if (FunkinAssets.exists(Paths.getPath('images/menus/pause/songs/' + pauseArtAsset + '.png', null, true)))
 		songArt.loadGraphic(Paths.image('menus/pause/songs/' + pauseArtAsset));
 	else 
 		songArt.loadGraphic(Paths.image('menus/pause/songs/unknown-song'));

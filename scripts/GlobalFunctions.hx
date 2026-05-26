@@ -20,7 +20,7 @@ typedef FlashingSettings =
 	/**
 	 * The array of the color values (RGB)
 	 */
-	 @:optional var colors:Array<Int>;
+	@:optional var colors:Array<Int>;
 }
 
 var cinematicBars:Map<String, FlxSprite> = ["top" => null, "bottom" => null];
@@ -46,6 +46,9 @@ var bottomBarTwn:FlxTween;
 
 public var foreground:FlxTypedGroup;
 
+public var ratingNameGroup:FlxTypedGroup<FlxSprite>;
+public var ratingNumGroup:FlxTypedGroup<FlxSprite>;
+
 function onLoad()
 {
     camVideo = new FlxCamera();
@@ -68,6 +71,12 @@ function onCreatePost()
 	stageBGFlash.y -= 450;
 	stageBGFlash.scrollFactor.set();
     add(stageBGFlash);
+
+	ratingNameGroup = new FlxTypedGroup();
+	ratingNumGroup = new FlxTypedGroup();
+
+	playHUD.add(ratingNameGroup);
+	playHUD.add(ratingNumGroup);
 
     for (grp in [gfGroup, dadGroup, boyfriendGroup]) // fixes layering issue with the bg flash overlaying the characters
 	{
@@ -215,7 +224,7 @@ public function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String
     }});
 }
 
-public function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5, tweenType:String = 'linear', textDelay:Float = 0.03)
+public function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5, tweenType:String = 'linear', ?textDelay:Float = 0.03)
 {
 	if (!lyricsIcon.visible)
 	{

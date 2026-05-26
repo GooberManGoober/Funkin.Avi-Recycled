@@ -7,7 +7,7 @@
 	],
 	"splashesEnabled": true,
 	"susSplashesEnabled": false,
-	"noteTexture": "UI/notes/GreyNOTE_assets",
+	"noteTexture": "UI/noteSkins/NOTE_assets-GREY",
 	"receptorAnimations": [
 		[
 			{
@@ -282,7 +282,7 @@
 			}
 		]
 	],
-	"splashTexture": "UI/notes/GREYnoteSplashes",
+	"splashTexture": "UI/noteSplashes/noteSplashes-grey",
 	"antialiasing": true,
 	"quantsEnabled": false,
 	"inGameColoring": false,

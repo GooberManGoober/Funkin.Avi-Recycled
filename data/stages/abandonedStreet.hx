@@ -40,13 +40,13 @@ function onLoad()
     defaultCamZoom = 0.87;
     cameraSpeed = 1;
     
-    bg = new FlxSprite(-500, -100).loadGraphic(Paths.image(pathway + 'bg'));
+    bg = new FlxSprite(-500, -200).loadGraphic(Paths.image(pathway + 'bg'));
     bg.antialiasing = ClientPrefs.globalAntialiasing;
     bg.scale.set(1.5, 1.5);
     bg.scrollFactor.set(1, 1);
     add(bg);	
     
-    floor = new FlxSprite(-500, -100).loadGraphic(Paths.image(pathway + 'street'));
+    floor = new FlxSprite(-500, -200).loadGraphic(Paths.image(pathway + 'street'));
     floor.antialiasing = ClientPrefs.globalAntialiasing;
     floor.scale.set(1.5, 1.5);
     floor.scrollFactor.set(1, 1);
@@ -54,7 +54,7 @@ function onLoad()
 
     if (PlayState.SONG.song == 'Delusional')
     {	
-        fakeLightOfHope = new FlxSprite(-990, 1500).loadGraphic(Paths.image(pathway + 'falseHope'));
+        fakeLightOfHope = new FlxSprite(-990, 1400).loadGraphic(Paths.image(pathway + 'falseHope'));
         fakeLightOfHope.setGraphicSize(Std.int(fakeLightOfHope.width * 4));
         fakeLightOfHope.updateHitbox();
         fakeLightOfHope.antialiasing = ClientPrefs.globalAntialiasing;
@@ -64,14 +64,14 @@ function onLoad()
         add(fakeLightOfHope);
         
         // Bedroom Grah :fire: - MalyPlus
-        minnieBackground = new FlxSprite(-20, 200).loadGraphic(Paths.image(pathway + 'background'));
+        minnieBackground = new FlxSprite(-20, 100).loadGraphic(Paths.image(pathway + 'background'));
         minnieBackground.scale.set(2,2);
         minnieBackground.scrollFactor.set(1, 1);
         minnieBackground.antialiasing = ClientPrefs.globalAntialiasing;
         minnieBackground.visible = false;
         add(minnieBackground);
 
-        totallyanoriginalname = new FlxSprite(-20, 200).loadGraphic(Paths.image(pathway + 'shading'));
+        totallyanoriginalname = new FlxSprite(-20, 100).loadGraphic(Paths.image(pathway + 'shading'));
         totallyanoriginalname.scale.set(2,2);
         totallyanoriginalname.scrollFactor.set(1,1);
         totallyanoriginalname.visible = false;
@@ -81,7 +81,7 @@ function onLoad()
 
     if(!ClientPrefs.lowQulity)
     {
-        stageCurtains = new FlxSprite(0, 0).loadGraphic(Paths.image(pathway + 'i_forgor'));
+        stageCurtains = new FlxSprite(0, -100).loadGraphic(Paths.image(pathway + 'i_forgor'));
         stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
         stageCurtains.updateHitbox();
         stageCurtains.screenCenter();
@@ -97,7 +97,7 @@ function onCreatePost()
 {    
     if(!ClientPrefs.lowQulity)
     {
-        atmosphereParticle = new FlxEmitter(-2080.5, 2100);
+        atmosphereParticle = new FlxEmitter(-2080.5, 2000);
         atmosphereParticle.launchMode = FlxEmitterMode.SQUARE;
         atmosphereParticle.velocity.set(-50, -200, 50, -600, -90, 0, 90, -600);
         atmosphereParticle.scale.set(4, 4, 4, 4, 0, 0, 0, 0);
@@ -108,7 +108,7 @@ function onCreatePost()
         atmosphereParticle.loadParticles(Paths.image(pathway + 'dustParticle'), 500, 16, true);
         atmosphereParticle.start(false, FlxG.random.float(.0521, .1060), 1000000);
 
-        ashParticle = new FlxEmitter(-2080.5, 2250.4);
+        ashParticle = new FlxEmitter(-2080.5, 2150.4);
         for (i in 0 ... 100)
             {
                 var blackParticle = new FlxParticle();
@@ -132,7 +132,7 @@ function onCreatePost()
         foreground.add(atmosphereParticle);
 		foreground.add(ashParticle); 
        
-        rain = new FlxSprite(-550, -800);
+        rain = new FlxSprite(-550, -700);
         rain.frames = Paths.getSparrowAtlas(pathway + 'rain');
         rain.animation.addByPrefix('drippin', 'Rain', 30, true);
         rain.scale.set(2, 2);
@@ -1372,7 +1372,7 @@ function onSongStart()
 
             modManager.queueFuncOnce(1912, (s,s2)->{ 
                 camFollow.x = 630;
-                camFollow.y = 700;
+                camFollow.y = 600;
                 isCameraOnForcedPos = true;
                 defaultCamZoom = 0.5;
                 boyfriend.cameras = [camVideo];
@@ -1492,19 +1492,19 @@ function onSongStart()
                 camFlashSystem('fancy flash', {alpha: 0.4, timer: 2, colors: [255, 0, 0]});
                 camFlashSystem('dark', {alpha: 0.8, timer: 6, ease: FlxEase.quartInOut});
                 isCameraOnForcedPos = true;
-                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150, y: camFollow.y + 50}, 4.3, {ease: FlxEase.quartInOut});
+                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150, y: camFollow.y - 50}, 4.3, {ease: FlxEase.quartInOut});
             });
             // camera moves over to Mickey realizing he was never gonna win
             modManager.queueFuncOnce(1024 * 4, (s,s2)->{ 
                 if (camPosTween != null)
                     camPosTween.cancel();
                     
-                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 950, y: camFollow.y - 70}, 1.5, {ease: FlxEase.circInOut});
+                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 950, y: camFollow.y - 170}, 1.5, {ease: FlxEase.circInOut});
             });
 
             modManager.queueFuncOnce(1040 * 4, (s,s2)->{ 
                 camFollow.x = 475;
-                camFollow.y = 450;
+                camFollow.y = 350;
                 defaultCamZoom = 0.5;
                 camFlashSystem('dark', {alpha: 0, timer: 1, ease: FlxEase.circOut});
             });

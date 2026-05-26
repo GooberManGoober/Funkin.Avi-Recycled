@@ -13,6 +13,9 @@ import funkin.states.options.GameplaySettingsSubState;
 import funkin.states.options.MiscSubState;
 import funkin.states.options.OptionsState;
 import funkin.states.MainMenuState;
+import funkin.states.options.NoteOffsetState;
+
+import funkin.input.Controls.Device;
 
 import lime.app.Application;
 
@@ -21,6 +24,7 @@ using StringTools;
 var options:Array<String> = [
     'Notes',
     'Controls',
+    'Adjust Delay and Combo',
     'Graphics',
     'Visuals and UI',
     'Gameplay',
@@ -40,7 +44,8 @@ function openSelectedSubstate(label:String) {
         case 'Notes':
             openSubState(new NoteSettingsSubState());
         case 'Controls':
-            openSubState(new ControlsSubState());
+            final gamepad = FlxG.gamepads.getFirstActiveGamepad();
+			openSubState(new ControlsSubState(gamepad != null ? Device.Gamepad(gamepad.id) : Device.Keys));
         case 'Graphics':
             openSubState(new GraphicsSettingsSubState());
         case 'Visuals and UI':
@@ -49,6 +54,8 @@ function openSelectedSubstate(label:String) {
             openSubState(new GameplaySettingsSubState());
         case 'NMV':
             openSubState(new MiscSubState());
+        case 'Adjust Delay and Combo':
+			FlxG.switchState(new NoteOffsetState());
     }
     persistentUpdate = false;
 }
