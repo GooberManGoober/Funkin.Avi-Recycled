@@ -37,9 +37,6 @@ function setupCardData()
 			fontStuff = "splatter";
 		case 'Malfunction':
 			fontStuff = "m40.ttf";
-		case 'Bless Legacy':
-			fontStuff = "vcr.ttf";
-			isLegacy = true;
 		default: 
 			fontStuff = "vcr.ttf";
 	}

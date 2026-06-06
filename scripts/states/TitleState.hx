@@ -4,7 +4,6 @@ import sys.io.File;
 
 import lime.app.Application;
 import funkin.FunkinAssets;
-import openfl.filters.ShaderFilter;
 
 import funkin.states.MainMenuState;
 
@@ -22,9 +21,6 @@ var isTweenCancelled = false;
 var whiteFade:FlxSprite;
 
 var fadeTween:FlxTween;
-
-var defaultShader:FlxRuntimeShader;
-var defaultShader2:FlxRuntimeShader;
 
 var fade:FlxSprite;
 
@@ -233,12 +229,6 @@ function onCreate()
 		add(grain);
 	}
 
-	defaultShader2 = newShader('monitorFilter');
-	if(ClientPrefs.shaders)
-	{
-		FlxG.camera.filters = [new ShaderFilter(defaultShader2)];
-	}
-	
 	if (initialized)
 		skipIntro();
 	else
@@ -329,8 +319,12 @@ function deleteCoolText()
 	}
 }
 
+var curBeat = 0;
+
 function onBeatHit()
 {
+	curBeat += 1;
+	
 	if(!closedState) {
 		FlxG.camera.zoom += 0.025;
 
@@ -341,8 +335,7 @@ function onBeatHit()
 		recycledText.scale.x += 0.03;
 		recycledText.scale.y += 0.03;
 
-		sickBeats += 1;
-		switch (sickBeats)
+		switch (curBeat)
 		{
 			case 1:
 				createCoolText(["Goober (the guy with a -1.04 GPA)"], 15);
@@ -478,20 +471,12 @@ function windowFixesAndEvents()
 			System.exit(0);
 		});
 	}
-	else if(Application.current.window.title.contains("Funkin.avi: Recycled - .edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - iva.niknuF"))
-	{
-		Application.current.window.title = ".edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - iva.niknuF";
-	}
+	else if(Application.current.window.title.contains("Funkin.avi: Recycled - .edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - delcyceR :iva.niknuF"))
+		Application.current.window.title = ".edud ssarg emos hcuot og ot deen uoy ,das yrev tsuj ,yltsenoh ,das si thaT ?sdrawkcab txet siht fo lla gnidaer otni troffe hcum os gnittup enigamI - delcyceR :iva.niknuF";
 	else if(Application.current.window.title.contains("Funkin.avi: Recycled - fuckin: restored.mp3 - jsjsjsdjdsjdsjadsjjads"))
-	{
 		Application.current.window.title = "fuckin: restored.mp3 - jsjsjsdjdsjdsjadsjjads";
-	}
 	else if(Application.current.window.title.contains('Funkin.avi: Recycled - fuckin.mp3 - i juss shat meseff'))
-	{
 		Application.current.window.title = "fuckin: restored.mp3 - i juss shat meseff";
-	}
 	else if(Application.current.window.title.contains("Funkin.avi: Recycled -  "))
-	{
 		Application.current.window.title = " ";
-	}
 }

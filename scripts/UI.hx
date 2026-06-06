@@ -30,8 +30,7 @@ function onPause() {
 	if (audio.inst != null)
 		audio.pause();
 
-	if (PlayState.SONG.song == "Bless Legacy") openSubState(new ScriptedSubstate("LegacyPauseSubState"));
-	else openSubState(new ScriptedSubstate("FAVIPauseSubState"));
+	openSubState(new ScriptedSubstate("FAVIPauseSubState"));
 	FlxTween.globalManager.forEach((i:FlxTween) -> if (!i.finished) i.active = true); // makes the objects in the pause menu actually able to tween
 	return ScriptConstants.STOP_FUNC;
 }
@@ -141,28 +140,25 @@ function onCreatePost()
 
 function onUpdate(elapsed)
 {
-    if (PlayState.SONG.song != "Bless Legacy")
+    // the COOLER cam pos thing or whatever
+	// x, y, angle
+	var camOffset = [0.0, 0.0, 0];
+
+	var char = cameraOnDad ? dad : boyfriend;
+
+	if (char.animation.curAnim != null && !isCameraOnForcedPos && ClientPrefs.camFollowsCharacters) 
 	{
-		// the COOLER cam pos thing or whatever
-		// x, y, angle
-		var camOffset = [0.0, 0.0, 0];
-
-		var char = cameraOnDad ? dad : boyfriend;
-
-		if (char.animation.curAnim != null && !isCameraOnForcedPos && ClientPrefs.camFollowsCharacters) 
+		switch (char.animation.curAnim.name.substring(4))
 		{
-			switch (char.animation.curAnim.name.substring(4))
-			{
-				case 'RIGHT', 'RIGHT-alt':
-					camOffset[2] += 1.3;
-				case 'LEFT', 'LEFT-alt':
-					camOffset[2] -= 1.45;
-			}
+			case 'RIGHT', 'RIGHT-alt':
+				camOffset[2] += 1.3;
+			case 'LEFT', 'LEFT-alt':
+				camOffset[2] -= 1.45;
 		}
+	}
 
-		if(!inCutscene) {
-			camGame.angle = FlxMath.lerp(camGame.angle, 0 + camOffset[2], 0.04 * cameraSpeed);
-		}
+	if(!inCutscene) {
+		camGame.angle = FlxMath.lerp(camGame.angle, 0 + camOffset[2], 0.04 * cameraSpeed);
 	}
 }
 

@@ -15,15 +15,6 @@ function resetCharPos()
 {
     switch (PlayState.SONG.stage)
     {
-        case 'vaultRoomLegacy':
-            switch (boyfriend.curCharacter)
-            {
-                case 'bfghost':
-                    boyfriend.setPosition(300, -450);
-                default:
-                    boyfriend.setPosition(950, 520);
-            }
-            dad.setPosition(0, 100);
         case 'abandonedStreet':
             switch (dad.curCharacter)
             {
@@ -121,8 +112,14 @@ function resetCharPos()
             }
             boyfriend.setPosition(330, 300);
         case 'vaultRoom':
-            boyfriend.setPosition(960, 530);
-            dad.setPosition(-680, -520);
+            switch (boyfriend.curCharacter)
+            {
+                case 'bfghost':
+                    boyfriend.setPosition(300, -450);
+                default:
+                    boyfriend.setPosition(950, 520);
+            }
+            dad.setPosition(0, 100);
         case 'fuckingLine':
             dad.setPosition(-400, -150);
             boyfriend.setPosition(900, 300);

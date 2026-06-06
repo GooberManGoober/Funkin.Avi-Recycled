@@ -5,16 +5,18 @@
 				258,
 				-685
 			],
-			"loop": false,
-			"fps": 24,
-			"anim": "idle",
 			"indices": [],
-			"name": "satandd idle"
+			"fps": 24,
+			"flipX": false,
+			"flipY": false,
+			"anim": "idle",
+			"loop": false,
+			"name": "dd-satanNEW idle"
 		}
 	],
 	"no_antialiasing": false,
 	"ghosts_enabled": false,
-	"image": "characters/satandd",
+	"image": "characters/dd-satanNEW",
 	"position": [
 		0,
 		0

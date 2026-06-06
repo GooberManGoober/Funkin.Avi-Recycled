@@ -54,8 +54,7 @@ var songList:Array<String> = [
     'Birthday',
     //Covers & Collabs
 	'Delusion',
-	'Disclosure',
-    'Bless Legacy'
+	'Disclosure'
 ];
 
 var songPercent:Float = 0;

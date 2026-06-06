@@ -3,7 +3,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import lime.app.Application;
-import openfl.filters.ShaderFilter;
 import funkin.states.MainMenuState;
 
 using StringTools;
@@ -11,19 +10,10 @@ using StringTools;
 var upText:FlxText;
 var downText:FlxText;
 
-var monitor:FlxRuntimeShader;
-
 var controls = Controls.instance;
 
 function onCreate() 
 {
-    monitor = newShader('monitorFilter');
-
-    if (ClientPrefs.shaders)
-    {
-        FlxG.camera.filters = [new ShaderFilter(monitor)];
-    }
-
     var eyes:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menus/mainmenu/HahaSadBoi'));
     eyes.scrollFactor.set(0, 0);
     eyes.screenCenter();

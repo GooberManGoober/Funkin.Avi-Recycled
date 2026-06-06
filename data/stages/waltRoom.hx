@@ -27,9 +27,13 @@ function onLoad()
 {
     defaultCamZoom = 0.75;
 
-    Paths.getSparrowAtlas("characters/Walt");
-    Paths.getSparrowAtlas("characters/walt death");
-    Paths.getSparrowAtlas("characters/waltLaugh");
+    FunkinAssets.getGraphicUnsafe(Paths.image("characters/Walt"));
+    FunkinAssets.getGraphicUnsafe(Paths.image("characters/walt death"));
+    FunkinAssets.getGraphicUnsafe(Paths.image("characters/waltLaugh"));
+
+    addCharacterToList('walt-death', 1);
+    addCharacterToList('walt-true', 1);
+    addCharacterToList('walt-cutscene', 1);
 
     camGame.alpha = 0.0001;
     camHUD.alpha = 0.0001;

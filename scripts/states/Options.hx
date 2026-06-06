@@ -3,8 +3,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.FlxG;
 
-import openfl.filters.ShaderFilter;
-
 import funkin.states.options.NoteSettingsSubState;
 import funkin.states.options.ControlsSubState;
 import funkin.states.options.GraphicsSettingsSubState;
@@ -61,13 +59,6 @@ function openSelectedSubstate(label:String) {
 }
 
 function onCreate() {
-    if (ClientPrefs.shaders) {
-        FlxG.camera.filters = [
-            new ShaderFilter(newShader("grayScale")),
-            new ShaderFilter(newShader('monitorFilter'))
-        ];
-    }
-
     Application.current.window.title = "Funkin.avi: Recycled - Options";
 
     var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menus/menuDesat'));

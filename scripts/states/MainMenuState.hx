@@ -18,7 +18,6 @@ import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import lime.app.Application;
-import openfl.filters.ShaderFilter;
 
 import funkin.states.options.OptionsState;
 import funkin.states.MainMenuState;
@@ -165,9 +164,6 @@ var finishedFunnyMove:Bool = false;
 
 var holdTimer:Float = 0;
 
-var defaultShader:FlxRuntimeShader;
-var defaultShader2:FlxRuntimeShader;
-
 var howmuchyoufuckinkeptdoingit:Int = 0;
 
 function onCreate()
@@ -196,7 +192,6 @@ function onCreate()
 
 	menuart = new FlxSprite().loadGraphic(Paths.image('menus/mainmenu/newspaper'));
 	menuart.scrollFactor.set(0, 0);
-	//menuart.setGraphicSize(StdDaInt(menuart.width * 1.175));
 	menuart.updateHitbox();
 	menuart.screenCenter();
 	menuart.antialiasing = ClientPrefs.globalAntialiasing;
@@ -210,8 +205,7 @@ function onCreate()
 	for (i in 0...optionShit.length)
 	{
 		var menuItem:FlxSprite = new FlxSprite(700, 0);
-		menuItem.scale.x = scale;
-		menuItem.scale.y = scale;
+		menuItem.scale.set(scale, scale);
 		menuItem.frames = Paths.getSparrowAtlas('menus/mainmenu/menu_' + optionShit[i]);
 		menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 		menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
@@ -306,14 +300,6 @@ function onCreate()
 	}
 
 	FlxTween.tween(FlxG.sound.music, {pitch: 1}, 1.2);
-	
-	defaultShader2 = newShader('monitorFilter');
-	if(ClientPrefs.shaders)
-	{
-		FlxG.camera.filters = [
-			new ShaderFilter(defaultShader2)
-		];
-	}
 }
 
 var selectedSomethin:Bool = false;

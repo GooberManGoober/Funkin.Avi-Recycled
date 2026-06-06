@@ -2,7 +2,6 @@ import flixel.text.FlxText;
 import flixel.text.FlxText.FlxTextFormat;
 import flixel.text.FlxText.FlxTextFormatMarkerPair;
 import haxe.Json;
-import openfl.filters.ShaderFilter;
 import sys.io.File;
 import lime.app.Application;
 import flixel.addons.display.FlxGridOverlay;
@@ -149,13 +148,6 @@ function onCreate()
 	boxOverlay.antialiasing = ClientPrefs.globalAntialiasing;
 	add(boxOverlay);
 
-	var monitor = newShader('monitorFilter');
-
-	if (ClientPrefs.shaders)
-		fuckingCameraSoTheMenuDoesntFuckUpOrWhateverCauseFlixelIsEVIL.filters = ([
-			new ShaderFilter(monitor)
-		]);
-
 	if (!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
@@ -179,8 +171,6 @@ function onCreate()
 
 	changeSelection(0);
 }
-
-var shaderTime:Float = 0;
 
 function onUpdate(elapsed)
 {
