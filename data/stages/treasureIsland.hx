@@ -53,15 +53,17 @@ function onSongStart()
 
         playHUD.alpha = 0;
 
-        modManager.queueEase(332 * 4, 334 * 4, "opponentSwap", 0, "expoOut", -1);
+        modManager.queueEase(332 * 4, 334 * 4, "opponentSwap", 0, "expoOut", 1);
         modManager.queueEase(332 * 4, 334 * 4, "transformZ", 0, "expoOut", 1);
 
         modManager.queueEase(332 * 4, 334 * 4, "alpha", 0, "expoOut", 1);
 
         modManager.queueEase(332 * 4, 334 * 4, "transform0X", 0, "expoOut", 1);
         modManager.queueEase(332 * 4, 334 * 4, "transform1X", 0, "expoOut", 1);
-        modManager.queueEase(332 * 4, 334 * 4, "transform2X", 0, "expoOut", 1);
-        modManager.queueEase(332 * 4, 334 * 4, "transform3X", 0, "expoOut", 1);
+
+        modManager.queueEase(332 * 4, 334 * 4, "opponentSwap", (ClientPrefs.middleScroll ? 0.5 : 0), "expoOut", 0);
+        modManager.queueEase(332 * 4, 334 * 4, "transform2X", (ClientPrefs.middleScroll ? 630 : 0), "expoOut", 1);
+        modManager.queueEase(332 * 4, 334 * 4, "transform3X", (ClientPrefs.middleScroll ? 630 : 0), "expoOut", 1);
 
         modManager.queueEase(332 * 4, 334 * 4, "confusion", 0, "expoOut", 1);
         modManager.queueEase(332 * 4, 334 * 4, "reverse", 0, "expoOut", 1);

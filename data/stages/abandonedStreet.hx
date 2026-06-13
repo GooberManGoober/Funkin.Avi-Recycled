@@ -1492,7 +1492,7 @@ function onSongStart()
                 camFlashSystem('fancy flash', {alpha: 0.4, timer: 2, colors: [255, 0, 0]});
                 camFlashSystem('dark', {alpha: 0.8, timer: 6, ease: FlxEase.quartInOut});
                 isCameraOnForcedPos = true;
-                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150, y: camFollow.y - 50}, 4.3, {ease: FlxEase.quartInOut});
+                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150}, 4.3, {ease: FlxEase.quartInOut});
             });
             // camera moves over to Mickey realizing he was never gonna win
             modManager.queueFuncOnce(1024 * 4, (s,s2)->{ 
@@ -1504,7 +1504,7 @@ function onSongStart()
 
             modManager.queueFuncOnce(1040 * 4, (s,s2)->{ 
                 camFollow.x = 475;
-                camFollow.y = 350;
+                camFollow.y = 450;
                 defaultCamZoom = 0.5;
                 camFlashSystem('dark', {alpha: 0, timer: 1, ease: FlxEase.circOut});
             });

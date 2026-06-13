@@ -209,7 +209,8 @@ function onCreate()
 	whiteFade.alpha = 0;
 	add(whiteFade);
 
-	if(!ClientPrefs.lowQuality) {
+	if(!ClientPrefs.lowQuality)
+	{
 		var scratchStuff:FlxSprite = new FlxSprite();
 		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
 		scratchStuff.animation.addByPrefix('idle', 'scratch thing 1', 24, true);
@@ -229,22 +230,16 @@ function onCreate()
 		add(grain);
 	}
 
-	if (initialized)
-		skipIntro();
-	else
-		initialized = true;
+	if (initialized) skipIntro();
+	else initialized = true;
 }
 
 function onUpdate(elapsed)
 {
-	if (FlxG.sound.music != null && FlxG.sound.music.playing)
-		Conductor.songPosition = FlxG.sound.music.time;
+	if (FlxG.sound.music != null && FlxG.sound.music.playing) Conductor.songPosition = FlxG.sound.music.time;
 
 	var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
-	/**
-		* closing in a cool way
-		*/
 	if (FlxG.keys.justPressed.ESCAPE && !pressedEnter)
 	{
 		FlxG.sound.music.fadeOut(3);
@@ -277,10 +272,7 @@ function onUpdate(elapsed)
 		}
 	}
 
-	if (initialized && pressedEnter && !skippedIntro)
-	{
-		skipIntro();
-	}
+	if (initialized && pressedEnter && !skippedIntro) skipIntro();
 
 	FlxG.camera.zoom = FlxMath.lerp(1, FlxG.camera.zoom, FlxMath.bound(1 - (elapsed * 1.925), 0, 1));
 	logoBl.scale.set(FlxMath.lerp(0.85, logoBl.scale.x, FlxMath.bound(1 - (elapsed * 1.995), 0, 1)), FlxMath.lerp(0.85, logoBl.scale.y, FlxMath.bound(1 - (elapsed * 1.995), 0, 1)));
@@ -325,7 +317,8 @@ function onBeatHit()
 {
 	curBeat += 1;
 	
-	if(!closedState) {
+	if(!closedState)
+	{
 		FlxG.camera.zoom += 0.025;
 
 		// logo doesn't have animation, we make one by ourselfs instead
@@ -467,7 +460,7 @@ function windowFixesAndEvents()
 	}
 	else if(Application.current.window.title.contains("Funkin.avi: Recycled - I'm shutting down your game now, fuck you"))
 	{
-		new FlxTimer().start(1.5, function(tmr:FlxTimer){
+		new FlxTimer().start(1.5, function(tmr:FlxTimer) {
 			System.exit(0);
 		});
 	}

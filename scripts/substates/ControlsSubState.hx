@@ -1,10 +1,6 @@
-import flixel.text.FlxText;
-
-import openfl.filters.ShaderFilter;
-import funkin.utils.CameraUtil;
-
-function onCreatePost() {
-	if(!ClientPrefs.lowQuality)
+function onCreatePost()
+{
+	if (!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
 		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
@@ -13,6 +9,7 @@ function onCreatePost() {
 		scratchStuff.screenCenter();
 		scratchStuff.scale.x = 1.1;
 		scratchStuff.scale.y = 1.1;
+		scratchStuff.scrollFactor.set();
 		add(scratchStuff);
 
 		var grain:FlxSprite = new FlxSprite();
@@ -22,13 +19,7 @@ function onCreatePost() {
 		grain.screenCenter();
 		grain.scale.x = 1.1;
 		grain.scale.y = 1.1;
+		grain.scrollFactor.set();
 		add(grain);
 	}
-
-	if (ClientPrefs.shaders) {
-        CameraUtil.lastCamera.filters = [
-            new ShaderFilter(newShader("grayScale")),
-            new ShaderFilter(newShader('monitorFilter'))
-        ];
-    }
 }

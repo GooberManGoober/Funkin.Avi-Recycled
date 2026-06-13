@@ -13,7 +13,8 @@ var theFogIsComingTheFogIsComingTheFogIsComingTheFogIsComingTheFogIsComingTheFog
 // the text stuff
 var totallyEmotionalTextDisplay:FlxText;
 
-function onCreate() {
+function onCreate()
+{
    // setup window's new functionality
    Application.current.window.borderless = true;
    Application.current.window.title = "Was it worth it?";

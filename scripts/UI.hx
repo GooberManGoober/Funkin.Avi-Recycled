@@ -81,6 +81,25 @@ function onCreatePost()
 		}
 	}
 
+	if (ClientPrefs.middleScroll && PlayState.SONG.song != "Malfunction")
+	{
+		modManager.setValue("opponentSwap", 0.5, 0);
+        modManager.setValue("transform2X", 630, 1);
+        modManager.setValue("transform3X", 630, 1);
+
+		opponentStrums.underlayAlphaMult = 0;
+
+		opponentStrums.baseAlpha = 0.35;
+		opponentStrums.alpha = 0.35;
+	}
+	else
+	{
+		opponentStrums.underlayAlphaMult = 1;
+
+		opponentStrums.baseAlpha = 1;
+		opponentStrums.alpha = 1;
+	}
+
 	switch (PlayState.SONG.stage)
 	{
 		case 'forestNew', 'clubhouse', 'trueGrinsOfSins', 'apartment':

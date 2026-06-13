@@ -203,8 +203,7 @@ function onUpdate(elapsed)
 		FlxG.sound.music.fadeIn();
 	}
 
-	if(FlxG.mouse.wheel != 0)
-		changeSelection(-1 * FlxG.mouse.wheel);
+	if(FlxG.mouse.wheel != 0) changeSelection(-1 * FlxG.mouse.wheel);
 }
 
 function jsonStuff()
@@ -217,10 +216,8 @@ function jsonStuff()
 function changeSelection(newSelect:Int = 0)
 {
 	curSelected += newSelect;
-	if (curSelected < 0)
-		curSelected = creditArray.length - 1;
-	if (curSelected >= creditArray.length)
-		curSelected = 0;
+	if (curSelected < 0) curSelected = creditArray.length - 1;
+	if (curSelected >= creditArray.length) curSelected = 0;
 
 	creditNameText.text = creditArray[curSelected][0] != null ? creditArray[curSelected][0] : 'unknown';
 	creditDescText.text = creditArray[curSelected][3] != null ? creditArray[curSelected][3] : 'unknown';
@@ -241,7 +238,7 @@ function reloadText(long:Bool)
 	{
 		switch (creditArray[curSelected][0].toLowerCase())
 		{
-			case 'domingo' | 'retrojogador':
+			case 'domingo':
 				creditNameText.y = FlxG.height * 0.1;
 				creditWorkText.y = FlxG.height * 0.21;
 				creditDescText.fieldWidth = 1000;

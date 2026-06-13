@@ -1,4 +1,5 @@
-function onLoad() {
+function onLoad()
+{
 	saveFix();
 }
 

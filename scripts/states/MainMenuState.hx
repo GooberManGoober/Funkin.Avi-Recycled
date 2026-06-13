@@ -26,61 +26,13 @@ import funkin.states.StoryMenuState;
 import funkin.states.TitleState;
 import funkin.states.FreeplayState;
 
-using StringTools;
-
-typedef Utils = 
-{
-    @:deprecated('text is no longer used! Use sendNotification instead')
-    @:noCompletion
-    /**
-    * The main text for your notification
-    */
-    @:optional var text:String;
-
-    @:deprecated('text is no longer used! Use sendNotification instead')
-    @:noCompletion
-    /**
-    * The secondary text for your notification
-    */
-    @:optional var subText:String;
-
-    /**
-    * The font used for your notification box (affects both main and secondary text!)
-    */
-    @:optional var font:String;
-
-    /**
-    * The text color used for your notification box (affects both main and secondary text!)
-    */
-    @:optional var textColor:FlxColor;
-
-    /**
-    * The width of your notification box.
-    */
-    @:optional var boxWidth:Int;
-
-    /**
-    * The height of your notification box.
-    */
-    @:optional var boxHeight:Int;
-
-    /**
-    * The color of your notification box.
-    */
-    @:optional var boxColor:FlxColor;
-
-    /**
-    * The camera that will be present in your notification box (Uses the last camera of the `FlxG.cameras.list` list by default).
-    */
-    @:optional var camera:FlxCamera;
-} 
+using StringTools; 
 
 var curSelected:Int = 0;
 
 var menuItems:FlxTypedGroup;
 
 var camFilter:FlxCamera;
-var messager;
 
 var controls = Controls.instance;
 
@@ -213,7 +165,6 @@ function onCreate()
 		menuItem.ID = i;
 		menuItems.add(menuItem);
 		menuItem.antialiasing = ClientPrefs.globalAntialiasing;
-		//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 		menuItem.updateHitbox();
 
 		switch (menuItem.ID)
@@ -252,7 +203,7 @@ function onCreate()
 	verionDesc.scrollFactor.set();
 	verionDesc.cameras = [camFilter];
 	add(verionDesc);
-	
+
 	newBox(-400, FlxG.height - 80, {
 		text: 'Freeplay is Locked!', 
 		subText: 'Complete Episode 1 to Unlock this Menu!',
@@ -285,8 +236,7 @@ function onCreate()
 	scratchStuff.cameras = [camFilter];
 	grain.cameras = [camFilter];
 
-	if (FlxG.stage.window.title.contains('*cantaloupe jumpscare*'))
-		coolMenuEvents(1);
+	if (FlxG.stage.window.title.contains('*cantaloupe jumpscare*')) coolMenuEvents(1);
 
 	Application.current.window.title = "Funkin.avi - " + windowShit[FlxG.random.int(0, windowShit.length - 1)];
 
@@ -304,7 +254,8 @@ function onCreate()
 
 var selectedSomethin:Bool = false;
 
-function onCloseSubState() {
+function onCloseSubState()
+{
 	selectedSomethin = false;
 }
 
@@ -316,8 +267,7 @@ function onUpdate(elapsed)
 		persistentUpdate = false;
 	}
 
-	if (FlxG.keys.justPressed.R)
-		coolMenuEvents(0);
+	if (FlxG.keys.justPressed.R) coolMenuEvents(0);
 
 	if (FlxG.sound.music.volume < 0.8)
 		FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -386,7 +336,7 @@ function onUpdate(elapsed)
 				else
 				{
 					FlxG.sound.play(Paths.sound('cancelMenu'));
-					sendMessage('Freeplay is locked!', 'Complete Episode 1 to Unlock this menu.');
+					sendMessage();
 				}
 			}
 			else
@@ -433,10 +383,8 @@ function onUpdate(elapsed)
 
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			if (!ClientPrefs.inDevMode) 
-				FlxG.switchState(new ScriptedState("SexState"));
-			else
-				FlxG.switchState(new MasterEditorMenu());
+			if (!ClientPrefs.inDevMode) FlxG.switchState(new ScriptedState("SexState"));
+			else FlxG.switchState(new MasterEditorMenu());
 		}
 		if (FlxG.keys.justPressed.ONE && ClientPrefs.inDevMode)
 		{
@@ -457,10 +405,8 @@ function changeItem(huh:Int = 0)
 {
 	curSelected += huh;
 
-	if (curSelected >= menuItems.length)
-		curSelected = 0;
-	if (curSelected < 0)
-		curSelected = menuItems.length - 1;
+	if (curSelected >= menuItems.length) curSelected = 0;
+	if (curSelected < 0) curSelected = menuItems.length - 1;
 
 	menuItems.forEach(function(spr:FlxSprite)
 	{
@@ -505,52 +451,97 @@ function coolMenuEvents(getEvent:Int)
 	}
 }
 
+/**
+ * The functions for the message box
+ */
+
+typedef Utils = 
+{
+    @:noCompletion
+    /**
+    * The main text for your notification
+    */
+    @:optional var text:String;
+
+    @:noCompletion
+    /**
+    * The secondary text for your notification
+    */
+    @:optional var subText:String;
+
+    /**
+    * The font used for your notification box (affects both main and secondary text!)
+    */
+    @:optional var font:String;
+
+    /**
+    * The text color used for your notification box (affects both main and secondary text!)
+    */
+    @:optional var textColor:FlxColor;
+
+    /**
+    * The width of your notification box.
+    */
+    @:optional var boxWidth:Int;
+
+    /**
+    * The height of your notification box.
+    */
+    @:optional var boxHeight:Int;
+
+    /**
+    * The color of your notification box.
+    */
+    @:optional var boxColor:FlxColor;
+
+    /**
+    * The camera that will be present in your notification box (Uses the last camera of the `FlxG.cameras.list` list by default).
+    */
+    @:optional var camera:FlxCamera;
+}
+
 var box:FlxSprite;
 var boxText:FlxText;
 var boxSubText:FlxText;
-
-// var onDeny = new FlxSignal();
 
 var boxTween:FlxTween;
 var boxTween2:FlxTween;
 var boxTween3:FlxTween;
 
-function newBox(x:Float = 0, y:Float = 0, utils:Utils) {
+function newBox(x:Float = 0, y:Float = 0, utils:Utils)
+{   
     // null checks
     if (utils.font == null) utils.font = 'vcr';
+    if (utils.text == null) utils.text = 'this is a text!';
+    if (utils.subText == null) utils.subText = 'this is a subtext!';
     if (utils.textColor == null) utils.textColor = FlxColor.WHITE;
     if (utils.boxWidth == null) utils.boxWidth = 360;
     if (utils.boxHeight == null) utils.boxHeight = 90;
     if (utils.boxColor == null) utils.boxColor = FlxColor.BLACK;
-    if (utils.camera == null) utils.camera = FlxG.cameras.list[FlxG.cameras.list.length - 1];
+    if (utils.camera == null) utils.camera = CameraUtil.lastCamera;
 
-    boxText = new FlxText(x, y, 0, 'this is a text!', 24);
+    box = new FlxSprite(x, y).makeGraphic(utils.boxWidth, utils.boxHeight, utils.boxColor);
+    box.scrollFactor.set();
+    box.alpha = 0;
+	box.camera = utils.camera;
+    add(box);
+
+    boxText = new FlxText(x, y, 0, utils.text, 24);
     boxText.setFormat(Paths.font(utils.font), 32, 0xFFFFFFFF, "left", FlxTextBorderStyle.OUTLINE, 0xFF000000);
     boxText.scrollFactor.set();
-    boxText.camera = utils.camera;
+    boxText.alpha = 0;
+	boxText.camera = utils.camera;
+    add(boxText);
 
-    boxSubText = new FlxText(x, boxText.y + 30, 0, 'this is a subtext!', 24);
+    boxSubText = new FlxText(x, y + 30, 0, utils.subText, 24);
     boxSubText.setFormat(Paths.font(utils.font), 24, 0xFFFFFFFF, "left", FlxTextBorderStyle.OUTLINE, 0xFF000000);
     boxSubText.scrollFactor.set();
-    boxSubText.camera = utils.camera;
-
-    box = new FlxSprite(x, boxText.y).makeGraphic(utils.boxWidth, utils.boxHeight, utils.boxColor);
-    box.scrollFactor.set();
-    box.camera = utils.camera;
-
-    box.alpha = boxText.alpha = boxSubText.alpha = 0;
-
-    add(box);
-    add(boxText);
+    boxSubText.alpha = 0;
+	boxSubText.camera = utils.camera;
     add(boxSubText);
 }
 
-/**
-    * Send a `MessageBox` message to the game.
-    * @param text the principal piece of text of your notification.
-    * @param subText the secondary piece of text of your notification.
-    */
-function sendMessage(text:String = 'text', subText:String = '')
+function sendMessage()
 {
     if (boxTween != null)
         boxTween.cancel();
@@ -558,64 +549,30 @@ function sendMessage(text:String = 'text', subText:String = '')
         boxTween2.cancel();
     if (boxTween3 != null)
         boxTween3.cancel();
-
-    boxText.text = text;
-    boxSubText.text = subText;
-
-    boxTween = FlxTween.tween(boxText, {
-        alpha: 1,
-        x: 0
-    }, 0.8, {
-        ease: FlxEase.sineOut,
-        onComplete: function(twn:FlxTween)
+    
+    boxTween = FlxTween.tween(boxText, {alpha: 1, x: 0}, 0.8, {ease: FlxEase.sineOut, onComplete: function(twn:FlxTween)
         {
-            boxTween = FlxTween.tween(boxText, {
-                alpha: 0,
-                x: -400
-            }, 1.5, {
-                startDelay: 3,
-                ease: FlxEase.sineInOut,
-                onComplete: function(twn:FlxTween)
+            boxTween = FlxTween.tween(boxText, {alpha: 0, x: -400}, 1.5, {startDelay: 3, ease: FlxEase.sineInOut, onComplete: function(twn:FlxTween)
                 {
                     boxTween = null;
                 }
             });
         }
     });
-    boxTween2 = FlxTween.tween(boxSubText, {
-        alpha: 1,
-        x: 0
-    }, 0.8, {
-        ease: FlxEase.sineOut,
-        onComplete: function(twn:FlxTween)
+
+    boxTween2 = FlxTween.tween(boxSubText, {alpha: 1, x: 0}, 0.8, {ease: FlxEase.sineOut,onComplete: function(twn:FlxTween)
         {
-            boxTween2 = FlxTween.tween(boxSubText, {
-                alpha: 0,
-                x: -400
-            }, 1.5, {
-                startDelay: 3,
-                ease: FlxEase.sineInOut,
-                onComplete: function(twn:FlxTween)
+            boxTween2 = FlxTween.tween(boxSubText, {alpha: 0, x: -400}, 1.5, {startDelay: 3, ease: FlxEase.sineInOut, onComplete: function(twn:FlxTween)
                 {
                     boxTween2 = null;
                 }
             });
         }
     });
-    boxTween3 = FlxTween.tween(box, {
-        alpha: 1,
-        x: 0
-    }, 0.8, {
-        ease: FlxEase.sineOut,
-        onComplete: function(twn:FlxTween)
+
+    boxTween3 = FlxTween.tween(box, {alpha: 1, x: 0}, 0.8, {ease: FlxEase.sineOut, onComplete: function(twn:FlxTween)
         {
-            boxTween3 = FlxTween.tween(box, {
-                alpha: 0,
-                x: -400
-            }, 1.5, {
-                startDelay: 3,
-                ease: FlxEase.sineInOut,
-                onComplete: function(twn:FlxTween)
+            boxTween3 = FlxTween.tween(box, {alpha: 0, x: -400}, 1.5, {startDelay: 3, ease: FlxEase.sineInOut, onComplete: function(twn:FlxTween)
                 {
                     boxTween3 = null;
                 }

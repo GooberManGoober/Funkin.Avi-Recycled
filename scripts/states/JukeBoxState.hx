@@ -61,8 +61,7 @@ var songPercent:Float = 0;
 
 function onLoad()
 {
-    for (i in songList)
-        Paths.image('menus/pause/songs/${songList[i].toLowerCase().replace(' ', '-')}');
+    for (i in songList) Paths.image('menus/pause/songs/${songList[i].toLowerCase().replace(' ', '-')}');
     
     FlxG.sound.music.volume = 0;
 
@@ -168,13 +167,9 @@ function onUpdate(elapsed)
         timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false) + ' / ' + FlxStringUtil.formatTime(Math.floor(inst.length / 1000), false);
     }
 
-    if (FlxG.sound.music.volume > 0 && !selectedSomethin)
-		FlxG.sound.music.volume = 0;
+    if (FlxG.sound.music.volume > 0 && !selectedSomethin) FlxG.sound.music.volume = 0;
 
-    if (vocals != null && vocals.length > inst.time)
-    {
-		vocals.time = inst.time;
-    }
+    if (vocals != null && vocals.length > inst.time) vocals.time = inst.time;
 
     if (controls.BACK && !selectedSomethin)
     {
@@ -188,11 +183,9 @@ function onUpdate(elapsed)
 
     if (inSelectorMode)
     {
-        if (controls.UI_LEFT_P)
-            changeSongSelection(-1, false, true);
+        if (controls.UI_LEFT_P) changeSongSelection(-1, false, true);
 
-        if (controls.UI_RIGHT_P)
-            changeSongSelection(1, false, true);
+        if (controls.UI_RIGHT_P) changeSongSelection(1, false, true);
     }
 
     if (songIsPLaying)
@@ -252,14 +245,13 @@ function changeSongSelection(change:Int, ?forcePlay:Bool = false, ?goToSelector:
     var pauseArtAsset:String = songList[curSong].toLowerCase().replace(" ", "-");
     
     if (FunkinAssets.exists(Paths.getPath('images/menus/pause/songs/' + pauseArtAsset + '.png', null, true)))
-		songArt.loadGraphic(Paths.image('menus/pause/songs/' + pauseArtAsset));
+        songArt.loadGraphic(Paths.image('menus/pause/songs/' + pauseArtAsset));
 	else 
 		songArt.loadGraphic(Paths.image('menus/pause/songs/unknown-song'));
 
     songNameTxt.text = '< ${songList[curSong]} >';
 
-    if (!forcePlay)
-        FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
+    if (!forcePlay) FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'));
 
     if (forcePlay) playSelectedSong();
 

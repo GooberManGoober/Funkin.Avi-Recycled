@@ -51,8 +51,8 @@ function onCreate()
     add(grain);
 }
 
-function onUpdate(elapsed) {
-
+function onUpdate(elapsed)
+{
     if (controls.BACK)
     {
         Application.current.window.alert('Bro think there was sex', 'L moment');

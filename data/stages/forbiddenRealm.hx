@@ -210,6 +210,9 @@ function onSongStart()
         count.cameras = [camGame];
         foreground.add(count);
         FlxG.sound.play(Paths.sound('intro3-glitch'), 2);
+
+        opponentStrums.underlayAlphaMult = 0;
+        playerStrums.underlayAlphaMult = 0;
     });
 
     modManager.queueFuncOnce(325 * 4, (s,s2)->{ 
@@ -261,6 +264,11 @@ function onSongStart()
 
     modManager.queueFuncOnce(616 * 4, (s,s2)->{ 
         camGame.visible = false;
+    });
+
+    modManager.queueFuncOnce(1824, (s,s2)->{ 
+        FlxTween.tween(opponentStrums, {underlayAlphaMult: 1}, Conductor.stepCrotchet * 20 / 1000, {ease: FlxEase.cubeInOut});
+        FlxTween.tween(playerStrums, {underlayAlphaMult: 1}, Conductor.stepCrotchet * 20 / 1000, {ease: FlxEase.cubeInOut});
     });
 
     for (i in [48, 39, 64, 72, 88, 96, 103, 113, 128, 184, 192])

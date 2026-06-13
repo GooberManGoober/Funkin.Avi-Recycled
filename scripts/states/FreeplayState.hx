@@ -207,7 +207,8 @@ function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int, 
 	});
 }
 
-function changeBotPlay(){
+function changeBotPlay()
+{
 	ClientPrefs.gameplaySettings["botplay"] = (ClientPrefs.gameplaySettings["botplay"] == true) ? false : true;
 	if (ClientPrefs.gameplaySettings["botplay"] == true)
 		botplaytext.text = 'Press B to toggle Botplay. Botplay: ON';
@@ -243,15 +244,13 @@ function onUpdate(elapsed)
 	lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, FlxMath.bound(elapsed * 24, 0, 1)));
 	lerpRating = FlxMath.lerp(lerpRating, intendedRating, FlxMath.bound(elapsed * 12, 0, 1));
 
-	if (Math.abs(lerpScore - intendedScore) <= 10)
-		lerpScore = intendedScore;
-	if (Math.abs(lerpRating - intendedRating) <= 0.01)
-		lerpRating = intendedRating;
+	if (Math.abs(lerpScore - intendedScore) <= 10) lerpScore = intendedScore;
+	if (Math.abs(lerpRating - intendedRating) <= 0.01) lerpRating = intendedRating;
 
 	var ratingSplit:Array<String> = Std.string(MathUtil.floorDecimal(lerpRating * 100, 2)).split('.');
 	if(ratingSplit.length < 2) ratingSplit.push('');
 	
-	while(ratingSplit[1].length < 2) ratingSplit[1] += '0';
+	while (ratingSplit[1].length < 2) ratingSplit[1] += '0';
 
 	scoreText.text = 'PERSONAL BEST: ' + FlxStringUtil.formatMoney(lerpScore, false) + ' (' + ratingSplit.join('.') + '%)';
 	if (!selectedSomethin) positionHighscore();
@@ -291,6 +290,7 @@ function onUpdate(elapsed)
 				changeSelection(-shiftMult, true);
 				holdTime = 0;
 			}
+
 			if (controls.UI_DOWN_P)
 			{
 				changeSelection(shiftMult, true);
@@ -388,7 +388,7 @@ var shittyTmr:FlxTimer;
 
 function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 {
-	if(playSound) FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.4);
+	if (playSound) FlxG.sound.play(Paths.sound('funkinAVI/menu/scrollSfx'), 0.4);
 
 	if (shittyTmr != null) shittyTmr.cancel();
 
@@ -396,7 +396,7 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 		shittyTmr = null;
 	});
 
-	if(ClientPrefs.flashing) FlxG.camera.flash(FlxColor.BLACK, 0.1);
+	if (ClientPrefs.flashing) FlxG.camera.flash(FlxColor.BLACK, 0.1);
 
 	curSelected = FlxMath.wrap(curSelected + change, 0, songs.length - 1);
 	FlxG.save.data.freeplayCurSelected = curSelected;

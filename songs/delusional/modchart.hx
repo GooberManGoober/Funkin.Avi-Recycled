@@ -4,39 +4,38 @@ function onSongStart()
     modManager.queueEase(992, 998, "reverse", 0, "expoInOut", 1);
     modManager.queueEase(992, 998, "reverse", 1, "expoInOut", 0);
 
+    if (ClientPrefs.middleScroll)
+    {
+        modManager.queueEase(1120, 1131, "transform2X", 0, 'expoInOut', 1);
+        modManager.queueEase(1120, 1131, "transform3X", 0, 'expoInOut', 1);
+    }
+
     modManager.queueEase(1120, 1131, "reverse", 0, "expoInOut", 0);
     modManager.queueEase(1120, 1131, "localrotateZ", ClientPrefs.downScroll ? 1.575 : -1.575, 'expoInOut', 1);
 
     modManager.queueEase(1360, 1371, "localrotateZ", 0, 'expoInOut', 1);
 
+    if (ClientPrefs.middleScroll)
+    {
+        modManager.queueEase(1360, 1371, "transform2X", 630, 'expoInOut', 1);
+        modManager.queueEase(1360, 1371, "transform3X", 630, 'expoInOut', 1);
+    }
+
     //
+    modManager.queueEase(1630, 1630 + 11, "opponentSwap", -10, 'quartOut', 1);
+    modManager.queueEase(1630, 1630 + 11, "transform0X", -632.5, 'quartOut', 0);
+    modManager.queueEase(1630, 1630 + 11, "transform1X", -522.5, 'quartOut', 0);
+    modManager.queueEase(1630, 1630 + 11, "transform1Y", 175, 'quartOut', 0);
+
+    modManager.queueEase(1630, 1630 + 11, "reverse2", 1, 'quartOut', 0);
+    modManager.queueEase(1630, 1630 + 11, "transform2X", -225, 'quartOut', 0);
+    modManager.queueEase(1630, 1630 + 11, "transform2Y", -175, 'quartOut', 0);
     if (!ClientPrefs.downScroll)
-    {
-        modManager.queueEase(1630, 1630 + 11, "opponentSwap", -10, 'quartOut', 1);
-        modManager.queueEase(1630, 1630 + 11, "transform0X", -632.5, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform1X", -522.5, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform1Y", 175, 'quartOut', 0);
-
-        modManager.queueEase(1630, 1630 + 11, "reverse2", 1, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform2X", -225, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform2Y", -175, 'quartOut', 0);
-
         modManager.queueEase(1630, 1630 + 11, "reverse3", 1, 'quartOut', 0);
-    }
     else
-    {
-        modManager.queueEase(1630, 1630 + 11, "opponentSwap", -10, 'quartOut', 1);
-        
-        modManager.queueEase(1630, 1630 + 11, "transform0X", -632.5, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform1X", -522.5, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform1Y", 175, 'quartOut', 0);
-
-        modManager.queueEase(1630, 1630 + 11, "reverse1", 1, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform2X", -225, 'quartOut', 0);
-        modManager.queueEase(1630, 1630 + 11, "transform2Y", -175, 'quartOut', 0);
-
         modManager.queueEase(1630, 1630 + 11, "reverse0", 1, 'quartOut', 0);
-    }
+
+    if (ClientPrefs.middleScroll) modManager.queueEase(1630, 1630 + 11, "opponentSwap", 0, 'quartOut', 0);
     //
 
     modManager.queueSet(1900, "opponentSwap", 4, 1);
@@ -59,13 +58,31 @@ function onSongStart()
     modManager.queueSet(1900, "reverse0", 0, 0);
 
     modManager.queueEase(1920, 484 * 4, "opponentSwap", 1, "expoOut", 1);
-    modManager.queueEase(508 * 4, 512 * 4, "opponentSwap", 1, "expoOut", 0);
+
+    if (ClientPrefs.middleScroll)
+    {
+        modManager.queueEase(1920, 484 * 4, "transform2X", 0, "expoOut", 1);
+        modManager.queueEase(1920, 484 * 4, "transform3X", 0, "expoOut", 1);
+    }
+
+    if (ClientPrefs.middleScroll) modManager.queueEase(508 * 4, 512 * 4, "opponentSwap", 0.5, "expoOut", 0);
+    else modManager.queueEase(508 * 4, 512 * 4, "opponentSwap", 1, "expoOut", 0);
 
     modManager.queueEase(2685, 2735, "opponentSwap", 4, "sineInOut", 1);
     modManager.queueEase(2685, 2735, "opponentSwap", 2, "sineInOut", 0);
 
-    modManager.queueSet(2975, "opponentSwap", 0, 0);
-    modManager.queueSet(2975, "opponentSwap", 0, 1);
+    if (ClientPrefs.middleScroll)
+    {
+        modManager.queueSet(2975, "opponentSwap", 0.5, 0);
+        modManager.queueSet(2975, "opponentSwap", 0, 1);
+        modManager.queueSet(2975, "transform2X", 630, 1);
+        modManager.queueSet(2975, "transform3X", 630, 1);
+    }
+    else
+    {
+        modManager.queueSet(2975, "opponentSwap", 0, 0);
+        modManager.queueSet(2975, "opponentSwap", 0, 1);
+    }
 
     modManager.queueSet(2975, "transformZ", 0, 1);
     if (ClientPrefs.opponentStrums)
@@ -85,6 +102,7 @@ function onSongStart()
     modManager.queueEase(4072, 4072 + 20, "transformZ", -0.25, "sineInOut", 0);
     modManager.queueEase(4072, 4072 + 20, "transformY", ClientPrefs.downScroll ? 67 : -67, "sineInOut", 0);
     modManager.queueEase(4072, 4072 + 20, "transformX", -300, "sineInOut", 0);
+    modManager.queueEase(4072, 4072 + 20, "opponentSwap", 0, "sineInOut", 0);
 
     if (ClientPrefs.opponentStrums)
         modManager.queueSet(4096, "alpha", 0.6, 1);
@@ -100,6 +118,7 @@ function onSongStart()
     modManager.queueSet(4096, "transform1X", 200, 1);
     modManager.queueSet(4096, "transform2X", 420, 1);
     modManager.queueSet(4096, "transform3X", 500, 1);
+    modManager.queueSet(4096, "opponentSwap", 0, 1);
 
     modManager.queueSet(704, "drunkSpeed", 1100, 1);
     modManager.queueSet(704, "drunk", 0.05, 1);

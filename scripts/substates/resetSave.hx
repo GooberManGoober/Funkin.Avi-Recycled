@@ -120,6 +120,7 @@ function onUpdate(elapsed)
 			FlxG.sound.music.fadeOut(0.3);
 			CameraUtil.lastCamera.fade(FlxColor.BLACK, 0.5, false, resetZaGame, false);
 		}
+		else close();
 	}
 }
 
@@ -155,13 +156,6 @@ function resetData()
 	FlxG.save.data.episode1FPLock = 'locked';
 
     FlxG.save.data.freeplayMenuList = 0;
-
-    FlxG.save.data.huntedLock = 'locked';
-    FlxG.save.data.malfunctionLock = 'locked';
-    FlxG.save.data.blessLock = 'locked';
-    FlxG.save.data.crossinLock = 'locked';
-    FlxG.save.data.tgLock = 'locked';
-    FlxG.save.data.rickyLock = 'locked';
 
     FlxG.save.data.birthdayLocky = "uncompleted";
 

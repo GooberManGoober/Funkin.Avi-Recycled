@@ -4,7 +4,10 @@ var grpMenuShit:FlxTypedGroup;
 
 var controls = Controls.instance;
 
-var menuItems:Array<String> = ['Juke Box', 'Reset Save Data'];
+var menuItems:Array<String> = [
+	'Juke Box',
+	'Reset Save Data'
+];
 var curSelected:Int = 0;
 
 function onCreate()
@@ -53,14 +56,8 @@ var holdTime:Float = 0;
 
 function onUpdate(elapsed)
 {
-	if (controls.UI_UP_P)
-	{
-		changeSelection(-1);
-	}
-	if (controls.UI_DOWN_P)
-	{
-		changeSelection(1);
-	}
+	if (controls.UI_UP_P) changeSelection(-1);
+	if (controls.UI_DOWN_P) changeSelection(1);
 	
 	var daSelected:String = menuItems[curSelected];
 	

@@ -37,8 +37,10 @@ var selectorRight:Alphabet;
 
 var controls = Controls.instance;
 
-function openSelectedSubstate(label:String) {
-    switch(label) {
+function openSelectedSubstate(label:String)
+{
+    switch(label)
+    {
         case 'Notes':
             openSubState(new NoteSettingsSubState());
         case 'Controls':
@@ -58,7 +60,8 @@ function openSelectedSubstate(label:String) {
     persistentUpdate = false;
 }
 
-function onCreate() {
+function onCreate()
+{
     Application.current.window.title = "Funkin.avi: Recycled - Options";
 
     var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menus/menuDesat'));
@@ -87,7 +90,7 @@ function onCreate() {
     changeSelection();
     ClientPrefs.flush();
     
-    if(!ClientPrefs.lowQuality)
+    if (!ClientPrefs.lowQuality)
 	{
 		var scratchStuff:FlxSprite = new FlxSprite();
 		scratchStuff.frames = Paths.getSparrowAtlas('filters/scratchShit');
@@ -109,19 +112,17 @@ function onCreate() {
 	}
 }
 
-function onCloseSubState() {
+function onCloseSubState()
+{
 	persistentUpdate = true;
 
 	ClientPrefs.flush();
 }
 
-function onUpdate(elapsed:Float) {
-    if (controls.UI_UP_P) {
-        changeSelection(-1);
-    }
-    if (controls.UI_DOWN_P) {
-        changeSelection(1);
-    }
+function onUpdate(elapsed:Float)
+{
+    if (controls.UI_UP_P) changeSelection(-1);
+    if (controls.UI_DOWN_P) changeSelection(1);
 
     if (controls.BACK)
     {
@@ -131,29 +132,32 @@ function onUpdate(elapsed:Float) {
             FlxG.switchState(() -> {
                 new PlayState();
             });
-        } else {
+        }
+        else
+        {
             FlxG.switchState(() -> {
                 new MainMenuState();
             });
         }
     }
 
-    if (controls.ACCEPT) {
-        openSelectedSubstate(options[curSelected]);
-    }
+    if (controls.ACCEPT) openSelectedSubstate(options[curSelected]);
 }
 
-function changeSelection(?change:Int = 0) {
+function changeSelection(?change:Int = 0)
+{
     curSelected = FlxMath.wrap(curSelected + change, 0, options.length - 1);
 
     var bullShit:Int = 0;
 
-    for (item in grpOptions.members) {
+    for (item in grpOptions.members)
+    {
         item.targetY = bullShit - curSelected;
         bullShit += 1;
 
         item.alpha = 0.6;
-        if (item.targetY == 0) {
+        if (item.targetY == 0)
+        {
             item.alpha = 1;
             selectorLeft.x = item.x - 63;
             selectorLeft.y = item.y;
