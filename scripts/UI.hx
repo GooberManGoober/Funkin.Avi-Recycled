@@ -81,7 +81,7 @@ function onCreatePost()
 		}
 	}
 
-	if (ClientPrefs.middleScroll && PlayState.SONG.song != "Malfunction")
+	if (ClientPrefs.middleScroll && (PlayState.SONG.song != "Malfunction" && PlayState.SONG.song != "Mercy"))
 	{
 		modManager.setValue("opponentSwap", 0.5, 0);
         modManager.setValue("transform2X", 630, 1);
