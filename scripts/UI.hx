@@ -177,7 +177,7 @@ function onUpdate(elapsed)
 	}
 
 	if(!inCutscene) {
-		camGame.angle = FlxMath.lerp(camGame.angle, 0 + camOffset[2], 0.04 * cameraSpeed);
+		camGame.scrollAngle = FlxMath.lerp(camGame.scrollAngle, 0 + camOffset[2], 0.04 * cameraSpeed);
 	}
 }
 

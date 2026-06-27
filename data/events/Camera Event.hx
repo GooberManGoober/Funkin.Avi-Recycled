@@ -77,7 +77,7 @@ function onTrigger(value1, value2)
                     if (camTwn[4] != null)
                         camTwn[4].cancel();
 
-                    camTwn[4] = FlxTween.tween(camGame, {angle: Std.parseFloat(triggerInfo[1])}, Std.parseFloat(triggerInfo[2]), {ease: CoolUtil.getEaseFromString(triggerInfo[3].trim()), onComplete: function(twn:FlxTween)
+                    camTwn[4] = FlxTween.tween(camGame, {scrollAngle: Std.parseFloat(triggerInfo[1])}, Std.parseFloat(triggerInfo[2]), {ease: CoolUtil.getEaseFromString(triggerInfo[3].trim()), onComplete: function(twn:FlxTween)
                     {
                         camTwn[4] = null;
                     }});
@@ -92,8 +92,8 @@ function onTrigger(value1, value2)
                 case "defaultcamzoom": defaultCamZoom = Std.parseFloat(triggerInfo[1]);
                 case "alpha": camGame.alpha = Std.parseFloat(triggerInfo[1]);
                 case "hudalpha": camHUD.alpha = Std.parseFloat(triggerInfo[1]);
-                case "angle": camGame.angle = Std.parseFloat(triggerInfo[1]);
-                case "hudangle": camHUD.angle = Std.parseFloat(triggerInfo[1]);
+                case "angle": camGame.scrollAngle = Std.parseFloat(triggerInfo[1]);
+                case "hudangle": camHUD.scrollAngle = Std.parseFloat(triggerInfo[1]);
                 case "adddefaultcamzoom": defaultCamZoom += Std.parseFloat(triggerInfo[1]);
             }
 
