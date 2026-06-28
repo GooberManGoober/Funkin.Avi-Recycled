@@ -100,6 +100,14 @@ function onCreatePost()
 		opponentStrums.alpha = 1;
 	}
 
+	if (!ClientPrefs.opponentStrums)
+	{
+		opponentStrums.underlayAlphaMult = 0;
+
+		opponentStrums.baseAlpha = 0;
+		opponentStrums.alpha = 0;
+	}
+
 	switch (PlayState.SONG.stage)
 	{
 		case 'forestNew', 'clubhouse', 'trueGrinsOfSins', 'apartment':

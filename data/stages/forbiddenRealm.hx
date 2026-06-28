@@ -19,7 +19,6 @@ var pathway:String = 'stages/forbiddenRealm/';
 function onLoad()
 {
     defaultCamZoom = 0.75;
-    //spawnGirlfriend = false;
 
     fuckingsquares = new FlxSprite(-750, -850);
     fuckingsquares.loadGraphic(Paths.image(pathway + 'malfunctionBG-NEW'));
@@ -42,6 +41,17 @@ function onLoad()
     greyParticles.start(false, FlxG.random.float(.0521, .1060), 1000000);
     add(greyParticles);
 
+    whiteBG = new FlxSprite(-800, -200).makeGraphic(1, 1, 0xFFFFFFFF);
+    whiteBG.scale.set(FlxG.width, FlxG.height);
+    whiteBG.alpha = 0.001;
+    add(whiteBG);
+}
+
+function onCreatePost()
+{
+    playHUD.ratingPrefix = "pixelUI/";
+    playHUD.ratingSuffix = "-pixel";
+
     blackParticles = new FlxEmitter(-2080.5, 1212.4);
     blackParticles.launchMode = FlxEmitterMode.SQUARE;
     blackParticles.velocity.set(-70, -220, 70, -620, -110, 20, 110, -620);
@@ -52,7 +62,8 @@ function onLoad()
     blackParticles.lifespan.set(1.9, 4.9);
     blackParticles.loadParticles(Paths.image(pathway + 'particleBlack'), 500, 16, true);
     blackParticles.start(false, FlxG.random.float(.0821, .1460), 1000000);
-    
+    foreground.add(blackParticles);
+
     mickeyEmitter = new FlxEmitter(-2099.8, 1620.4);
     for (i in 0 ... 100)
     {
@@ -61,7 +72,7 @@ function onLoad()
         mickeyParticle.animation.addByPrefix('mickParticle idle', 'mickParticle idle', 12, true);
         mickeyParticle.animation.play('mickParticle idle');
         mickeyParticle.exists = false;
-        //mickeyParticle.animation.curAnim.curFrame = FlxG.random.int(0, 3);
+        mickeyParticle.antialiasing = false;
         mickeyEmitter.add(mickeyParticle);
     }
     mickeyEmitter.launchMode = FlxEmitterMode.SQUARE;
@@ -73,24 +84,7 @@ function onLoad()
     mickeyEmitter.lifespan.set(4, 4.5);
     mickeyEmitter.start(false, FlxG.random.float(.125, .287), 100000);
     mickeyEmitter.emitting = false;
-
-    whiteBG = new FlxSprite(-800, -200).makeGraphic(1, 1, 0xFFFFFFFF);
-    whiteBG.scale.set(FlxG.width, FlxG.height);
-    whiteBG.alpha = 0.001;
-    whiteBG.active = false;
-    add(whiteBG);
-}
-
-function onCreatePost()
-{
-    playHUD.ratingPrefix = "pixelUI/";
-    playHUD.ratingSuffix = "-pixel";
-
-    if (PlayState.SONG.song != 'Malfunction Legacy')
-    {
-        foreground.add(blackParticles);
-        foreground.add(mickeyEmitter);
-    }
+    foreground.add(mickeyEmitter);
 
     camGame.alpha = 0.001;
 	camHUD.alpha = 0.001;

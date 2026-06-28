@@ -177,7 +177,7 @@ function onSongStart()
 
     //modchart beginning
     modManager.queueEase(736, 736 + 20, "alpha", 1, "backInOut", 1);
-    modManager.queueEase(736, 736 + 20, "opponentSwap", 0.5, 'backInOut', 0);
+    if (!ClientPrefs.middleScroll) modManager.queueEase(736, 736 + 20, "opponentSwap", 0.5, 'backInOut', 0);
 
     modManager.queueEase(736, 736 + 20, "drunkZSpeed", 2, 'backInOut', 0);
     modManager.queueEase(736, 736 + 20, "drunkSpeed", 2, 'backInOut', 0);
@@ -187,7 +187,7 @@ function onSongStart()
 
     //modchart ending
     modManager.queueEase(1024, 1024 + 20, "alpha", 0, "cubeOut", 1);
-    modManager.queueEase(1024, 1024 + 20, "opponentSwap", 0, 'cubeOut', 0);
+    if (!ClientPrefs.middleScroll) modManager.queueEase(1024, 1024 + 20, "opponentSwap", 0, 'cubeOut', 0);
     modManager.queueEase(1024, 1024 + 20, "drunkZ", 0, 'cubeOut', 0);
     modManager.queueEase(1024, 1024 + 20, "drunk", 0, 'cubeOut', 0);
 }
@@ -219,14 +219,14 @@ function onUpdate(elapsed)
         FlxTween.tween(PlayState.instance, {health: 2}, 1);
     }
 
-    if (!camHudMoves) camHUD.angle = FlxMath.lerp(camHUD.angle, 0, FlxMath.bound(elapsed * 2.4, 0, 1));
+    if (!camHudMoves) camHUD.scrollAngle = FlxMath.lerp(camHUD.scrollAngle, 0, FlxMath.bound(elapsed * 2.4, 0, 1));
 
     if (camHudMoves && ClientPrefs.mechanics)
     {
         var songPos = Conductor.songPosition;
 
         // math momento -jason
-        camHUD.angle = Math.sin(songPos / 800) * 80 / 10;
+        camHUD.scrollAngle = Math.sin(songPos / 800) * 80 / 10;
 
         // illegal instruction moment
         FlxTween.tween(PlayState.instance, {health: FlxG.random.float(0.024, 2)}, 0.3);

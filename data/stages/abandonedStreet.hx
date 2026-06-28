@@ -1499,7 +1499,7 @@ function onSongStart()
                 if (camPosTween != null)
                     camPosTween.cancel();
                     
-                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 950, y: camFollow.y - 170}, 1.5, {ease: FlxEase.circInOut});
+                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 950}, 1.5, {ease: FlxEase.circInOut});
             });
 
             modManager.queueFuncOnce(1040 * 4, (s,s2)->{ 
