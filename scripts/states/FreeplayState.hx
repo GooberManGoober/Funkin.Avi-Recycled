@@ -352,11 +352,8 @@ function onUpdate(elapsed)
 			FlxTween.tween(songArt, {angle: 0, x: 215, y: -60, 'scale.x': 0.53, 'scale.y': 0.53}, 1, {ease: FlxEase.expoOut});
 			FlxTween.color(bg, 1, bg.color, FlxColor.BLACK, {ease: FlxEase.expoOut});
 
-			FlxTween.tween(scoreText, {x: 1480}, 1, {ease: FlxEase.expoOut});
-			FlxTween.tween(scoreBG, {x: 1480}, 1, {ease: FlxEase.expoOut});
-			FlxTween.tween(diffText, {x: 1480}, 1, {ease: FlxEase.expoOut});
-			FlxTween.tween(tabText, {x: 1480}, 1, {ease: FlxEase.expoOut});
-			FlxTween.tween(tabHint, {x: 1480}, 1, {ease: FlxEase.expoOut});
+			for (i in [scoreText, scoreBG, diffText, tabText,tabHint])
+				FlxTween.tween(i, {x: 1480}, 1, {ease: FlxEase.expoOut});
 
 			FlxG.sound.music.stop();
 			confirmSound.play(false, 0, 4);
@@ -457,7 +454,6 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 				songArt.shader = glitchyStuff;
 				FlxTween.cancelTweensOf(songArt, ['scale.x', 'scale.y']);
 				songArt.scale.set(0.3, 0.3);
-				FlxG.camera.shake(0.01, 0.001);
 
 			case 'Twisted Grins':
 				songArt.shader = smilesShader;
@@ -466,41 +462,11 @@ function changeSelection(?change:Int = 0, ?playSound:Bool = true)
 			case 'Devilish Deal', 'Delusional':
 				songArt.shader = chromAberration;
 
-			case 'Bless':
-				songArt.shader = null;
-				songArt.setColorTransform(1, 1, 1, 1, 1, 1, 1, 0);
-
-				FlxTween.tween(songArt.colorTransform, {
-					redMultiplier: -1,
-					blueMultiplier: -1,
-					greenMultiplier: -1,
-					redOffset: 255,
-					blueOffset: 255,
-					greenOffset: 255
-				}, 2, {ease: FlxEase.circInOut, type: 4});
-			
-			case 'Birthday':
-				songArt.shader = null;
-
-				FlxTween.tween(songArt.scale, {x: -0.3, y: -0.3}, 2, {ease: FlxEase.circInOut, type: 4});
-
 			default:
 				songArt.shader = null;
-				songArt.setColorTransform(1, 1, 1, 1, 0, 0, 0, 0);
-				FlxG.camera.shake(0.01, 0.001);
-
-				FlxTween.cancelTweensOf(songArt, [
-					'scale.x',
-					'scale.y',
-					'colorTransform.redOffset',
-					'colorTransform.blueOffset',
-					'colorTransform.greenOffset',
-					'colorTransform.redMultiplier',
-					'colorTransform.blueMultiplier',
-					'colorTransform.greenMultiplier'
-				]);
-				songArt.scale.set(0.3, 0.3);
 		}
+
+		FlxG.camera.shake(0.01, 0.001);
 	}
 
 	difficultyRank = songs[curSelected].difficultyRank;
