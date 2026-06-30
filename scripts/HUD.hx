@@ -14,8 +14,6 @@ var judgementUnderlay:FlxSprite;
 
 var fancyBarOverlay:FlxSprite;
 
-var healthLerp:Float = 1;
-
 var botTxtArray:Array<Any> = [
     "AUTOPLAY",
     "BOTPLAY",
@@ -164,8 +162,6 @@ function onCreatePost()
             autoplayMark.visible = false;
             playHUD.add(autoplayMark);
     }
-    
-    healthBar.valueFunction = function() return healthLerp;
 
     if (ClientPrefs.showRatings && PlayState.SONG.song != "Cycled Sins")
     {
@@ -203,8 +199,6 @@ function onUpdatePost(elapsed)
         else
             judgementCounter.text = 'Sicks: ${sicks}\nGoods: ${goods}\nBads: ${bads}\nShits: ${shits}\n';
     }
-
-    updateHealthBar();
 
     scoreTxt.scale.set(1, 1);
     
@@ -310,9 +304,4 @@ function onUpdatePost(elapsed)
                     iconP1.animation.curAnim.curFrame = 0;
         }
     }
-}
-
-function updateHealthBar():Void
-{
-    healthLerp = FlxMath.lerp(healthLerp, health, .2 / (ClientPrefs.framerate / 60));
 }
