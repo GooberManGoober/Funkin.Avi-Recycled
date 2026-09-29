@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				440,
+				30
+			],
+			"anim": "idle",
+			"fps": 18,
+			"name": "Mickey idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				476,
+				58
+			],
+			"anim": "singLEFT",
+			"fps": 20,
+			"name": "Mickey note left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				446,
+				-116
+			],
+			"anim": "singDOWN",
+			"fps": 20,
+			"name": "Mickey note down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				342,
+				343
+			],
+			"anim": "singUP",
+			"fps": 20,
+			"name": "Mickey note up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				609,
+				28
+			],
+			"anim": "singRIGHT",
+			"fps": 20,
+			"name": "Mickey note right",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/delusional-mickey/Delusional_mickey",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "deluavier",
+	"flip_x": false,
+	"healthbar_colors": [
+		61,
+		61,
+		61
+	],
+	"camera_position": [
+		20,
+		180
+	],
+	"sing_duration": 6.1,
+	"scale": 0.7
+}
