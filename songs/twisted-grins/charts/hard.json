@@ -15846,6 +15846,7 @@
 			"cartoon"
 		],
 		"stage": "trueGrinsOfSins",
+		"hudClass": "SpectraHUD",
 		"needsVoices": true,
 		"voiceSfx1": "Player",
 		"voiceSfx2": "Opponent",

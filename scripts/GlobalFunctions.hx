@@ -130,23 +130,17 @@ public function camFlashSystem(flashType:String, settings:FlashingSettings)
         switch (flashType)
         {
             case 'flash':
-                if (settings.alpha > 1 || settings.alpha < 0) // prevents a crash from making a dumb mistake
-                    stageBGFlash.alpha = 0.5;
-                else
-                    stageBGFlash.alpha = settings.alpha;
+                if (settings.alpha > 1 || settings.alpha < 0) stageBGFlash.alpha = 0.5;
+                else stageBGFlash.alpha = settings.alpha;
 
-                if (settings.timer <= 0) // another check to prevent a crash
-                    settings.timer = 1;
+                if (settings.timer <= 0) settings.timer = 1;
 
-                if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) // blend check cause it makes it look cool
-                    stageBGFlash.blend = BlendMode.NORMAL;
-                else
-                    stageBGFlash.blend = BlendMode.ADD;
+                if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) stageBGFlash.blend = BlendMode.NORMAL;
+                else stageBGFlash.blend = BlendMode.ADD;
 
                 stageBGFlash.color = FlxColor.fromRGB(settings.colors[0], settings.colors[1], settings.colors[2], 255);
 
-                if (BGFlashTween != null) // makes it so it won't look wonky, visually
-                    BGFlashTween.cancel();
+                if (BGFlashTween != null) BGFlashTween.cancel();
 
                 BGFlashTween = FlxTween.tween(stageBGFlash, {alpha: 0}, settings.timer, {
                     ease: settings.ease,
@@ -159,14 +153,11 @@ public function camFlashSystem(flashType:String, settings:FlashingSettings)
             case 'dark':
                 if (stageBGFlash != null)
                 {
-                    if (BGFlashTween != null)
-                        BGFlashTween.cancel();
+                    if (BGFlashTween != null) BGFlashTween.cancel();
 
-                    if (stageBGFlash.blend != BlendMode.NORMAL)
-                        stageBGFlash.blend = BlendMode.NORMAL;
+                    if (stageBGFlash.blend != BlendMode.NORMAL) stageBGFlash.blend = BlendMode.NORMAL;
 
-                    if (settings.timer <= 0)
-                        settings.timer = 1;
+                    if (settings.timer <= 0) settings.timer = 1;
 
                     stageBGFlash.color = FlxColor.BLACK; // hardcoded to be black
 
@@ -182,21 +173,15 @@ public function camFlashSystem(flashType:String, settings:FlashingSettings)
             case 'fancy flash':
                 if (blendFlash != null)
                 {
-                    if (settings.alpha > 1 || settings.alpha < 0) // prevents a crash from making a dumb mistake
-                        blendFlash.alpha = 0.5;
-                    else
-                        blendFlash.alpha = settings.alpha;
+                    if (settings.alpha > 1 || settings.alpha < 0) blendFlash.alpha = 0.5;
+                    else blendFlash.alpha = settings.alpha;
 
-                    if (settings.timer <= 0) // another check to prevent a crash
-                        settings.timer = 1;
+                    if (settings.timer <= 0) settings.timer = 1;
 
-                    if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) // turn it to white, cause I can
-                        blendFlash.blend = BlendMode.NORMAL;
-                    else
-                        blendFlash.blend = BlendMode.ADD;
+                    if (settings.colors[0] == 0 && settings.colors[1] == 0 && settings.colors[2] == 0) blendFlash.blend = BlendMode.NORMAL;
+                    else blendFlash.blend = BlendMode.ADD;
 
-                    if (flashTween != null)
-                        flashTween.cancel();
+                    if (flashTween != null) flashTween.cancel();
 
                     blendFlash.color = FlxColor.fromRGB(settings.colors[0], settings.colors[1], settings.colors[2], 255);
 
@@ -212,17 +197,7 @@ public function camFlashSystem(flashType:String, settings:FlashingSettings)
     }
 }
 
-public function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String>):Void
-{
-    if (dumbCamTwn != null)
-        dumbCamTwn.cancel();
-    
-    dumbCamTwn = FlxTween.tween(camGame, {zoom: zoom}, time, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
-    {
-        defaultCamZoom = zoom;
-        dumbCamTwn = null;
-    }});
-}
+public function tweenCamera(zoom:Float = 0.9, time:Float = 0.6, ease:Null<String>):Void camChangeZoom(zoom, time, CoolUtil.getEaseFromString(ease));
 
 public function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:String = 'vcr', size:Int = 15, duration:Float = 5, tweenType:String = 'linear', ?textDelay:Float = 0.03)
 {
@@ -234,20 +209,16 @@ public function manageLyrics(icon:String = 'bf', text:String = 'swaggers', font:
 
 	lyricsIcon.changeIcon(icon, false, false, false);
 
-	if (icon == "satandd")
-		lyricsIcon.y = lyrics.y - 80;
-	else
-		lyricsIcon.y = lyrics.y - 65;
+	if (icon == "satandd") lyricsIcon.y = lyrics.y - 80;
+	else lyricsIcon.y = lyrics.y - 65;
 
 	lyrics.font = Paths.font(font);
 	lyrics.resetText(text);
 	lyrics.start(textDelay); // currently placeholder time !!
 
-	if (lyricsTween != null)
-		lyricsTween.cancel();
+	if (lyricsTween != null) lyricsTween.cancel();
 
-	if (iconTween != null)
-		iconTween.cancel();
+	if (iconTween != null) iconTween.cancel();
 
 	iconTween = FlxTween.tween(lyricsIcon, {
 		'scale.x': 1,
@@ -324,8 +295,7 @@ public function cinematicBarControls(?controlType:String = "add", ?speed:Float, 
 			}
 			
 		case "movetop", "move top":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
+			if (topBarTwn != null) topBarTwn.cancel();
 
 			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
 			{
@@ -333,8 +303,7 @@ public function cinematicBarControls(?controlType:String = "add", ?speed:Float, 
 			}});
 			
 		case "movebottom", "move bottom":
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
+			if (bottomBarTwn != null) bottomBarTwn.cancel();
 
 			bottomBarTwn = FlxTween.tween(cinematicBars["bottom"], {y: FlxG.height - position}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
 			{
@@ -342,10 +311,8 @@ public function cinematicBarControls(?controlType:String = "add", ?speed:Float, 
 			}});
 			
 		case "moveboth", "move both":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
+			if (topBarTwn != null) topBarTwn.cancel();
+			if (bottomBarTwn != null) bottomBarTwn.cancel();
 
 			topBarTwn = FlxTween.tween(cinematicBars["top"], {y: position - FlxG.height}, speed, {ease: CoolUtil.getEaseFromString(ease), onComplete: function(twn:FlxTween)
 			{
@@ -365,10 +332,8 @@ public function cinematicBarControls(?controlType:String = "add", ?speed:Float, 
 			FlxTween.tween(cinematicBars["bottom"], {y: (FlxG.height - position) - bopValue}, speed, {ease: CoolUtil.getEaseFromString(ease)});
 			
 		case "bopboth", "bop both":
-			if (topBarTwn != null)
-				topBarTwn.cancel();
-			if (bottomBarTwn != null)
-				bottomBarTwn.cancel();
+			if (topBarTwn != null) topBarTwn.cancel();
+			if (bottomBarTwn != null) bottomBarTwn.cancel();
 
 			cinematicBars["top"].y = position - FlxG.height;
 			cinematicBars["bottom"].y = FlxG.height - position;

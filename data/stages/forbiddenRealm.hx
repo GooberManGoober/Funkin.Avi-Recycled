@@ -165,13 +165,13 @@ function onSongStart()
         tweenCamera(1.2, 5, 'quartInOut');
     });
 
-    modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.75;
+    modManager.queueFuncOnce(32 * 4, (s,s2)->{
+        camChangeZoom(0.75, 1.9, FlxEase.expoOut);
         FlxTween.tween(camHUD, {alpha: 1}, 0.5, {ease: FlxEase.sineOut});
     });
 
     modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.65;
+        camChangeZoom(0.65, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(164 * 4, (s,s2)->{ 
@@ -268,7 +268,7 @@ function onSongStart()
     for (i in [48, 39, 64, 72, 88, 96, 103, 113, 128, 184, 192])
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            defaultCamZoom = 0.75;
+            camChangeZoom(0.75, 1.9, FlxEase.expoOut);
         });
     }
 
@@ -282,28 +282,28 @@ function onSongStart()
     for (i in [45, 61, 110, 126, 187])
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            defaultCamZoom = 0.9;
+            camChangeZoom(0.9, 1.9, FlxEase.expoOut);
         });
     }
 
     for (i in [46, 62, 67, 76, 83, 92, 111, 127, 158, 190])
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            defaultCamZoom = 1;
+            camChangeZoom(defaultCamZoom + 0.1, 1.9, FlxEase.expoOut);
         });
     }
 
     for (i in [47, 63, 68, 84, 112, 159])
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            defaultCamZoom = 1.3;
+            camChangeZoom(1.3, 1.9, FlxEase.expoOut);
         });
     }
 
     for (i in [69, 85])
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            defaultCamZoom = 1.1;
+            camChangeZoom(1.1, 1.9, FlxEase.expoOut);
         });
     }
 }

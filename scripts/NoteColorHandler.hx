@@ -9,15 +9,10 @@ function onCreatePost()
     }
 }
 
-function onSpawnNotePost(note){
+function onSpawnNotePost(note)
+{
 	final tail = (note.isSustainNote ? note.parent.tail : note.tail);
-    for (sustain in tail)
-    {
-        sustain.alpha = 0.65;
-    }
+    for (sustain in tail) sustain.alpha = 0.65;
 }
 
-function onSpawnNoteSplash(splash, note)
-{
-    splash.alpha = 0.65;
-}
+function onSpawnNoteSplash(splash, note) splash.alpha = 0.65;

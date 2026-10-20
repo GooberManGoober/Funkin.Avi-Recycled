@@ -13620,6 +13620,7 @@
 			"cartoon"
 		],
 		"stage": "abandonedStreet",
+		"hudClass": "MickeyHUD",
 		"needsVoices": true,
 		"voiceSfx1": "Player",
 		"voiceSfx2": "Opponent",

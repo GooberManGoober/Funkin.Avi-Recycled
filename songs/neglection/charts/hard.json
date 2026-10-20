@@ -6021,6 +6021,7 @@
 		"needsVoices": true,
 		"voiceSfx1": "Player",
 		"stage": "treasureIsland",
+		"hudClass": "SpectraHUD",
 		"bpm": 155,
 		"voiceSfx2": "Opponent"
 	}

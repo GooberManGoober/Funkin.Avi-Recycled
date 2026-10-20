@@ -6,7 +6,7 @@ import flixel.text.FlxText.FlxTextFormat;
 import flixel.text.FlxText.FlxTextFormatMarkerPair;
 import flixel.text.FlxText;
 import funkin.api.DiscordClient;
-import funkin.scripting.PluginsManager;
+import funkin.backend.plugins.ModPlugin;
 import lime.app.Application;
 import funkin.utils.CameraUtil;
 import funkin.states.options.OptionsState;
@@ -414,7 +414,7 @@ function resumeGame()
 						Application.current.window.title = "Funkin.avi: Recycled - " + 
 						(PlayState.isStoryMode ? "Episode 1" + " - " : "Freeplay - ") + 
 						PlayState.SONG.song + 
-						" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
+						" [" + ModPlugin.instance.callOnPlugin('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
 					});
 				});
 			});

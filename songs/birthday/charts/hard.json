@@ -6719,6 +6719,7 @@
 		"voiceSfx1": "Player",
 		"needsVoices": true,
 		"stage": "clubhouse",
+		"hudClass": "SpectraHUD",
 		"bpm": 175,
 		"voiceSfx2": "Opponent"
 	}

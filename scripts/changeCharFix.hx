@@ -1,15 +1,6 @@
-function onCreatePost()
-{
-    resetCharPos();
-}
+function onCreatePost() resetCharPos();
 
-function onEvent(eventName, value1, value2)
-{
-    if (eventName == "Change Character")
-    {
-        resetCharPos();
-    }
-}
+function onEvent(eventName, value1, value2) if (eventName == "Change Character") resetCharPos();
 
 function resetCharPos()
 {
@@ -18,12 +9,9 @@ function resetCharPos()
         case 'abandonedStreet':
             switch (dad.curCharacter)
             {
-                case 'delusional-mickey':
-                    dad.setPosition(-430, 120);
-                case 'mick-lunacyEnd':
-                    dad.setPosition(-750, -210);
-                default:
-                    dad.setPosition(-870, -190);
+                case 'delusional-mickey': dad.setPosition(-430, 120);
+                case 'mick-lunacyEnd': dad.setPosition(-750, -210);
+                default: dad.setPosition(-870, -190);
             }
             switch (boyfriend.curCharacter)
             {
@@ -43,12 +31,9 @@ function resetCharPos()
         case 'delusionStreet':
             switch (dad.curCharacter)
             {
-                case 'delusional-mickey':
-                    dad.setPosition(-260, 120);
-                case 'mick-lunacyEnd':
-                    dad.setPosition(-750, -210);
-                default:
-                    dad.setPosition(-870, -190);
+                case 'delusional-mickey': dad.setPosition(-260, 120);
+                case 'mick-lunacyEnd': dad.setPosition(-750, -210);
+                default: dad.setPosition(-870, -190);
             }
             switch (boyfriend.curCharacter)
             {
@@ -68,25 +53,22 @@ function resetCharPos()
         case 'clubhouse':
             switch (dad.curCharacter)
             {
-                case 'mickey-lunacy-legacy':
-                    dad.setPosition(0, 0);
-                default:
-                    dad.setPosition(-240, -260);
+                case 'mickey-lunacy-legacy': dad.setPosition(0, 0);
+                default: dad.setPosition(-240, -260);
             }
             switch (boyfriend.curCharacter)
             {
-                case 'bf-demon-old':
-                    boyfriend.setPosition(500, -320);
-                default:
-                    boyfriend.setPosition(650, -360);
+                case 'bf-demon-old': boyfriend.setPosition(500, -320);
+                default: boyfriend.setPosition(650, -360);
             }
             gf.setPosition(280, -410);
 
         case 'forbiddenRealm':
-            if (dad.curCharacter == 'gm-calm-pixel')
-                dad.setPosition(-130, 50);
-            else
-                dad.setPosition(-100, 150);
+            switch (dad.curCharacter)
+            {
+                case 'gm-calm-pixel': dad.setPosition(-130, 50);
+                default: dad.setPosition(-100, 150);
+            }
             
             boyfriend.setPosition(1300, 600);
         case 'trueGrinsOfSins':
@@ -99,25 +81,18 @@ function resetCharPos()
         case 'waltRoom':
             switch (dad.curCharacter)
             {
-                case 'walt-true':
-                    dad.setPosition(280, -200);
-                case 'walt-new':
-                    dad.setPosition(260, -50);
-                case 'walt-cutscene':
-                    dad.setPosition(260, -10);
-                case 'walt-death':
-                    dad.setPosition(260, -190);
-                default:
-                    dad.setPosition(0, 0);
+                case 'walt-true': dad.setPosition(280, -200);
+                case 'walt-new': dad.setPosition(260, -50);
+                case 'walt-cutscene': dad.setPosition(260, -10);
+                case 'walt-death': dad.setPosition(260, -190);
+                default: dad.setPosition(0, 0);
             }
             boyfriend.setPosition(330, 300);
         case 'vaultRoom':
             switch (boyfriend.curCharacter)
             {
-                case 'bfghost':
-                    boyfriend.setPosition(300, -450);
-                default:
-                    boyfriend.setPosition(950, 520);
+                case 'bfghost': boyfriend.setPosition(300, -450);
+                default: boyfriend.setPosition(950, 520);
             }
             dad.setPosition(0, 100);
         case 'fuckingLine':

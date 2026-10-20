@@ -39,15 +39,7 @@ function onTrigger(value1, value2)
         case "tween value":
             switch (triggerInfo[0].toLowerCase())
             {
-                case "zoom":
-                    if (camTwn[0] != null)
-                        camTwn[0].cancel();
-
-                    camTwn[0] = FlxTween.tween(camGame, {zoom: Std.parseFloat(triggerInfo[1])}, Std.parseFloat(triggerInfo[2]), {ease: CoolUtil.getEaseFromString(triggerInfo[3].trim()), onComplete: function(twn:FlxTween)
-                    {
-                        defaultCamZoom = Std.parseFloat(triggerInfo[1]);
-                        camTwn[0] = null;
-                    }});
+                case "zoom": camChangeZoom(Std.parseFloat(triggerInfo[1]), Std.parseFloat(triggerInfo[2]), CoolUtil.getEaseFromString(triggerInfo[3].trim()));
                 
                 case "alpha":
                     if (camTwn[2] != null)
@@ -89,12 +81,12 @@ function onTrigger(value1, value2)
         case "change value":
             switch (triggerInfo[0].toLowerCase())
             {
-                case "defaultcamzoom": defaultCamZoom = Std.parseFloat(triggerInfo[1]);
+                case "defaultcamzoom": camChangeZoom(Std.parseFloat(triggerInfo[1]), 1.9, FlxEase.expoOut);
                 case "alpha": camGame.alpha = Std.parseFloat(triggerInfo[1]);
                 case "hudalpha": camHUD.alpha = Std.parseFloat(triggerInfo[1]);
                 case "angle": camGame.scrollAngle = Std.parseFloat(triggerInfo[1]);
                 case "hudangle": camHUD.scrollAngle = Std.parseFloat(triggerInfo[1]);
-                case "adddefaultcamzoom": defaultCamZoom += Std.parseFloat(triggerInfo[1]);
+                case "adddefaultcamzoom": camChangeZoom(defaultCamZoom + Std.parseFloat(triggerInfo[1]), 1.9, FlxEase.expoOut);
             }
 
         case "shake":
@@ -146,27 +138,21 @@ function onTrigger(value1, value2)
                     isCameraOnForcedPos = true;
                     if(triggerInfo[0] == null) triggerInfo[0] = "0";
                     if(triggerInfo[1] == null) triggerInfo[1] = "0";
-                    camFollow.x = Std.parseFloat(triggerInfo[0]);
-                    camFollow.y = Std.parseFloat(triggerInfo[1]);
+                    focusCamera("position", Std.parseFloat(triggerInfo[0]), Std.parseFloat(triggerInfo[1]), 1.9, "CLASSIC", true);
                 }
             }
 
         case "tween position":
             if (camFollow != null)
             {
-                if (camTwn[7] != null)
-                    camTwn[7].cancel();
-
                 isCameraOnForcedPos = false;
                 if(triggerInfo[0] != null || triggerInfo[1] != null)
                 {
                     isCameraOnForcedPos = true;
                     if(triggerInfo[0] == null) triggerInfo[0] = "0";
                     if(triggerInfo[1] == null) triggerInfo[1] = "0";
-                    camTwn[7] = FlxTween.tween(camFollow, {x: Std.parseFloat(triggerInfo[0]), y: Std.parseFloat(triggerInfo[1])}, Std.parseFloat(triggerInfo[2]), {ease: CoolUtil.getEaseFromString(triggerInfo[3].trim().toLowerCase()), onComplete: function(twn:FlxTween)
-                    {
-                        camTwn[7] = null;
-                    }});
+                    
+                    focusCamera("position", Std.parseFloat(triggerInfo[0]), Std.parseFloat(triggerInfo[1]), Std.parseFloat(triggerInfo[2]), triggerInfo[3], true);
                 }
             }
         case "snap position":
@@ -176,6 +162,7 @@ function onTrigger(value1, value2)
                 if(triggerInfo[0] != null || triggerInfo[1] != null)
                 {
                     isCameraOnForcedPos = true;
+                    updateCamOffsets = false;
                     if(triggerInfo[0] == null) triggerInfo[0] = "0";
                     if(triggerInfo[1] == null) triggerInfo[1] = "0";
                     

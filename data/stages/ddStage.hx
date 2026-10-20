@@ -157,7 +157,7 @@ function onSongStart()
     modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
         FlxTween.tween(devilishGaming, {alpha: 0}, 3, {ease: FlxEase.sineOut});
         FlxTween.tween(camGame, {alpha: 1}, 3, {ease: FlxEase.sineOut});
-        defaultCamZoom = 1.3;
+        camChangeZoom(1.3, 1.9, FlxEase.expoOut);
         manageLyrics('satandd', 'In the rain...', 'betterSatanFont.ttf', 30, 2, 'sineInOut', 0.1);
     });
 
@@ -170,10 +170,8 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(28 * 4, (s,s2)->{
-        isCameraOnForcedPos = true;
-        FlxTween.tween(camFollow, {x: 1500, y: 1300}, 2, {ease: FlxEase.sineInOut});
-        FlxTween.tween(FlxG.camera, {zoom: 0.55}, 2, {ease: FlxEase.sineInOut});
-        defaultCamZoom = 0.55;
+        focusCamera("position", 1500, 1300, 2, 'sineInOut', true);
+        camChangeZoom(0.55, 2, FlxEase.sineInOut);
         manageLyrics('satandd', '...What is on your mind?', 'betterSatanFont.ttf', 30, 2.5, 'sineInOut', 0.06);
     });
 
@@ -202,10 +200,9 @@ function onSongStart()
         });
     }
 
-    modManager.queueFuncOnce(60 * 4, (s,s2)->{ 
-        FlxTween.tween(camFollow, {x: 2200, y: 1400}, 2, {ease: FlxEase.sineInOut});
-        FlxTween.tween(FlxG.camera, {zoom: 1.2}, 2, {ease: FlxEase.sineInOut});
-        defaultCamZoom = 1.2;
+    modManager.queueFuncOnce(60 * 4, (s,s2)->{
+        focusCamera("position", 2200, 1400, 2, 'sineInOut', true);
+        camChangeZoom(1.2, 2, FlxEase.sineInOut);
         FlxTween.tween(camHUD, {alpha: 0.4}, 0.75, {ease: FlxEase.quartInOut});
         FlxTween.tween(dad.colorTransform, {redMultiplier: 1, blueMultiplier: 1, greenMultiplier: 1}, 2, {ease: FlxEase.circInOut});
         if (ClientPrefs.shaders)
@@ -259,7 +256,7 @@ function onSongStart()
     
     modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
         isCameraOnForcedPos = false;
-        defaultCamZoom = 0.55;
+        camChangeZoom(0.55, 1.9, FlxEase.expoOut);
         FlxTween.tween(camHUD, {alpha: 1}, 1.2, {ease: FlxEase.quartInOut});
     });
 
@@ -290,30 +287,27 @@ function onBeatHit()
     // me when zoom gets higher or whatever -jason
     if(curBeat >= 64 && curBeat < 95)
     {
-        FlxG.camera.zoom += 0.025;
-        camHUD.zoom += 0.042;
+        uiBop(0.025, 0.042, 0.8);
         FlxTween.tween(gradient, {alpha: 0.3}, 2);
     }
 
     if(curBeat >= 96 && curBeat < 111)
     {
-        FlxG.camera.zoom += 0.04;
-        camHUD.zoom += 0.053;
+        uiBop(0.04, 0.053, 0.8);
         FlxTween.tween(gradient, {alpha: 0.6}, 2);
     }
 
     if(curBeat == 112)
     {
-        isCameraOnForcedPos = true;
-        FlxTween.tween(camFollow, {x: camFollow.x - 150, y: 1380}, 14, {ease: FlxEase.sineInOut});
-        FlxTween.tween(FlxG.camera, {zoom: 2}, 14, {ease: FlxEase.sineInOut});
+        focusCamera("position", camFollow.x - 150, 1380, 14, 'sineInOut', true);
+        camChangeZoom(2, 14, FlxEase.sineInOut);
         FlxTween.tween(gradient, {alpha: 0.9}, 2);
     }
 
     if(curBeat >= 112) // doesn't make sense to but a "&& curBeat < idk"
     {
         // not including camGame cus it bugs out
-        camHUD.zoom += 0.053;
+        uiBop(0.04, 0.053, 0.8);
     }
 
     if (curBeat >= 64 && curBeat <= 79)

@@ -7534,6 +7534,7 @@
 		"song": "Cycled Sins",
 		"voiceSfx1": "Player",
 		"stage": "apartment",
+		"hudClass": "SpectraHUD",
 		"arrowSkins": [
 			"sin",
 			"sin"

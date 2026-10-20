@@ -281,36 +281,36 @@ function onSongStart()
         cinematicBarControls("moveboth", 0.0001, 'linear', 100);
     });
     
-    modManager.queueFuncOnce(8 * 4, (s,s2)->{ 
-        defaultCamZoom -= 0.08;
+    modManager.queueFuncOnce(8 * 4, (s,s2)->{
+        camChangeZoom(defaultCamZoom - 0.08, 1.9, FlxEase.expoOut);
         camFlashSystem('flash', {timer: 0.35});
         cinematicBarControls("moveboth", 0.35, 'circOut', 70);
         FlxTween.tween(camHUD, {alpha: 1}, 0.4);
     });
 
-    modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
-        defaultCamZoom += 0.1;
+    modManager.queueFuncOnce(16 * 4, (s,s2)->{
+        camChangeZoom(defaultCamZoom + 0.1, 1.9, FlxEase.expoOut);
         cinematicBarControls("moveboth", 0.35, 'circOut', 80);
     });
 
-    modManager.queueFuncOnce(24 * 4, (s,s2)->{ 
-        camGame.zoom += 0.12;
-        defaultCamZoom -= 0.2;
+    modManager.queueFuncOnce(24 * 4, (s,s2)->{
+        uiBop(0.12, 0, 0.8);
+        camChangeZoom(defaultCamZoom - 0.2, 1.9, FlxEase.expoOut);
         camFlashSystem('flash', {alpha: 0.35, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
         cinematicBarControls("bopboth", 0.45, 'circOut', 60, 40);
     });
 
     modManager.queueFuncOnce(40 * 4, (s,s2)->{ 
-        defaultCamZoom -= 0.25;
+        camChangeZoom(defaultCamZoom - 0.25, 1.9, FlxEase.expoOut);
         camFlashSystem('flash', {alpha: 0.6, timer: 0.3, ease: FlxEase.circOut, colors: [255, 135, 135]});
         cinematicBarControls("bopboth", 0.3, 'circOut', 55, 40);
-        camGame.zoom += 0.16;
+        uiBop(0.16, 0, 0.8);
     });
 
     for (i in [104, 112, 120, 128])
     {
-        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            camGame.zoom += 0.25;
+        modManager.queueFuncOnce(i * 4, (s,s2)->{
+            uiBop(0.25, 0, 0.8);
 			camFlashSystem('flash', {alpha: 0.6, timer: 0.3, ease: FlxEase.circOut, colors: [255, 135, 135]});
             cinematicBarControls("bopboth", 0.3, 'circOut', 70, 30);
         });
@@ -318,9 +318,9 @@ function onSongStart()
 
     modManager.queueFuncOnce(136 * 4, (s,s2)->{ 
         camFlashSystem('flash', {alpha: 0.35, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
-        camGame.zoom += 0.1;
+        uiBop(0.1, 0, 0.8);
         cinematicBarControls("bopboth", 0.45, 'circOut', 85, 30);
-        defaultCamZoom += 0.11;
+        camChangeZoom(defaultCamZoom + 0.11, 1.9, FlxEase.expoOut);
     });
 
     for (i in [108, 116])
@@ -357,7 +357,7 @@ function onSongStart()
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem('flash', {alpha: 0.35, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
             cinematicBarControls("bopboth", 0.45, 'circOut', 70, 30);
-            camGame.zoom += 0.1;
+            uiBop(0.1, 0, 0.8);
 
             modManager.setValue("drunkZ", 1, -1);
             modManager.setValue("drunk", 1, -1);
@@ -373,7 +373,7 @@ function onSongStart()
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem('flash', {alpha: 0.56, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
             cinematicBarControls("bopboth", 0.45, 'circOut', 80, 30);
-            camGame.zoom += 0.16;
+            uiBop(0.16, 0, 0.8);
 
             modManager.setValue("drunkZ", 1.25, -1);
             modManager.setValue("drunk", 1.25, -1);
@@ -388,7 +388,8 @@ function onSongStart()
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem('flash', {alpha: 0.89, timer: 0.45, ease: FlxEase.circOut, colors: [255, 135, 135]});
             cinematicBarControls("bopboth", 0.45, 'circOut', 100, 30);
-            camGame.zoom += 0.21;
+            
+            uiBop(0.21, 0, 0.8);
 
             modManager.setValue("drunkZ", 1.5, -1);
             modManager.setValue("drunk", 1.5, -1);
@@ -403,12 +404,12 @@ function onSongStart()
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem('dark', {alpha: 0.8, timer: 0.21, ease: FlxEase.sineOut});
             cinematicBarControls("moveboth", 0.21, 'sineOut', 120);
-            defaultCamZoom += 0.3;
+            camChangeZoom(defaultCamZoom + 0.3, 1.9, FlxEase.expoOut);
         });
     }
 
-    modManager.queueFuncOnce(136 * 4, (s,s2)->{ 
-        defaultCamZoom -= 0.3;
+    modManager.queueFuncOnce(136 * 4, (s,s2)->{
+        camChangeZoom(defaultCamZoom - 0.3, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(24 * 4, (s,s2)->{ 
@@ -431,15 +432,13 @@ function onSongStart()
 
         camGame.flash(FlxColor.fromRGB(255, 135, 135), 0.3);
 
-        camFollow.x = 440;
-        camFollow.y = 360;
-        defaultCamZoom = 0.5;
-        isCameraOnForcedPos = true;
+        camChangeZoom(0.5, 1.9, FlxEase.expoOut);
+        focusCamera("position", 440, 360, 1.9, "expoOut");
     });
 
     modManager.queueFuncOnce(264 * 4, (s,s2)->{ 
         isCameraOnForcedPos = false;
-        defaultCamZoom = 0.9;
+        camChangeZoom(0.9, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(295 * 4, (s,s2)->{ 

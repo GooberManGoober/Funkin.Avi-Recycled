@@ -79,10 +79,8 @@ function onSongStart()
 		camGame.flash(FlxColor.WHITE, 3);
 		if (ClientPrefs.shaders) camGame.filters = [new ShaderFilter(chrom)];
 
-		defaultCamZoom = 0.65;
-		camFollow.x = 600;
-		camFollow.y = 400;
-		isCameraOnForcedPos = true;
+		camChangeZoom(0.65, 1.9, FlxEase.expoOut);
+		focusCamera("position", 600, 400, 1.9, "expoOut");
 
 		FlxG.game.setFilters([new ShaderFilter(invert)]);
 		invert.setFloat('binaryIntensity', 1000);
@@ -97,7 +95,7 @@ function onSongStart()
 		camGame.flash(FlxColor.BLACK, 3);
 		camGame.filtersEnabled = false;
 
-		defaultCamZoom = 0.9;
+		camChangeZoom(0.9, 1.9, FlxEase.expoOut);
 		isCameraOnForcedPos = false;
 		
 		invert.setFloat('negativity', 0);
@@ -108,14 +106,12 @@ function onSongStart()
 	});
 
 	modManager.queueFuncOnce(3072, (s,s2)->{ 
-		defaultCamZoom = 1;
-		camFollow.x = 1050;
-		camFollow.y = 600;
-		isCameraOnForcedPos = true;
+		camChangeZoom(1, 1.9, FlxEase.expoOut);
+		focusCamera("position", 1050, 600, 1.9, "expoOut");
 	});
 
 	modManager.queueFuncOnce(3200, (s,s2)->{ 
-		defaultCamZoom = 0.86;
+		camChangeZoom(0.86, 1.9, FlxEase.expoOut);
 		isCameraOnForcedPos = false;
 	});
 }

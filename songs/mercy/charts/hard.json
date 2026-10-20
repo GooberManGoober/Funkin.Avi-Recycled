@@ -5870,6 +5870,7 @@
 			"walt"
 		],
 		"stage": "waltRoom",
+		"hudClass": "SpectraHUD",
 		"validScore": true,
 		"voiceSfx2": "Opponent",
 		"bpm": 160,

@@ -84,18 +84,15 @@ function onSongStart()
     });
     
     modManager.queueFuncOnce(176 * 4, (s,s2)->{ 
-        FlxTween.tween(camGame, {zoom: 1.1}, 4.1, {ease: FlxEase.sineInOut, onComplete: function(twn:FlxTween)
-		{
-			defaultCamZoom = 1.1;
-		}});
+        camChangeZoom(1.1, 4.1, FlxEase.sineInOut);
     });
 
-    modManager.queueFuncOnce(184 * 4, (s,s2)->{ 
-        defaultCamZoom = 1.4;
+    modManager.queueFuncOnce(184 * 4, (s,s2)->{
+        camChangeZoom(1.4, 1.9, FlxEase.expoOut);
     });
 
-    modManager.queueFuncOnce(190 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.65;
+    modManager.queueFuncOnce(190 * 4, (s,s2)->{
+        camChangeZoom(0.65, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(192 * 4, (s,s2)->{ 
@@ -157,10 +154,10 @@ function onSongStart()
 
     modManager.queueFuncOnce(1311, (s,s2)->{ 
         cinematicBarControls("moveboth", 1.65, 'backIn', 380);
-        FlxTween.tween(camGame, {zoom: 1.1}, 1.65, {ease: FlxEase.backIn, onComplete: function(twn:FlxTween)
+        camChangeZoom(1.1, 1.65, FlxEase.backIn, function(twn:FlxTween)
 		{
 			camGame.alpha = 0;
-		}});
+		});
     });
 
     modManager.queueFuncOnce(1352, (s,s2)->{ 
@@ -196,8 +193,7 @@ function onBeatHit()
 {
     if (((curBeat >= 64 && curBeat < 128) && curBeat % 2 == 0) || (curBeat >= 128 && curBeat < 256))
     {
-        FlxG.camera.zoom += ((curBeat > 176 && curBeat < 184) ? 0 : .05);
-        camHUD.zoom += .04;
+        uiBop(((curBeat > 176 && curBeat < 184) ? 0 : .05), .04, 0.8);
 
     }
 }

@@ -1441,6 +1441,7 @@
 		"voiceSfx1": "Player",
 		"needsVoices": true,
 		"stage": "ddStage",
+		"hudClass": "MickeyHUD",
 		"bpm": 90,
 		"voiceSfx2": "Opponent"
 	}

@@ -9,7 +9,7 @@ import lime.system.System;
 
 import funkin.states.editors.MasterEditorMenu;
 
-import funkin.scripting.PluginsManager;
+import funkin.backend.plugins.ModPlugin;
 
 import funkin.utils.MathUtil;
 import flixel.FlxObject;
@@ -388,7 +388,7 @@ function onUpdate(elapsed)
 		}
 		if (FlxG.keys.justPressed.ONE && ClientPrefs.inDevMode)
 		{
-			PluginsManager.callPluginFunc('GameData', 'fullSave');
+			ModPlugin.instance.callOnPlugin('GameData', 'fullSave');
 			FlxG.sound.play(Paths.sound('funkinAVI/easterEggSound'));
 		}		
 		if (FlxG.keys.justPressed.TWO && ClientPrefs.inDevMode)

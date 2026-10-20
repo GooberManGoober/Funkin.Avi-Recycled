@@ -1,4 +1,4 @@
-import funkin.scripting.PluginsManager;
+import funkin.backend.plugins.ModPlugin;
 import flixel.text.FlxText.FlxTextFormat;
 import flixel.text.FlxText.FlxTextFormatMarkerPair;
 import funkin.utils.CameraUtil;
@@ -135,7 +135,7 @@ function resetZaGame()
 	FunkinAssets.cache.clearStoredMemory();
 	FunkinAssets.cache.clearUnusedMemory();
 
-	PluginsManager.populate();
+	ModPlugin.instance.populate();
 
 	Mods.applyModConfig();
 }

@@ -6674,6 +6674,7 @@
 		],
 		"needsVoices": true,
 		"stage": "fuckingLine",
+		"hudClass": "SpectraHUD",
 		"bpm": 165
 	}
 }

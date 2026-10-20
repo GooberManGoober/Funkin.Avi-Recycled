@@ -77,7 +77,7 @@ function onSongStart()
     // they start going on an acid trip lmao
     modManager.queueFuncOnce(256 * 4, (s,s2)->{ 
         camGame.shake(0.015, 1.3);
-        defaultCamZoom = 1.1;
+        camChangeZoom(1.1, 1.9, FlxEase.expoOut);
         aberrationBoom.setFloat('aberration', 0.03);
         aberrationBoom.setFloat('effectTime', 0.06);
     });
@@ -88,14 +88,14 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(260 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.76;
+        camChangeZoom(0.76, 1.9, FlxEase.expoOut);
         aberrationBoom.setFloat('aberration', 0.12);
         aberrationBoom.setFloat('effectTime', 0.24);
     });
 
     modManager.queueFuncOnce(320 * 4, (s,s2)->{ 
         camGame.shake(0.025, 1.3);
-        defaultCamZoom = 1;
+        camChangeZoom(1, 1.9, FlxEase.expoOut);
         aberrationBoom.setFloat('aberration', 0.15);
         aberrationBoom.setFloat('effectTime', 0.30);
     });
@@ -111,7 +111,7 @@ function onSongStart()
     });
 
     modManager.queueFuncOnce(388 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.85;
+        camChangeZoom(0.85, 1.9, FlxEase.expoOut);
         if (ClientPrefs.flashing)
             camGame.flash(FlxColor.WHITE, 0.5);
         aberrationBoom.setFloat('aberration', 0.001);

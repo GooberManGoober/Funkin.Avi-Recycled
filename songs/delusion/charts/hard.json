@@ -5450,6 +5450,7 @@
 		"validScore": true,
 		"needsVoices": false,
 		"stage": "delusionStreet",
+		"hudClass": "SpectraHUD",
 		"bpm": 158,
 		"speed": 2.8,
 		"lanes": 2,

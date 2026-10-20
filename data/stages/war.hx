@@ -47,29 +47,29 @@ var cinematicValue:Float = 0;
 
 function onSongStart()
 {
-    modManager.queueFuncOnce(1, (s,s2)->{ 
-        defaultCamZoom = 1.1;
+    modManager.queueFuncOnce(1, (s,s2)->{
+        camChangeZoom(1.1, 1.9, FlxEase.expoOut);
         cinematicBarControls("moveboth", 2, "backOut", 180);
         FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.sineOut});
     });
 
-    modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.6;
+    modManager.queueFuncOnce(16 * 4, (s,s2)->{
+        camChangeZoom(0.6, 1.9, FlxEase.expoOut);
         cinematicBarControls("moveboth", 1, "circOut", 50);
         cinematicValue = 50;
     });
 
     for (i in [48, 56, 64, 72])
     {
-        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            defaultCamZoom += 0.1;
+        modManager.queueFuncOnce(i * 4, (s,s2)->{
+            camChangeZoom(defaultCamZoom + 0.1, 1.9, FlxEase.expoOut);
             cinematicBarControls("moveboth", 1.5, "circOut", cinematicValue + 20);
             cinematicValue += 20;
         });
     }
 
-    modManager.queueFuncOnce(80 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.6;
+    modManager.queueFuncOnce(80 * 4, (s,s2)->{
+        camChangeZoom(0.6, 1.9, FlxEase.expoOut);
         cinematicBarControls("moveboth", 2, "backOut", 50);
         cinematicValue = 0;
     });
@@ -85,13 +85,13 @@ function onSongStart()
 
     for (i in [272, 276, 280, 284])
     {
-        modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-            defaultCamZoom += 0.05;
+        modManager.queueFuncOnce(i * 4, (s,s2)->{
+            camChangeZoom(defaultCamZoom + 0.05, 1.9, FlxEase.expoOut);
         });
     }
 
     modManager.queueFuncOnce(288 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.6;
+        camChangeZoom(0.6, 1.9, FlxEase.expoOut);
     });
 }
 
@@ -99,13 +99,11 @@ function onBeatHit()
 {
     if (curBeat >= 240 && curBeat < 288 && curBeat % 2 == 0)
     {
-        camGame.zoom += 0.015;
-        camHUD.zoom += 0.03;
+        uiBop(0.015, 0.03, 0.8);
     }
 
     if (curBeat >= 288 && curBeat < 352)
     {
-        camGame.zoom += 0.015;
-        camHUD.zoom += 0.03;
+        uiBop(0.015, 0.03, 0.8);
     }
 }

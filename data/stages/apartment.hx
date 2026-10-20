@@ -315,7 +315,7 @@ function onSongStart()
     {
         modManager.queueFuncOnce(i * 4, (s,s2)->{ 
             camFlashSystem('flash', {alpha: 0.32, timer: 1.2, colors: [255, 0, 0]});
-            FlxG.camera.zoom += 0.1;
+            uiBop(0.1, 0, 0.8);
         });
     }
 }
@@ -324,8 +324,7 @@ function onSectionHit()
 {
     if (camZooming)
     {
-        FlxG.camera.zoom -= 0.015;
-        camHUD.zoom -= 0.03;
+        uiBop(-0.015, -0.03, 0.8);
     }
 }
 

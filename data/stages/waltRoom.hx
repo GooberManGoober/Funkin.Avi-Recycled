@@ -312,27 +312,27 @@ function onSongStart()
     modManager.queueFuncOnce(16 * 4, (s,s2)->{ 
         FlxTween.tween(camGame, {alpha: 1}, 5, {ease: FlxEase.sineInOut});
         FlxTween.tween(camHUD, {alpha: 1}, 5, {ease: FlxEase.sineInOut, startDelay: 1.5});
-        defaultCamZoom = 1.3;
+        camChangeZoom(1.3, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
-        defaultCamZoom = 1.2;
+        camChangeZoom(1.2, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(40 * 4, (s,s2)->{ 
-        defaultCamZoom = 1.1;
+        camChangeZoom(1.1, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(48 * 4, (s,s2)->{ 
-        defaultCamZoom = 1;
+        camChangeZoom(1, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(56 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.9;
+        camChangeZoom(0.9, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
-        defaultCamZoom = 0.75;
+        camChangeZoom(0.75, 1.9, FlxEase.expoOut);
     });
 
     modManager.queueFuncOnce(128 * 4, (s,s2)->{ 
@@ -418,7 +418,7 @@ function onEvent(name, value1, value2)
         switch (value1.toLowerCase())
         {
             case "start":
-                defaultCamZoom = 0.75;
+                camChangeZoom(0.75, 1.9, FlxEase.expoOut);
                 for (bullshit in [retardedButPissBehind, sameAsAdobe, pissOfGlory, greaterPiss])
                     bullshit.visible = false;
                 modManager.setValue("alpha", 1, 1);

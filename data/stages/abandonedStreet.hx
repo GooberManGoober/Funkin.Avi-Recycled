@@ -367,7 +367,6 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(96 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.85;
                 tweenCamera(0.85, 0.4, 'expoOut');
 
                 if (ClientPrefs.flashing)
@@ -393,7 +392,7 @@ function onSongStart()
                     camGame.flash(FlxColor.WHITE, 1.5);
                 camFlashSystem('flash', {alpha: 0.32, timer: 0.35, colors: [194, 194, 194]});
                 
-                defaultCamZoom = 1.25;
+                camChangeZoom(1.25, 1.9, FlxEase.expoOut);
             });
 
             modManager.queueFuncOnce(220 * 4, (s,s2)->{ 
@@ -402,7 +401,7 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(288 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.85;
+                camChangeZoom(0.85, 1.9, FlxEase.expoOut);
 
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 1.5);
@@ -453,7 +452,7 @@ function onSongStart()
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
                     camFlashSystem('flash', {alpha: 0.32, timer: 0.1, colors: [194, 194, 194]});
-                    camHUD.zoom += 0.04;
+                    uiBop(0, 0.04, 0.8);
                 });
             }
 
@@ -825,7 +824,7 @@ function onSongStart()
 
             modManager.queueFuncOnce(32 * 4, (s,s2)->{ 
                 if (ClientPrefs.flashing) camGame.flash(FlxColor.BLACK, 1.5);
-                tweenCamera(camGame.zoom + .5, 16.5, 'sineInOut');
+                tweenCamera(defaultCamZoom + .5, 16.5, 'sineInOut');
             });
 
             modManager.queueFuncOnce(64 * 4, (s,s2)->{ 
@@ -839,8 +838,8 @@ function onSongStart()
                 FlxTween.tween(camHUD, {alpha: 1}, 5, {ease: FlxEase.sineOut});
             });
 
-            modManager.queueFuncOnce(96 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.75;
+            modManager.queueFuncOnce(96 * 4, (s,s2)->{
+                camChangeZoom(0.75, 1.9, FlxEase.expoOut);
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 1.5);
             });
@@ -852,54 +851,54 @@ function onSongStart()
                 });
             }
 
-            modManager.queueFuncOnce(156 * 4, (s,s2)->{ 
-                defaultCamZoom = 1.05;
+            modManager.queueFuncOnce(156 * 4, (s,s2)->{
+                camChangeZoom(1.05, 1.9, FlxEase.expoOut);
             });
 
             modManager.queueFuncOnce(160 * 4, (s,s2)->{ 
                 boundValue = 1.25;
                 drainValue = 0.015;
-                defaultCamZoom = 0.7;
+                camChangeZoom(0.7, 1.9, FlxEase.expoOut);
                 if (ClientPrefs.flashing) camGame.flash(FlxColor.BLACK, 1.5);
             });
 
-            modManager.queueFuncOnce(192 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.75;
+            modManager.queueFuncOnce(192 * 4, (s,s2)->{
+                camChangeZoom(0.75, 1.9, FlxEase.expoOut);
             });
 
             for (i in [200, 238, 270, 316, 332, 344])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 0.8;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(0.8, 1.9, FlxEase.expoOut);
                 });
             }
 
-            modManager.queueFuncOnce(208 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.85;
+            modManager.queueFuncOnce(208 * 4, (s,s2)->{
+                camChangeZoom(0.85, 1.9, FlxEase.expoOut);
             });
 
             for (i in [216, 252, 284])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 0.9;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(0.9, 1.9, FlxEase.expoOut);
                 });
             }
 
-            modManager.queueFuncOnce(220 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.95;
+            modManager.queueFuncOnce(220 * 4, (s,s2)->{
+                camChangeZoom(0.95, 1.9, FlxEase.expoOut);
             });
 
             for (i in [222, 267, 239, 271, 334])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 1;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(1, 1.9, FlxEase.expoOut);
                 });
             }
 
             for (i in [224, 288])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 0.75;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(0.75, 1.9, FlxEase.expoOut);
                     if (ClientPrefs.flashing)
                         camGame.flash(FlxColor.WHITE, 1.5);
                     FlxTween.tween(camHUD, {alpha: 0}, 3, {ease: FlxEase.sineInOut});
@@ -908,15 +907,15 @@ function onSongStart()
 
             for (i in [228, 260, 292, 286])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 1.1;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(1.1, 1.9, FlxEase.expoOut);
                 });
             }
 
             for (i in [230, 262, 296, 312, 236, 268])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 0.65;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(0.65, 1.9, FlxEase.expoOut);
                 });
             }
 
@@ -925,52 +924,54 @@ function onSongStart()
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
                     if (ClientPrefs.flashing)
                         camGame.flash(FlxColor.WHITE, 1.5);
-                    defaultCamZoom = 0.7;
+                    camChangeZoom(0.7, 1.9, FlxEase.expoOut);
                 });
             }
 
             for (i in [412, 240, 272, 300, 304, 336, 248, 280, 328])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 0.7;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(0.7, 1.9, FlxEase.expoOut);
                 });
             }
 
             modManager.queueFuncOnce(320 * 4, (s,s2)->{ 
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 1.5);
-                defaultCamZoom = 0.7;
+                camChangeZoom(0.7, 1.9, FlxEase.expoOut);
             });
 
-            modManager.queueFuncOnce(254 * 4, (s,s2)->{ 
-                defaultCamZoom = 1.1;
+            modManager.queueFuncOnce(254 * 4, (s,s2)->{
+                camChangeZoom(1.1, 1.9, FlxEase.expoOut);
                 FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.sineInOut});
             });
 
-            modManager.queueFuncOnce(318 * 4, (s,s2)->{ 
-                defaultCamZoom = 1.25;
+            modManager.queueFuncOnce(318 * 4, (s,s2)->{
+                camChangeZoom(1.25, 1.9, FlxEase.expoOut);
                 FlxTween.tween(camHUD, {alpha: 1}, 1, {ease: FlxEase.sineInOut});
             });
 
             for (i in [310, 342, 350])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 1.25;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(1.25, 1.9, FlxEase.expoOut);
                 });
             }
 
-            modManager.queueFuncOnce(352 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.65;
+            modManager.queueFuncOnce(352 * 4, (s,s2)->{
+                camChangeZoom(0.65, 1.9, FlxEase.expoOut, function(twn:FlxTween)
+                {
+                    camChangeZoom(1.1, 18, FlxEase.linear);
+                });
                 FlxTween.tween(camHUD, {alpha: 0.25}, 8, {ease: FlxEase.sineInOut});
                 FlxTween.num(health, 0.01, 20, null, shitshitfuckfuck -> health = shitshitfuckfuck);
 
                 if (globalGradient != null)
                     FlxTween.tween(globalGradient, {alpha: 0.8}, 10);
-                FlxTween.tween(FlxG.camera, {zoom: 1.1}, 18, {startDelay: 2});
             });
 
-            modManager.queueFuncOnce(408 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.9;
+            modManager.queueFuncOnce(408 * 4, (s,s2)->{
+                camChangeZoom(0.9, 1.9, FlxEase.expoOut);
                 FlxTween.tween(camHUD, {alpha: 0.36}, 4, {ease: FlxEase.sineInOut});
             });
 
@@ -987,7 +988,11 @@ function onSongStart()
             });
 
             modManager.queueFuncOnce(481 * 4, (s,s2)->{ 
-                camFollow.x += 100;
+                if (camFollowTween != null) camFollowTween.cancel();
+					
+				camFollowTween = FlxTween.tween(camFollowPoint, {
+                    x: camFollowPoint.x + 100
+                }, 1.9 / (cameraSpeed * playbackRate), {ease: FlxEase.expoOut});
             });
 
             modManager.queueFuncOnce(506 * 4, (s,s2)->{ 
@@ -1114,8 +1119,8 @@ function onSongStart()
                 camBars.fade(FlxColor.BLACK, 2, true);
             });
 
-            modManager.queueFuncOnce(132 * 4, (s,s2)->{ 
-                defaultCamZoom = 1.3;
+            modManager.queueFuncOnce(132 * 4, (s,s2)->{
+                camChangeZoom(1.3, 1.9, FlxEase.expoOut);
                 if (ClientPrefs.opponentStrums)
                     modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear", 1);
                 modManager.queueEase(136 * 4, 148 * 4, "alpha", 1, "linear", 0);
@@ -1137,30 +1142,35 @@ function onSongStart()
                 if (vocals.volume != 1) vocals.volume = 1; // it should be fixed then
             });
 
-            modManager.queueFuncOnce(144 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.8;
+            modManager.queueFuncOnce(144 * 4, (s,s2)->{
+                camChangeZoom(0.8, 1.9, FlxEase.expoOut);
                 camBars.fade(0x000000, 5, true);
                 camFlashSystem('dark', {alpha: 1, timer: 0.3, ease: FlxEase.quartInOut});
-                defaultCamZoom = 1.2;
-                camFollow.x -= 100;
-                FlxTween.tween(camFollow, {x: camFollow.x + 100}, 12, {ease: FlxEase.sineInOut});
+                camChangeZoom(1.2, 1.9, FlxEase.expoOut);
+
+                if (camFollowTween != null) camFollowTween.cancel();
+
+                camFollowPoint.x -= 100;
+                camFollowTween = FlxTween.tween(camFollowPoint, {x: camFollowPoint.x + 100}, 12, {ease: FlxEase.sineInOut});
             });
 
             modManager.queueFuncOnce(176 * 4, (s,s2)->{ 
                 camFlashSystem('dark', {alpha: 0, timer: 0.3, ease: FlxEase.quartInOut});
-                defaultCamZoom = 0.75;
+                camChangeZoom(0.75, 1.9, FlxEase.expoOut);
                 camGame.flash(FlxColor.WHITE, 1);
 
+                if (camFollowTween != null) camFollowTween.cancel();
+
                 // today in super r slur shit we have this cus i hate my life
-                FlxTween.tween(camFollow, {y: camFollow.y - 300}, .00000001, {onComplete: bensonFromRegularShow -> {
-                    FlxTween.tween(camFollow, {y: camFollow.y + 300}, 7, {ease: FlxEase.sineInOut});
+                camFollowTween = FlxTween.tween(camFollowPoint, {y: camFollowPoint.y - 300}, .00000001, {onComplete: bensonFromRegularShow -> {
+                    camFollowTween = FlxTween.tween(camFollowPoint, {y: camFollowPoint.y + 300}, 7, {ease: FlxEase.sineInOut});
                 }});
             });
 
             for (i in [180, 188, 196])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camGame.zoom += 0.3;
+                    uiBop(0.3, 0, 0.8);
                     camFlashSystem('flash', {alpha: 0.5, timer: 0.35});
                 });
             }
@@ -1168,18 +1178,18 @@ function onSongStart()
             for (i in [184, 192, 200])
             {
                 modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    camGame.zoom += 0.15;
+                    uiBop(0.15, 0, 0.8);
                     camFlashSystem('flash', {alpha: 0.25, timer: 0.35});
                 });
             }
 
-            modManager.queueFuncOnce(204 * 4, (s,s2)->{ 
-                defaultCamZoom = 1;
+            modManager.queueFuncOnce(204 * 4, (s,s2)->{
+                camChangeZoom(1, 1.9, FlxEase.expoOut);
             });
 
             modManager.queueFuncOnce(208 * 4, (s,s2)->{ 
                 camGame.fade(FlxColor.BLACK, .000001);
-                defaultCamZoom = 1.3;
+                camChangeZoom(1.3, 1.9, FlxEase.expoOut);
                 modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear", 0);
                 if (ClientPrefs.opponentStrums)
                     modManager.queueEase(216 * 4, 220 * 4, "alpha", 0, "linear", 1);
@@ -1198,7 +1208,7 @@ function onSongStart()
                 }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
 
                 camGame.fade(FlxColor.BLACK, .000001, true);
-                defaultCamZoom = 0.75;
+                camChangeZoom(0.75, 1.9, FlxEase.expoOut);
                 camGame.shake(0.01, 1.2);
             });
             // The Drop Starts
@@ -1247,59 +1257,59 @@ function onSongStart()
 
             modManager.queueFuncOnce(228 * 4, (s,s2)->{ 
                 chromTween = null;
-                defaultCamZoom = 0.85;
+                camChangeZoom(0.85, 1.9, FlxEase.expoOut);
             });
 
-            modManager.queueFuncOnce(230 * 4, (s,s2)->{ 
-                defaultCamZoom = 1;
+            modManager.queueFuncOnce(230 * 4, (s,s2)->{
+                camChangeZoom(1, 1.9, FlxEase.expoOut);
             });
 
-            modManager.queueFuncOnce(232 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.75;
+            modManager.queueFuncOnce(232 * 4, (s,s2)->{
+                camChangeZoom(0.75, 1.9, FlxEase.expoOut);
             });
 
-            modManager.queueFuncOnce(278 * 4, (s,s2)->{ 
-                defaultCamZoom = 1;
+            modManager.queueFuncOnce(278 * 4, (s,s2)->{
+                camChangeZoom(1, 1.9, FlxEase.expoOut);
             });
 
             for (i in [280, 312, 344])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 0.7;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(0.7, 1.9, FlxEase.expoOut);
                 });
             }
 
             for (i in [288, 296, 304, 320, 328, 336])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom += 0.1;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(defaultCamZoom + 0.1, 1.9, FlxEase.expoOut);
                 });
             }
 
             modManager.queueFuncOnce(308 * 4, (s,s2)->{ 
-                defaultCamZoom += 0.2;
+                camChangeZoom(defaultCamZoom + 0.2, 1.9, FlxEase.expoOut);
             });
 
             modManager.queueFuncOnce(340 * 4, (s,s2)->{ 
-                defaultCamZoom += 0.3;
+                camChangeZoom(defaultCamZoom + 0.3, 1.9, FlxEase.expoOut);
             });
 
             for (i in [356, 388])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 1.2;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(1.2, 1.9, FlxEase.expoOut);
                 });
             }
 
             for (i in [358, 390])
             {
-                modManager.queueFuncOnce(i * 4, (s,s2)->{ 
-                    defaultCamZoom = 1.3;
+                modManager.queueFuncOnce(i * 4, (s,s2)->{
+                    camChangeZoom(1.3, 1.9, FlxEase.expoOut);
                 });
             }
 
-            modManager.queueFuncOnce(360 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.75;
+            modManager.queueFuncOnce(360 * 4, (s,s2)->{
+                camChangeZoom(0.75, 1.9, FlxEase.expoOut);
             });
 
             modManager.queueFuncOnce(375 * 4, (s,s2)->{ 
@@ -1324,15 +1334,15 @@ function onSongStart()
                 modManager.setValue("alpha", 0);
                 if (ClientPrefs.flashing)
                     camGame.flash(FlxColor.WHITE, 1);
-                defaultCamZoom = 0.8;
+                camChangeZoom(0.8, 1.9, FlxEase.expoOut);
                 
                 chromTween = FlxTween.num(chromEffect, 0.1, 0.6, {
                     ease: FlxEase.quadOut
                 }, shitshitfuckfuck -> chromEffect = shitshitfuckfuck);
             });
 
-            modManager.queueFuncOnce(408 * 4, (s,s2)->{ 
-                defaultCamZoom = 0.87;
+            modManager.queueFuncOnce(408 * 4, (s,s2)->{
+                camChangeZoom(0.87, 1.9, FlxEase.expoOut);
             });
 
             modManager.queueFuncOnce(472 * 4, (s,s2)->{ 
@@ -1367,14 +1377,12 @@ function onSongStart()
                     }
                 }
                 chromEffect = 0.00001;
-                defaultCamZoom = 0.85;
+                camChangeZoom(0.85, 1.9, FlxEase.expoOut);
             });
 
             modManager.queueFuncOnce(1912, (s,s2)->{ 
-                camFollow.x = 630;
-                camFollow.y = 600;
-                isCameraOnForcedPos = true;
-                defaultCamZoom = 0.5;
+                focusCamera("position", 630, 600, 1.9, "expoOut");
+                camChangeZoom(0.5, 1.9, FlxEase.expoOut);
                 boyfriend.cameras = [camVideo];
 
                 playHUD.showRating = playHUD.showRatingNum = false;
@@ -1428,8 +1436,6 @@ function onSongStart()
                 isCameraOnForcedPos = false;
                 boundValue = 0.45;
                 drainValue = 0.032;
-                camFollow.x = 0;
-                camFollow.y = 0;
             });
 
             modManager.queueFuncOnce(744 * 4, (s,s2)->{ 
@@ -1438,7 +1444,7 @@ function onSongStart()
                 boyfriend.alpha = 1;
                 playHUD.showRating = playHUD.showRatingNum = ClientPrefs.showRatings;
                 modManager.setValue("alpha", 0);
-                defaultCamZoom = 0.9;
+                camChangeZoom(0.9, 1.9, FlxEase.expoOut);
                 chromEffect = 0.1;
                 if (minnieJumpscare != null)
                     minnieJumpscare.visible = false;
@@ -1492,32 +1498,31 @@ function onSongStart()
                 camFlashSystem('fancy flash', {alpha: 0.4, timer: 2, colors: [255, 0, 0]});
                 camFlashSystem('dark', {alpha: 0.8, timer: 6, ease: FlxEase.quartInOut});
                 isCameraOnForcedPos = true;
-                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x + 150}, 4.3, {ease: FlxEase.quartInOut});
+                camPosTween = FlxTween.tween(camFollowPoint, {x: camFollowPoint.x + 150}, 4.3, {ease: FlxEase.quartInOut});
             });
             // camera moves over to Mickey realizing he was never gonna win
             modManager.queueFuncOnce(1024 * 4, (s,s2)->{ 
                 if (camPosTween != null)
                     camPosTween.cancel();
                     
-                camPosTween = FlxTween.tween(camFollow, {x: camFollow.x - 950}, 1.5, {ease: FlxEase.circInOut});
+                camPosTween = FlxTween.tween(camFollowPoint, {x: camFollowPoint.x - 950}, 1.5, {ease: FlxEase.circInOut});
             });
 
             modManager.queueFuncOnce(1040 * 4, (s,s2)->{ 
-                camFollow.x = 475;
-                camFollow.y = 450;
-                defaultCamZoom = 0.5;
+                focusCamera("position", 475, 450, 1.9, "expoOut");
+                camChangeZoom(0.5, 1.9, FlxEase.expoOut);
                 camFlashSystem('dark', {alpha: 0, timer: 1, ease: FlxEase.circOut});
             });
 
             modManager.queueFuncOnce(1072 * 4, (s,s2)->{ 
                 isCameraOnForcedPos = false;
-                defaultCamZoom = 0.9;
+                camChangeZoom(0.9, 1.9, FlxEase.expoOut);
                 death.play();
                 death.pause();
             });
 
-            modManager.queueFuncOnce(1082 * 4, (s,s2)->{ 
-                FlxTween.tween(camGame, {zoom: 1.6}, 1, {ease: FlxEase.sineInOut});
+            modManager.queueFuncOnce(1082 * 4, (s,s2)->{
+                camChangeZoom(1.6, 1, FlxEase.sineInOut);
                 camVideo.fade(FlxColor.BLACK, 0.7);
             });
 
@@ -1595,8 +1600,7 @@ function onBeatHit()
             {
                 if (curBeat % 2 == 0)
                 {
-                    camGame.zoom += 0.05;
-                    camHUD.zoom += 0.06;
+                    uiBop(0.05, 0.06, 0.8);
                 }
             }
         
@@ -1624,8 +1628,7 @@ function onBeatHit()
         case 'Delusional':
             if ((curBeat >= 216 && curBeat < 340) || (curBeat >= 344 && curBeat < 356) || (curBeat >= 360 && curBeat < 388) || (curBeat >= 392 && curBeat < 408) || (curBeat >= 880 && curBeat < 1072))
             {
-                FlxG.camera.zoom += 0.015;
-                camHUD.zoom += 0.03;
+                uiBop(0.015, 0.03, 0.8);
             }
 
     }

@@ -1,7 +1,7 @@
-import funkin.scripting.PluginsManager;
+import funkin.backend.plugins.ModPlugin;
 
 // Pre-made Text
-var composer:String = PluginsManager.callPluginFunc('CreditsData', 'getArtistName', [PlayState.SONG.song]);
+var composer:String = ModPlugin.instance.callOnPlugin('CreditsData', 'getArtistName', [PlayState.SONG.song]);
 var songTitle:String = PlayState.SONG.song;
 
 var songCrdGrp:FlxSpriteGroup;
@@ -23,22 +23,14 @@ function setupCardData()
 {
 	switch (PlayState.SONG.song)
 	{
-		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'War Dilemma', 'Birthday', 'Delusion', 'Disclosure':
-			fontStuff = "DisneyFont.ttf";
-		case 'Delusional':
-			fontStuff = "betterSatanFont.ttf";
-		case 'Bless':
-			fontStuff = "MagicOwlFont.otf";
-		case "Don't Cross!":
-			fontStuff = "PhantomMuff Full Letters 1.1.5.ttf";
-		case 'Cycled Sins':
-			fontStuff = "calibri-regular";
-		case 'Mercy':
-			fontStuff = "splatter";
-		case 'Malfunction':
-			fontStuff = "m40.ttf";
-		default: 
-			fontStuff = "vcr.ttf";
+		case 'Devilish Deal', 'Isolated', 'Lunacy', 'Hunted', 'Twisted Grins', 'War Dilemma', 'Birthday', 'Delusion', 'Disclosure': fontStuff = "DisneyFont.ttf";
+		case 'Delusional': fontStuff = "betterSatanFont.ttf";
+		case 'Bless': fontStuff = "MagicOwlFont.otf";
+		case "Don't Cross!": fontStuff = "PhantomMuff Full Letters 1.1.5.ttf";
+		case 'Cycled Sins': fontStuff = "calibri-regular";
+		case 'Mercy': fontStuff = "splatter";
+		case 'Malfunction': fontStuff = "m40.ttf";
+		default: fontStuff = "vcr.ttf";
 	}
 }
 
@@ -103,15 +95,11 @@ function onCreatePost()
 		dadIcon.alpha = 0.001;
 		playerIcon.alpha = 0.001;
 
-		if (dadIcon.frameCount == 3)
-			dadIcon.animation.curAnim.curFrame = 2;
-		else
-			dadIcon.animation.curAnim.curFrame = 0;
+		if (dadIcon.frameCount == 3) dadIcon.animation.curAnim.curFrame = 2;
+		else dadIcon.animation.curAnim.curFrame = 0;
 
-		if (playerIcon.frameCount == 3)
-			playerIcon.animation.curAnim.curFrame = 2;
-		else
-			playerIcon.animation.curAnim.curFrame = 0;
+		if (playerIcon.frameCount == 3) playerIcon.animation.curAnim.curFrame = 2;
+		else playerIcon.animation.curAnim.curFrame = 0;
 	
 		songCrdGrp.add(dadIcon);
 		songCrdGrp.add(playerIcon);
@@ -122,34 +110,27 @@ function onCreatePost()
 	{
 		switch (PlayState.SONG.song)
 		{
-			case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional':
-			// do nothing, it's already set under stepHit()
-			case 'Cycled Sins':
-				playCardAnim(6);
-			case 'Mercy':
-				playCardAnim(9);
-			default:
-				playCardAnim(0.08);
+			case 'Devilish Deal', 'Isolated', 'Lunacy', 'Delusional': // do nothing, it's already set under stepHit()
+			case 'Cycled Sins': playCardAnim(6);
+			case 'Mercy': playCardAnim(9);
+			default: playCardAnim(0.08);
 		}
 	}
 }
 
 function onSongStart()
 {
-	if (isLegacy)
-	{
-		playLegacyCardAnim();
-	}
+	if (isLegacy) playLegacyCardAnim();
 
 	// Modified Card Delays
 	switch (PlayState.SONG.song)
 	{
 		case 'Devilish Deal', 'Isolated', 'Lunacy':
-			modManager.queueFuncOnce(1, (s,s2)->{ 
+			modManager.queueFuncOnce(1, (s,s2) -> {
 				playCardAnim(0.2);
 			});
 		case 'Delusional':
-			modManager.queueFuncOnce(1, (s,s2)->{ 
+			modManager.queueFuncOnce(1, (s,s2) -> {
 				playCardAnim(0.001);
 			});
 	}

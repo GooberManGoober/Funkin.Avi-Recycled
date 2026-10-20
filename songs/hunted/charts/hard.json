@@ -6274,6 +6274,7 @@
 		"needsVoices": true,
 		"voiceSfx1": "Everett",
 		"stage": "forestNew",
+		"hudClass": "SpectraHUD",
 		"voiceSfx2": "Goofy",
 		"bpm": 160
 	}

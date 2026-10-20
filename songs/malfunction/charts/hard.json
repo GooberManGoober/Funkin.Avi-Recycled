@@ -12240,6 +12240,7 @@
 		],
 		"needsVoices": true,
 		"stage": "forbiddenRealm",
+		"hudClass": "SpectraHUD",
 		"voiceSfx1": "BF",
 		"bpm": 166,
 		"voiceSfx2": "Malsquare"

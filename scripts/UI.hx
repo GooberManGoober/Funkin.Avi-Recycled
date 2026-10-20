@@ -1,47 +1,35 @@
-import funkin.scripting.PluginsManager;
-import lime.app.Application;
+import funkin.backend.plugins.ModPlugin;
 
 var curEpisode:String;
 var windowName:String = "";
 
 var introSoundsSuffix:String = '';
 
-var cameraOnDad = false;
-
 public var globalGradient:FlxSprite;
 
 var isPixelStage:Bool = false;
 var pixelZoom = 1;
 
-function onMoveCamera(char)
+function onPause()
 {
-    if (!PlayState.SONG.notes[curSection].mustHitSection)
-        cameraOnDad = true;
-    else
-        cameraOnDad = false;
-}
-
-function onPause() {
-	FlxG.camera.followLerp = 0;
 	persistentUpdate = false;
 	persistentDraw = true;
 	paused = true;
 
-	if (audio.inst != null)
-		audio.pause();
+	if (audio.inst != null) audio.pause();
 
 	openSubState(new ScriptedSubstate("FAVIPauseSubState"));
 	FlxTween.globalManager.forEach((i:FlxTween) -> if (!i.finished) i.active = true); // makes the objects in the pause menu actually able to tween
 	return ScriptConstants.STOP_FUNC;
 }
 
-function onLoad() {
+function onLoad()
+{
 	countdownSounds = false;
 
 	switch (PlayState.SONG.song)
 	{
-		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday", "Delusion":
-			introSoundsSuffix = "-cartoon";
+		case "Isolated", "Devilish Deal", "Lunacy", "Delusional", "Hunted", "Twisted Grins", "Laugh Track", "Birthday", "Delusion": introSoundsSuffix = "-cartoon";
 		case "Malfunction":
 			introSoundsSuffix = "-error";
 			isPixelStage = true;
@@ -50,10 +38,7 @@ function onLoad() {
 			skipCountdown = true;
 			isPixelStage = true;
 			pixelZoom = 6;
-		default:
-			if(isPixelStage) {
-				introSoundsSuffix = '-pixel';
-			}
+		default: if(isPixelStage) introSoundsSuffix = '-pixel';
 	}
 
 	canAccessEditors = ClientPrefs.inDevMode;
@@ -61,16 +46,15 @@ function onLoad() {
 
 function onCreatePost()
 {
-    cameraSpeed *= 2;
-
+    cameraSpeed *= 1.5;
+	
 	playHUD.comboOffsets = [99999, 99999, 99999, 99999];
 
 	if (!ClientPrefs.lowQuality)
 	{
 		switch (PlayState.SONG.stage)
 		{
-			case 'war', 'treasureIsland', 'forbiddenRealm', 'fuckingLine', 'vaultRoom', 'vaultRoomLegacy', 'apartment', 'waltRoom':
-				//nothing
+			case 'war', 'treasureIsland', 'forbiddenRealm', 'fuckingLine', 'vaultRoom', 'vaultRoomLegacy', 'apartment', 'waltRoom': //nothing
 			default:
 				scratch = new FlxSprite();
 				scratch.frames = Paths.getSparrowAtlas('filters/scratchShit');
@@ -100,20 +84,10 @@ function onCreatePost()
 		opponentStrums.alpha = 1;
 	}
 
-	if (!ClientPrefs.opponentStrums)
-	{
-		opponentStrums.underlayAlphaMult = 0;
-
-		opponentStrums.baseAlpha = 0;
-		opponentStrums.alpha = 0;
-	}
-
 	switch (PlayState.SONG.stage)
 	{
-		case 'forestNew', 'clubhouse', 'trueGrinsOfSins', 'apartment':
-			//nothing
-		default:
-			gf.visible = false;
+		case 'forestNew', 'clubhouse', 'trueGrinsOfSins', 'apartment': //nothing
+		default: gf.visible = false;
 	}
 
 	switch (PlayState.SONG.stage)
@@ -147,46 +121,22 @@ function onCreatePost()
 
 	windowName = "Funkin.avi: Recycled - " + 
 	(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + 
-	" (Composed by: " + PluginsManager.callPluginFunc('CreditsData', 'getArtistName', [PlayState.SONG.song]) + 
-	") - Chart by: " + PluginsManager.callPluginFunc('CreditsData', 'getCharterCredits', [PlayState.SONG.song]) + 
-	" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // shitty long ass name that credits literally every fucking thing
+	" (Composed by: " + ModPlugin.instance.callOnPlugin('CreditsData', 'getArtistName', [PlayState.SONG.song]) + 
+	") - Chart by: " + ModPlugin.instance.callOnPlugin('CreditsData', 'getCharterCredits', [PlayState.SONG.song]) + 
+	" [" + ModPlugin.instance.callOnPlugin('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // shitty long ass name that credits literally every fucking thing
 
-	Application.current.window.title = windowName;
+	WindowUtil.setTitle(windowName);
 
 	new FlxTimer().start(5, function(tmr:FlxTimer)
 	{
 		windowName = "Funkin.avi: Recycled - " + 
 		(PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + 
 		PlayState.SONG.song + 
-		" [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // short version that displays after 5 seconds yayaya
+		" [" + ModPlugin.instance.callOnPlugin('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]"; // short version that displays after 5 seconds yayaya
 
-		Application.current.window.title = windowName;
+		WindowUtil.setTitle(windowName);
 	});
 
-}
-
-function onUpdate(elapsed)
-{
-    // the COOLER cam pos thing or whatever
-	// x, y, angle
-	var camOffset = [0.0, 0.0, 0];
-
-	var char = cameraOnDad ? dad : boyfriend;
-
-	if (char.animation.curAnim != null && !isCameraOnForcedPos && ClientPrefs.camFollowsCharacters) 
-	{
-		switch (char.animation.curAnim.name.substring(4))
-		{
-			case 'RIGHT', 'RIGHT-alt':
-				camOffset[2] += 1.3;
-			case 'LEFT', 'LEFT-alt':
-				camOffset[2] -= 1.45;
-		}
-	}
-
-	if(!inCutscene) {
-		camGame.scrollAngle = FlxMath.lerp(camGame.scrollAngle, 0 + camOffset[2], 0.04 * cameraSpeed);
-	}
 }
 
 function onCountdownTick(swagCounter)
@@ -254,66 +204,67 @@ function onSongStart()
 	{
 		modManager.queueFuncOnce(472 * 4, (s,s2)->{ 
 			windowName = "...";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 
 		modManager.queueFuncOnce(476 * 4, (s,s2)->{ 
 			windowName = "Where am I...?";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 
 		modManager.queueFuncOnce(480 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [________]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(484 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [P_______]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(488 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PE______]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(492 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEA_____]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(496 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEAC____]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(500 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACE___]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(504 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACEF__]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(508 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACEFU_]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(512 * 4, (s,s2)->{
 			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + "Regret [PEACEFUL]";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(728 * 4, (s,s2)->{
 			windowName = "...";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(736 * 4, (s,s2)->{
 			windowName = "Welcome back.... Little mouse.";
-			Application.current.window.title = windowName;
+			WindowUtil.setTitle(windowName);
 		});
 		modManager.queueFuncOnce(744 * 4, (s,s2)->{
-			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + " [" + PluginsManager.callPluginFunc('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
-			Application.current.window.title = windowName;
+			windowName = "Funkin.avi: Recycled - " + (PlayState.isStoryMode ? curEpisode + " - " : "Freeplay - ") + PlayState.SONG.song + " [" + ModPlugin.instance.callOnPlugin('CreditsData', 'getDiffRank', [PlayState.SONG.song]) + "]";
+			WindowUtil.setTitle(windowName);
 		});
 	}
 }
 
-function onPopUpScorePost(note, daRating, ratingGraphic, numGroup) {
+function onPopUpScorePost(note, daRating, ratingGraphic, numGroup)
+{
 	if (playHUD.showRating)
 	{
 		var rating:FlxSprite = new FlxSprite().loadGraphic(Paths.image(playHUD.ratingPrefix + daRating.image + playHUD.ratingSuffix));
@@ -325,10 +276,8 @@ function onPopUpScorePost(note, daRating, ratingGraphic, numGroup) {
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
 		
-		if (isPixelStage)
-			rating.antialiasing = false;
-		else
-			rating.antialiasing = ClientPrefs.globalAntialiasing;
+		if (isPixelStage) rating.antialiasing = false;
+		else rating.antialiasing = ClientPrefs.globalAntialiasing;
 		rating.updateHitbox();
 		ratingNameGroup.add(rating);
 		FlxTween.tween(rating, {alpha: 0}, 0.2, {startDelay: Conductor.crotchet * 0.001});
@@ -371,10 +320,8 @@ function onPopUpScorePost(note, daRating, ratingGraphic, numGroup) {
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
 
-			if (isPixelStage)
-				numScore.antialiasing = false;
-			else
-				numScore.antialiasing = ClientPrefs.globalAntialiasing;
+			if (isPixelStage) numScore.antialiasing = false;
+			else numScore.antialiasing = ClientPrefs.globalAntialiasing;
 
 			numScore.updateHitbox();
 			ratingNumGroup.add(numScore);

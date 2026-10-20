@@ -12751,6 +12751,7 @@
 		],
 		"needsVoices": true,
 		"stage": "vaultRoom",
+		"hudClass": "SpectraHUD",
 		"bpm": 120
 	}
 }

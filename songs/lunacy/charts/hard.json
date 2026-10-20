@@ -5930,6 +5930,7 @@
 		],
 		"needsVoices": true,
 		"stage": "abandonedStreet",
+		"hudClass": "MickeyHUD",
 		"voiceSfx1": "Player",
 		"voiceSfx2": "Opponent",
 		"bpm": 188
