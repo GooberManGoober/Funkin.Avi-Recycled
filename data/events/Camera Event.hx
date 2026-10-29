@@ -66,13 +66,7 @@ function onTrigger(value1, value2)
                     }});
 
                 case "angle":
-                    if (camTwn[4] != null)
-                        camTwn[4].cancel();
-
-                    camTwn[4] = FlxTween.tween(camGame, {scrollAngle: Std.parseFloat(triggerInfo[1])}, Std.parseFloat(triggerInfo[2]), {ease: CoolUtil.getEaseFromString(triggerInfo[3].trim()), onComplete: function(twn:FlxTween)
-                    {
-                        camTwn[4] = null;
-                    }});
+                    camChangeAngle(Std.parseFloat(triggerInfo[1]), Std.parseFloat(triggerInfo[2]), CoolUtil.getEaseFromString(triggerInfo[3]));
             }
 
         case "start hidden":
@@ -84,17 +78,15 @@ function onTrigger(value1, value2)
                 case "defaultcamzoom": camChangeZoom(Std.parseFloat(triggerInfo[1]), 1.9, FlxEase.expoOut);
                 case "alpha": camGame.alpha = Std.parseFloat(triggerInfo[1]);
                 case "hudalpha": camHUD.alpha = Std.parseFloat(triggerInfo[1]);
-                case "angle": camGame.scrollAngle = Std.parseFloat(triggerInfo[1]);
+                case "angle": camChangeAngle(Std.parseFloat(triggerInfo[1]), 0, FlxEase.expoOut);
                 case "hudangle": camHUD.scrollAngle = Std.parseFloat(triggerInfo[1]);
                 case "adddefaultcamzoom": camChangeZoom(defaultCamZoom + Std.parseFloat(triggerInfo[1]), 1.9, FlxEase.expoOut);
             }
 
         case "shake":
-            if (triggerInfo[2] == "hud")
-                camHUD.shake(Std.parseFloat(triggerInfo[0]), Std.parseFloat(triggerInfo[1]));
-            else
-                camGame.shake(Std.parseFloat(triggerInfo[0]), Std.parseFloat(triggerInfo[1]));
-
+            if (triggerInfo[2] == "hud") camHUD.shake(Std.parseFloat(triggerInfo[0]), Std.parseFloat(triggerInfo[1]));
+            else camGame.shake(Std.parseFloat(triggerInfo[0]), Std.parseFloat(triggerInfo[1]));
+            
         case "flash":
             if (ClientPrefs.flashing)
             {
@@ -106,10 +98,9 @@ function onTrigger(value1, value2)
                 if (triggerInfo[5] == null) triggerInfo[5] = "false";
     
                 var boolShit:Bool = false;
-    
-                if (triggerInfo[5].toLowerCase().trim() == "true")
-                    boolShit = true;
-    
+                
+                if (triggerInfo[5].toLowerCase().trim() == "true") boolShit = true;
+                
                 flashSprite.color = FlxColor.fromRGB(Std.parseInt(triggerInfo[0]), Std.parseInt(triggerInfo[1]), Std.parseInt(triggerInfo[2]));
                 flashSpeed = Std.parseFloat(triggerInfo[3]);
                 flashSprite.alpha = Std.parseFloat(triggerInfo[4]);
@@ -124,10 +115,9 @@ function onTrigger(value1, value2)
             if (triggerInfo[4] == null) triggerInfo[4] = "false";
 
             var boolShit:Bool = false;
-
-            if (triggerInfo[4].toLowerCase().trim() == "true")
-                boolShit = true;
-
+            
+            if (triggerInfo[4].toLowerCase().trim() == "true") boolShit = true;
+            
             camGame.fade(FlxColor.fromRGB(Std.parseInt(triggerInfo[0]), Std.parseInt(triggerInfo[1]), Std.parseInt(triggerInfo[2])), Std.parseFloat(triggerInfo[3]), boolShit);
         case "change pos":
             if(camFollow != null)
